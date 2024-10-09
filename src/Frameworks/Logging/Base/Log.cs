@@ -132,8 +132,7 @@
                 stringBuilder.Append($"<{nameof(Parameters)}>{Parameters}</{nameof(Parameters)}>");
             }
 
-            string result =
-                stringBuilder.ToString();
+            string result = stringBuilder.ToString();
 
             return result;
         }

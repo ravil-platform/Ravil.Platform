@@ -32,13 +32,13 @@
 
         #region (Relations)
         public int? AccountLevelId { get; set; }
-        public virtual AccountLevel AccountLevel { get; set; }
+        public virtual AccountLevel? AccountLevel { get; set; }
 
         public int? AccountCategoryId { get; set; }
-        public virtual AccountCategory AccountCategory { get; set; }
+        public virtual AccountCategory? AccountCategory { get; set; }
 
-        public virtual ICollection<Order.Order> Orders { get; set; }
-        public virtual ICollection<AccountAttr> AccountAttrs { get; set; }
+        public virtual required ICollection<Order.Order> Orders { get; set; }
+        public virtual required ICollection<AccountAttr> AccountAttrs { get; set; }
         #endregion
     }
 }

@@ -33,26 +33,26 @@
 
 
         public int AccountId { get; set; }
-        public virtual Account.Account Account { get; set; }
+        public virtual Account.Account? Account { get; set; }
 
 
-        public string JobBranchId { get; set; }
-        public virtual JobBranch JobBranch { get; set; }
+        public string? JobBranchId { get; set; }
+        public virtual JobBranch? JobBranch { get; set; }
 
 
         public int? PaymentPortalId { get; set; }
-        public virtual PaymentPortal.PaymentPortal PaymentPortal { get; set; }
+        public virtual PaymentPortal.PaymentPortal? PaymentPortal { get; set; }
 
 
         public int? PromotionCodeId { get; set; }
-        public virtual PromotionCode PromotionCode { get; set; }
+        public virtual PromotionCode? PromotionCode { get; set; }
 
 
-        public string UserId { get; set; }
-        public virtual ApplicationUser ApplicationUser { get; set; }
+        public string UserId { get; set; } = null!;
+        public virtual required ApplicationUser ApplicationUser { get; set; }
 
 
-        public virtual ICollection<Transaction.Transaction> Transactions { get; set; }
+        public virtual required ICollection<Transaction.Transaction> Transactions { get; set; }
         #endregion
     }
 }

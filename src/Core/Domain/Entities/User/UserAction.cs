@@ -17,11 +17,11 @@
         #endregion
 
         #region (Relations)
-        public string UserId { get; set; }
-        public virtual ApplicationUser ApplicationUser { get; set; }
+        public string UserId { get; set; } = null!;
+        public virtual required ApplicationUser ApplicationUser { get; set; }
 
         public int ActionId { get; set; }
-        public virtual Action Action { get; set; }
+        public virtual required Action Action { get; set; }
         #endregion
     }
 }

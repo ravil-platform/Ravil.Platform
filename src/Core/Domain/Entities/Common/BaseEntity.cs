@@ -3,7 +3,7 @@
     public abstract class BaseEntity<TKey>
     {
         [Key]
-        public required TKey Id { get; set; }
+        public TKey Id { get; set; }
 
         public bool IsDeleted { get; set; } = false;
         public DateTime CreateDate { get; set; } = DateTime.Now;

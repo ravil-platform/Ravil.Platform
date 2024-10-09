@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Constants
+﻿namespace Constants
 {
     public static class ComponentNames
     {
@@ -19,7 +13,7 @@ namespace Constants
         public static string MenuBarComponent = "MenuBar";
         public static string MenuBarMobileComponent = "MenuBarMobile";
         public static string MenuBarMobileServicesComponent = "MenuBarMobileServices";
-        
+
         public static string CtaComponent = "CTA";
         public static string WhyIranComponent = "WhyIran";
         public static string HomeInfoComponent = "HomeInfo";
@@ -36,7 +30,7 @@ namespace Constants
         public static string CountriesSliderComponent = "CountriesSlider";
         public static string IncludedServicesComponent = "IncludedServices";
         public static string SpecialServicesSliderComponent = "SpecialServicesSlider";
-        
+
         public static string TourServicesComponent = "TourServices";
         public static string ServicesBookingComponent = "ServicesBooking";
         public static string ServiceComparePricesComponent = "ServiceComparePrices";

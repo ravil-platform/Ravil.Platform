@@ -1,22 +1,20 @@
-﻿using System.Collections;
-using System.Reflection;
-using Microsoft.Net.Http.Headers;
-
-namespace Logging.Base
+﻿namespace Logging.Base
 {
     public abstract class Logger<T> : object, ILogger<T> where T : class
     {
-        protected Logger(IHttpContextAccessor httpContextAccessor = null) : base()
-        {
-            HttpContextAccessor = httpContextAccessor;
-        }
-
+        #region ( Constructor )
         protected IHttpContextAccessor HttpContextAccessor { get; set; }
+        protected Logger(IHttpContextAccessor? httpContextAccessor = null) : base()
+        {
+            HttpContextAccessor = httpContextAccessor!;
+        }
+        #endregion
 
-        #region GetExceptions(System.Exception exception)
+        #region ( Methods )
+        #region ( Get Exceptions )
         protected virtual string GetExceptions(Exception exception)
         {
-            System.Text.StringBuilder result = new System.Text.StringBuilder();
+            StringBuilder result = new();
 
             Exception currentException = exception;
 
@@ -46,25 +44,24 @@ namespace Logging.Base
 
                 index++;
 
-                currentException =
-                    currentException.InnerException;
+                currentException = currentException.InnerException!;
             }
 
             return result.ToString();
         }
-        #endregion /GetExceptions(System.Exception exception)
+        #endregion
 
-        #region protected virtual string GetParameters(System.Collections.Hashtable parameters)
-        protected virtual string? GetParameters(System.Collections.Hashtable parameters)
+        #region ( Get Parameters )
+        protected virtual string? GetParameters(Hashtable parameters)
         {
             if (parameters == null || parameters.Count == 0)
             {
                 return null;
             }
 
-            System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder();
+            StringBuilder stringBuilder = new();
 
-            foreach (System.Collections.DictionaryEntry item in parameters)
+            foreach (DictionaryEntry item in parameters)
             {
                 if (item.Key != null)
                 {
@@ -85,39 +82,35 @@ namespace Logging.Base
                 }
             }
 
-            string result =
-                stringBuilder.ToString();
+            string result = stringBuilder.ToString();
 
             return result;
         }
-        #endregion /protected virtual string GetParameters(System.Collections.Hashtable parameters)
+        #endregion
 
-        protected void Log(LogLevel level, MethodBase methodBase, string message, Exception exception = null, Hashtable parameters = null)
+        #region ( Log )
+        protected void Log(LogLevel level, MethodBase methodBase, string message, Exception? exception = null, Hashtable? parameters = null)
         {
             if (exception == null && string.IsNullOrWhiteSpace(message))
             {
                 return;
             }
 
-            // **************************************************
             string currentCultureName = Thread.CurrentThread.CurrentCulture.Name;
 
-            System.Globalization.CultureInfo newCultureInfo =
-                new System.Globalization.CultureInfo(name: "en-US");
+            CultureInfo newCultureInfo = new(name: "en-US");
 
-            System.Globalization.CultureInfo currentCultureInfo =
-                new System.Globalization.CultureInfo(currentCultureName);
+            CultureInfo currentCultureInfo = new(currentCultureName);
 
             Thread.CurrentThread.CurrentCulture = newCultureInfo;
-            // **************************************************
 
-            Log log = new Log();
-
-            log.Level = level;
-
-            log.ClassName = typeof(T).Name;
-            log.MethodName = methodBase.Name;
-            log.Namespace = typeof(T).Namespace;
+            Log log = new()
+            {
+                Level = level,
+                ClassName = typeof(T).Name,
+                MethodName = methodBase.Name,
+                Namespace = typeof(T).Namespace!
+            };
 
             if (HttpContextAccessor != null &&
                 HttpContextAccessor.HttpContext != null &&
@@ -132,7 +125,7 @@ namespace Logging.Base
                 HttpContextAccessor.HttpContext.User != null &&
                 HttpContextAccessor.HttpContext.User.Identity != null)
             {
-                log.Username = HttpContextAccessor.HttpContext.User.Identity.Name;
+                log.Username = HttpContextAccessor.HttpContext.User.Identity.Name!;
             }
 
             if (HttpContextAccessor != null &&
@@ -146,27 +139,24 @@ namespace Logging.Base
 
             log.Message = message;
 
-            log.Exceptions = GetExceptions(exception: exception);
+            log.Exceptions = GetExceptions(exception!);
 
-            log.Parameters = GetParameters(parameters: parameters);
+            log.Parameters = GetParameters(parameters);
 
-            LogByFavoriteLibrary(log: log, exception: exception);
+            LogByFavoriteLibrary(log, exception!);
 
-            // **************************************************
             Thread.CurrentThread.CurrentCulture = currentCultureInfo;
-            // **************************************************
         }
+        #endregion
 
+        #region ( Logs Leveles )
         protected abstract void LogByFavoriteLibrary(Log log, Exception exception);
 
-        public void LogTrace
-            (string message, Hashtable parameters = null)
+        public void LogTrace(string message, Hashtable? parameters = null)
         {
-            System.Diagnostics.StackTrace
-                stackTrace = new System.Diagnostics.StackTrace();
+            StackTrace stackTrace = new();
 
-            System.Reflection.MethodBase
-                methodBase = stackTrace.GetFrame(1).GetMethod();
+            MethodBase methodBase = stackTrace.GetFrame(1)!.GetMethod()!;
 
             Log(methodBase: methodBase,
                 level: LogLevel.Trace,
@@ -175,14 +165,11 @@ namespace Logging.Base
                 parameters: parameters);
         }
 
-        public void LogDebug
-            (string message, Hashtable parameters = null)
+        public void LogDebug(string message, Hashtable? parameters = null)
         {
-            System.Diagnostics.StackTrace
-                stackTrace = new System.Diagnostics.StackTrace();
+            StackTrace stackTrace = new();
 
-            System.Reflection.MethodBase
-                methodBase = stackTrace.GetFrame(1).GetMethod();
+            MethodBase methodBase = stackTrace.GetFrame(1)!.GetMethod()!;
 
             Log(methodBase: methodBase,
                 level: LogLevel.Debug,
@@ -191,14 +178,11 @@ namespace Logging.Base
                 parameters: parameters);
         }
 
-        public void LogInformation
-            (string message, Hashtable parameters = null)
+        public void LogInformation(string message, Hashtable? parameters = null)
         {
-            System.Diagnostics.StackTrace
-                stackTrace = new System.Diagnostics.StackTrace();
+            StackTrace stackTrace = new();
 
-            System.Reflection.MethodBase
-                methodBase = stackTrace.GetFrame(1).GetMethod();
+            MethodBase methodBase = stackTrace.GetFrame(1)!.GetMethod()!;
 
             Log(methodBase: methodBase,
                 level: LogLevel.Information,
@@ -207,14 +191,11 @@ namespace Logging.Base
                 parameters: parameters);
         }
 
-        public void LogWarning
-            (string message, Hashtable parameters = null)
+        public void LogWarning(string message, Hashtable? parameters = null)
         {
-            System.Diagnostics.StackTrace
-                stackTrace = new System.Diagnostics.StackTrace();
+            StackTrace stackTrace = new();
 
-            System.Reflection.MethodBase
-                methodBase = stackTrace.GetFrame(1).GetMethod();
+            MethodBase methodBase = stackTrace.GetFrame(1)!.GetMethod()!;
 
             Log(methodBase: methodBase,
                 level: LogLevel.Warning,
@@ -223,35 +204,32 @@ namespace Logging.Base
                 parameters: parameters);
         }
 
-        public void LogError
-            (Exception? exception = null, string? message = null, Hashtable? parameters = null)
+        public void LogError(Exception? exception = null, string? message = null, Hashtable? parameters = null)
         {
-            System.Diagnostics.StackTrace
-                stackTrace = new System.Diagnostics.StackTrace();
+            StackTrace stackTrace = new();
 
-            System.Reflection.MethodBase
-                methodBase = stackTrace.GetFrame(1).GetMethod();
+            MethodBase methodBase = stackTrace.GetFrame(1)!.GetMethod()!;
 
             Log(methodBase: methodBase,
                 level: LogLevel.Error,
-                message: message,
+                message: message!,
                 exception: exception,
                 parameters: parameters);
         }
 
-        public void LogCritical
-            (Exception? exception = null, string? message = null, Hashtable? parameters = null)
+        public void LogCritical(Exception? exception = null, string? message = null, Hashtable? parameters = null)
         {
-            System.Diagnostics.StackTrace
-                stackTrace = new System.Diagnostics.StackTrace();
+            StackTrace stackTrace = new();
 
-            MethodBase methodBase = stackTrace.GetFrame(1).GetMethod();
+            MethodBase methodBase = stackTrace.GetFrame(1)!.GetMethod()!;
 
             Log(methodBase: methodBase,
                 level: LogLevel.Critical,
-                message: message,
+                message: message!,
                 exception: exception,
                 parameters: parameters);
         }
+        #endregion
+        #endregion
     }
 }

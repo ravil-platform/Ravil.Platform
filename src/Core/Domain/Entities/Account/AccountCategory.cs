@@ -13,7 +13,7 @@
         #endregion
 
         #region (Relations)
-        public virtual ICollection<Account> Accounts { get; set; }
+        public virtual required ICollection<Account> Accounts { get; set; }
         #endregion
     }
 }

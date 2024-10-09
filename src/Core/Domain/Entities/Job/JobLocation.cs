@@ -9,23 +9,16 @@
         #endregion
 
         #region (Relations)
-        [Required]
-        public string LocationId { get; set; }
-        public virtual Location.Location Location { get; set; }
+        public string LocationId { get; set; } = null!;
+        public virtual required Location.Location Location { get; set; }
 
+        public string JobBranchId { get; set; } = null!;
+        public virtual required JobBranch JobBranch { get; set; }
 
-        [Required]
-        public string JobBranchId { get; set; }
-        public virtual JobBranch JobBranch { get; set; }
+        public string AddressId { get; set; } = null!;
+        public virtual required Address.Address Address { get; set; }
 
-
-        [Required]
-        public string AddressId { get; set; }
-        public virtual Address.Address Address { get; set; }
-
-
-        [Required]
-        public string JobId { get; set; }
+        public string JobId { get; set; } = null!;
         #endregion
     }
 }

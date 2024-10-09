@@ -18,10 +18,6 @@
             builder.Property(o => o.AdminName).IsRequired(false);
             builder.Property(o => o.CookieValue).IsRequired(false);
             builder.Property(o => o.JobId).IsRequired();
-
-            //relations 
-            builder
-                .
         }
     }
 }

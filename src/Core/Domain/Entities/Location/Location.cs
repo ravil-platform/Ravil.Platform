@@ -13,8 +13,8 @@
         #endregion
 
         #region (Relations)
-        public string AddressId { get; set; }
-        public virtual Address.Address Address { get; set; }
+        public string AddressId { get; set; } = null!;
+        public virtual required Address.Address Address { get; set; }
         #endregion
     }
 }

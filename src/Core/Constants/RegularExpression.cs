@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Constants
+﻿namespace Constants
 {
     public static class RegularExpression
     {
@@ -21,7 +15,7 @@ namespace Constants
         public const string AlphanumericWithSpace = @"^[a-zA-Z0-9 ]*$";
         public const string LetterAndNumber = @"^[A-Za-z0-9]+";
         public const string DuplicateWords = @"(\b\w+\b)(?=.*\b\1\b)";
-        
+
         public const string HtmlElements = @"/<\/?[\w\s]*>|<.+[\W]>/";
         public const string HtmlEventAttributes = @"/\bon\w+=\S+(?=.*>)/";
         public const string HtmlEventAttributesWithTag = @"/(?:<[^>]+\s)(on\S+)=[""']?((?:.(?![""']?\s+(?:\S+)=|[>""']))+.)[""']?/";

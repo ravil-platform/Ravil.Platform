@@ -23,12 +23,11 @@ namespace Domain.Entities.Attr
         #endregion
 
         #region (Relations)
-        [Required]
         public int AttrAccountId { get; set; }
-        public virtual AttrAccount AttrAccount { get; set; }
+        public virtual required AttrAccount AttrAccount { get; set; }
 
 
-        public virtual ICollection<AccountAttr> AccountAttrs { get; set; }
+        public virtual required ICollection<AccountAttr> AccountAttrs { get; set; }
         #endregion
     }
 }
