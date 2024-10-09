@@ -4,6 +4,8 @@
     {
         public void Configure(EntityTypeBuilder<Domain.Entities.ContactUs.ContactUs> builder)
         {
+            builder.ToTable("ContactUs", "ContactUs");
+
             builder.HasKey(c => c.Id);
             builder.Property(c => c.FullName).IsRequired().HasMaxLength(MaxLength.FullName);
             builder.Property(c => c.Email).IsRequired().HasMaxLength(MaxLength.Email);

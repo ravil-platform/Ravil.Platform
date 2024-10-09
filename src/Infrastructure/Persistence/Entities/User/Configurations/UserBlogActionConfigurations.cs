@@ -4,6 +4,8 @@ public class UserBlogActionConfigurations : IEntityTypeConfiguration<UserBlogAct
 {
     public void Configure(EntityTypeBuilder<UserBlogAction> builder)
     {
+        builder.ToTable("UserBlogActions", "Users");
+
         builder.HasKey(u => u.Id);
         builder.Property(u => u.BlogActionType).IsRequired();
         builder.Property(u => u.ActionScore).IsRequired();

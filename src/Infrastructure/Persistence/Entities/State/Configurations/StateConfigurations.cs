@@ -4,6 +4,8 @@ public class StateConfigurations : IEntityTypeConfiguration<Domain.Entities.Stat
 {
     public void Configure(EntityTypeBuilder<Domain.Entities.State.State> builder)
     {
+        builder.ToTable("States", "States");
+
         builder.HasKey(s => s.Id);
         builder.Property(s => s.Subtitle).IsRequired().HasMaxLength(MaxLength.Title);
         builder.Property(s => s.Picture).IsRequired(false).HasMaxLength(MaxLength.Picture);

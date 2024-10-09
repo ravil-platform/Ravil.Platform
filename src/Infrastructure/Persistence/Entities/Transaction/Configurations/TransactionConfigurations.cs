@@ -4,6 +4,8 @@ public class TransactionConfigurations : IEntityTypeConfiguration<Domain.Entitie
 {
     public void Configure(EntityTypeBuilder<Domain.Entities.Transaction.Transaction> builder)
     {
+        builder.ToTable("Transactions", "Transactions");
+
         builder.HasKey(t => t.Id);
         builder.Property(t => t.Title).IsRequired().HasMaxLength(MaxLength.Title);
         builder.Property(t => t.Description).IsRequired().HasMaxLength(MaxLength.Description);

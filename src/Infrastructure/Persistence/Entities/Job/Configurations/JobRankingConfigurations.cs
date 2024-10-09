@@ -4,6 +4,8 @@ public class JobRankingConfigurations : IEntityTypeConfiguration<JobRanking>
 {
     public void Configure(EntityTypeBuilder<JobRanking> builder)
     {
+        builder.ToTable("JobRankings", "Jobs");
+
         builder.HasKey(j => j.Id);
         builder.Property(j => j.Sort).IsRequired(false);
         builder.Property(j => j.ExpireSortDay).IsRequired(false);

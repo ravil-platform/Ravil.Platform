@@ -4,6 +4,8 @@ public class CityBaseConfigurations : IEntityTypeConfiguration<CityBase>
 {
     public void Configure(EntityTypeBuilder<CityBase> builder)
     {
+        builder.ToTable("CityBases", "Cities");
+
         builder.HasKey(c => c.Id);
         builder.Property(c => c.Name).IsRequired().HasMaxLength(MaxLength.Name);
         builder.Property(c => c.CountyId).IsRequired(false);

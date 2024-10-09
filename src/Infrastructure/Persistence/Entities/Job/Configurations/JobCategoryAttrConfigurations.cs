@@ -4,6 +4,8 @@ public class JobCategoryAttrConfigurations : IEntityTypeConfiguration<JobCategor
 {
     public void Configure(EntityTypeBuilder<JobCategoryAttr> builder)
     {
+        builder.ToTable("JobCategoriyAttrs", "Jobs");
+
         builder.HasKey(j => j.Id);
     }
 }

@@ -4,6 +4,8 @@
     {
         public void Configure(EntityTypeBuilder<Domain.Entities.TimeWork.TimeWork> builder)
         {
+            builder.ToTable("TimeWorks", "TimeWorks");
+
             builder.HasKey(t => t.Id);
             builder.Property(t => t.StartTime).IsRequired();
             builder.Property(t => t.EndTime).IsRequired();

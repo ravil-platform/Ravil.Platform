@@ -4,6 +4,8 @@
     {
         public void Configure(EntityTypeBuilder<Domain.Entities.Complaint.Complaint> builder)
         {
+            builder.ToTable("Complaints", "Complaints");
+
             builder.HasKey(c => c.Id);
             builder.Property(c => c.FullName).IsRequired().HasMaxLength(MaxLength.FullName);
             builder.Property(c => c.Email).IsRequired(false).HasMaxLength(MaxLength.Email);

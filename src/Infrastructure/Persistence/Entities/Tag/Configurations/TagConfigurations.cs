@@ -4,6 +4,8 @@
     {
         public void Configure(EntityTypeBuilder<Domain.Entities.Tag.Tag> builder)
         {
+            builder.ToTable("Tags", "Tags");
+
             builder.HasKey(t => t.Id);
             builder.Property(t => t.Name).IsRequired().HasMaxLength(MaxLength.Name);
             builder.Property(t => t.UniqueName).IsRequired().HasMaxLength(MaxLength.Slug);

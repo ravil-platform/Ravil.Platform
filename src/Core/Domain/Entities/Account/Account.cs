@@ -2,7 +2,7 @@
 {
     public class Account : BaseEntity
     {
-        #region (Fields)
+        #region ( Fields )
         public string Title { get; set; } = null!;
 
         public string Subtitle { get; set; } = null!;
@@ -30,7 +30,7 @@
         public DateTime ExpireDate { get; set; } = DateTime.Now.AddDays(30);
         #endregion
 
-        #region (Relations)
+        #region ( Relations )
         public int? AccountLevelId { get; set; }
         public virtual AccountLevel? AccountLevel { get; set; }
 

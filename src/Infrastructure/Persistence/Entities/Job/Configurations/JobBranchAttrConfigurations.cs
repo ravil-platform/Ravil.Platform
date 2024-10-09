@@ -4,6 +4,8 @@ public class JobBranchAttrConfigurations : IEntityTypeConfiguration<JobBranchAtt
 {
     public void Configure(EntityTypeBuilder<JobBranchAttr> builder)
     {
+        builder.ToTable("JobBranchAttrs", "Jobs");
+
         builder.HasKey(j => j.Id);
 
         //relations

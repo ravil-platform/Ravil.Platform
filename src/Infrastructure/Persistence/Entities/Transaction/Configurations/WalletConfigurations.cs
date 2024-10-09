@@ -4,6 +4,8 @@ public class WalletConfigurations : IEntityTypeConfiguration<Wallet>
 {
     public void Configure(EntityTypeBuilder<Wallet> builder)
     {
+        builder.ToTable("Wallets", "Transactions");
+
         builder.HasKey(w => w.Id);
         builder.Property(w => w.Inventory).IsRequired();
 

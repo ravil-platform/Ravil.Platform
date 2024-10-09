@@ -4,6 +4,8 @@ public class UserBannerViewConfigurations : IEntityTypeConfiguration<UserBannerV
 {
     public void Configure(EntityTypeBuilder<UserBannerView> builder)
     {
+        builder.ToTable("UserBannerViews", "Users");
+
         builder.HasKey(u => u.Id);
 
         //relations

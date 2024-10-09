@@ -4,6 +4,8 @@
     {
         public void Configure(EntityTypeBuilder<Domain.Entities.Comment.Comment> builder)
         {
+            builder.ToTable("Comments", "Comments");
+
             builder.HasKey(c => c.Id);
             builder.Property(c => c.CommentType).IsRequired();
             builder.Property(c => c.JobBranchId).IsRequired(false);

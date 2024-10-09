@@ -4,6 +4,8 @@
     {
         public void Configure(EntityTypeBuilder<Domain.Entities.Attr.Attr> builder)
         {
+            builder.ToTable("Attrs", "Attrs");
+
             builder.HasKey(a => a.Id);
             builder.Property(a => a.Title).IsRequired().HasMaxLength(MaxLength.Title);
             builder.Property(a => a.AttrType).IsRequired();

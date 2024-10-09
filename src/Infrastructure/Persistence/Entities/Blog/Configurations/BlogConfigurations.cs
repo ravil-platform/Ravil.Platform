@@ -4,6 +4,8 @@
     {
         public void Configure(EntityTypeBuilder<Domain.Entities.Blog.Blog> builder)
         {
+            builder.ToTable("Blogs", "Blogs");
+
             builder.HasKey(b => b.Id);
             builder.Property(b => b.Route).IsRequired().HasMaxLength(MaxLength.Slug);
             builder.Property(b => b.Title).IsRequired().HasMaxLength(MaxLength.Title);

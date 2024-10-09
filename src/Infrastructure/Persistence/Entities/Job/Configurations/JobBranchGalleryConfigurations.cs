@@ -4,6 +4,8 @@ public class JobBranchGalleryConfigurations : IEntityTypeConfiguration<JobBranch
 {
     public void Configure(EntityTypeBuilder<JobBranchGallery> builder)
     {
+        builder.ToTable("JobBranchGalleries", "Jobs");
+
         builder.HasKey(j => j.Id);
         builder.Property(j => j.ImageName).IsRequired(false).HasMaxLength(MaxLength.Picture);
         builder.Property(j => j.Sort).IsRequired().HasMaxLength(MaxLength.Picture);

@@ -4,6 +4,8 @@ public class UserLikedGalleryConfigurations : IEntityTypeConfiguration<UserLiked
 {
     public void Configure(EntityTypeBuilder<UserLikedGallery> builder)
     {
+        builder.ToTable("UserLikedGalleries", "Users");
+
         builder.HasKey(u => u.Id);
         builder.Property(u => u.UserLikedType).IsRequired();
         builder.Property(u => u.BlogId).IsRequired(false);

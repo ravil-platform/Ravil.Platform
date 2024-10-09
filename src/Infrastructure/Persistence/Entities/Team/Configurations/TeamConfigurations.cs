@@ -4,6 +4,8 @@
     {
         public void Configure(EntityTypeBuilder<Domain.Entities.Team.Team> builder)
         {
+            builder.ToTable("Teams", "Teams");
+
             builder.HasKey(t => t.Id);
             builder.Property(t => t.FullName).IsRequired().HasMaxLength(MaxLength.FullName);
             builder.Property(t => t.Degree).IsRequired().HasMaxLength(MaxLength.Degree);

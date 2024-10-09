@@ -4,6 +4,8 @@
     {
         public void Configure(EntityTypeBuilder<Domain.Entities.Order.Order> builder)
         {
+            builder.ToTable("Orders", "Orders");
+
             builder.HasKey(o => o.Id);
             builder.Property(o => o.Price).IsRequired();
             builder.Property(o => o.Discount).IsRequired();

@@ -6,6 +6,8 @@ namespace Persistence.Entities.User.Configurations
     {
         public void Configure(EntityTypeBuilder<Action> builder)
         {
+            builder.ToTable("Actions", "Actions");
+
             builder.HasKey(a => a.Id);
             builder.Property(a => a.ActionTypes).IsRequired();
             builder.Property(a => a.Title).IsRequired().HasMaxLength(MaxLength.Title);

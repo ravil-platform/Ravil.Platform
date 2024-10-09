@@ -2,7 +2,7 @@
 {
     public class Address 
     {
-        #region (Fields)
+        #region ( Fields )
         public string Id { get; set; } = Guid.NewGuid().ToString("N").Substring(0, 5);
 
         public string PostalAddress { get; set; } = null!;
@@ -17,7 +17,7 @@
         public DateTime UpdateDate { get; set; } = DateTime.Now;
         #endregion
 
-        #region (Relations)
+        #region ( Relations )
         public int StateId { get; set; }
         public virtual StateBase State { get; set; }
 

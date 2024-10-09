@@ -4,6 +4,8 @@ public class UserActionConfigurations : IEntityTypeConfiguration<UserAction>
 {
     public void Configure(EntityTypeBuilder<UserAction> builder)
     {
+        builder.ToTable("UserActions", "Users");
+
         builder.HasKey(u => u.Id);
         builder.Property(u => u.JobBranchId).IsRequired(false);
         builder.Property(u => u.BlogId).IsRequired(false);

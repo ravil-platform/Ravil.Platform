@@ -4,6 +4,8 @@ public class StateBaseConfigurations : IEntityTypeConfiguration<StateBase>
 {
     public void Configure(EntityTypeBuilder<StateBase> builder)
     {
+        builder.ToTable("StateBases", "States");
+
         builder.HasKey(s => s.Id);
         builder.Property(s => s.Name).IsRequired().HasMaxLength(MaxLength.Name);
         builder.Property(s => s.Multiplier).IsRequired(false);

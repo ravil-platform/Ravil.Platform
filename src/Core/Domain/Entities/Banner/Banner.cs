@@ -39,24 +39,4 @@
         public virtual ICollection<UserBannerView> UserBannerViews { get; set; }
         #endregion
     }
-
-    #region (Enums)
-    public enum BannerType
-    {
-        [Display(Name = "وبلاگ")]
-        Blog,
-        [Display(Name = "کسب و کار")]
-        JobBranch,
-        [Display(Name = "ویژه")]
-        Special
-    }
-
-    public enum BannerPictureType
-    {
-        [Display(Name = "مربع")]
-        Square,
-        [Display(Name = "مستطیل")]
-        Rectangle
-    }
-    #endregion
 }

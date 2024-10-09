@@ -4,6 +4,8 @@
     {
         public void Configure(EntityTypeBuilder<Domain.Entities.PaymentPortal.PaymentPortal> builder)
         {
+            builder.ToTable("PaymentPortals", "PaymentPortals");
+
             builder.HasKey(p => p.Id);
             builder.Property(p => p.Title).IsRequired().HasMaxLength(MaxLength.Title);
             builder.Property(p => p.Status).IsRequired();
