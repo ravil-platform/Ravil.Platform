@@ -29,7 +29,7 @@
         {
             FluentResults.Result result = new FluentResults.Result();
 
-            FluentValidation.ValidationException validationException =
+            FluentValidation.ValidationException? validationException =
                 exception as FluentValidation.ValidationException;
 
             if (validationException != null)
@@ -53,12 +53,12 @@
                     var dic = new Dictionary<string, string>
                     {
                         ["Exception"] = exception.Message,
-                        ["StackTrace"] = exception.StackTrace,
+                        ["StackTrace"] = exception.StackTrace!,
                     };
                     if (exception.InnerException != null)
                     {
                         dic.Add("InnerException.Exception", exception.InnerException.Message);
-                        dic.Add("InnerException.StackTrace", exception.InnerException.StackTrace);
+                        dic.Add("InnerException.StackTrace", exception.InnerException.StackTrace!);
                     }
 
                     message = JsonConvert.SerializeObject(dic);
