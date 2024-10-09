@@ -1,0 +1,14 @@
+﻿global using Constants;
+global using Domain.Entities.Account;
+global using Domain.Entities.Blog;
+global using Domain.Entities.Category;
+global using Domain.Entities.City;
+global using Domain.Entities.Comment;
+global using Domain.Entities.Job;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.EntityFrameworkCore.Metadata.Builders;
+global using Microsoft.Extensions.DependencyInjection;
+global using Domain.Entities.Order;
+global using Domain.Entities.State;
+global using Domain.Entities.Transaction;
+global using Domain.Entities.User;
