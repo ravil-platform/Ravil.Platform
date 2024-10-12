@@ -4,6 +4,8 @@
     {
         public void Configure(EntityTypeBuilder<Domain.Entities.City.City> builder)
         {
+            builder.ToTable("Cities", "Cities");
+
             builder.HasKey(c => c.Id);
             builder.Property(c => c.Subtitle).IsRequired().HasMaxLength(MaxLength.Title);
             builder.Property(c => c.Route).IsRequired().HasMaxLength(MaxLength.Slug);

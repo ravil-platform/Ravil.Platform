@@ -4,6 +4,8 @@ public class WalletTransactionConfigurations : IEntityTypeConfiguration<Domain.E
 {
     public void Configure(EntityTypeBuilder<Domain.Entities.Transaction.Transaction> builder)
     {
+        builder.ToTable("WalletTransactions", "Transactions");
+
         builder.HasKey(w => w.Id);
     }
 }

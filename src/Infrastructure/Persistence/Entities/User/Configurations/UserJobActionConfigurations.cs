@@ -4,6 +4,8 @@ public class UserJobActionConfigurations : IEntityTypeConfiguration<UserJobActio
 {
     public void Configure(EntityTypeBuilder<UserJobAction> builder)
     {
+        builder.ToTable("UserJobActions", "Users");
+
         builder.HasKey(u => u.Id);
         builder.Property(u => u.JobActionType).IsRequired();
         builder.Property(u => u.ActionScore).IsRequired();

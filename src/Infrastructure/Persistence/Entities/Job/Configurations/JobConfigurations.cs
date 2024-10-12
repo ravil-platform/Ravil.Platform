@@ -4,6 +4,8 @@ public class JobConfigurations : IEntityTypeConfiguration<Domain.Entities.Job.Jo
 {
     public void Configure(EntityTypeBuilder<Domain.Entities.Job.Job> builder)
     {
+        builder.ToTable("Jobs", "Jobs");
+
         builder.HasKey(j => j.Id);
         builder.Property(j => j.Route).IsRequired().HasMaxLength(MaxLength.Slug);
         builder.Property(j => j.Title).IsRequired().HasMaxLength(MaxLength.Title);

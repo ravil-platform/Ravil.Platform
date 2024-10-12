@@ -4,6 +4,8 @@
     {
         public void Configure(EntityTypeBuilder<AccountAttr> builder)
         {
+            builder.ToTable("AccountAttrs", "Accounts");
+
             builder.HasKey(a => a.Id);
             builder
                 .HasOne(a => a.AttrAccount)

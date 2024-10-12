@@ -4,6 +4,8 @@
     {
         public void Configure(EntityTypeBuilder<PromotionCode> builder)
         {
+            builder.ToTable("PromotionCodes", "Orders");
+
             builder.HasKey(p => p.Id);
             builder.Property(p => p.Title).IsRequired().HasMaxLength(MaxLength.Title);
             builder.Property(p => p.Code).IsRequired().HasMaxLength(MaxLength.Code);

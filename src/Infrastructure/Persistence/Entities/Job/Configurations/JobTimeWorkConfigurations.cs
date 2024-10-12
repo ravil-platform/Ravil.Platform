@@ -4,6 +4,8 @@ public class JobTimeWorkConfigurations : IEntityTypeConfiguration<JobTimeWork>
 {
     public void Configure(EntityTypeBuilder<JobTimeWork> builder)
     {
+        builder.ToTable("JobTimeWorks", "Jobs");
+
         builder.HasKey(j => j.Id);
         builder.Property(j => j.StartTime).IsRequired().HasMaxLength(MaxLength.Title);
         builder.Property(j => j.EndTime).IsRequired().HasMaxLength(MaxLength.Title);

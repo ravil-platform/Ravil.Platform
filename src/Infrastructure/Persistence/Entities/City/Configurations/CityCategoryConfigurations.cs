@@ -4,6 +4,8 @@ public class CityCategoryConfigurations : IEntityTypeConfiguration<CityCategory>
 {
     public void Configure(EntityTypeBuilder<CityCategory> builder)
     {
+        builder.ToTable("CityCategories", "Cities");
+
         builder.HasKey(c => c.Id);
     }
 }

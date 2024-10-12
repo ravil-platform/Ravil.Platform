@@ -4,6 +4,8 @@
     {
         public void Configure(EntityTypeBuilder<Domain.Entities.Address.Address> builder)
         {
+            builder.ToTable("Addresses", "Addresses");
+
             builder.HasKey(a => a.Id);
             builder.Property(a => a.PostalAddress).IsRequired().HasMaxLength(MaxLength.Address);
             builder.Property(a => a.PostalCode).IsRequired().HasMaxLength(MaxLength.PostalCode);

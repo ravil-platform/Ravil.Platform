@@ -4,6 +4,8 @@
     {
         public void Configure(EntityTypeBuilder<Domain.Entities.Location.Location> builder)
         {
+            builder.ToTable("Locations", "Locations");
+
             builder.HasKey(l => l.Id);
             builder.Property(l => l.Route).IsRequired(false).HasMaxLength(MaxLength.Slug);
             builder.Property(l => l.Lat).IsRequired();

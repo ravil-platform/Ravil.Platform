@@ -4,6 +4,8 @@
     {
         public void Configure(EntityTypeBuilder<Domain.Entities.DayOfWeek.DayOfWeek> builder)
         {
+            builder.ToTable("DayOfWeeks", "DayOfWeeks");
+
             builder.HasKey(d => d.Id);
             builder.Property(d => d.AlternateName).IsRequired(false);
             builder.Property(d => d.PersianName).IsRequired().HasMaxLength(MaxLength.Name);

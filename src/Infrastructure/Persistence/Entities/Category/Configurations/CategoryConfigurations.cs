@@ -4,6 +4,8 @@
     {
         public void Configure(EntityTypeBuilder<Domain.Entities.Category.Category> builder)
         {
+            builder.ToTable("Categories", "Categories");
+
             builder.HasKey(c => c.Id);
             builder.Property(c => c.Type).IsRequired();
             builder.Property(c => c.Name).IsRequired().HasMaxLength(MaxLength.Name);

@@ -20,3 +20,4 @@ global using Domain.Entities.UploadedFile.Enums;
 global using Domain.Entities.User.Enums;
 global using Microsoft.AspNetCore.Identity;
 global using Domain.Entities.User;
+global using Domain.Entities.Banner.Enums;

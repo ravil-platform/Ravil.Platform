@@ -4,6 +4,8 @@
     {
         public void Configure(EntityTypeBuilder<Domain.Entities.MainSlider.MainSlider> builder)
         {
+            builder.ToTable("MainSliders", "MainSliders");
+
             builder.HasKey(b => b.Id);
             builder.Property(b => b.Title).IsRequired().HasMaxLength(MaxLength.Title);
             builder.Property(b => b.ExpireDay).IsRequired(false);

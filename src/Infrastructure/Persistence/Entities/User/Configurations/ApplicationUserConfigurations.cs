@@ -4,6 +4,8 @@
     {
         public void Configure(EntityTypeBuilder<ApplicationUser> builder)
         {
+            builder.ToTable("Users", "Users");
+
             builder.HasKey(u => u.Id);
             builder.Property(u => u.Firstname).IsRequired(false).HasMaxLength(MaxLength.Name);
             builder.Property(u => u.Lastname).IsRequired(false).HasMaxLength(MaxLength.Name);

@@ -4,6 +4,8 @@
     {
         public void Configure(EntityTypeBuilder<Domain.Entities.Config.Config> builder)
         {
+            builder.ToTable("Configs", "Configs");
+
             builder.HasKey(c => c.Id);
 
             builder.Property(c => c.FoundingDate).IsRequired(false);

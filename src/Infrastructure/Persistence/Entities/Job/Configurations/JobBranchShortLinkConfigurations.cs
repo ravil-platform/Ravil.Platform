@@ -4,6 +4,8 @@ public class JobBranchShortLinkConfigurations : IEntityTypeConfiguration<JobBran
 {
     public void Configure(EntityTypeBuilder<JobBranchShortLink> builder)
     {
+        builder.ToTable("JobBranchShortLinks", "Jobs");
+
         builder.HasKey(j => j.Id);
         builder.Property(j => j.ShortKey);
 

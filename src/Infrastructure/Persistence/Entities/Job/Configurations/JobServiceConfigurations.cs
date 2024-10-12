@@ -4,6 +4,8 @@ public class JobServiceConfigurations : IEntityTypeConfiguration<JobService>
 {
     public void Configure(EntityTypeBuilder<JobService> builder)
     {
+        builder.ToTable("JobServices", "Jobs");
+
         builder.HasKey(j => j.Id);
 
         //relations 

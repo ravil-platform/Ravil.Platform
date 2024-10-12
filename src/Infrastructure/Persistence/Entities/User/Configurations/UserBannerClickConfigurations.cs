@@ -4,6 +4,8 @@ public class UserBannerClickConfigurations : IEntityTypeConfiguration<UserBanner
 {
     public void Configure(EntityTypeBuilder<UserBannerClick> builder)
     {
+        builder.ToTable("UserBannerClicks", "Users");
+
         builder.HasKey(u => u.Id);
         builder.Property(u => u.CreateDate).IsRequired();
 

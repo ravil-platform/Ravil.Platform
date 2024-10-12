@@ -4,6 +4,8 @@
     {
         public void Configure(EntityTypeBuilder<BlogCategory> builder)
         {
+            builder.ToTable("BlogCategories", "Blogs");
+
             builder.HasKey(b => b.Id);
             builder.Property(b => b.Title).IsRequired().HasMaxLength(MaxLength.Title);
             builder.Property(b => b.Sort).IsRequired();

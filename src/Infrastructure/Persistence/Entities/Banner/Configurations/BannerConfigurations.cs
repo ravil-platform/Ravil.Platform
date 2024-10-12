@@ -4,6 +4,8 @@
     {
         public void Configure(EntityTypeBuilder<Domain.Entities.Banner.Banner> builder)
         {
+            builder.ToTable("Banners", "Banners");
+
             builder.HasKey(b => b.Id);
             builder.Property(b => b.BannerType).IsRequired();
             builder.Property(b => b.BannerPictureType).IsRequired();
@@ -22,7 +24,6 @@
                 .WithMany(j => j.Banners)
                 .HasForeignKey(b => b.JobBranchId);
 
-            //todo : user banner view & user banner click
 
         }
     }

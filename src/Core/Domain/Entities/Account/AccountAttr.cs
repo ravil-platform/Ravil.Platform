@@ -2,7 +2,7 @@
 {
     public class AccountAttr : BaseEntity
     {
-        #region (Relations)
+        #region ( Relations )
         public int AccountId { get; set; }
         public virtual required Account Account { get; set; }
 
