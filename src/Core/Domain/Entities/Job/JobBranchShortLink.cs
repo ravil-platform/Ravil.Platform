@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities.Job;
 
-public class JobBranchShortLink
+public class JobBranchShortLink : BaseEntity
 {
     #region (Fields)
     public int Id { get; set; }

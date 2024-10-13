@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities.RedirectionUrl;
 
-public class RedirectionUrl
+public class RedirectionUrl : BaseEntity
 {
     #region (Fields)
     public int Id { get; set; }

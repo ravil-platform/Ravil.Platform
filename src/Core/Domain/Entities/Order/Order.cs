@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities.Order
 {
-    public class Order : BaseEntity<Guid>
+    public class Order : Entity<string>
     {
         #region (Fields)
         public string OrderNumber { get; set; } = null!;
@@ -52,7 +52,7 @@
         public virtual required ApplicationUser ApplicationUser { get; set; }
 
 
-        public virtual required ICollection<Transaction.Transaction> Transactions { get; set; }
+        //public virtual required ICollection<Transaction.Transaction> Transactions { get; set; }
         #endregion
     }
 }

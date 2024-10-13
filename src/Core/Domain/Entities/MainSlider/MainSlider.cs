@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities.MainSlider
 {
-    public class MainSlider : BaseEntity
+    public class MainSlider : Entity
     {
         #region (Fields)
         public string Title { get; set; } = null!;

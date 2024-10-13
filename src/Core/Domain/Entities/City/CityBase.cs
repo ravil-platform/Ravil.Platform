@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities.City
 {
-    public class CityBase : BaseEntity
+    public class CityBase : Entity
     {
         #region (Fields)
         public int CountyId { get; set; }

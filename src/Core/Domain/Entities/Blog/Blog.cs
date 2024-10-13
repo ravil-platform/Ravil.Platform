@@ -35,9 +35,7 @@
 
         public virtual ICollection<BlogCategoryRel> BlogCategoryRels { get; set; }
 
-        public virtual ICollection<UserBlogAction> BlogUserActions { get; set; }
-
-        public virtual ICollection<UserBlogLike> BlogUserLikes { get; set; } //TODO: Optional
+        public virtual ICollection<UserBlogLike> BlogUserLikes { get; set; } 
         #endregion
     }
 }

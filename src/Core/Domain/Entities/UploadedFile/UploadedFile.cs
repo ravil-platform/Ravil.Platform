@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities.UploadedFile
 {
-    public class UploadedFile
+    public class UploadedFile : IEntity
     {
         #region (Fields)
         public int Id { get; set; }

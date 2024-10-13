@@ -4,7 +4,7 @@ public class JobTimeWorkConfigurations : IEntityTypeConfiguration<JobTimeWork>
 {
     public void Configure(EntityTypeBuilder<JobTimeWork> builder)
     {
-        builder.ToTable("JobTimeWorks", "Jobs");
+        builder.ToTable("JobTimeWork", DatabaseSchemas.Jobs);
 
         builder.HasKey(j => j.Id);
         builder.Property(j => j.StartTime).IsRequired().HasMaxLength(MaxLength.Title);

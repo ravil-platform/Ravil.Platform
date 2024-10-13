@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities.Comment
 {
-    public class AnswerComment : BaseEntity
+    public class AnswerComment : Entity
     {
         #region (Fields)
         public string? AdminId { get; set; }

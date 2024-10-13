@@ -4,13 +4,14 @@
     {
         public void Configure(EntityTypeBuilder<ApplicationUser> builder)
         {
-            builder.ToTable("Users", "Users");
+            builder.ToTable("ApplicationUser", DatabaseSchemas.Users);
 
             builder.HasKey(u => u.Id);
+
             builder.Property(u => u.Firstname).IsRequired(false).HasMaxLength(MaxLength.Name);
             builder.Property(u => u.Lastname).IsRequired(false).HasMaxLength(MaxLength.Name);
             builder.Property(u => u.BirthDate).IsRequired(false);
-            builder.Property(u => u.RegisterDate).IsRequired(false);
+            builder.Property(u => u.RegisterDate).IsRequired();
             builder.Property(u => u.ConfirmationDate).IsRequired(false);
             builder.Property(u => u.LockoutReason).IsRequired(false).HasMaxLength(MaxLength.Description);
             builder.Property(u => u.NationalCode).IsRequired(false).HasMaxLength(MaxLength.NationalCode);
@@ -30,10 +31,10 @@
             builder.Property(u => u.UserNameType);
 
             //relations
-            builder
-                .HasOne(u => u.Wallet)
-                .WithOne(w => w.User)
-                .HasForeignKey<Wallet>(w => w.UserId);
+            //builder
+            //    .HasOne(u => u.Wallet)
+            //    .WithOne(w => w.User)
+            //    .HasForeignKey<Wallet>(w => w.UserId);
 
             builder
                 .HasOne(u => u.StateBase)
@@ -65,11 +66,11 @@
                 .HasForeignKey(o => o.UserId)
                 .IsRequired();
 
-            builder
-                .HasMany(u => u.Transactions)
-                .WithOne(o => o.ApplicationUser)
-                .HasForeignKey(o => o.UserId)
-                .IsRequired();
+            //builder
+            //    .HasMany(u => u.Transactions)
+            //    .WithOne(o => o.ApplicationUser)
+            //    .HasForeignKey(o => o.UserId)
+            //    .IsRequired();
 
             builder
                 .HasMany(u => u.UserAddresses)
@@ -84,27 +85,37 @@
                 .IsRequired();
 
             builder
-                .HasMany(u => u.UserBlogActions)
-                .WithOne(o => o.ApplicationUser)
-                .HasForeignKey(o => o.UserId)
-                .IsRequired();
-
-            builder
                 .HasMany(u => u.UserBlogLikes)
                 .WithOne(o => o.ApplicationUser)
                 .HasForeignKey(o => o.UserId)
                 .IsRequired(); 
-            
+
+            //identity relations
+            // Each User can have many UserClaims
             builder
-                .HasMany(u => u.UserJobAction)
-                .WithOne(o => o.ApplicationUser)
-                .HasForeignKey(o => o.UserId)
+                .HasMany<IdentityUserClaim<string>>()
+                .WithOne()
+                .HasForeignKey(uc => uc.UserId)
+                .IsRequired();
+            // Each User can have many UserLogins
+            builder
+                .HasMany<IdentityUserLogin<string>>()
+                .WithOne()
+                .HasForeignKey(ul => ul.UserId)
                 .IsRequired();
 
+            // Each User can have many UserTokens
             builder
-                .HasMany(u => u.UserLikedGalleries)
-                .WithOne(o => o.ApplicationUser)
-                .HasForeignKey(o => o.UserId)
+                .HasMany<IdentityUserToken<string>>()
+                .WithOne()
+                .HasForeignKey(ut => ut.UserId)
+                .IsRequired();
+
+            // Each User can have many entries in the UserRole join table
+            builder
+                .HasMany<IdentityUserRole<string>>()
+                .WithOne()
+                .HasForeignKey(ur => ur.UserId)
                 .IsRequired();
         }
     }

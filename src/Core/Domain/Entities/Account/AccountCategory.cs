@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities.Account
 {
-    public class AccountCategory : BaseEntity
+    public class AccountCategory : Entity
     {
         #region (Fields)
         public string Title { get; set; } = null!;

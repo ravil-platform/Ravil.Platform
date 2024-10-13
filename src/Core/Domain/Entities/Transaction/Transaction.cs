@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities.Transaction
 {
-    public class Transaction : BaseEntity<Guid>
+    public class Transaction : Entity<Guid>
     {
         #region (Fields)
         /// <summary>
@@ -49,8 +49,8 @@
         public virtual ApplicationUser ApplicationUser { get; set; }
 
 
-        public virtual Order.Order Order { get; set; }
-        public string OrderId { get; set; }
+        //public virtual Order.Order Order { get; set; }
+        public Guid OrderId { get; set; }
 
 
         public virtual ICollection<WalletTransaction> WalletTransaction { get; set; }

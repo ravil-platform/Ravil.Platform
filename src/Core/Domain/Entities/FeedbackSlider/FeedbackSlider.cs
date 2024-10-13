@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities.FeedbackSlider
 {
-    public class FeedbackSlider
+    public class FeedbackSlider : BaseEntity
     {
         #region (Fields)
         public int Id { get; set; }

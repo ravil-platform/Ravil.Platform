@@ -4,7 +4,7 @@ public class JobConfigurations : IEntityTypeConfiguration<Domain.Entities.Job.Jo
 {
     public void Configure(EntityTypeBuilder<Domain.Entities.Job.Job> builder)
     {
-        builder.ToTable("Jobs", "Jobs");
+        builder.ToTable("Job", DatabaseSchemas.Jobs);
 
         builder.HasKey(j => j.Id);
         builder.Property(j => j.Route).IsRequired().HasMaxLength(MaxLength.Slug);
@@ -23,8 +23,8 @@ public class JobConfigurations : IEntityTypeConfiguration<Domain.Entities.Job.Jo
         builder.Property(j => j.IsResizePicture).IsRequired();
         builder.Property(j => j.AdminName).IsRequired(false);
         builder.Property(j => j.AdminId).IsRequired(false);
-        builder.Property(j => j.ViewCountTotal).IsRequired(false);
-        builder.Property(j => j.AverageRate).IsRequired(false);
+        builder.Property(j => j.ViewCountTotal).IsRequired();
+        builder.Property(j => j.AverageRate).IsRequired();
         builder.Property(j => j.IsGoogleData).IsRequired();
 
         //relations

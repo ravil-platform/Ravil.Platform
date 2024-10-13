@@ -68,7 +68,6 @@ public class JobBranch : BaseMetaDataEntity
     public virtual ICollection<JobService>? JobServices { get; set; }
     public virtual ICollection<JobTimeWork>? JobTimeWorks { get; set; }
 
-    public virtual ICollection<UserJobAction>? JobUserActions { get; set; }
     public virtual ICollection<UserBookMark>? JobUserBookMarks { get; set; }
     public virtual ICollection<UsersFeedbackSlider>? UsersFeedbackSliders { get; set; }
     #endregion

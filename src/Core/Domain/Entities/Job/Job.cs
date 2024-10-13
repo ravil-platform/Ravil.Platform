@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities.Job;
 
-public class Job : BaseEntity
+public class Job : Entity
 {
     #region (Fields)
     public string Route { get; set; }

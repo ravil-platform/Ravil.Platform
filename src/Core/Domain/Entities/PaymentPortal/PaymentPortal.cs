@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities.PaymentPortal
 {
-    public class PaymentPortal
+    public class PaymentPortal : BaseEntity
     {
         #region (Fields)
         public int Id { get; set; }

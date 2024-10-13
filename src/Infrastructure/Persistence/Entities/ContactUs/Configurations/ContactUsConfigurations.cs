@@ -4,7 +4,7 @@
     {
         public void Configure(EntityTypeBuilder<Domain.Entities.ContactUs.ContactUs> builder)
         {
-            builder.ToTable("ContactUs", "ContactUs");
+            builder.ToTable("ContactUs", DatabaseSchemas.ContactUs);
 
             builder.HasKey(c => c.Id);
             builder.Property(c => c.FullName).IsRequired().HasMaxLength(MaxLength.FullName);
@@ -14,8 +14,8 @@
             builder.Property(c => c.PhoneNumber).IsRequired().HasMaxLength(MaxLength.Phone);
             builder.Property(c => c.UserId).IsRequired(false);
             builder.Property(c => c.UserIp).IsRequired(false);
-            builder.Property(c => c.StatusAnswer).IsRequired(false);
-            builder.Property(c => c.IsReadByAdmin).IsRequired(false);
+            builder.Property(c => c.StatusAnswer).IsRequired();
+            builder.Property(c => c.IsReadByAdmin).IsRequired();
             builder.Property(c => c.AnswerDate).IsRequired(false);
             builder.Property(c => c.AdminName).IsRequired(false);
             builder.Property(c => c.AdminId).IsRequired(false);

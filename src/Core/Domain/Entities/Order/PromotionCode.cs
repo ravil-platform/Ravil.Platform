@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities.Order;
 
-public class PromotionCode : BaseEntity
+public class PromotionCode : Entity
 {
     #region (Fields)
     public string Title { get; set; } = null!;

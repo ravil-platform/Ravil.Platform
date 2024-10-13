@@ -4,7 +4,7 @@
     {
         public void Configure(EntityTypeBuilder<Domain.Entities.Tag.Tag> builder)
         {
-            builder.ToTable("Tags", "Tags");
+            builder.ToTable("Tag", DatabaseSchemas.Tags);
 
             builder.HasKey(t => t.Id);
             builder.Property(t => t.Name).IsRequired().HasMaxLength(MaxLength.Name);

@@ -4,7 +4,7 @@ public class FeedbackSliderConfigurations : IEntityTypeConfiguration<Domain.Enti
 {
     public void Configure(EntityTypeBuilder<Domain.Entities.FeedbackSlider.FeedbackSlider> builder)
     {
-        builder.ToTable("FeedbackSliders", "FeedbackSliders");
+        builder.ToTable("FeedbackSlider", DatabaseSchemas.FeedbackSliders);
 
         builder.HasKey(f => f.Id);
         builder.Property(f => f.CategoryId).IsRequired(false);

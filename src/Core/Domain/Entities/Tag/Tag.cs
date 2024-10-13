@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities.Tag
 {
-    public class Tag
+    public class Tag : BaseEntity
     {
         #region (Fields)
         public int Id { get; set; }

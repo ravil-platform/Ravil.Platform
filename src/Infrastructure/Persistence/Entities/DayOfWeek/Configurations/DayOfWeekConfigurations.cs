@@ -4,7 +4,7 @@
     {
         public void Configure(EntityTypeBuilder<Domain.Entities.DayOfWeek.DayOfWeek> builder)
         {
-            builder.ToTable("DayOfWeeks", "DayOfWeeks");
+            builder.ToTable("DayOfWeek", DatabaseSchemas.Schema);
 
             builder.HasKey(d => d.Id);
             builder.Property(d => d.AlternateName).IsRequired(false);

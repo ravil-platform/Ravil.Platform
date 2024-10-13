@@ -1,8 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Domain.Entities.User
+﻿namespace Domain.Entities.User
 {
-    public class UsersFeedbackSlider
+    public class UsersFeedbackSlider : IEntity
     {
         #region (Fields)
         [Key]

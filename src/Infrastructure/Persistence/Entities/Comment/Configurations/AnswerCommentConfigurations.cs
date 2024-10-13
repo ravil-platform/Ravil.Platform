@@ -4,7 +4,7 @@ public class AnswerCommentConfigurations : IEntityTypeConfiguration<AnswerCommen
 {
     public void Configure(EntityTypeBuilder<AnswerComment> builder)
     {
-        builder.ToTable("AnswerComments", "Comments");
+        builder.ToTable("AnswerComment", DatabaseSchemas.Comments);
 
         builder.HasKey(a => a.Id);
         builder.Property(a => a.IsAdminAnswer).IsRequired();

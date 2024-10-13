@@ -4,7 +4,7 @@
     {
         public void Configure(EntityTypeBuilder<JobBranch> builder)
         {
-            builder.ToTable("JobBranchs", "Jobs");
+            builder.ToTable("JobBranch", DatabaseSchemas.Jobs);
 
             builder.HasKey(j => j.Id);
             builder.Property(j => j.Route).IsRequired().HasMaxLength(MaxLength.Slug);
@@ -19,8 +19,8 @@
             builder.Property(j => j.IsConfirmedByAdmin).IsRequired();
             builder.Property(j => j.ConfirmationDate).IsRequired();
             builder.Property(j => j.MapUrl).IsRequired(false);
-            builder.Property(j => j.ViewCount).IsRequired(false);
-            builder.Property(j => j.AverageRate).IsRequired(false);
+            builder.Property(j => j.ViewCount).IsRequired();
+            builder.Property(j => j.AverageRate).IsRequired();
             builder.Property(j => j.AdminName).IsRequired(false).HasMaxLength(MaxLength.Name);
             builder.Property(j => j.AdminId).IsRequired(false);
             builder.Property(j => j.IsOffer).IsRequired();

@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities.State;
 
-public class StateBase
+public class StateBase : BaseEntity
 {
     #region (Fields)
     public int Id { get; set; }

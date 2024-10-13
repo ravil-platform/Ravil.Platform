@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities.ShortLink;
 
-public class ShortLink
+public class ShortLink : BaseEntity
 {
     #region (Fields)
     public int Id { get; set; }

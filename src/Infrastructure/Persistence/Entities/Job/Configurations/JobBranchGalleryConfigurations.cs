@@ -4,7 +4,7 @@ public class JobBranchGalleryConfigurations : IEntityTypeConfiguration<JobBranch
 {
     public void Configure(EntityTypeBuilder<JobBranchGallery> builder)
     {
-        builder.ToTable("JobBranchGalleries", "Jobs");
+        builder.ToTable("JobBranchGallery", DatabaseSchemas.Jobs);
 
         builder.HasKey(j => j.Id);
         builder.Property(j => j.ImageName).IsRequired(false).HasMaxLength(MaxLength.Picture);

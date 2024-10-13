@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities.User
 {
-    public class UserBookMark : BaseEntity
+    public class UserBookMark : Entity
     {
         #region (Fields
         public UserBookMarkType UserBookMarkType { get; set; }

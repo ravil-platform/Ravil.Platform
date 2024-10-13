@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities.User;
 
-public class UserAddress : BaseEntity
+public class UserAddress : Entity
 {
     #region (Fields)
     public string ReceiverName { get; set; } = null!;

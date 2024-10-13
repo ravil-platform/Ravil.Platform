@@ -4,7 +4,7 @@
     {
         public void Configure(EntityTypeBuilder<Domain.Entities.Brand.Brand> builder)
         {
-            builder.ToTable("Brands", "Brands");
+            builder.ToTable("Brand", DatabaseSchemas.Brands);
 
             builder.HasKey(b => b.Id);
             builder.Property(b => b.Title).IsRequired().HasMaxLength(MaxLength.Title);

@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities.Comment
 {
-    public class Comment : BaseEntity
+    public class Comment : Entity
     {
         #region (Fields)
         public CommentTypes CommentType { get; set; }

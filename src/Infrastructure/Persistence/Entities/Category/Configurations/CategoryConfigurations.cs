@@ -4,20 +4,20 @@
     {
         public void Configure(EntityTypeBuilder<Domain.Entities.Category.Category> builder)
         {
-            builder.ToTable("Categories", "Categories");
+            builder.ToTable("Category", DatabaseSchemas.Categories);
 
             builder.HasKey(c => c.Id);
-            builder.Property(c => c.Type).IsRequired();
+            builder.Property(c => c.Type).IsRequired().HasDefaultValue(CategoryBusinessType.BrandName); ;
             builder.Property(c => c.Name).IsRequired().HasMaxLength(MaxLength.Name);
             builder.Property(c => c.Route).IsRequired().HasMaxLength(MaxLength.Slug);
             builder.Property(c => c.NodeLevel).IsRequired();
             builder.Property(c => c.HeadingTitle).IsRequired(false).HasMaxLength(MaxLength.Title);
             builder.Property(c => c.IsActive).IsRequired();
-            builder.Property(c => c.IsLastNode).IsRequired(false);
-            builder.Property(c => c.HasAttribute).IsRequired(false);
+            builder.Property(c => c.IsLastNode).IsRequired();
+            builder.Property(c => c.HasAttribute).IsRequired();
             builder.Property(c => c.Picture).IsRequired(false).HasMaxLength(MaxLength.Picture);
             builder.Property(c => c.IconPicture).IsRequired(false).HasMaxLength(MaxLength.Picture);
-            builder.Property(c => c.IsResizePicture).IsRequired(false);
+            builder.Property(c => c.IsResizePicture).IsRequired();
             builder.Property(c => c.Sort).IsRequired();
             builder.Property(c => c.PageContent).IsRequired().HasMaxLength(MaxLength.Content);
             builder.Property(c => c.ViewCount).IsRequired();

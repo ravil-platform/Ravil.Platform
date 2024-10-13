@@ -1,8 +1,6 @@
-﻿using Domain.Entities.Transaction;
-
-namespace Domain.Entities.User
+﻿namespace Domain.Entities.User
 {
-    public class ApplicationUser : IdentityUser
+    public class ApplicationUser : IdentityUser , IEntity
     {
         #region (Fields)
         public string? Firstname { get; set; }
@@ -55,22 +53,18 @@ namespace Domain.Entities.User
         public int? CityBaseId { get; set; }
         public virtual CityBase CityBase { get; set; }
 
-        public virtual Wallet Wallet { get; set; }
+        //public virtual Wallet Wallet { get; set; }
 
         public virtual ICollection<Order.Order> Orders { get; set; }
         public virtual ICollection<Comment.Comment> Comments { get; set; }
         public virtual ICollection<JobBranch> JobBranches { get; set; }
-        public virtual ICollection<Transaction.Transaction> Transactions { get; set; }
+        //public virtual ICollection<Transaction.Transaction> Transactions { get; set; }
 
-        public virtual ICollection<UserAction> UserActions { get; set; }
         public virtual ICollection<UserAddress> UserAddresses { get; set; }
         public virtual ICollection<UserBookMark> UserBookMarks { get; set; }
-        public virtual ICollection<UserBlogAction> UserBlogActions { get; set; }
         public virtual ICollection<UserBlogLike> UserBlogLikes { get; set; }
         public virtual ICollection<UserBannerView> UserBannerViews { get; set; }
         public virtual ICollection<UserBannerClick> UserBannerClicks { get; set; }
-        public virtual ICollection<UserLikedGallery> UserLikedGalleries { get; set; }
-        public virtual ICollection<UserJobAction> UserJobAction { get; set; }
         #endregion
     }
 }

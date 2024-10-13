@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities.Category
 {
-    public class CategoryService : BaseEntity
+    public class CategoryService : Entity
     {
         #region (Relations)
         public int CategoryId { get; set; }

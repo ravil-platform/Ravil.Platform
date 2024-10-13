@@ -4,7 +4,7 @@ public class FaqConfigurations : IEntityTypeConfiguration<Domain.Entities.Faq.Fa
 {
     public void Configure(EntityTypeBuilder<Domain.Entities.Faq.Faq> builder)
     {
-        builder.ToTable("Faqs", "Faqs");
+        builder.ToTable("Faq", DatabaseSchemas.Faqs);
 
         builder.HasKey(d => d.Id);
         builder.Property(d => d.Question).IsRequired();

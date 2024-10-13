@@ -4,13 +4,13 @@ public class StateConfigurations : IEntityTypeConfiguration<Domain.Entities.Stat
 {
     public void Configure(EntityTypeBuilder<Domain.Entities.State.State> builder)
     {
-        builder.ToTable("States", "States");
+        builder.ToTable("State", DatabaseSchemas.Sates);
 
         builder.HasKey(s => s.Id);
         builder.Property(s => s.Subtitle).IsRequired().HasMaxLength(MaxLength.Title);
         builder.Property(s => s.Picture).IsRequired(false).HasMaxLength(MaxLength.Picture);
         builder.Property(s => s.IsResizePicture).IsRequired();
-        builder.Property(s => s.Multiplier).IsRequired(false);
+        builder.Property(s => s.Multiplier).IsRequired();
 
         //relation
         builder

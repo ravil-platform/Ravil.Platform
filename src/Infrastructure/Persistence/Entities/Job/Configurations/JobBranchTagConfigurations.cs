@@ -4,7 +4,7 @@ public class JobBranchTagConfigurations : IEntityTypeConfiguration<JobBranchTag>
 {
     public void Configure(EntityTypeBuilder<JobBranchTag> builder)
     {
-        builder.ToTable("JobBranchTags", "Jobs");
+        builder.ToTable("JobBranchTag", DatabaseSchemas.Jobs);
 
         builder.HasKey(j => j.Id);
 

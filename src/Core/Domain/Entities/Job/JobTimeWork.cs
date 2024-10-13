@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities.Job
 {
-    public class JobTimeWork
+    public class JobTimeWork : BaseEntity
     {
         #region (Fields)
         public int Id { get; set; }

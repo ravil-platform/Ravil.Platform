@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities.Account
 {
-    public class AccountAttr : BaseEntity
+    public class AccountAttr : Entity
     {
         #region ( Relations )
         public int AccountId { get; set; }

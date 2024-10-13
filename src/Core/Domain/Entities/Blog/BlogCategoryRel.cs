@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities.Blog
 {
-    public class BlogCategoryRel : BaseEntity
+    public class BlogCategoryRel : Entity
     {
         #region (Relations)
         public int BlogId { get; set; }

@@ -4,7 +4,7 @@
     {
         public void Configure(EntityTypeBuilder<Domain.Entities.Account.Account> builder)
         {
-            builder.ToTable("Accounts", "Accounts");
+            builder.ToTable("Account", DatabaseSchemas.Accounts);
 
             builder.HasKey(a => a.Id);
             builder.Property(p => p.Title).IsRequired().HasMaxLength(MaxLength.Title);

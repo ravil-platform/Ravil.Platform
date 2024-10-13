@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities.User
 {
-    public class UserLikedGallery : BaseEntity
+    public class UserLikedGallery : Entity
     {
         #region (Fields)
         public UserLikedType UserLikedType { get; set; }

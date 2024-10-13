@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities.Attr
 {
-    public class Attr : BaseEntity
+    public class Attr : Entity
     {
         #region (Fields)
         public string Title { get; set; }

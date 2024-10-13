@@ -1,5 +1,5 @@
 ﻿namespace Domain.Entities.Faq;
-public class Faq
+public class Faq : BaseEntity
 {
     #region (Fields)
     public int Id { get; set; }

@@ -4,7 +4,7 @@
     {
         public void Configure(EntityTypeBuilder<AccountCategory> builder)
         {
-            builder.ToTable("AccountCategories", "Accounts");
+            builder.ToTable("AccountCategory", DatabaseSchemas.Accounts);
 
             builder.HasKey(a => a.Id);
             builder.Property(a => a.Title).IsRequired().HasMaxLength(MaxLength.Title);

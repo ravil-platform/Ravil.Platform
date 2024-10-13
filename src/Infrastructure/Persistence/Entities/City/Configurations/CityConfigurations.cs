@@ -4,7 +4,7 @@
     {
         public void Configure(EntityTypeBuilder<Domain.Entities.City.City> builder)
         {
-            builder.ToTable("Cities", "Cities");
+            builder.ToTable("City", DatabaseSchemas.Cities);
 
             builder.HasKey(c => c.Id);
             builder.Property(c => c.Subtitle).IsRequired().HasMaxLength(MaxLength.Title);

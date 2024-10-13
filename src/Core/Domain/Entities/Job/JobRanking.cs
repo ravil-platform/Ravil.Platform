@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities.Job
 {
-    public class JobRanking
+    public class JobRanking : BaseEntity
     {
         #region (Fields)
         public int Id { get; set; }

@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities.DayOfWeek
 {
-    public class DayOfWeek
+    public class DayOfWeek : BaseEntity
     {
         #region (Fields)
         public int Id { get; set; }

@@ -1,4 +1,4 @@
-﻿namespace Persistence.Entities.Transaction.Configurations;
+﻿/*namespace Persistence.Entities.Transaction.Configurations;
 
 public class WalletConfigurations : IEntityTypeConfiguration<Wallet>
 {
@@ -16,4 +16,4 @@ public class WalletConfigurations : IEntityTypeConfiguration<Wallet>
             .HasForeignKey(w => w.WalletId)
             .IsRequired();
     }
-}
+}*/

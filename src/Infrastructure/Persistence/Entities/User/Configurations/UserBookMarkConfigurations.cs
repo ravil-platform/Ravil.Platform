@@ -4,7 +4,7 @@ public class UserBookMarkConfigurations : IEntityTypeConfiguration<UserBookMark>
 {
     public void Configure(EntityTypeBuilder<UserBookMark> builder)
     {
-        builder.ToTable("UserBookMarks", "Users");
+        builder.ToTable("UserBookMark", DatabaseSchemas.Users);
 
         builder.HasKey(u => u.Id);
         builder.Property(u => u.UserBookMarkType).IsRequired();

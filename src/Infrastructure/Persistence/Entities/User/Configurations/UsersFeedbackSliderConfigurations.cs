@@ -6,6 +6,5 @@ public class UsersFeedbackSliderConfigurations : IEntityTypeConfiguration<UsersF
 {
     public void Configure(EntityTypeBuilder<UsersFeedbackSlider> builder)
     {
-        throw new NotImplementedException();
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Persistence.Entities.Transaction.Configurations;
+﻿/*namespace Persistence.Entities.Transaction.Configurations;
 
 public class WalletTransactionConfigurations : IEntityTypeConfiguration<Domain.Entities.Transaction.Transaction>
 {
@@ -8,4 +8,4 @@ public class WalletTransactionConfigurations : IEntityTypeConfiguration<Domain.E
 
         builder.HasKey(w => w.Id);
     }
-}
+}*/

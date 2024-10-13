@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities.Team
 {
-    public class Team
+    public class Team : BaseEntity
     {
         #region (Fields)
         public int Id { get; set; }

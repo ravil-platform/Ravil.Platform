@@ -4,7 +4,7 @@
     {
         public void Configure(EntityTypeBuilder<Domain.Entities.Order.Order> builder)
         {
-            builder.ToTable("Orders", "Orders");
+            builder.ToTable("Order", DatabaseSchemas.Orders);
 
             builder.HasKey(o => o.Id);
             builder.Property(o => o.Price).IsRequired();

@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities.Service;
 
-public class Service : BaseEntity
+public class Service : Entity
 {
     #region (Fields)
     public string ServiceTitle { get; set; } = null!;

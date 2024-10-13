@@ -4,7 +4,7 @@ public class BlogTagConfigurations : IEntityTypeConfiguration<BlogTag>
 {
     public void Configure(EntityTypeBuilder<BlogTag> builder)
     {
-        builder.ToTable("BlogTags", "Blogs");
+        builder.ToTable("BlogTag", DatabaseSchemas.Blogs);
 
         builder.HasKey(b => b.Id);
     }

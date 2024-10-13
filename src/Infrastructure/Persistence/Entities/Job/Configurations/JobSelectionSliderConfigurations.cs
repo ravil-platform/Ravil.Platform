@@ -4,7 +4,7 @@ public class JobSelectionSliderConfigurations : IEntityTypeConfiguration<JobSele
 {
     public void Configure(EntityTypeBuilder<JobSelectionSlider> builder)
     {
-        builder.ToTable("JobSelectionSliders", "Jobs");
+        builder.ToTable("JobSelectionSlider", DatabaseSchemas.Jobs);
 
         builder.HasKey(j => j.Id);
         builder.Property(j => j.JobSliderType).IsRequired();

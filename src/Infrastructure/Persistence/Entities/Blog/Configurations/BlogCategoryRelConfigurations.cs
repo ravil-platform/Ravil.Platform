@@ -4,7 +4,7 @@
     {
         public void Configure(EntityTypeBuilder<BlogCategoryRel> builder)
         {
-            builder.ToTable("BlogCategoryRels", "Blogs");
+            builder.ToTable("BlogCategoryRel", DatabaseSchemas.Blogs);
 
             builder.HasKey(b => b.Id);
         }

@@ -4,7 +4,7 @@ public class UserAddressConfigurations : IEntityTypeConfiguration<UserAddress>
 {
     public void Configure(EntityTypeBuilder<UserAddress> builder)
     {
-        builder.ToTable("UserAddresses", "Users");
+        builder.ToTable("UserAddresse", DatabaseSchemas.Users);
 
         builder.HasKey(u => u.Id);
         builder.Property(u => u.ReceiverName).IsRequired().HasMaxLength(MaxLength.Name);

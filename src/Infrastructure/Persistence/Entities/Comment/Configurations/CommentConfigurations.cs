@@ -4,7 +4,7 @@
     {
         public void Configure(EntityTypeBuilder<Domain.Entities.Comment.Comment> builder)
         {
-            builder.ToTable("Comments", "Comments");
+            builder.ToTable("Comment", DatabaseSchemas.Comments);
 
             builder.HasKey(c => c.Id);
             builder.Property(c => c.CommentType).IsRequired();

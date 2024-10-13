@@ -4,7 +4,7 @@ public class JobServiceConfigurations : IEntityTypeConfiguration<JobService>
 {
     public void Configure(EntityTypeBuilder<JobService> builder)
     {
-        builder.ToTable("JobServices", "Jobs");
+        builder.ToTable("JobService", DatabaseSchemas.Jobs);
 
         builder.HasKey(j => j.Id);
 

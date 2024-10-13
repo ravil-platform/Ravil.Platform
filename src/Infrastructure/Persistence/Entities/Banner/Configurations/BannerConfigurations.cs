@@ -4,7 +4,7 @@
     {
         public void Configure(EntityTypeBuilder<Domain.Entities.Banner.Banner> builder)
         {
-            builder.ToTable("Banners", "Banners");
+            builder.ToTable("Banner", DatabaseSchemas.Banners);
 
             builder.HasKey(b => b.Id);
             builder.Property(b => b.BannerType).IsRequired();
@@ -15,7 +15,7 @@
             builder.Property(b => b.ExpireDay).IsRequired(false);
             builder.Property(b => b.LargePicture).IsRequired(false).HasMaxLength(MaxLength.Picture);
             builder.Property(b => b.SmallPicture).IsRequired(false).HasMaxLength(MaxLength.Picture);
-            builder.Property(b => b.Sort).IsRequired(false);
+            builder.Property(b => b.Sort).IsRequired();
             builder.Property(b => b.LinkPage).IsRequired(false);
 
             //relations

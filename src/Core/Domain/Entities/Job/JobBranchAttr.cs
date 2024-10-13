@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities.Job;
 
-public class JobBranchAttr
+public class JobBranchAttr : BaseEntity
 {
     #region (Fields)
     public int Id { get; set; }

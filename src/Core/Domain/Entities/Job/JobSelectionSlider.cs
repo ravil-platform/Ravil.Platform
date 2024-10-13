@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities.Job
 {
-    public class JobSelectionSlider
+    public class JobSelectionSlider : BaseEntity
     {
         #region (Fields)
         public int Id { get; set; }

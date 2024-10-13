@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities.Blog
 {
-    public class BlogCategory :BaseEntity
+    public class BlogCategory :Entity
     {
         #region (Fields)
         public string Title { get; set; } = null!;

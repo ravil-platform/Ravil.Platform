@@ -4,7 +4,7 @@
     {
         public void Configure(EntityTypeBuilder<AccountLevel> builder)
         {
-            builder.ToTable("AccountLevels", "Accounts"); 
+            builder.ToTable("AccountLevel", DatabaseSchemas.Accounts); 
 
             builder.HasKey(a => a.Id);
             builder.Property(a => a.LevelTitle).IsRequired().HasMaxLength(MaxLength.Title);

@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities.Brand
 {
-    public class Brand : BaseEntity
+    public class Brand : Entity
     {
         #region (Fields)
         public string Title { get; set; } = null!;

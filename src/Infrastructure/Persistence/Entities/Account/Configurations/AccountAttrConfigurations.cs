@@ -4,7 +4,7 @@
     {
         public void Configure(EntityTypeBuilder<AccountAttr> builder)
         {
-            builder.ToTable("AccountAttrs", "Accounts");
+            builder.ToTable("AccountAttr", DatabaseSchemas.Accounts);
 
             builder.HasKey(a => a.Id);
             builder

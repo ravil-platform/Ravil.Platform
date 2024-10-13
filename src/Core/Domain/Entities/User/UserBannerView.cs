@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities.User
 {
-    public class UserBannerView
+    public class UserBannerView : IEntity
     {
         #region (Fields)
         public int Id { get; set; }

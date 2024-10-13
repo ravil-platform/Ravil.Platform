@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities.Address
 {
-    public class Address 
+    public class Address : BaseEntity
     {
         #region ( Fields )
         public string Id { get; set; } = Guid.NewGuid().ToString("N").Substring(0, 5);

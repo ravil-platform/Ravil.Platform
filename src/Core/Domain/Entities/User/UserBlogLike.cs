@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities.User
 {
-    public class UserBlogLike
+    public class UserBlogLike : IEntity
     {
         #region (Fields)
         public int Id { get; set; }

@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities.ContactUs
 {
-    public class ContactUs : BaseEntity
+    public class ContactUs : Entity
     {
         #region (Fields)
         public string FullName { get; set; } = null!;

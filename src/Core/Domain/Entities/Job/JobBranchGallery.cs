@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities.Job;
 
-public class JobBranchGallery
+public class JobBranchGallery : BaseEntity
 {
     #region (Fields)
     public int Id { get; set; }

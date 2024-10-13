@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities.Transaction
 {
-    public class Wallet : BaseEntity
+    public class Wallet : Entity
     {
         #region (Fields)
         /// <summary>

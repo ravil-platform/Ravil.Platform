@@ -4,7 +4,7 @@
     {
         public void Configure(EntityTypeBuilder<Domain.Entities.UploadedFile.UploadedFile> builder)
         {
-            builder.ToTable("UploadedFiles", "UploadedFiles");
+            builder.ToTable("UploadedFile", DatabaseSchemas.UploadedFiles);
 
             builder.HasKey(u => u.Id);
             builder.Property(u => u.Name).IsRequired().HasMaxLength(MaxLength.Name);

@@ -1,7 +1,14 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Persistence.Context;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<ApplicationDbContext>(option =>
+{
+    option.UseSqlServer("Data Source=.; Initial Catalog=RavilDB;  integrated security = true; TrustServerCertificate=True;");
+
+});
 
 // Add services to the container.
 

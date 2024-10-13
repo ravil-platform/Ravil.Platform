@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities.City
 {
-    public class CityCategory : BaseEntity
+    public class CityCategory : Entity
     {
         #region (Relations)
         [Required]

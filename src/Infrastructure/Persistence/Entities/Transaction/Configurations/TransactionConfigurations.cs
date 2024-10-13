@@ -1,4 +1,5 @@
-﻿namespace Persistence.Entities.Transaction.Configurations;
+﻿/*
+namespace Persistence.Entities.Transaction.Configurations;
 
 public class TransactionConfigurations : IEntityTypeConfiguration<Domain.Entities.Transaction.Transaction>
 {
@@ -30,4 +31,5 @@ public class TransactionConfigurations : IEntityTypeConfiguration<Domain.Entitie
             .IsRequired();
     }
 }
+*/
 

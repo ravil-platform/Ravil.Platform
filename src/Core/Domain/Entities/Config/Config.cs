@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities.Config
 {
-    public class Config
+    public class Config : BaseEntity
     {
         #region (Fields)
         public int? Id { get; set; }
