@@ -1,5 +1,4 @@
-﻿
-namespace Persistence.Contracts
+﻿namespace Persistence.Contracts
 {
     public interface IUnitOfWork : RNX.Persistence.IUnitOfWork
     {
@@ -151,6 +150,13 @@ namespace Persistence.Contracts
         public IUserBookMarkRepository UserBookMarkRepository { get; }
 
         public IUserFeedbackSliderRepository UserFeedbackSliderRepository { get; }
+        #endregion
+
+
+        //AI Recommendation
+
+        #region ( Action Histories )
+        public IActionHistoriesRepository ActionHistoriesRepository { get; }
         #endregion
     }
 }

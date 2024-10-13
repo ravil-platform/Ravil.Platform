@@ -33,6 +33,7 @@
         public static readonly String Addresses = "Addresses";
         public static readonly String Accounts = "Accounts";
         public static readonly String Schema = "Schema";
+        public static readonly String ActionHistories = "ActionHistories";
         public static readonly String Dbo = "dbo";
     }
 }

@@ -8,6 +8,7 @@ global using Domain.Entities.Category.Enums;
 global using Domain.Entities.City;
 global using Domain.Entities.Comment.Enums;
 global using Domain.Entities.Config.Enums;
+global using Domain.Entities.Histories.Enums;
 global using Domain.Entities.Job;
 global using Domain.Entities.Job.Enums;
 global using Domain.Entities.Location.Enums;

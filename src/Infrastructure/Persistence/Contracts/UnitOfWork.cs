@@ -963,5 +963,24 @@
             }
         }
         #endregion
+
+
+        //AI Recommendation
+
+        #region ( Action Histories )
+        private IActionHistoriesRepository? _actionHistoriesRepository;
+        public IActionHistoriesRepository ActionHistoriesRepository
+        {
+            get
+            {
+                if (_actionHistoriesRepository == null)
+                {
+                    _actionHistoriesRepository = new ActionHistoriesRepository(DatabaseContext);
+                }
+
+                return _actionHistoriesRepository;
+            }
+        }
+        #endregion
     }
 }
