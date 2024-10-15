@@ -6,7 +6,7 @@
         {
             builder.ToTable("ActionHistories", DatabaseSchemas.ActionHistories);
 
-            builder.HasNoKey();
+            builder.HasKey(a => a.Id);
             builder.Property(p => p.FullName).IsRequired(false).HasMaxLength(MaxLength.FullName);
             builder.Property(p => p.CategoryName).IsRequired().HasMaxLength(MaxLength.Name);
             builder.Property(p => p.AddressIp).IsRequired().HasMaxLength(MaxLength.Ip);

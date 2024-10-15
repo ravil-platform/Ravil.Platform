@@ -4,6 +4,11 @@
     {
         #region ( Fields )
         /// <summary>
+        /// شناسه اصلی
+        /// </summary>
+        public Guid Id { get; set; }
+
+        /// <summary>
         /// شناسه کاربر
         /// </summary>
         public string UserId { get; set; } = null!;

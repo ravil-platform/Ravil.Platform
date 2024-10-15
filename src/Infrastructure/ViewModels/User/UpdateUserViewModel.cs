@@ -1,7 +1,9 @@
 ﻿namespace ViewModels.User
 {
-    public class CreateUserViewModel
+    public class UpdateUserViewModel
     {
+        public Guid Id { get; set; }
+
         [Display(Name = "نام")]
         public string? Firstname { get; set; }
 
@@ -11,12 +13,10 @@
 
 
         [Display(Name = "نام کاربری")]
-        [Required(ErrorMessage = "پر کردن {0} الزامی است.")]
-        public string UserName { get; set; } = null!;
+        public string? UserName { get; set; } 
 
         [Display(Name = "کلمه عبور")]
-        [Required(ErrorMessage = "پر کردن {0} الزامی است.")]
-        public string PasswordHash { get; set; } = null!;
+        public string? PasswordHash { get; set; } 
 
 
         [Display(Name = "کد ملی")]

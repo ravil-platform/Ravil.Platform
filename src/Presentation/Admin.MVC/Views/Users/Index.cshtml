@@ -7,7 +7,7 @@
     int counter = 1;
 }
 
-<a href="javascript:void(0)" class="btn btn-success mb-2" data-toggle="modal" data-target="#AddForm">
+<a href="javascript:void(0)" class="btn btn-success mb-2" data-toggle="modal" data-target="#CreateForm">
     افزودن کاربر جدید <i class="bx bxs-user-plus"></i>
 </a>
 
@@ -97,8 +97,9 @@
                                     <th width="10%">نام</th>
                                     <th width="10%">نام خانوادگی</th>
                                     <th width="13%">نام کاربری</th>
-                                    <th width="7%">موبایل</th>
-                                    <th width="12%">وضعیت</th>
+                                    <th width="6%">موبایل</th>
+                                    <th width="7%">ایمیل</th>
+                                    <th width="6%">وضعیت</th>
                                     <th width="16%">تاریخ عضویت</th>
                                     <th width="18%">عملیات</th>
                                 </tr>
@@ -111,21 +112,40 @@
                                         <td>@user.Firstname</td>
                                         <td>@user.Lastname</td>
                                         <td>@user.UserName</td>
-                                        <td>@user.Phone</td>
 
                                         @if (user.PhoneNumberConfirmed)
                                         {
-                                            <td class="text-success">فعال</td>
+                                            <td class="text-success">@user.Phone</td>
                                         }
                                         else
                                         {
+                                            <td class="text-danger">@user.Phone</td>
+                                        }
+                                        
+                                        @if (user.EmailConfirmed)
+                                        {
+                                            <td class="text-success">@user.Email</td>
+                                        }
+                                        else
+                                        {
+                                            <td class="text-danger">@user.Email</td>
+                                        }
+                                        
+
+                                        @if (user.UserIsBlocked)
+                                        {
                                             <td class="text-danger">غیر غعال</td>
                                         }
+                                        else
+                                        {
+                                            <td class="text-success">فعال</td>
+                                        }
+
                                         <td> @user.RegisterDate.ToShamsiDate()</td>
 
                                         <td>
-                                            <a title="ویرایش"><i class="bx bxs-edit-alt text-warning"></i></a>
-                                            <a title="جزییات"><i class="bx bxs-user-detail text-secondary"></i></a>
+                                            <a onclick="update('@user.Id')" data-toggle="tooltip" data-placement="top" data-original-title="ویرایش"><i class="bx bxs-edit-alt text-warning"></i></a>
+                                            <a asp-controller="Users" asp-action="Detail" asp-route-id="@user.Id" data-toggle="tooltip" data-placement="top" data-original-title="جزئیات"><i class="bx bxs-user-detail text-secondary"></i></a>
                                         </td>
                                     </tr>
                                     counter++;
@@ -187,11 +207,11 @@
         </div>
     </div>
 
-    <div class="modal fade text-left" id="AddForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
+    <div class="modal fade text-left" id="CreateForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel33">افزودن کاربر جدید</h4>
+                    <h4 class="modal-title">افزودن کاربر جدید</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="بستن">
                         <i class="bx bx-x"></i>
                     </button>
@@ -203,6 +223,20 @@
             </div>
         </div>
     </div>
+    <div class="modal fade text-left" id="UpdateForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">ویرایش کاربر</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="بستن">
+                        <i class="bx bx-x"></i>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
 </section>
 
 
@@ -229,19 +263,38 @@
 
         $("#empty").click(function (event) {
             $("#PageSize").val(10);
-            $("#Type").val('null');
             $("#Active").val('null');
 
-            $("#Name").val(null);
-            $("#Family").val(null);
+            $("#Firstname").val(null);
+            $("#Lastname").val(null);
             $("#UserName").val(null);
-            $("#Email").val(null);
-            $("#Mobile").val(null);
+            $("#UserName").val(null);
+            $("#Phone").val(null);
             $("#RegisterDateFrom").val(null);
             $("#RegisterDateTo").val(null);
         });
 
         jalaliDatepicker.startWatch();
 
+        function update(id) {
+            var modalBody = $("#UpdateForm").find('.modal-body');
+            var modalFooter = $("#UpdateForm").find('.modal-footer');
+
+            if (modalBody && modalFooter) {
+                modalBody.remove();
+                modalFooter.remove();
+            }
+
+            $.ajax({
+                url: '@Url.Action("Update")',
+                data: { id: id },
+                success: function (result) {
+                    $("#UpdateForm").find('.modal-content').append(result);
+                    new bootstrap.Modal(document.getElementById('UpdateForm'), {
+                        keyboard: false
+                    }).show();
+                }
+            });
+        }
     </script>
 }

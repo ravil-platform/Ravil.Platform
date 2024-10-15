@@ -3,7 +3,7 @@
     public abstract class Repository<T> :
         object, IRepository<T> where T : class, Domain.IEntity
     {
-        protected internal Repository(Microsoft.EntityFrameworkCore.DbContext databaseContext) : base()
+        protected internal Repository(DbContext databaseContext) : base()
         {
             DatabaseContext =
                 databaseContext ??
@@ -12,19 +12,19 @@
             DbSet = DatabaseContext.Set<T>();
         }
 
-        protected Microsoft.EntityFrameworkCore.DbSet<T> DbSet { get; }
+        protected DbSet<T> DbSet { get; }
 
-        protected Microsoft.EntityFrameworkCore.DbContext DatabaseContext { get; }
+        protected DbContext DatabaseContext { get; }
 
 
-        public virtual async Task InsertAsync(T entity)
+        public virtual async Task InsertAsync(T entity, CancellationToken cancellationToken)
         {
             if (entity == null)
             {
                 throw new ArgumentNullException(paramName: nameof(entity));
             }
 
-            await DbSet.AddAsync(entity);
+            await DbSet.AddAsync(entity, cancellationToken);
         }
 
         protected virtual void Update(T entity)
@@ -37,7 +37,7 @@
             DbSet.Update(entity);
         }
 
-        public virtual async Task UpdateAsync(T entity)
+        public virtual async Task UpdateAsync(T entity, CancellationToken cancellationToken)
         {
             if (entity == null)
             {
@@ -47,10 +47,10 @@
             await Task.Run(() =>
             {
                 DbSet.Update(entity);
-            });
+            }, cancellationToken);
         }
 
-        public virtual async Task DeleteAsync(T entity)
+        public virtual async Task DeleteAsync(T entity, CancellationToken cancellationToken)
         {
             if (entity == null)
             {
@@ -60,31 +60,31 @@
             await Task.Run(() =>
             {
                 DbSet.Remove(entity);
-            });
+            }, cancellationToken);
         }
 
-        public virtual async Task<T> GetByIdAsync(Guid id)
+        public virtual async Task<T> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         {
-            return await DbSet.FindAsync(keyValues: id);
+            return await DbSet.FindAsync(id.ToString(), cancellationToken);
         }
 
-        public virtual async Task<bool> DeleteByIdAsync(Guid id)
+        public virtual async Task<bool> DeleteByIdAsync(Guid id, CancellationToken cancellationToken)
         {
-            T entity = await GetByIdAsync(id);
+            T entity = await GetByIdAsync(id, cancellationToken);
 
             if (entity == null)
             {
                 return false;
             }
 
-            await DeleteAsync(entity);
+            await DeleteAsync(entity, cancellationToken);
 
             return true;
         }
 
-        public virtual async Task<IList<T>> GetAllAsync()
+        public virtual async Task<IList<T>> GetAllAsync(CancellationToken cancellationToken)
         {
-            var result = await DbSet.ToListAsync();
+            var result = await DbSet.ToListAsync(cancellationToken);
 
             return result;
         }

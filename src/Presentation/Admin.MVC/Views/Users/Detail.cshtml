@@ -1,0 +1,427 @@
+﻿@model Domain.Entities.User.ApplicationUser
+
+@{
+    ViewData["Title"] = "جزئیات کاربر";
+    ViewData["selected"] = "Users_Index";
+}
+
+<form method="post" id="Remove" asp-controller="Users" asp-action="Remove" asp-route-id="@Model.Id"></form>
+<form method="post" id="Restore" asp-controller="Users" asp-action="Restore" asp-route-id="@Model.Id"></form>
+<form method="post" id="Delete" asp-controller="Users" asp-action="Delete" asp-route-id="@Model.Id"></form>
+
+<form method="post" id="UnLock" asp-controller="Users" asp-action="UnLock" asp-route-id="@Model.Id"></form>
+
+<form method="post" id="ConfirmPhone" asp-controller="Users" asp-action="ConfirmPhone" asp-route-id="@Model.Id"></form>
+<form method="post" id="UnConfirmPhone" asp-controller="Users" asp-action="UnConfirmPhone" asp-route-id="@Model.Id"></form>
+
+<form method="post" id="ConfirmEmail" asp-controller="Users" asp-action="ConfirmEmail" asp-route-id="@Model.Id"></form>
+<form method="post" id="UnConfirmEmail" asp-controller="Users" asp-action="UnConfirmEmail" asp-route-id="@Model.Id"></form>
+
+<section>
+    <div class="row">
+        <div class="col-12 col-sm-7">
+            <div class="media">
+                <a class="mr-1">
+                    <img src="/Admin/images/UserPlaceHolder.png" alt="users view avatar" class="users-avatar-shadow rounded-circle" height="64" width="64">
+                </a>
+                <div class="media-body mt-n50">
+                    <h4 class="media-heading">
+                        <span class="users-view-name">@Model.Firstname @Model.Lastname</span>
+                        <span class="text-muted font-medium-1">
+                        </span><span class="users-view-username text-muted font-medium-1 ">@Model.UserName</span>
+                    </h4>
+                    <span>شناسه:</span>
+                    <span class="users-view-id">@Model.Id</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 px-0 d-flex justify-content-end align-items-center px-1 mb-2">
+            @if (Model.LockoutEnabled)
+            {
+                <a onclick="UnLock(this)" class="btn btn-sm btn-success mr-25 text-white">فعالسازی حساب <i class="bx bx-check-square"></i></a>
+            }
+            else
+            {
+                <a onclick="javascript:void(0)" class="btn btn-sm btn-danger mr-25 text-white" data-toggle="modal" data-target="#LockForm">مسدود کردن حساب <i class="bx bx-block"></i></a>
+            }
+
+            @if (Model.PhoneNumberConfirmed)
+            {
+                <a onclick="UnConfirmPhone(this)" class="btn btn-sm btn-danger mr-25 text-white">غیرفعالسازی تلفن همراه <i class="bx bx-block"></i></a>
+            }
+            else
+            {
+                <a onclick="ConfirmPhone(this)" class="btn btn-sm btn-success mr-25 text-white">تایید تلفن همراه <i class="bx bx-check-square"></i></a>
+            }
+
+            @if (Model.EmailConfirmed)
+            {
+                <a onclick="UnConfirmEmail(this)" class="btn btn-sm btn-danger mr-25 text-white">غیرفعالسازی ایمیل <i class="bx bx-block"></i></a>
+            }
+            else
+            {
+                <a onclick="ConfirmEmail(this)" class="btn btn-sm btn-success mr-25 text-white">تایید ایمیل <i class="bx bx-check-square"></i></a>
+            }
+
+            @if (Model.IsDeleted)
+            {
+                <a onclick="RestoreConfirm(this)" class="btn btn-sm btn-primary text-white mr-25">بازیابی <i class="bx bx-undo"></i></a>
+                <a onclick="DeleteConfirm(this)" class="btn btn-sm btn-light-danger text-white mr-25">حذف فیزیکی <i class="bx bxs-trash-alt"></i></a>
+            }
+            else
+            {
+                <a onclick="RemoveConfirm(this)" class="btn btn-sm btn-light-danger text-white  mr-25">حذف منطقی <i class="bx bx-trash-alt"></i></a>
+            }
+
+            <a href="#" onclick="update('@Model.Id')" class="btn btn-sm btn-warning  mr-25">ویرایش <i class="bx bx-edit"></i></a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-content">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 col-md-12">
+                        <table class="table table-borderless line-height-1">
+                            <tbody>
+                                <tr>
+                                    <td>نام و نام خانوادگی:</td>
+                                    <td class="users-view-name">@Model.Firstname @Model.Lastname</td>
+                                </tr>
+
+                                <tr>
+                                    <td>نام کاربری:</td>
+                                    <td class="users-view-username">@Model.UserName</td>
+                                </tr>
+
+                                <tr>
+                                    <td>موبایل:</td>
+                                    @if (Model.PhoneNumberConfirmed)
+                                    {
+                                        <td class="users-view-username text-success">@Model.Phone</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="users-view-username text-danger">@Model.Phone</td>
+                                    }
+                                </tr>
+
+                                <tr>
+                                    <td>ایمیل:</td>
+                                    @if (Model.EmailConfirmed)
+                                    {
+                                        <td class="users-view-email text-success">@Model.Email</td>
+                                    }
+                                    else
+                                    {
+                                        <td class="users-view-email text-danger">@Model.Email</td>
+                                    }
+                                </tr>
+
+                                <tr>
+                                    <td>تاریخ ثبت نام:</td>
+                                    <td>@Model.RegisterDate.ToShamsiDate()</td>
+                                </tr>
+
+                                <tr>
+                                    <td>وضعیت حساب کاربری:</td>
+                                    <td>
+                                        @if (Model.LockoutEnabled)
+                                        {
+                                            <span class="badge badge-light-danger users-view-status">مسدود</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-light-success users-view-status">فعال</span>
+                                        }
+                                    </td>
+                                </tr>
+
+                                @if (Model.LockoutEnabled)
+                                {
+                                    <tr>
+                                        <td class="text-danger">شرح مسدود سازی:</td>
+                                        <td class="text-danger">
+                                            @Model.LockoutReason
+                                        </td>
+                                    </tr>
+                                }
+
+                                <tr>
+                                    <td>حذف شده:</td>
+                                    <td>
+                                        @if (Model.IsDeleted)
+                                        {
+                                            <span class="badge badge-light-danger users-view-status">بله</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-light-success users-view-status">خیر</span>
+                                        }
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade text-left" id="UpdateForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">ویرایش کاربر</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="بستن">
+                        <i class="bx bx-x"></i>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade text-left" id="LockForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">دلیل مسدود سازی</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="بستن">
+                        <i class="bx bx-x"></i>
+                    </button>
+                </div>
+                <form asp-controller="Users" asp-action="Lock" method="post">
+                    <input type="hidden" asp-for="Id" />
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <div class="controls">
+                                <label>شرح</label>
+                                <textarea name="lockoutReason" type="text" rows="4" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+                            <i class="bx bx-x d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">بستن</span>
+                        </button>
+                        <button type="submit" class="btn btn-primary ml-1">
+                            <i class="bx bx-check d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">تایید</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        function DeleteConfirm(event) {
+            Swal.fire({
+                title: 'آیااطمینان دارید؟',
+                text: 'درصورت حذف امکان بازگشت این آیتم وجود ندارد',
+                icon: "info",
+                showCancelButton: true,
+                cancelButtonText: 'خیر',
+                canceButtonClass: 'btn btn-danger',
+                showConfirButton: true,
+                confirmButtonText: 'بله',
+                confirmButtonClass: 'btn btn-success'
+            }).then((result) => {
+                if (result.value) {
+                    $("#Delete").submit();
+                }
+            });
+
+            return false;
+        }
+
+        function RemoveConfirm(event) {
+            Swal.fire({
+                title: 'آیااطمینان دارید؟',
+                text: 'درصورت حذف این آیتم به سطل زباله انتقال میابد',
+                icon: "info",
+                showCancelButton: true,
+                cancelButtonText: 'خیر',
+                canceButtonClass: 'btn btn-danger',
+                showConfirButton: true,
+                confirmButtonText: 'بله',
+                confirmButtonClass: 'btn btn-success'
+            }).then((result) => {
+                if (result.value) {
+                    $("#Remove").submit();
+                }
+            });
+
+            return false;
+        }
+
+        function RestoreConfirm(event) {
+            Swal.fire({
+                title: 'آیااطمینان دارید؟',
+                text: 'بازیابی کاربر',
+                icon: "info",
+                showCancelButton: true,
+                cancelButtonText: 'خیر',
+                canceButtonClass: 'btn btn-danger',
+                showConfirButton: true,
+                confirmButtonText: 'بله',
+                confirmButtonClass: 'btn btn-success'
+            }).then((result) => {
+                if (result.value) {
+                    $("#Restore").submit();
+                }
+            });
+
+            return false;
+        }
+
+
+        function ConfirmEmail(event) {
+            Swal.fire({
+                title: 'آیااطمینان دارید؟',
+                text: 'تایید ایمیل',
+                icon: "info",
+                showCancelButton: true,
+                cancelButtonText: 'خیر',
+                canceButtonClass: 'btn btn-danger',
+                showConfirButton: true,
+                confirmButtonText: 'بله',
+                confirmButtonClass: 'btn btn-success'
+            }).then((result) => {
+                if (result.value) {
+                    $("#ConfirmEmail").submit();
+                }
+            });
+
+            return false;
+        }
+
+        function UnConfirmEmail(event) {
+            Swal.fire({
+                title: 'آیااطمینان دارید؟',
+                text: 'غیرفعالسازی ایمیل',
+                icon: "info",
+                showCancelButton: true,
+                cancelButtonText: 'خیر',
+                canceButtonClass: 'btn btn-danger',
+                showConfirButton: true,
+                confirmButtonText: 'بله',
+                confirmButtonClass: 'btn btn-success'
+            }).then((result) => {
+                if (result.value) {
+                    $("#UnConfirmEmail").submit();
+                }
+            });
+
+            return false;
+        }
+
+        function ConfirmPhone(event) {
+            Swal.fire({
+                title: 'آیااطمینان دارید؟',
+                text: 'تایید تلفن همراه',
+                icon: "info",
+                showCancelButton: true,
+                cancelButtonText: 'خیر',
+                canceButtonClass: 'btn btn-danger',
+                showConfirButton: true,
+                confirmButtonText: 'بله',
+                confirmButtonClass: 'btn btn-success'
+            }).then((result) => {
+                if (result.value) {
+                    $("#ConfirmPhone").submit();
+                }
+            });
+
+            return false;
+        }
+
+        function UnConfirmPhone(event) {
+            Swal.fire({
+                title: 'آیااطمینان دارید؟',
+                text: 'غیرفعالسازی تلفن همراه',
+                icon: "info",
+                showCancelButton: true,
+                cancelButtonText: 'خیر',
+                canceButtonClass: 'btn btn-danger',
+                showConfirButton: true,
+                confirmButtonText: 'بله',
+                confirmButtonClass: 'btn btn-success'
+            }).then((result) => {
+                if (result.value) {
+                    $("#UnConfirmPhone").submit();
+                }
+            });
+
+            return false;
+        }
+
+        function Lock(event) {
+            Swal.fire({
+                title: 'آیااطمینان دارید؟',
+                text: 'مسدود سازی حساب کاربر',
+                icon: "info",
+                showCancelButton: true,
+                cancelButtonText: 'خیر',
+                canceButtonClass: 'btn btn-danger',
+                showConfirButton: true,
+                confirmButtonText: 'بله',
+                confirmButtonClass: 'btn btn-success'
+            }).then((result) => {
+                if (result.value) {
+                    $("#Lock").submit();
+                }
+            });
+
+            return false;
+        }
+
+        function UnLock(event) {
+            Swal.fire({
+                title: 'آیااطمینان دارید؟',
+                text: 'فعالسازی حساب کاربر',
+                icon: "info",
+                showCancelButton: true,
+                cancelButtonText: 'خیر',
+                canceButtonClass: 'btn btn-danger',
+                showConfirButton: true,
+                confirmButtonText: 'بله',
+                confirmButtonClass: 'btn btn-success'
+            }).then((result) => {
+                if (result.value) {
+                    $("#UnLock").submit();
+                }
+            });
+
+            return false;
+        }
+
+
+        function update(id) {
+            var modalBody = $("#UpdateForm").find('.modal-body');
+            var modalFooter = $("#UpdateForm").find('.modal-footer');
+
+            if (modalBody && modalFooter) {
+                modalBody.remove();
+                modalFooter.remove();
+            }
+
+            $.ajax({
+                url: '@Url.Action("Update")',
+                data: { id: id },
+                success: function (result) {
+                    $("#UpdateForm").find('.modal-content').append(result);
+                    new bootstrap.Modal(document.getElementById('UpdateForm'), {
+                        keyboard: false
+                    }).show();
+                    $("#detailPage").val(true);
+                }
+            });
+        }
+    </script>
+}

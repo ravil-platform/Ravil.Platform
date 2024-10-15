@@ -16,16 +16,16 @@
         protected DbContext DatabaseContext { get; }
    
 
-        public virtual async Task<TEntity> GetByIdAsync(Guid id)
+        public virtual async Task<TEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         {
-            return await DbSet.FindAsync(keyValues: id);
+            return await DbSet.FindAsync(id, cancellationToken);
         }
 
-        public virtual async Task<IList<TEntity>> GetAllAsync()
+        public virtual async Task<IList<TEntity>> GetAllAsync(CancellationToken cancellationToken)
         {
             // ToListAsync -> Extension Method -> using Microsoft.EntityFrameworkCore;
            
-            var result = await DbSet.ToListAsync();
+            var result = await DbSet.ToListAsync(cancellationToken);
 
             return result;
         }
