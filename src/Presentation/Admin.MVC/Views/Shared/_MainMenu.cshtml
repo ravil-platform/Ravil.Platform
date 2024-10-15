@@ -1,0 +1,218 @@
+﻿@{
+    var selected = ViewData["selected"]?.ToString() ?? "";
+}
+
+<div class="main-menu menu-fixed menu-dark menu-accordion menu-shadow" data-scroll-to-active="true">
+    <div class="navbar-header">
+        <ul class="nav navbar-nav flex-row">
+            <li class="nav-item mr-auto">
+                <a class="navbar-brand" href="/">
+                    <div class="brand-logo"><img class="logo" src="~/assets/images/logo/logo.png"></div>
+                    <h2 class="brand-text mb-0">راویل</h2>
+                </a>
+            </li>
+            <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"><i class="bx bx-x d-block d-xl-none font-medium-4 primary"></i><i class="toggle-icon bx bx-disc font-medium-4 d-none d-xl-block primary" data-ticon="bx-disc"></i></a></li>
+        </ul>
+    </div>
+    <div class="shadow-bottom"></div>
+    <div class="main-menu-content">
+        <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation" data-icon-style="lines">
+            <li class=" nav-item">
+                <a ><i class="menu-livicon" data-icon="desktop"></i><span class="menu-title" data-i18n="Dashboard">مدیریت کاربران</span></a>
+                <ul class="menu-content">
+                    <li class="active">
+                        <a asp-controller="Users" asp-action="Index"><i class="bx bx-left-arrow-alt"></i><span class="menu-item" data-i18n="eCommerce">مشاهده لیست</span></a>
+                    </li>
+                    <li>
+                        <a href="dashboard-analytics.html"><i class="bx bx-left-arrow-alt"></i><span class="menu-item" data-i18n="Analytics">آمار تحلیلی</span></a>
+                    </li>
+                </ul>
+            </li>
+            <li class=" navigation-header">
+                <span>برنامه ها</span>
+            </li>
+            <li class=" nav-item">
+                <a href="#"><i class="menu-livicon" data-icon="notebook"></i><span class="menu-title" data-i18n="Invoice">صورتحساب</span></a>
+                <ul class="menu-content">
+                    <li>
+                        <a href="app-invoice-list.html"><i class="bx bx-left-arrow-alt"></i><span class="menu-item" data-i18n="Invoice List">لیست صورتحساب ها</span></a>
+                    </li>
+                    <li>
+                        <a href="app-invoice.html"><i class="bx bx-left-arrow-alt"></i><span class="menu-item" data-i18n="Invoice">صورتحساب</span></a>
+                    </li>
+                    <li>
+                        <a href="app-invoice-edit.html"><i class="bx bx-left-arrow-alt"></i><span class="menu-item" data-i18n="Invoice Edit">ویرایش صورتحساب</span></a>
+                    </li>
+                    <li>
+                        <a href="app-invoice-add.html"><i class="bx bx-left-arrow-alt"></i><span class="menu-item" data-i18n="Invoice Add">افزودن صورتحساب</span></a>
+                    </li>
+                </ul>
+            </li>
+   
+           
+          
+            <li class="disabled nav-item">
+                <a href="#"><i class="menu-livicon" data-icon="morph-preview"></i><span class="menu-title" data-i18n="Disabled Menu">گزینه غیرفعال</span></a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+@*  ﻿@{
+    var selected = ViewData["selected"]?.ToString() ?? "";
+}
+
+<div class="main-menu menu-fixed menu-dark menu-accordion menu-shadow" data-scroll-to-active="true">
+    <div class="navbar-header">
+        <ul class="nav navbar-nav flex-row">
+            <li class="nav-item mr-auto">
+                <a class="navbar-brand" href="#">
+                    <div class="brand-logo"><img class="logo" src="/admin/logo/nak-icon.jpg"></div>
+                    <h2 class="brand-text mb-0">پنل مدیریت</h2>
+                </a>
+            </li>
+            <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"><i class="bx bx-x d-block d-xl-none font-medium-4 primary toggle-icon"></i><i class="toggle-icon bx bx-disc font-medium-4 d-none d-xl-block collapse-toggle-icon primary" data-ticon="bx-disc"></i></a></li>
+        </ul>
+    </div>
+    <div class="shadow-bottom"></div>
+    <div class="main-menu-content">
+        <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation" data-icon-style="lines">
+            <li class="nav-item">
+                <a href="/"><i class='bx bx-world'></i><span class="menu-title" data-i18n="globe">مشاهده وب سایت </span></a>
+            </li>
+        </ul>
+
+        <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation" data-icon-style="lines">
+            <li class="nav-item">
+                <a href="/Admin/Index"><i class='bx bxs-dashboard'></i><span class="menu-title" data-i18n="globe">داشبورد </span></a>
+            </li>
+        </ul>
+
+        <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation" data-icon-style="">
+            <li class="nav-item">
+                <a href="javascript:void(0)"><i class="bx bx-user"></i><span class="menu-title" data-i18n="Dashboard">مدیریت کاربران</span></a>
+
+                <ul class="menu-content">
+                    <li class="@(selected == "Users_Index" ? "active" : null)">
+                        <a href="/Admin/Users"><i class="bx bxs-user-detail"></i><span class="menu-item" data-i18n="eCommerce">لیست کاربران</span></a>
+                    </li>
+
+                    <li class="@(selected == "Users_Add" ? "active" : null)">
+                        <a href="/Admin/Users/Add"><i class="bx bx-user-plus"></i><span class="menu-item" data-i18n="eCommerce">ثبت مشخصات کاربر</span></a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+        <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
+            <li class="nav-item">
+                <a href="javascript:void(0)"><i class="bx bx-image-alt"></i><span class="menu-title">مدیریت بنر ها</span></a>
+                <ul class="menu-content">
+                    <li class="@(selected == "Banners_Index" ? "active" : "null")">
+                        <a href="/Admin/Banners"><i class="bx bxs-image"></i><span class="menu-item">لیست بنر ها</span></a>
+                    </li>
+
+                    <li class="@(selected == "Banners_Add" ? "active" : "null")">
+                        <a href="/Admin/Banners/Add"><i class="bx bxs-image-add"></i><span class="menu-item">ثبت مشخصات بنر</span></a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+        <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation" data-icon-style="">
+            <li class="nav-item">
+                <a href="javascript:void(0)"><i class="bx bx-photo-album"></i><span class="menu-title" data-i18n="Dashboard">مدیریت اسلایدر ها</span></a>
+                <ul class="menu-content">
+                    <li class="@(selected == "Sliders_Index" ? "active" : "null")">
+                        <a href="/Admin/Sliders"><i class="bx bxs-image"></i><span class="menu-item" data-i18n="eCommerce">لیست اسلایدر ها</span></a>
+                    </li>
+
+                    <li class="@(selected == "Sliders_Add" ? "active" : "null")">
+                        <a href="/Admin/Sliders/Add"><i class="bx bxs-image-add"></i><span class="menu-item" data-i18n="eCommerce">ثبت مشخصات اسلایدر</span></a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+        <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation" data-icon-style="">
+            <li class="nav-item">
+                <a href="javascript:void(0)">
+                    <i class="bx bx-list-ul"></i><span class="menu-title" data-i18n="Dashboard">مدیریت دسته بندی ها</span>
+                </a>
+
+                <ul class="menu-content">
+                    <li class="@(selected == "Categories_Index" ? "active" : null)">
+                        <a href="/Admin/Categories"><i class="bx bx-list-ul"></i><span class="menu-item" data-i18n="eCommerce">لیست دسته بندی ها </span></a>
+                    </li>
+
+                    <li class="@(selected == "Categories_Add" ? "active" : null)">
+                        <a href="/Admin/Categories/Add"><i class="bx bx-list-plus"></i><span class="menu-item" data-i18n="eCommerce">ثبت مشخصات دسته بندی</span></a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+        <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation" data-icon-style="">
+            <li class="nav-item">
+                <a href="javascript:void(0)"><i class="bx bxs-t-shirt"></i><span class="menu-title" data-i18n="Dashboard">مدیریت محصولات</span></a>
+
+                <ul class="menu-content">
+                    <li class="@(selected ==  "Products_Index" ? "active" : null)">
+                        <a href="/Admin/Products"><i class="bx bx-list-ul"></i><span class="menu-item" data-i18n="eCommerce">لیست محصولات</span></a>
+                    </li>
+
+                    <li class="@(selected == "Products_Add" ? "active" : null)">
+                        <a href="/Admin/Products/Add"><i class="bx bx-plus"></i><span class="menu-item" data-i18n="eCommerce">ثبت مشخصات محصول</span></a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+        <ul class="navigation navigation-main">
+            <li class="nav-item">
+                <a href="javascript:void(0)"><i class="bx bx-file"></i><span class="menu-title">مدیریت سفارشات</span></a>
+
+                <ul class="menu-content">
+                    <li class="@(selected == "Orders_Index" ? "active" : "null")">
+                        <a href="/Admin/Orders"><i class="bx bx-receipt"></i><span class="menu-item">لیست سفارشات</span></a>
+                    </li>
+
+                    <li class="@(selected == "Orders_Add" ? "active" : "null")">
+                        <a href="/Admin/Orders/Add"><i class="bx bx-plus"></i><span class="menu-item">افزودن سفارش</span></a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+        <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
+            <li class="nav-item">
+                <a href="javascript:void(0)"><i class="bx bx-notepad"></i><span class="menu-title">مدیریت پست ها</span></a>
+                <ul class="menu-content">
+                    <li class="@(selected == "Posts_Index" ? "active" : "null")">
+                        <a href="/Admin/Posts"><i class="bx bx-news"></i><span class="menu-item">لیست پست ها</span></a>
+                    </li>
+
+                    <li class="@(selected == "Posts_Add" ? "active" : "null")">
+                        <a href="/Admin/Posts/Add"><i class="bx bx-pencil"></i><span class="menu-item">ثبت مشخصات پست</span></a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+        <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
+            <li class="nav-item">
+                <a href="javascript:void(0)"><i class="bx bxs-discount"></i><span class="menu-title">مدیریت کد های تخفیف</span></a>
+                <ul class="menu-content">
+                    <li class="@(selected == "Discounts_Index" ? "active" : "null")">
+                        <a href="/Admin/Discounts"><i class="bx bxs-coupon"></i><span class="menu-item">لیست کد های تخفیف</span></a>
+                    </li>
+
+                    <li class="@(selected == "Discounts_Add" ? "active" : "null")">
+                        <a href="/Admin/Discounts/Add"><i class="bx bx-plus"></i><span class="menu-item">ثبت مشخصات کد تخفیف</span></a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div> *@

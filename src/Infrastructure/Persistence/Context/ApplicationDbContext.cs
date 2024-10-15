@@ -1,4 +1,5 @@
-﻿using Persistence.Entities.Account.Configurations;
+﻿using Common.Utilities.Extensions;
+using Persistence.Entities.Account.Configurations;
 
 namespace Persistence.Context
 {
@@ -212,6 +213,7 @@ namespace Persistence.Context
             modelBuilder.Entity<JobBranchAttr>().HasOne(i => i.AttrValue)
                 .WithMany(a => a.JobBranchAttrs).OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.AddSequentialGuidForIdConvention();
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AccountConfigurations).Assembly);
         }
     }

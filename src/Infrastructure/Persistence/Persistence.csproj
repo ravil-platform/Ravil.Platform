@@ -24,6 +24,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Constants\Constants.csproj" />
     <ProjectReference Include="..\..\Core\Domain\Domain.csproj" />
+    <ProjectReference Include="..\ViewModels\ViewModels.csproj" />
   </ItemGroup>
 
 </Project>

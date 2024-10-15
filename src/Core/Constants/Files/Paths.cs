@@ -2,5 +2,6 @@
 {
     public static class Paths
     {
+        public const string DefaultAvatarPath = "DefaultAvatar.jpg";
     }
 }

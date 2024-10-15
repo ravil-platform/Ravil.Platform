@@ -273,7 +273,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("UpdateDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 10, 13, 16, 56, 21, 822, DateTimeKind.Local).AddTicks(1013));
+                        .HasDefaultValue(new DateTime(2024, 10, 14, 12, 19, 38, 44, DateTimeKind.Local).AddTicks(1010));
 
                     b.HasKey("Id");
 
@@ -2898,8 +2898,9 @@ namespace Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasMaxLength(512)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(512)");
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
@@ -2942,12 +2943,14 @@ namespace Persistence.Migrations
                         .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasMaxLength(512)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(512)");
 
                     b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasMaxLength(512)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(512)");
 
                     b.Property<string>("OneTimeUseCode")
                         .HasMaxLength(20)
@@ -2991,8 +2994,9 @@ namespace Persistence.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasMaxLength(512)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(512)");
 
                     b.Property<int>("UserNameType")
                         .HasColumnType("int");
@@ -3014,6 +3018,62 @@ namespace Persistence.Migrations
                     b.HasIndex("StateId");
 
                     b.ToTable("ApplicationUser", "Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "05446344-f9cc-4566-bd2c-36791b4e28ed",
+                            AccessFailedCount = 0,
+                            BlockedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ConcurrencyStamp = "661bc32a-f5cb-45c9-93fc-e564868be568",
+                            Email = "admin@localhost.com",
+                            EmailConfirmed = true,
+                            ExpireTimeSpanBlock = 0,
+                            Firstname = "Admin",
+                            Gender = 0,
+                            IsDeleted = false,
+                            LastDeleteBicycleDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Lastname = "System",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@LOCALHOST.COM",
+                            NormalizedUserName = "ADMIN@LOCALHOST.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGUxpwcDBbDTFLVxLB9jDZfq6z8squRBAChCc86kOHmCaTQcXqFFmbPuycl2vf+DKg==",
+                            PhoneNumberConfirmed = false,
+                            RegisterDate = new DateTime(2024, 10, 14, 12, 19, 38, 145, DateTimeKind.Local).AddTicks(2779),
+                            SecurityStamp = "6608e7df-9fae-4a11-9864-9a035e58f81d",
+                            TwoFactorEnabled = false,
+                            UpdateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UserIsBlocked = false,
+                            UserName = "admin@localhost.com",
+                            UserNameType = 0
+                        },
+                        new
+                        {
+                            Id = "2ec9f480-7288-4d0f-a1cd-53cc89968b45",
+                            AccessFailedCount = 0,
+                            BlockedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ConcurrencyStamp = "318e1ef7-1937-43bb-8918-ffaafe804a30",
+                            Email = "user@localhost.com",
+                            EmailConfirmed = true,
+                            ExpireTimeSpanBlock = 0,
+                            Firstname = "System",
+                            Gender = 0,
+                            IsDeleted = false,
+                            LastDeleteBicycleDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Lastname = "User",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "USER@LOCALHOST.COM",
+                            NormalizedUserName = "USER@LOCALHOST.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEI69lhfI/cVBhuZWjvuTS+cBt/Eb8S9rGZOHUq8bbIi2OfgYTTbuquTLE1R30lFB2A==",
+                            PhoneNumberConfirmed = false,
+                            RegisterDate = new DateTime(2024, 10, 14, 12, 19, 38, 242, DateTimeKind.Local).AddTicks(4093),
+                            SecurityStamp = "9fc02fda-5294-451d-b52a-12738491ad08",
+                            TwoFactorEnabled = false,
+                            UpdateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UserIsBlocked = false,
+                            UserName = "user@localhost.com",
+                            UserNameType = 0
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.User.UserAddress", b =>
@@ -3276,6 +3336,40 @@ namespace Persistence.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("IdentityRole<Guid>");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("9845f909-799c-45fd-9158-58c1336ffddc"),
+                            Name = "User",
+                            NormalizedName = "USER"
+                        },
+                        new
+                        {
+                            Id = new Guid("cb275765-1cac-4652-a03f-f8871dd575d1"),
+                            Name = "Administrator",
+                            NormalizedName = "ADMINISTRATOR"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

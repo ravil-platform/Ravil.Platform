@@ -1,24 +1,16 @@
-using Microsoft.EntityFrameworkCore;
-using Persistence.Context;
-
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
-
+var configuration = builder.Configuration;
 
 services.AddControllers();
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
 
-services.AddDbContext<ApplicationDbContext>(option =>
-{
-    option.UseSqlServer("Data Source=.; Initial Catalog=ravilDB;  integrated security = true; TrustServerCertificate=True;");
-   
-});
+
+services.AddApplicationServices(configuration);
+services.AddPersistenceServices(configuration);
 
 
-
-services.AddApplicationServices(builder.Configuration);
-services.AddPersistenceServices();
 
 var app = builder.Build();
 

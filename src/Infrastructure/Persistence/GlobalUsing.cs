@@ -65,3 +65,6 @@ global using Persistence.Entities.Transaction.Repositories;
 global using Persistence.Entities.UploadedFile.Repositories;
 global using Persistence.Entities.User.Repositories;
 global using RNX.Persistence;
+global using Microsoft.Extensions.Configuration;
+global using ViewModels.Filter.User;
+global using Constants.Files;

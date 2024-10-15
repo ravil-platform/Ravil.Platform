@@ -1,4 +1,6 @@
-﻿namespace Persistence.Entities.User.Configurations
+﻿using Common.Utilities.Extensions;
+
+namespace Persistence.Entities.User.Configurations
 {
     public class ApplicationUserConfigurations : IEntityTypeConfiguration<ApplicationUser>
     {
@@ -30,6 +32,35 @@
             builder.Property(u => u.LastDeleteBicycleDate);
             builder.Property(u => u.UserNameType);
 
+
+            var adminPassword = Security.GetSha256Hash("Avicen_AdminP@ssword1");
+            var userPassword = Security.GetSha256Hash("Avicen_UserP@ssword1");
+
+            builder.HasData(
+                new ApplicationUser
+                {
+                    Id = new Guid("05446344-f9cc-4566-bd2c-36791b4e28ed").ToString(),
+                    Email = "admin@localhost.com",
+                    NormalizedEmail = "ADMIN@LOCALHOST.COM",
+                    Firstname = "Admin",
+                    Lastname = "System",
+                    UserName = "admin@localhost.com",
+                    NormalizedUserName = "ADMIN@LOCALHOST.COM",
+                    PasswordHash = adminPassword,
+                    EmailConfirmed = true,
+                },
+                new ApplicationUser
+                {
+                    Id = new Guid("2ec9f480-7288-4d0f-a1cd-53cc89968b45").ToString(),
+                    Email = "user@localhost.com",
+                    NormalizedEmail = "USER@LOCALHOST.COM",
+                    Firstname = "System",
+                    Lastname = "User",
+                    UserName = "user@localhost.com",
+                    NormalizedUserName = "USER@LOCALHOST.COM",
+                    PasswordHash = userPassword,
+                    EmailConfirmed = true,
+                });
             //relations
             //builder
             //    .HasOne(u => u.Wallet)
@@ -88,9 +119,15 @@
                 .HasMany(u => u.UserBlogLikes)
                 .WithOne(o => o.ApplicationUser)
                 .HasForeignKey(o => o.UserId)
-                .IsRequired(); 
+                .IsRequired();
 
             //identity relations
+            // Limit the size of columns to use efficient database types
+            builder.Property(u => u.UserName).IsUnicode(false).HasMaxLength(512);
+            builder.Property(u => u.NormalizedUserName).IsUnicode(false).HasMaxLength(512);
+            builder.Property(u => u.Email).IsUnicode(false).HasMaxLength(512);
+            builder.Property(u => u.NormalizedEmail).IsUnicode(false).HasMaxLength(512);
+
             // Each User can have many UserClaims
             builder
                 .HasMany<IdentityUserClaim<string>>()

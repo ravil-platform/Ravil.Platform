@@ -1,0 +1,247 @@
+﻿@using ViewModels.User
+@model UsersFilterViewModel
+
+@{
+    ViewData["Title"] = "لیست کاربران";
+    ViewData["selected"] = "Users_Index";
+    int counter = 1;
+}
+
+<a href="javascript:void(0)" class="btn btn-success mb-2" data-toggle="modal" data-target="#AddForm">
+    افزودن کاربر جدید <i class="bx bxs-user-plus"></i>
+</a>
+
+<section>
+    <div class="users-list-filter px-1">
+        <form method="get">
+            <input type="hidden" asp-for="FindAll" id="FindAll" value="false" />
+            <div class="row border rounded py-2 mb-2">
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <label>تعداد نمایش در هر صفحه</label>
+                    <fieldset class="form-group">
+                        <select asp-for="PageSize" class="form-control">
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                    </fieldset>
+                </div>
+
+
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <label>وضعیت</label>
+                    <fieldset class="form-group">
+                        <select asp-for="Active" class="form-control">
+                            <option value="null">همه</option>
+                            <option value="true">فعال</option>
+                            <option value="false">غیرفعال</option>
+                        </select>
+                    </fieldset>
+                </div>
+
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <label>نام</label>
+                    <input type="text" class="form-control text-left" asp-for="Firstname" />
+                </div>
+
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <label>نام خانوادگی</label>
+                    <input type="text" class="form-control text-left" asp-for="Lastname" />
+                </div>
+
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <label>نام کاربری</label>
+                    <input type="text" class="form-control text-right" asp-for="UserName" />
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <label>موبایل</label>
+                    <input type="text" class="form-control text-right" asp-for="Phone" />
+                </div>
+
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <label>تاریخ ثبت نام از</label>
+                    <input asp-for="RegisterDateFrom" type="text" class="form-control text-right" data-jdp />
+                </div>
+
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <label>تاریخ ثبت نام تا</label>
+                    <input asp-for="RegisterDateTo" type="text" class="form-control text-right" data-jdp />
+                </div>
+
+                <div class="col-12 col-sm-12 col-lg-6 d-flex align-items-center">
+                    <div class="col-4 col-sm-4 col-lg-4 d-flex align-items-center">
+                        <button id="empty" type="button" class="btn btn-warning btn-block glow users-list-clear mb-0 mt-75">خالی </button>
+                    </div>
+                    <div class="col-4 col-sm-4 col-lg-4 d-flex align-items-center">
+                        <button type="submit" id="SetFindAll" class="btn btn-info btn-block glow users-list-clear mb-0 mt-75">همه</button>
+                    </div>
+                    <div class="col-4 col-sm-4 col-lg-4 d-flex align-items-center">
+                        <button type="submit" class="btn btn-primary btn-block glow users-list-clear mb-0 mt-75">جستجو</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div>
+        <div class="card">
+            <div class="card-content">
+                <div class="car-body">
+                    <div class="table-responsive card card-body p-0">
+                        <table class="table mb-0 table-striped table-hover no-footer">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>ردیف</th>
+                                    <th width="10%">نام</th>
+                                    <th width="10%">نام خانوادگی</th>
+                                    <th width="13%">نام کاربری</th>
+                                    <th width="7%">موبایل</th>
+                                    <th width="12%">وضعیت</th>
+                                    <th width="16%">تاریخ عضویت</th>
+                                    <th width="18%">عملیات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var user in Model.Entities)
+                                {
+                                    <tr>
+                                        <td>@counter</td>
+                                        <td>@user.Firstname</td>
+                                        <td>@user.Lastname</td>
+                                        <td>@user.UserName</td>
+                                        <td>@user.Phone</td>
+
+                                        @if (user.PhoneNumberConfirmed)
+                                        {
+                                            <td class="text-success">فعال</td>
+                                        }
+                                        else
+                                        {
+                                            <td class="text-danger">غیر غعال</td>
+                                        }
+                                        <td> @user.RegisterDate.ToShamsiDate()</td>
+
+                                        <td>
+                                            <a title="ویرایش"><i class="bx bxs-edit-alt text-warning"></i></a>
+                                            <a title="جزییات"><i class="bx bxs-user-detail text-secondary"></i></a>
+                                        </td>
+                                    </tr>
+                                    counter++;
+                                }
+                                @if (Model.Entities.Any() == false)
+                                {
+                                    <tr>
+                                        <td colspan="9" class="text-center">موردی برای نمایش وجود ندارد</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination pagination-borderless justify-content-center mt-2">
+                                @if (Model.CurrentPage > 1)
+                                {
+                                    <li class="page-item previous">
+                                        <a onclick="changePage(@(Model.CurrentPage-1))" class="page-link" href="#">
+                                            <i class="bx bx-chevron-right"></i>
+                                        </a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="page-item previous disabled">
+                                        <a class="page-link" href="#">
+                                            <i class="bx bx-chevron-right"></i>
+                                        </a>
+                                    </li>
+                                }
+                                @for (int i = Model.StartPage; i < Model.EndPage; i++)
+                                {
+                                    <li class="@(i==Model.CurrentPage?"page-item active":"page-item")" onclick="changePage(@(i))">
+                                        <a class="page-link">@i</a>
+                                    </li>
+                                }
+                                @if (Model.CurrentPage < Model.EndPage)
+                                {
+                                    <li class="page-item next">
+                                        <a onclick="changePage(@(Model.CurrentPage+1))" class="page-link" href="#">
+                                            <i class="bx bx-chevron-left"></i>
+                                        </a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="page-item next disabled">
+                                        <a class="page-link" href="#">
+                                            <i class="bx bx-chevron-left"></i>
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade text-left" id="AddForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel33">افزودن کاربر جدید</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="بستن">
+                        <i class="bx bx-x"></i>
+                    </button>
+                </div>
+                @{
+                    var model = new CreateUserViewModel();
+                }
+                <partial name="_Create" model="model" />
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@section Scripts {
+
+    <script>
+
+
+        function changePage(Page) {
+            var url = new URL(window.location.href);
+            var SerachParams = url.searchParams;
+            //Change PageId
+            SerachParams.set('CurrentPage', Page);
+            url.search = SerachParams.toString();
+
+            //new Url String
+            var newUrlString = url.toString();
+            window.location.replace(newUrlString);
+        }
+
+        $("#SetFindAll").click(function (event) {
+            $("#FindAll").val("true");
+        });
+
+        $("#empty").click(function (event) {
+            $("#PageSize").val(10);
+            $("#Type").val('null');
+            $("#Active").val('null');
+
+            $("#Name").val(null);
+            $("#Family").val(null);
+            $("#UserName").val(null);
+            $("#Email").val(null);
+            $("#Mobile").val(null);
+            $("#RegisterDateFrom").val(null);
+            $("#RegisterDateTo").val(null);
+        });
+
+        jalaliDatepicker.startWatch();
+
+    </script>
+}

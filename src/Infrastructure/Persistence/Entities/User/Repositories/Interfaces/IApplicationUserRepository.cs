@@ -2,5 +2,7 @@
 
 public interface IApplicationUserRepository : IRepository<ApplicationUser>
 {
+    UsersFilterViewModel GetUsersByFilter(UsersFilterViewModel usersFilterViewModel);
+
 
 }

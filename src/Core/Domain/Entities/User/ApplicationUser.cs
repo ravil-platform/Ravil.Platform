@@ -7,12 +7,6 @@
 
         public string? Lastname { get; set; }
 
-        public DateTime? BirthDate { get; set; }
-
-        public DateTime RegisterDate { get; set; } = DateTime.Now;
-
-        public DateTime? ConfirmationDate { get; set; }
-
         public string? LockoutReason { get; set; }
 
         public string? NationalCode { get; set; }
@@ -23,27 +17,33 @@
 
         public string? Avatar { get; set; }
 
-        public GenderPerson Gender { get; set; }
-
         public string? OneTimeUseCode { get; set; }
 
-        public DateTime? OneTimeUseCodeEnd { get; set; }
-
         public bool UserIsBlocked { get; set; }
-
-        public DateTime BlockedDate { get; set; }
 
         public int ExpireTimeSpanBlock { get; set; }
 
         public bool IsDeleted { get; set; }
 
-        public DateTime UpdateDate { get; set; }
-
         public string? LastUpdateDateReason { get; set; }
+        
+        public DateTime? OneTimeUseCodeEnd { get; set; }
+
+        public DateTime BlockedDate { get; set; }
+
+        public DateTime UpdateDate { get; set; }
 
         public DateTime LastDeleteBicycleDate { get; set; }
 
+        public DateTime? BirthDate { get; set; }
+
+        public DateTime RegisterDate { get; set; } = DateTime.Now;
+
+        public DateTime? ConfirmationDate { get; set; }
+        
         public UserNameType UserNameType { get; set; } = UserNameType.PhoneNumber;
+        
+        public GenderPerson Gender { get; set; }
         #endregion
 
         #region (Relations)

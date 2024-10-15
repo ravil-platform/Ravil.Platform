@@ -11,6 +11,7 @@
                 options.RegisterServicesFromAssembly(typeof(BaseController).GetTypeInfo().Assembly);
             });
 
+            services.AddAutoMapper(typeof(MappingProfile));
             services.AddTransient(serviceType: typeof(Logging.Base.ILogger<>), implementationType: typeof(NLogAdapter<>));
 
             var siteSettingConfiguration = configuration.GetSection(nameof(SiteSettings));

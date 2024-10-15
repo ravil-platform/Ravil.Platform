@@ -16,3 +16,4 @@ global using System.Security.Claims;
 global using System.Text;
 global using Common.Options;
 global using Microsoft.Extensions.Configuration;
+global using Application.Profiles;
