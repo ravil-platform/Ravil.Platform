@@ -1,7 +1,4 @@
-﻿using System.Globalization;
-using Common.Utilities.Extensions;
-
-namespace Persistence.Entities.User.Repositories;
+﻿namespace Persistence.Entities.User.Repositories;
 
 public class ApplicationUserRepository : Repository<ApplicationUser>, IApplicationUserRepository
 {
@@ -167,28 +164,42 @@ public class ApplicationUserRepository : Repository<ApplicationUser>, IApplicati
         ApplicationDbContext.Users.Update(user);
     }
 
-    public async Task LockAsync(Guid id, string lockoutReason, CancellationToken cancellationToken)
+    public async Task<bool> LockAsync(Guid id, string lockoutReason, UserManager<ApplicationUser> userManager)
     {
-        var user = await GetByIdAsync(id, cancellationToken);
+        var user = await userManager.FindByIdAsync(id.ToString());
 
-        if (user is null) return;
+        if (user is null) return false;
 
-        user.LockoutEnabled = true;
         user.LockoutReason = lockoutReason;
 
-        ApplicationDbContext.Users.Update(user);
+        await userManager.SetLockoutEnabledAsync(user, true);
+
+        var result = await userManager.SetLockoutEndDateAsync(user, DateTime.Now.AddYears(10));
+
+        if (!result.Succeeded) return false;
+
+        var updateResult = await userManager.UpdateAsync(user);
+
+        return updateResult.Succeeded;
     }
 
-    public async Task UnLockAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<bool> UnLockAsync(Guid id, UserManager<ApplicationUser> userManager)
     {
-        var user = await GetByIdAsync(id, cancellationToken);
+        var user = await userManager.FindByIdAsync(id.ToString());
 
-        if (user is null) return;
+        if (user is null) return false;
 
-        user.LockoutEnabled = false;
         user.LockoutReason = null;
 
-        ApplicationDbContext.Users.Update(user);
+        await userManager.SetLockoutEnabledAsync(user, false);
+
+        var result = await userManager.SetLockoutEndDateAsync(user, null);
+
+        if (!result.Succeeded) return false;
+
+        var updateResult = await userManager.UpdateAsync(user);
+
+        return updateResult.Succeeded;
     }
 
 

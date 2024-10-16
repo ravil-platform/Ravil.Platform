@@ -1,19 +1,16 @@
-﻿using AutoMapper;
-using Domain.Entities.User;
-using FluentResults;
-using ViewModels.User;
-
-namespace Admin.MVC.Controllers
+﻿namespace Admin.MVC.Controllers
 {
     public class UsersController : BaseController
     {
         #region ( DI )
+        public UserManager<ApplicationUser> UserManager { get; }
         public IUnitOfWork UnitOfWork { get; }
         public IMapper Mapper { get; }
-        public UsersController(IUnitOfWork unitOfWork, IMapper mapper)
+        public UsersController(IUnitOfWork unitOfWork, IMapper mapper, UserManager<ApplicationUser> userManager)
         {
             UnitOfWork = unitOfWork;
             Mapper = mapper;
+            UserManager = userManager;
         }
         #endregion
 
@@ -169,7 +166,14 @@ namespace Admin.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Lock(Guid id, string lockoutReason)
         {
-            await UnitOfWork.ApplicationUserRepository.LockAsync(id, lockoutReason, CancellationToken.None);
+            var result = await UnitOfWork.ApplicationUserRepository.LockAsync(id, lockoutReason, UserManager);
+
+            if (result == false)
+            {
+                ErrorAlert();
+
+                return RedirectToAction("Detail", new { Id = id });
+            }
 
             try
             {
@@ -190,7 +194,7 @@ namespace Admin.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> UnLock(Guid id)
         {
-            await UnitOfWork.ApplicationUserRepository.UnLockAsync(id, CancellationToken.None);
+            await UnitOfWork.ApplicationUserRepository.UnLockAsync(id, UserManager);
 
             try
             {

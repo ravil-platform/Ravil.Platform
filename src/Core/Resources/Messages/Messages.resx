@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AccessDeniedPageMessage" xml:space="preserve">
+    <value>متأسفیم که نتوانستید وارد شوید. لطفاً با مالک این سایت تماس بگیرید و مستقیماً برای دسترسی با آنها تماس بگیرید.</value>
+  </data>
+  <data name="AddServiceToBookingSuccessfully" xml:space="preserve">
+    <value>یک خدمت با نام {0} به سبد خرید شما افزوده شد.</value>
+  </data>
+  <data name="CommentsEmptyList" xml:space="preserve">
+    <value>درحال حاضر دیدگاهی ثبت نشده است</value>
+  </data>
+  <data name="EmailConfirmationMessage" xml:space="preserve">
+    <value>حساب و ایمیل شما با موفقیت تایید شد. &lt;a href='{0}'&gt;برای ورود به سایت کلیک کنید.&lt;/a&gt;</value>
+  </data>
+  <data name="PaymentProfileLink" xml:space="preserve">
+    <value>برای مشاهده وضعیت سفارش خود به &lt;a href="{0}"&gt;سفارش های من&lt;/a&gt; در پنل کاربری خود مراجعه نمائید.</value>
+  </data>
+  <data name="ResetPasswordConfirmationMessage" xml:space="preserve">
+    <value>کلمه عبور شما با موفقیت ریست شد. &lt;a href='{0}'&gt;برای ورود کلیک کنید.&lt;/a&gt;</value>
+  </data>
+  <data name="SendContact" xml:space="preserve">
+    <value>پیغام شما برای کارشناسان ما ارسال شد. پس از بررسی در صورت لزوم با شما تماس گرفته می شود</value>
+  </data>
+  <data name="SendEmail" xml:space="preserve">
+    <value>لطفا با &lt;a href='{0}'&gt;اینجا کلیک کنید&lt;/a&gt; حساب خود را تأیید کنید.</value>
+  </data>
+  <data name="SendEmailCompleteBookingForAdmin" xml:space="preserve">
+    <value>اخیراً سفارشی با شماره {0} ثبت شد.
+
+برای تکمیل سفارش، به پنل ادمین و قسمت مدیریت سفارشات به آدرس زیر مراجعه کنید:
+
+{1}</value>
+  </data>
+  <data name="SendEmailCompleteBookingForUser" xml:space="preserve">
+    <value>سلام {0}
+ 
+سفارش ما با شماره {1} با موفقیت ثبت شد.
+
+برای مشاهده جزعیات سفارش، به پنل کاربری و قسمت مدیریت سفارشات به آدرس زیر مراجعه کنید:
+
+{2}</value>
+  </data>
+  <data name="SendEmailSignUpVerification" xml:space="preserve">
+    <value>سلام {0}
+شما اخیراً درخواست بازیابی کلمه عبور حساب خود را داده اید.
+
+برای تکمیل فرایند، لطفاً از کد زیر استفاده کنید:
+{1}
+
+===============================================
+
+در ضمن رمز عبور موقت شما برای ورود به سایت به شرح زیر است:
+{2}
+
+
+لطفا پس از ورود به سایت رمز موقت را از طریق لینک زیر تغییر دهید.
+{3}
+
+
+با تشکر</value>
+  </data>
+  <data name="SendEmailVerificationCode" xml:space="preserve">
+    <value>سلام {0}
+ 
+شما اخیراً در سایت آویس ثبت نام کرده اید.
+برای تکمیل ثبت نام، لطفاً حساب خود را تأیید کنید.
+
+ممکن است از شما خواسته شود این کد تأیید را وارد کنید: 
+{1}</value>
+  </data>
+  <data name="SendResetPasswordCode" xml:space="preserve">
+    <value>سلام {0}
+شما اخیراً درخواست بازیابی کلمه عبور حساب خود را داده اید.
+
+برای تکمیل فرایند، لطفاً از کد زیر استفاده کنید:
+{1}</value>
+  </data>
+  <data name="SubjectEmail" xml:space="preserve">
+    <value>تایید ایمیل حساب کاربری</value>
+  </data>
+  <data name="SubjectEmailCompleteBookingForUser" xml:space="preserve">
+    <value>ثبت سفارش</value>
+  </data>
+  <data name="SubjectEmailCompleteBookingForUser1" xml:space="preserve">
+    <value>ثبت سفارش</value>
+  </data>
+  <data name="SubjectEmaiVerificationCode" xml:space="preserve">
+    <value>ایمیل و حساب کاربری خود را با استفاده از کد تایید کنید</value>
+  </data>
+  <data name="SubjectResetPasswordEmail" xml:space="preserve">
+    <value>بازیابی رمز عبور</value>
+  </data>
+</root>

@@ -14,6 +14,6 @@ public interface IApplicationUserRepository : IRepository<ApplicationUser>
     Task ConfirmEmailAsync(Guid id, CancellationToken cancellationToken);
     Task UnConfirmEmailAsync(Guid id, CancellationToken cancellationToken);
 
-    Task LockAsync(Guid id, string lockoutReason, CancellationToken cancellationToken);
-    Task UnLockAsync(Guid id, CancellationToken cancellationToken);
+    Task<bool> LockAsync(Guid id, string lockoutReason, UserManager<ApplicationUser> UserManager);
+    Task<bool> UnLockAsync(Guid id, UserManager<ApplicationUser> UserManager);
 }

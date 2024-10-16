@@ -7,9 +7,9 @@ services.AddControllersWithViews();
 services.AddApplicationServices(configuration);
 services.AddPersistenceServices(configuration);
 
-// identity services basic
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+//// identity services basic
+//builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+//    .AddEntityFrameworkStores<ApplicationDbContext>();
 
 var app = builder.Build();
 

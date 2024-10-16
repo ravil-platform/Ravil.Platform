@@ -1,0 +1,958 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AboutPage" xml:space="preserve">
+    <value>صفحه درباره ما</value>
+  </data>
+  <data name="AboutUsContent" xml:space="preserve">
+    <value>محتوا و توضیحات صفحه درباره ما</value>
+  </data>
+  <data name="AboutUsMetaDescription" xml:space="preserve">
+    <value>توضیحات متا صفحه درباره ما</value>
+  </data>
+  <data name="AboutUsOurMissionDescription" xml:space="preserve">
+    <value>توضیحات بخش ماموریت ها</value>
+  </data>
+  <data name="AboutUsOurMissionTitle" xml:space="preserve">
+    <value>عنوان بخش ماموریت ها</value>
+  </data>
+  <data name="AboutUsOurValuesDescription" xml:space="preserve">
+    <value>توضیحات بخش ارزش ها</value>
+  </data>
+  <data name="AboutUsOurValuesTitle" xml:space="preserve">
+    <value>عنوان بخش ارزش ها</value>
+  </data>
+  <data name="AboutUsTitle" xml:space="preserve">
+    <value>عنوان صفحه درباره ما</value>
+  </data>
+  <data name="AboutUsVideo" xml:space="preserve">
+    <value>ویدئو صفحه درباره ما</value>
+  </data>
+  <data name="AboutUsVideoCover" xml:space="preserve">
+    <value>کاور ویدئو صفحه درباره ما</value>
+  </data>
+  <data name="AccessDeniedPageTitle" xml:space="preserve">
+    <value>صفحه عدم دسترسی به منابع</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>عملیات</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>آدرس</value>
+  </data>
+  <data name="AddressContactSection" xml:space="preserve">
+    <value>آدرس</value>
+  </data>
+  <data name="Administrator" xml:space="preserve">
+    <value>مدیر</value>
+  </data>
+  <data name="Adults" xml:space="preserve">
+    <value>بزرگسالان</value>
+  </data>
+  <data name="Agent" xml:space="preserve">
+    <value>نماینده</value>
+  </data>
+  <data name="Amount" xml:space="preserve">
+    <value>مبلغ</value>
+  </data>
+  <data name="Answer" xml:space="preserve">
+    <value>پاسخ</value>
+  </data>
+  <data name="ArrivalDate" xml:space="preserve">
+    <value>تاریخ ورود</value>
+  </data>
+  <data name="AuthDropdownSectionAdminPanelLinkText" xml:space="preserve">
+    <value>ادمین</value>
+  </data>
+  <data name="AuthDropdownSectionLogoutLinkText" xml:space="preserve">
+    <value>خروج از سایت</value>
+  </data>
+  <data name="AuthDropdownSectionProfileLinkText" xml:space="preserve">
+    <value>پروفایل کاربری</value>
+  </data>
+  <data name="AuthorName" xml:space="preserve">
+    <value>نویسنده</value>
+  </data>
+  <data name="AuthPageCodePlaceholderText" xml:space="preserve">
+    <value>کد ارسال شده را برای تایید و فعال سازی حساب کاربری وارد کنید ...</value>
+  </data>
+  <data name="AuthPageConfirmPasswordPlaceholderText" xml:space="preserve">
+    <value>تکرار رمز عبور ...</value>
+  </data>
+  <data name="AuthPageEmailAddressPlaceholderText" xml:space="preserve">
+    <value>آدرس ایمیل خود را وارد کنید ...</value>
+  </data>
+  <data name="AuthPageExternalButtonText" xml:space="preserve">
+    <value>ورود با حساب</value>
+  </data>
+  <data name="AuthPageExternalFacebookButtonText" xml:space="preserve">
+    <value>ورود با فیسبوک</value>
+  </data>
+  <data name="AuthPageExternalGoogleButtonText" xml:space="preserve">
+    <value>ورود با گوگل</value>
+  </data>
+  <data name="AuthPageFirstNamePlaceholderText" xml:space="preserve">
+    <value>نام خود را وارد کنید ...</value>
+  </data>
+  <data name="AuthPageForgotPasswordLinkText" xml:space="preserve">
+    <value>فراموشی کلمه عبور</value>
+  </data>
+  <data name="AuthPageLastNamePlaceholderText" xml:space="preserve">
+    <value>نام خانوادگی خود را وارد کنید ...</value>
+  </data>
+  <data name="AuthPagePasswordPlaceholderText" xml:space="preserve">
+    <value>رمز عبور خود را وارد کنید ...</value>
+  </data>
+  <data name="AuthPageRegisterQuestionLinkText" xml:space="preserve">
+    <value>رایگان ثبت نام کنید</value>
+  </data>
+  <data name="AuthPageRegisterQuestionText" xml:space="preserve">
+    <value>حساب کاربری ندارید ؟</value>
+  </data>
+  <data name="AuthPageSignInQuestionLinkText" xml:space="preserve">
+    <value>لطفا وارد شوید</value>
+  </data>
+  <data name="AuthPageSignInQuestionText" xml:space="preserve">
+    <value>حساب کاربری ندارید ؟</value>
+  </data>
+  <data name="AuthPageUsernamePlaceholderText" xml:space="preserve">
+    <value>نام کاربری یا ایمل خود را وارد کنید ...</value>
+  </data>
+  <data name="Avatar" xml:space="preserve">
+    <value>آواتار</value>
+  </data>
+  <data name="AverageOfRate" xml:space="preserve">
+    <value>میانگین رضایت</value>
+  </data>
+  <data name="Baby" xml:space="preserve">
+    <value>نوزاد</value>
+  </data>
+  <data name="BannerPicture" xml:space="preserve">
+    <value>تصویر بنر</value>
+  </data>
+  <data name="BirthDate" xml:space="preserve">
+    <value>تاریخ تولد</value>
+  </data>
+  <data name="Blog" xml:space="preserve">
+    <value>صفحه مجله پزشکی</value>
+  </data>
+  <data name="BlogHeadingContent" xml:space="preserve">
+    <value>محتوا صفحه مجله پزشکی</value>
+  </data>
+  <data name="BlogListHeadCopyWrite" xml:space="preserve">
+    <value>توضیحات لیست صفحه مجله پزشکی</value>
+  </data>
+  <data name="BlogMetaDescription" xml:space="preserve">
+    <value>توضیحات متا صفحه مجله پزشکی</value>
+  </data>
+  <data name="BlogTitle" xml:space="preserve">
+    <value>عنوان صفحه مجله پزشکی</value>
+  </data>
+  <data name="BookigNumber" xml:space="preserve">
+    <value>شماره سریال</value>
+  </data>
+  <data name="BookmarkButtonText" xml:space="preserve">
+    <value>نشان کردن</value>
+  </data>
+  <data name="Both" xml:space="preserve">
+    <value>هردو</value>
+  </data>
+  <data name="BrandName" xml:space="preserve">
+    <value>آویسن</value>
+  </data>
+  <data name="CanonicalMeta" xml:space="preserve">
+    <value>کنونیکال شود؟</value>
+  </data>
+  <data name="CanonicalMetaUrl" xml:space="preserve">
+    <value>لینک کنونیکال</value>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>دسته بندی</value>
+  </data>
+  <data name="CellPhoneNumber" xml:space="preserve">
+    <value>شماره تلفن همراه</value>
+  </data>
+  <data name="CellPhoneNumberVerificationKey" xml:space="preserve">
+    <value>کد تایید شماره تلفن همراه</value>
+  </data>
+  <data name="Children" xml:space="preserve">
+    <value>کودکان</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>شهر</value>
+  </data>
+  <data name="CityName" xml:space="preserve">
+    <value>نام شهر</value>
+  </data>
+  <data name="ClinicStay" xml:space="preserve">
+    <value>زمان بستری</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>بستن</value>
+  </data>
+  <data name="CmsPage" xml:space="preserve">
+    <value>صفحه وبلاگ</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>کد</value>
+  </data>
+  <data name="Comment" xml:space="preserve">
+    <value>دیدگاه</value>
+  </data>
+  <data name="CommentPercentAverage" xml:space="preserve">
+    <value>درصد رضایت بیماران</value>
+  </data>
+  <data name="Comments" xml:space="preserve">
+    <value>نظر</value>
+  </data>
+  <data name="CommentsSectionLikeTooltipText" xml:space="preserve">
+    <value>لایک کردن دیدگاه</value>
+  </data>
+  <data name="CommentsSectionRecommendedDoctorText" xml:space="preserve">
+    <value>این پزشک پیشنهاد میشود</value>
+  </data>
+  <data name="CommentsSectionReplyTooltipText" xml:space="preserve">
+    <value>پاسخ به دیدگاه</value>
+  </data>
+  <data name="CommentsSectionSearchPlaceholderText" xml:space="preserve">
+    <value>جستجو نظر، نام کاربر یا بیمار</value>
+  </data>
+  <data name="CommentsSectionSeeMoreButtonText" xml:space="preserve">
+    <value>مشاهده بیشتر</value>
+  </data>
+  <data name="CompanyName" xml:space="preserve">
+    <value>نام شرکت</value>
+  </data>
+  <data name="ConfirmEmailPageTitle" xml:space="preserve">
+    <value>تایید ایمیل و حساب کاربری</value>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>تکرار رمز عبور</value>
+  </data>
+  <data name="ContactFormButtonTitle" xml:space="preserve">
+    <value>ارسال پیام</value>
+  </data>
+  <data name="ContactPage" xml:space="preserve">
+    <value>صفحه تماس باما</value>
+  </data>
+  <data name="ContactPageImage" xml:space="preserve">
+    <value>تصویر شاخص صفحه تماس باما</value>
+  </data>
+  <data name="ContactPageVideo" xml:space="preserve">
+    <value>ویدئو صفحه تماس باما</value>
+  </data>
+  <data name="ContactUs" xml:space="preserve">
+    <value>تماس با ما</value>
+  </data>
+  <data name="Content" xml:space="preserve">
+    <value>محتوا</value>
+  </data>
+  <data name="ContentTitles" xml:space="preserve">
+    <value>فهرست مطالب</value>
+  </data>
+  <data name="Count" xml:space="preserve">
+    <value>تعداد</value>
+  </data>
+  <data name="CountriesComponentHeadingDescription" xml:space="preserve">
+    <value>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</value>
+  </data>
+  <data name="CountriesComponentHeadingTitle" xml:space="preserve">
+    <value>ما خدمات پزشکی را ارائه کرده ایم</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>کشور</value>
+  </data>
+  <data name="CoverPicture" xml:space="preserve">
+    <value>تصویر کاور</value>
+  </data>
+  <data name="CreateCommentButtonText" xml:space="preserve">
+    <value>ارسال دیدگاه</value>
+  </data>
+  <data name="CreateCommentSearchPlaceholder" xml:space="preserve">
+    <value>جستجو نظرات، کاربران و بیماران ...</value>
+  </data>
+  <data name="CreateCommentSortButtonText" xml:space="preserve">
+    <value>مرتب سازی</value>
+  </data>
+  <data name="CreateCommentText" xml:space="preserve">
+    <value>دیدگاه خود را ارسال کنید:</value>
+  </data>
+  <data name="CreateDate" xml:space="preserve">
+    <value>تاریخ ثبت</value>
+  </data>
+  <data name="CtaComponentHeadingDesciption" xml:space="preserve">
+    <value>سفر شما به سمت سلامتی از اینجا شروع می شود</value>
+  </data>
+  <data name="CtaComponentHeadingTitle" xml:space="preserve">
+    <value>سفر شما به سمت سلامتی از اینجا شروع می شود</value>
+  </data>
+  <data name="Currency" xml:space="preserve">
+    <value>واحد پول</value>
+  </data>
+  <data name="CurrencyCode" xml:space="preserve">
+    <value>کد واحد پول</value>
+  </data>
+  <data name="CurrentDate" xml:space="preserve">
+    <value>تاریخ جاری</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>تاریخ</value>
+  </data>
+  <data name="DeActive" xml:space="preserve">
+    <value>غیرفعال</value>
+  </data>
+  <data name="DefaultUserFirstName" xml:space="preserve">
+    <value>کاربر</value>
+  </data>
+  <data name="DefaultUserLastName" xml:space="preserve">
+    <value>سایت</value>
+  </data>
+  <data name="DeleteDate" xml:space="preserve">
+    <value>تاریخ حذف</value>
+  </data>
+  <data name="Deposit" xml:space="preserve">
+    <value>واریز</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>توضیح</value>
+  </data>
+  <data name="Discount" xml:space="preserve">
+    <value>تخفیف</value>
+  </data>
+  <data name="DiscountAmount" xml:space="preserve">
+    <value>میزان تخفیف</value>
+  </data>
+  <data name="DiscountCode" xml:space="preserve">
+    <value>کد تخفیف</value>
+  </data>
+  <data name="DiscountCoupon" xml:space="preserve">
+    <value>کوپن تخفیف</value>
+  </data>
+  <data name="DiscountPercent" xml:space="preserve">
+    <value>درصد تخفیف</value>
+  </data>
+  <data name="DiscountPrice" xml:space="preserve">
+    <value>قیمت تخفیف</value>
+  </data>
+  <data name="Dislike" xml:space="preserve">
+    <value>نپسندیدن</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>ویرایش</value>
+  </data>
+  <data name="EmailAddress" xml:space="preserve">
+    <value>نشانی پست الکترونیکی</value>
+  </data>
+  <data name="EmailAddressVerificationKey" xml:space="preserve">
+    <value>کد تایید نشانی پست الکترونیکی</value>
+  </data>
+  <data name="ExperienceCount" xml:space="preserve">
+    <value>تعداد عمل جراحی و سبقه</value>
+  </data>
+  <data name="ExpireDate" xml:space="preserve">
+    <value>تاریخ انقضاء</value>
+  </data>
+  <data name="Extension" xml:space="preserve">
+    <value>فرمت فایل</value>
+  </data>
+  <data name="Facebook" xml:space="preserve">
+    <value>فیسبوک</value>
+  </data>
+  <data name="Faqs" xml:space="preserve">
+    <value>سوالات متداول</value>
+  </data>
+  <data name="FaqsComponentHeadingDescription" xml:space="preserve">
+    <value>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</value>
+  </data>
+  <data name="FaqsComponentHeadingTitle" xml:space="preserve">
+    <value>سوالات متداول شما</value>
+  </data>
+  <data name="Female" xml:space="preserve">
+    <value>خانم</value>
+  </data>
+  <data name="FileType" xml:space="preserve">
+    <value>نوع فایل</value>
+  </data>
+  <data name="FilterCategoryTitle" xml:space="preserve">
+    <value>سایر دسته بندی ها</value>
+  </data>
+  <data name="FilterMoreTitle" xml:space="preserve">
+    <value>فیلترهای بیشتر</value>
+  </data>
+  <data name="FilterPricementTitle" xml:space="preserve">
+    <value>بازه قیمتی</value>
+  </data>
+  <data name="FilterSortHeadingTitle" xml:space="preserve">
+    <value>مرتب سازی</value>
+  </data>
+  <data name="FilterSortingTitle" xml:space="preserve">
+    <value>مرتب سازی</value>
+  </data>
+  <data name="FilterSortPopular" xml:space="preserve">
+    <value>محبوب ترین</value>
+  </data>
+  <data name="FilterSortPriceAsc" xml:space="preserve">
+    <value>ارزان ترین</value>
+  </data>
+  <data name="FilterSortPriceDesc" xml:space="preserve">
+    <value>گران ترین</value>
+  </data>
+  <data name="FilterSortRecent" xml:space="preserve">
+    <value>آخرین</value>
+  </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>نام</value>
+  </data>
+  <data name="FollowMeta" xml:space="preserve">
+    <value>فالو شود؟</value>
+  </data>
+  <data name="ForgetPasswordFormButtonTitle" xml:space="preserve">
+    <value>تایید و مرحله بعدی</value>
+  </data>
+  <data name="ForgetPasswordPageDescription" xml:space="preserve">
+    <value>برای بازیابی رمز حساب کاربری، ایمیل خود را وارد کنید.</value>
+  </data>
+  <data name="ForgetPasswordPageHeadingTitle" xml:space="preserve">
+    <value>فراموشی رمز عبور</value>
+  </data>
+  <data name="ForgetPasswordPageNote" xml:space="preserve">
+    <value>ما یک ایمیل حاوی کد بازیابی کلمه عبور به شماره حساب ایمیل شما ارسال خواهیم کرد.</value>
+  </data>
+  <data name="ForgetPasswordPageTitle" xml:space="preserve">
+    <value>فراموشی رمز عبور</value>
+  </data>
+  <data name="FullName" xml:space="preserve">
+    <value>نام و نام خانوادگی</value>
+  </data>
+  <data name="Gender" xml:space="preserve">
+    <value>جنسیت</value>
+  </data>
+  <data name="Group" xml:space="preserve">
+    <value>گروه</value>
+  </data>
+  <data name="Harvest" xml:space="preserve">
+    <value>برداشت</value>
+  </data>
+  <data name="HeaderAuthButtonText" xml:space="preserve">
+    <value>ورود / ثبت نام</value>
+  </data>
+  <data name="HeaderSearchButtonText" xml:space="preserve">
+    <value>جستوجو</value>
+  </data>
+  <data name="HeaderSearchPlaceholder" xml:space="preserve">
+    <value>جستوجو در بین پزشکان، خدمات و ...</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>صفحه اصلی</value>
+  </data>
+  <data name="HomeAboutSectionContent" xml:space="preserve">
+    <value>توضیحات بخش معرفی و درباره ما صفحه اصلی</value>
+  </data>
+  <data name="HomeAboutSectionTitle" xml:space="preserve">
+    <value>عنوان بخش معرفی و درباره ما صفحه اصلی</value>
+  </data>
+  <data name="HomeDescription" xml:space="preserve">
+    <value>توضیحات صفحه اصلی</value>
+  </data>
+  <data name="HomeMetaDescription" xml:space="preserve">
+    <value>توضیحات متا صفحه اصلی</value>
+  </data>
+  <data name="HomePageImage" xml:space="preserve">
+    <value>تصویر شاخص صفحه اصلی</value>
+  </data>
+  <data name="HomePageIntroductionVideo" xml:space="preserve">
+    <value>ویدئو اینترو صفحه اصلی</value>
+  </data>
+  <data name="HomePageIntroductionVideoCover" xml:space="preserve">
+    <value>کاور ویدئو اینترو صفحه اصلی</value>
+  </data>
+  <data name="HomePageVideo" xml:space="preserve">
+    <value>ویدئو صفحه اصلی</value>
+  </data>
+  <data name="HomePageVideoCover" xml:space="preserve">
+    <value>کاور ویدئو صفحه اصلی</value>
+  </data>
+  <data name="HomeTitle" xml:space="preserve">
+    <value>عنوان صفحه اصلی</value>
+  </data>
+  <data name="Icon" xml:space="preserve">
+    <value>آیکن</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>شناسه</value>
+  </data>
+  <data name="Image" xml:space="preserve">
+    <value>تصویر</value>
+  </data>
+  <data name="IndexMeta" xml:space="preserve">
+    <value>ایندکس شود؟</value>
+  </data>
+  <data name="Instagram" xml:space="preserve">
+    <value>اینستاگرام</value>
+  </data>
+  <data name="IntroductionVideo" xml:space="preserve">
+    <value>ویدئو معرفی</value>
+  </data>
+  <data name="IntroductionVideoCover" xml:space="preserve">
+    <value>کاور ویدئو معرفی</value>
+  </data>
+  <data name="Inventory" xml:space="preserve">
+    <value>موجودی</value>
+  </data>
+  <data name="IsActive" xml:space="preserve">
+    <value>فعال</value>
+  </data>
+  <data name="IsCellPhoneNumberVerified" xml:space="preserve">
+    <value>شماره تلفن همراه تایید شده است</value>
+  </data>
+  <data name="IsConfirmed" xml:space="preserve">
+    <value>وضعیت تایید</value>
+  </data>
+  <data name="IsDeleted" xml:space="preserve">
+    <value>انداختن در سطل زباله</value>
+  </data>
+  <data name="IsEmailAddressVerified" xml:space="preserve">
+    <value>نشانی پست الکترونیکی تایید شده است</value>
+  </data>
+  <data name="IsFeedbackPositive" xml:space="preserve">
+    <value>باخورد مثبت است؟</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>زبان</value>
+  </data>
+  <data name="LanguageCode" xml:space="preserve">
+    <value>کد زبان</value>
+  </data>
+  <data name="LanguageSummary" xml:space="preserve">
+    <value>خلاصه زبان</value>
+  </data>
+  <data name="LastName" xml:space="preserve">
+    <value>نام خانوادگی</value>
+  </data>
+  <data name="LastUpdateDate" xml:space="preserve">
+    <value>تاریخ بروزرسانی</value>
+  </data>
+  <data name="Like" xml:space="preserve">
+    <value>پسندیدن</value>
+  </data>
+  <data name="LinkedIn" xml:space="preserve">
+    <value>لینکدین</value>
+  </data>
+  <data name="Logo" xml:space="preserve">
+    <value>لوگو</value>
+  </data>
+  <data name="Male" xml:space="preserve">
+    <value>آقا</value>
+  </data>
+  <data name="MaleAndFemale" xml:space="preserve">
+    <value>خانم و آقا</value>
+  </data>
+  <data name="Map" xml:space="preserve">
+    <value>نقشه</value>
+  </data>
+  <data name="MapUrl" xml:space="preserve">
+    <value>پیوند نقشه</value>
+  </data>
+  <data name="MedicalSystemCode" xml:space="preserve">
+    <value>کد نظام پزشکی</value>
+  </data>
+  <data name="MenuBackButtonText" xml:space="preserve">
+    <value>بازگشت به منو اصلی</value>
+  </data>
+  <data name="MenuCloseButtonText" xml:space="preserve">
+    <value>بستن منو</value>
+  </data>
+  <data name="MetaDescription" xml:space="preserve">
+    <value>توضیحات متا سئو</value>
+  </data>
+  <data name="MetaTitle" xml:space="preserve">
+    <value>عنوان متا سئو</value>
+  </data>
+  <data name="MobileAverageOfRate" xml:space="preserve">
+    <value>امتیاز</value>
+  </data>
+  <data name="MobilePicture" xml:space="preserve">
+    <value>تصویر موبایل</value>
+  </data>
+  <data name="Money" xml:space="preserve">
+    <value>مبلغ</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>نام</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>رمز عبور جدید</value>
+  </data>
+  <data name="OldPassword" xml:space="preserve">
+    <value>رمزعبور فعلی</value>
+  </data>
+  <data name="Or" xml:space="preserve">
+    <value>یا</value>
+  </data>
+  <data name="Other" xml:space="preserve">
+    <value>سایر</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>گذرواژه</value>
+  </data>
+  <data name="Payment" xml:space="preserve">
+    <value>پرداخت</value>
+  </data>
+  <data name="Percent" xml:space="preserve">
+    <value>درصد</value>
+  </data>
+  <data name="PhoneContactSection" xml:space="preserve">
+    <value>شماره تماس</value>
+  </data>
+  <data name="PhoneNumbers" xml:space="preserve">
+    <value>شماره تماس ها</value>
+  </data>
+  <data name="Picture" xml:space="preserve">
+    <value>تصویر</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>قیمت</value>
+  </data>
+  <data name="Province" xml:space="preserve">
+    <value>استان</value>
+  </data>
+  <data name="ProvinceName" xml:space="preserve">
+    <value>نام استان</value>
+  </data>
+  <data name="Publisher" xml:space="preserve">
+    <value>ناشر</value>
+  </data>
+  <data name="Question" xml:space="preserve">
+    <value>سوال</value>
+  </data>
+  <data name="RateAverage" xml:space="preserve">
+    <value>میانگین امتیاز بیماران</value>
+  </data>
+  <data name="ReadingTime" xml:space="preserve">
+    <value>زمان خواندن</value>
+  </data>
+  <data name="Recovery" xml:space="preserve">
+    <value>زمان ریکاوری</value>
+  </data>
+  <data name="RememberMe" xml:space="preserve">
+    <value>من را بخاطر بسپار</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>حذف</value>
+  </data>
+  <data name="ResendCode" xml:space="preserve">
+    <value>ارسال مجدد کد</value>
+  </data>
+  <data name="ResetPasswordConfirmationPageTitle" xml:space="preserve">
+    <value>بازیابی کلمه عبور انجام شد</value>
+  </data>
+  <data name="ResetPasswordFormButtonTitle" xml:space="preserve">
+    <value>بازیابی</value>
+  </data>
+  <data name="ResetPasswordPageDescription" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ResetPasswordPageHeadingTitle" xml:space="preserve">
+    <value>بازیابی کلمه عبور</value>
+  </data>
+  <data name="ResetPasswordPageNote" xml:space="preserve">
+    <value>کلمه عبور مورد نظر خود را به همراه کد ارسال شده به ایمیل خود را وارد کنید.</value>
+  </data>
+  <data name="ResetPasswordPageTitle" xml:space="preserve">
+    <value>بازیابی کلمه عبور</value>
+  </data>
+  <data name="Review" xml:space="preserve">
+    <value>بررسی نمونه کار</value>
+  </data>
+  <data name="ReviewPage" xml:space="preserve">
+    <value>صفحه بازخوردها</value>
+  </data>
+  <data name="Row" xml:space="preserve">
+    <value>ردیف</value>
+  </data>
+  <data name="Rules" xml:space="preserve">
+    <value>قوانین و مقررات</value>
+  </data>
+  <data name="SeeMore" xml:space="preserve">
+    <value>مشاهده بیشتر</value>
+  </data>
+  <data name="Seen" xml:space="preserve">
+    <value>مشاهده</value>
+  </data>
+  <data name="Share" xml:space="preserve">
+    <value>اشتراک گزاری</value>
+  </data>
+  <data name="ShareButtonText" xml:space="preserve">
+    <value>اشتراک گزاری</value>
+  </data>
+  <data name="ShareModalBackButtonText" xml:space="preserve">
+    <value>بستن</value>
+  </data>
+  <data name="ShareModalCopyButtonText" xml:space="preserve">
+    <value>کپی لینک</value>
+  </data>
+  <data name="ShareModalText" xml:space="preserve">
+    <value>این صفحه را با دوستان خود به اشتراک بگذارید!</value>
+  </data>
+  <data name="ShareModalTitle" xml:space="preserve">
+    <value>اشتراک گزاری</value>
+  </data>
+  <data name="ShowMoreButton" xml:space="preserve">
+    <value>نمایشه همه</value>
+  </data>
+  <data name="SignInFormButtonTitle" xml:space="preserve">
+    <value>ورود به حساب کاربری</value>
+  </data>
+  <data name="SignInPageDescription" xml:space="preserve">
+    <value>خوشحالم که دوباره می بینیمت
+لطفا وارد حساب کاربری خود شوید</value>
+  </data>
+  <data name="SignInPageHeadingTitle" xml:space="preserve">
+    <value>خوش برگشتی</value>
+  </data>
+  <data name="SignInPageTitle" xml:space="preserve">
+    <value>ورود به سایت</value>
+  </data>
+  <data name="SignUpFormButtonTitle" xml:space="preserve">
+    <value>ثبت نام</value>
+  </data>
+  <data name="SignUpPageDescription" xml:space="preserve">
+    <value>برای ایجاد حساب کاربری و شروع، اطلاعات خود را در زیر وارد کنید</value>
+  </data>
+  <data name="SignUpPageHeadingTitle" xml:space="preserve">
+    <value>خوش آمدی</value>
+  </data>
+  <data name="SignUpPageTitle" xml:space="preserve">
+    <value>ثبت نام در سایت</value>
+  </data>
+  <data name="Slug" xml:space="preserve">
+    <value>مسیر یکتا (انگلیسی)</value>
+  </data>
+  <data name="SocialMediaContactSection" xml:space="preserve">
+    <value>شبکه های اجتماعی</value>
+  </data>
+  <data name="SocialMedias" xml:space="preserve">
+    <value>آدرس شبکه های اجتماعی</value>
+  </data>
+  <data name="Sort" xml:space="preserve">
+    <value>ترتیب</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>وضعیت</value>
+  </data>
+  <data name="StayDays" xml:space="preserve">
+    <value>روزهای اقامت</value>
+  </data>
+  <data name="Subject" xml:space="preserve">
+    <value>موضوع</value>
+  </data>
+  <data name="SubTitle" xml:space="preserve">
+    <value>زیرعنوان</value>
+  </data>
+  <data name="Summary" xml:space="preserve">
+    <value>خلاصه</value>
+  </data>
+  <data name="Tag" xml:space="preserve">
+    <value>برچسب</value>
+  </data>
+  <data name="Telegram" xml:space="preserve">
+    <value>تلگرام</value>
+  </data>
+  <data name="Text" xml:space="preserve">
+    <value>متن</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>عنوان</value>
+  </data>
+  <data name="Today" xml:space="preserve">
+    <value>امروز</value>
+  </data>
+  <data name="TotalStay" xml:space="preserve">
+    <value>دوران نقاهت</value>
+  </data>
+  <data name="Transaction" xml:space="preserve">
+    <value>تراکنش</value>
+  </data>
+  <data name="TransactionType" xml:space="preserve">
+    <value>نوع تراکنش</value>
+  </data>
+  <data name="Treatment" xml:space="preserve">
+    <value>بیمار</value>
+  </data>
+  <data name="Twitter" xml:space="preserve">
+    <value>توییتر</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>نوع</value>
+  </data>
+  <data name="UpdateDate" xml:space="preserve">
+    <value>تاریخ بروزرسانی</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>کاربر</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>شناسه‌ کاربری</value>
+  </data>
+  <data name="UserRole" xml:space="preserve">
+    <value>نقش کاربر</value>
+  </data>
+  <data name="ValidDateFrom" xml:space="preserve">
+    <value>اعتبار از تاریخ</value>
+  </data>
+  <data name="ValidDateTo" xml:space="preserve">
+    <value>اعتبار تا تاریخ</value>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>مقدار</value>
+  </data>
+  <data name="VerificationEmailFormButtonTitle" xml:space="preserve">
+    <value>تأیید حساب</value>
+  </data>
+  <data name="VerificationEmailPageDescription" xml:space="preserve">
+    <value>لطفاً با وارد کردن کد تأیید حساب خود را تأیید کنید</value>
+  </data>
+  <data name="VerificationEmailPageHeadingTitle" xml:space="preserve">
+    <value>حساب کاربری خود را تأیید کنید</value>
+  </data>
+  <data name="VerificationEmailPageNote" xml:space="preserve">
+    <value>کد ارسال شده به ایمیل خود را وارد کنید تا حساب کاربری شما فعال شود</value>
+  </data>
+  <data name="VerificationEmailPageTitle" xml:space="preserve">
+    <value>تأیید حساب کاربری</value>
+  </data>
+  <data name="Video" xml:space="preserve">
+    <value>ویدئو</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>بازدید</value>
+  </data>
+  <data name="Wallet" xml:space="preserve">
+    <value>کیف پول</value>
+  </data>
+  <data name="Whatsapp" xml:space="preserve">
+    <value>واتساپ</value>
+  </data>
+  <data name="Year" xml:space="preserve">
+    <value>سال</value>
+  </data>
+  <data name="NationalCode" xml:space="preserve">
+    <value>کد ملی</value>
+  </data>
+</root>

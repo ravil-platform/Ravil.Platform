@@ -6,3 +6,6 @@ global using Microsoft.AspNetCore.Mvc;
 global using Persistence.Contracts;
 global using ViewModels.Filter.User;
 global using Application;
+global using AutoMapper;
+global using Domain.Entities.User;
+global using ViewModels.User;
