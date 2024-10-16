@@ -1,6 +1,4 @@
-﻿using Common.Utilities.Extensions;
-
-namespace Persistence.Entities.User.Repositories;
+﻿namespace Persistence.Entities.User.Repositories;
 
 public class ApplicationUserRepository : Repository<ApplicationUser>, IApplicationUserRepository
 {
@@ -35,37 +33,55 @@ public class ApplicationUserRepository : Repository<ApplicationUser>, IApplicati
             query = query.Where(a => a.Lastname!.Contains(usersFilterViewModel.Lastname.Trim()));
         }
 
+        if (!string.IsNullOrWhiteSpace(usersFilterViewModel.NationalCode))
+        {
+            query = query.Where(a => a.NationalCode!.Contains(usersFilterViewModel.NationalCode.Trim()));
+        }
 
+        if (!string.IsNullOrWhiteSpace(usersFilterViewModel.Phone))
+        {
+            query = query.Where(a => a.Phone!.Contains(usersFilterViewModel.Phone.Trim()));
+        }
 
-        //try
-        //{
-        //    if (UserFilterViewModel.RegisterDateFrom != null)
-        //    {
-        //        PersianCalendar PersianCalendar = new PersianCalendar();
+        if (!string.IsNullOrWhiteSpace(usersFilterViewModel.UserName))
+        {
+            query = query.Where(a => a.UserName!.Contains(usersFilterViewModel.UserName.Trim()));
+        }
 
-        //        int Year = UserFilterViewModel.RegisterDateFrom.Value.Year;
-        //        int Month = UserFilterViewModel.RegisterDateFrom.Value.Month;
-        //        int Day = UserFilterViewModel.RegisterDateFrom.Value.Day;
+        if (usersFilterViewModel.Active != null)
+        {
+            query = query.Where(a => a.PhoneNumberConfirmed == usersFilterViewModel.Active);
+        }
 
-        //        DateTime RegisterDateFrom = PersianCalendar.ToDateTime(Year, Month, Day, 00, 00, 00, 00);
+        try
+        {
+            if (usersFilterViewModel.RegisterDateFrom != null)
+            {
+                var persianCalendar = new PersianCalendar();
 
-        //        query = query.Where(U => U.CreatedDate >= RegisterDateFrom);
-        //    }
+                var year = usersFilterViewModel.RegisterDateFrom.Value.Year;
+                var month = usersFilterViewModel.RegisterDateFrom.Value.Month;
+                var day = usersFilterViewModel.RegisterDateFrom.Value.Day;
 
-        //    if (UserFilterViewModel.RegisterDateTo != null)
-        //    {
-        //        PersianCalendar PersianCalendar = new PersianCalendar();
+                var registerDateFrom = persianCalendar.ToDateTime(year, month, day, 00, 00, 00, 00);
 
-        //        int Year = UserFilterViewModel.RegisterDateTo.Value.Year;
-        //        int Month = UserFilterViewModel.RegisterDateTo.Value.Month;
-        //        int Day = UserFilterViewModel.RegisterDateTo.Value.Day;
+                query = query.Where(a => a.RegisterDate >= registerDateFrom);
+            }
 
-        //        DateTime RegisterDateTo = PersianCalendar.ToDateTime(Year, Month, Day, 23, 59, 59, 59);
+            if (usersFilterViewModel.RegisterDateTo != null)
+            {
+                var persianCalendar = new PersianCalendar();
 
-        //        query = query.Where(U => U.CreatedDate <= RegisterDateTo);
-        //    }
-        //}
-        //catch { }
+                var year = usersFilterViewModel.RegisterDateTo.Value.Year;
+                var month = usersFilterViewModel.RegisterDateTo.Value.Month;
+                var day = usersFilterViewModel.RegisterDateTo.Value.Day;
+
+                var registerDateTo = persianCalendar.ToDateTime(year, month, day, 23, 59, 59, 59);
+
+                query = query.Where(a => a.RegisterDate <= registerDateTo);
+            }
+        }
+        catch { }
         #endregion
 
         usersFilterViewModel.Build(query.Count()).SetEntities(query);
@@ -73,11 +89,125 @@ public class ApplicationUserRepository : Repository<ApplicationUser>, IApplicati
         return usersFilterViewModel;
     }
 
-    public override Task InsertAsync(ApplicationUser entity)
+    public async Task RemoveAsync(Guid id, CancellationToken cancellationToken)
+    {
+        var user = await GetByIdAsync(id, cancellationToken);
+
+        if (user is null) return;
+
+        user.IsDeleted = true;
+
+        ApplicationDbContext.Users.Update(user);
+    }
+
+    public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
+    {
+        var user = await GetByIdAsync(id, cancellationToken);
+
+        if (user is null) return;
+
+        ApplicationDbContext.Users.Remove(user);
+    }
+
+    public async Task RestoreAsync(Guid id, CancellationToken cancellationToken)
+    {
+        var user = await GetByIdAsync(id, cancellationToken);
+
+        if (user is null) return;
+
+        user.IsDeleted = false;
+
+        ApplicationDbContext.Users.Update(user);
+    }
+
+    public async Task ConfirmPhoneAsync(Guid id, CancellationToken cancellationToken)
+    {
+        var user = await GetByIdAsync(id, cancellationToken);
+
+        if (user is null) return;
+
+        user.PhoneNumberConfirmed = true;
+
+        ApplicationDbContext.Users.Update(user);
+    }
+
+    public async Task UnConfirmPhoneAsync(Guid id, CancellationToken cancellationToken)
+    {
+        var user = await GetByIdAsync(id, cancellationToken);
+
+        if (user is null) return;
+
+        user.PhoneNumberConfirmed = false;
+
+        ApplicationDbContext.Users.Update(user);
+    }
+
+    public async Task ConfirmEmailAsync(Guid id, CancellationToken cancellationToken)
+    {
+        var user = await GetByIdAsync(id, cancellationToken);
+
+        if (user is null) return;
+
+        user.EmailConfirmed = true;
+
+        ApplicationDbContext.Users.Update(user);
+    }
+
+    public async Task UnConfirmEmailAsync(Guid id, CancellationToken cancellationToken)
+    {
+        var user = await GetByIdAsync(id, cancellationToken);
+
+        if (user is null) return;
+
+        user.EmailConfirmed = false;
+
+        ApplicationDbContext.Users.Update(user);
+    }
+
+    public async Task<bool> LockAsync(Guid id, string lockoutReason, UserManager<ApplicationUser> userManager)
+    {
+        var user = await userManager.FindByIdAsync(id.ToString());
+
+        if (user is null) return false;
+
+        user.LockoutReason = lockoutReason;
+
+        await userManager.SetLockoutEnabledAsync(user, true);
+
+        var result = await userManager.SetLockoutEndDateAsync(user, DateTime.Now.AddYears(10));
+
+        if (!result.Succeeded) return false;
+
+        var updateResult = await userManager.UpdateAsync(user);
+
+        return updateResult.Succeeded;
+    }
+
+    public async Task<bool> UnLockAsync(Guid id, UserManager<ApplicationUser> userManager)
+    {
+        var user = await userManager.FindByIdAsync(id.ToString());
+
+        if (user is null) return false;
+
+        user.LockoutReason = null;
+
+        await userManager.SetLockoutEnabledAsync(user, false);
+
+        var result = await userManager.SetLockoutEndDateAsync(user, null);
+
+        if (!result.Succeeded) return false;
+
+        var updateResult = await userManager.UpdateAsync(user);
+
+        return updateResult.Succeeded;
+    }
+
+
+    public override Task InsertAsync(ApplicationUser entity, CancellationToken cancellationToken)
     {
         entity.PasswordHash = Security.GetSha256Hash(entity.PasswordHash!);
         entity.PhoneNumberConfirmed = true;
 
-        return base.InsertAsync(entity);
+        return base.InsertAsync(entity, cancellationToken);
     }
 }

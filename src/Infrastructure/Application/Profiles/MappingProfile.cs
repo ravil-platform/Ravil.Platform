@@ -9,6 +9,7 @@ namespace Application.Profiles
         public MappingProfile() : base()
         {
             CreateMap<CreateUserViewModel, ApplicationUser>().ReverseMap();
+            CreateMap<UpdateUserViewModel, ApplicationUser>().ReverseMap();
         }
     }
 }

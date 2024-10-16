@@ -17,10 +17,10 @@
     <div class="shadow-bottom"></div>
     <div class="main-menu-content">
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation" data-icon-style="lines">
-            <li class=" nav-item">
+            <li class="nav-item">
                 <a ><i class="menu-livicon" data-icon="desktop"></i><span class="menu-title" data-i18n="Dashboard">مدیریت کاربران</span></a>
                 <ul class="menu-content">
-                    <li class="active">
+                    <li class="@(selected == "Users_Index" ? "active" : "null")">
                         <a asp-controller="Users" asp-action="Index"><i class="bx bx-left-arrow-alt"></i><span class="menu-item" data-i18n="eCommerce">مشاهده لیست</span></a>
                     </li>
                     <li>
@@ -31,7 +31,7 @@
             <li class=" navigation-header">
                 <span>برنامه ها</span>
             </li>
-            <li class=" nav-item">
+            <li class="disabled nav-item">
                 <a href="#"><i class="menu-livicon" data-icon="notebook"></i><span class="menu-title" data-i18n="Invoice">صورتحساب</span></a>
                 <ul class="menu-content">
                     <li>

@@ -1,7 +1,9 @@
 ﻿namespace ViewModels.User
 {
-    public class CreateUserViewModel
+    public class UpdateUserViewModel
     {
+        public Guid Id { get; set; }
+
         [Display(Name = nameof(DisplayNames.FirstName), ResourceType = typeof(DisplayNames))]
         public string? Firstname { get; set; }
 
@@ -11,13 +13,10 @@
 
 
         [Display(Name = nameof(DisplayNames.Username), ResourceType = typeof(DisplayNames))]
-        [Required(ErrorMessageResourceName = nameof(Validations.Required), ErrorMessageResourceType = typeof(Validations))]
-        public string UserName { get; set; } = null!;
-
+        public string? UserName { get; set; }
 
         [Display(Name = nameof(DisplayNames.Password), ResourceType = typeof(DisplayNames))]
-        [Required(ErrorMessageResourceName = nameof(Validations.Required), ErrorMessageResourceType = typeof(Validations))]
-        public string PasswordHash { get; set; } = null!;
+        public string? PasswordHash { get; set; }
 
 
         [Display(Name = nameof(DisplayNames.NationalCode), ResourceType = typeof(DisplayNames))]

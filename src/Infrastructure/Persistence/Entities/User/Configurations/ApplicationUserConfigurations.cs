@@ -33,8 +33,7 @@ namespace Persistence.Entities.User.Configurations
             builder.Property(u => u.UserNameType);
 
 
-            var adminPassword = Security.GetSha256Hash("Avicen_AdminP@ssword1");
-            var userPassword = Security.GetSha256Hash("Avicen_UserP@ssword1");
+            var hasher = new PasswordHasher<ApplicationUser>();
 
             builder.HasData(
                 new ApplicationUser
@@ -46,7 +45,7 @@ namespace Persistence.Entities.User.Configurations
                     Lastname = "System",
                     UserName = "admin@localhost.com",
                     NormalizedUserName = "ADMIN@LOCALHOST.COM",
-                    PasswordHash = adminPassword,
+                    PasswordHash = hasher.HashPassword(null, "Avicen_AdminP@ssword1"),
                     EmailConfirmed = true,
                 },
                 new ApplicationUser
@@ -58,7 +57,7 @@ namespace Persistence.Entities.User.Configurations
                     Lastname = "User",
                     UserName = "user@localhost.com",
                     NormalizedUserName = "USER@LOCALHOST.COM",
-                    PasswordHash = userPassword,
+                    PasswordHash = hasher.HashPassword(null, "Avicen_UserP@ssword1"),
                     EmailConfirmed = true,
                 });
             //relations

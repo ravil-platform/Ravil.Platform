@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence.Context;
 
@@ -11,9 +12,11 @@ using Persistence.Context;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241015061721_mig-SetIdForActionHistoryModel")]
+    partial class migSetIdForActionHistoryModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -273,7 +276,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("UpdateDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 10, 16, 9, 59, 19, 858, DateTimeKind.Local).AddTicks(889));
+                        .HasDefaultValue(new DateTime(2024, 10, 15, 9, 47, 20, 180, DateTimeKind.Local).AddTicks(8281));
 
                     b.HasKey("Id");
 
@@ -3031,7 +3034,7 @@ namespace Persistence.Migrations
                             Id = "05446344-f9cc-4566-bd2c-36791b4e28ed",
                             AccessFailedCount = 0,
                             BlockedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "27d67e17-a7e1-493e-9b9f-70d1a099ac89",
+                            ConcurrencyStamp = "ff49a00a-69e0-4a46-8c57-8ded34f3c2fd",
                             Email = "admin@localhost.com",
                             EmailConfirmed = true,
                             ExpireTimeSpanBlock = 0,
@@ -3043,10 +3046,10 @@ namespace Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "ADMIN@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEH3w0E5gBuk5H6xPaEobHM5T1DhHr1NeJYI9W1mt5kUSlmTLBCKoYxNLxJ7IQxIB4g==",
+                            PasswordHash = "L0DcCkwhQ8SHMfeN16k4Zoz5LYQWfT3mypSt6r4M8oo=",
                             PhoneNumberConfirmed = false,
-                            RegisterDate = new DateTime(2024, 10, 16, 9, 59, 19, 872, DateTimeKind.Local).AddTicks(5506),
-                            SecurityStamp = "2e868398-a248-4c35-86de-00010c63f526",
+                            RegisterDate = new DateTime(2024, 10, 15, 9, 47, 20, 191, DateTimeKind.Local).AddTicks(8881),
+                            SecurityStamp = "d09e28f4-2068-495e-9234-99d9cb2a4513",
                             TwoFactorEnabled = false,
                             UpdateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserIsBlocked = false,
@@ -3058,7 +3061,7 @@ namespace Persistence.Migrations
                             Id = "2ec9f480-7288-4d0f-a1cd-53cc89968b45",
                             AccessFailedCount = 0,
                             BlockedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "81e62d2d-b117-43b7-995a-dde81d899219",
+                            ConcurrencyStamp = "3535af37-b6a1-4c6b-8d8d-ff98cb3b0200",
                             Email = "user@localhost.com",
                             EmailConfirmed = true,
                             ExpireTimeSpanBlock = 0,
@@ -3070,10 +3073,10 @@ namespace Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "USER@LOCALHOST.COM",
                             NormalizedUserName = "USER@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDDo35bUOj0uMQ6urWJcmRAGsYTar4oi6g+OR8qteZ+4i6cbs/A4cxzj9Vf6kV7H5Q==",
+                            PasswordHash = "sabjcPE0ts3t+tJm3f6+uh8tpUhjfvO6NpJikNGh1kk=",
                             PhoneNumberConfirmed = false,
-                            RegisterDate = new DateTime(2024, 10, 16, 9, 59, 19, 926, DateTimeKind.Local).AddTicks(982),
-                            SecurityStamp = "cb0e7634-7186-4d01-a3b3-400b15b207ba",
+                            RegisterDate = new DateTime(2024, 10, 15, 9, 47, 20, 191, DateTimeKind.Local).AddTicks(8965),
+                            SecurityStamp = "319b8a4f-5442-4b68-aca5-ef4cd7a1b315",
                             TwoFactorEnabled = false,
                             UpdateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserIsBlocked = false,
