@@ -2,7 +2,19 @@
 
 public class FaqRepository : Repository<Domain.Entities.Faq.Faq>, IFaqRepository
 {
-    internal FaqRepository(DbContext databaseContext) : base(databaseContext)
+    public ApplicationDbContext ApplicationDbContext { get; }
+
+    internal FaqRepository(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
     {
+        ApplicationDbContext = applicationDbContext;
+    }
+
+    public async Task DeleteAsync(int id, CancellationToken cancellationToken)
+    {
+        var faq = await GetByIdAsync(id, cancellationToken);
+
+        if (faq is null) return;
+
+        await DeleteAsync(faq, cancellationToken);
     }
 }

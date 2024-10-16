@@ -3,9 +3,9 @@
 public class ApplicationUserRepository : Repository<ApplicationUser>, IApplicationUserRepository
 {
     public ApplicationDbContext ApplicationDbContext { get; }
-    internal ApplicationUserRepository(ApplicationDbContext databaseContext) : base(databaseContext)
+    internal ApplicationUserRepository(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
     {
-        ApplicationDbContext = databaseContext;
+        ApplicationDbContext = applicationDbContext;
     }
 
     public UsersFilterViewModel GetUsersByFilter(UsersFilterViewModel usersFilterViewModel)
@@ -106,7 +106,7 @@ public class ApplicationUserRepository : Repository<ApplicationUser>, IApplicati
 
         if (user is null) return;
 
-        ApplicationDbContext.Users.Remove(user);
+        await DeleteAsync(user, cancellationToken);
     }
 
     public async Task RestoreAsync(Guid id, CancellationToken cancellationToken)

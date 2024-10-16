@@ -67,6 +67,11 @@
         {
             return await DbSet.FindAsync(id.ToString(), cancellationToken);
         }
+        
+        public virtual async Task<T> GetByIdAsync(int id, CancellationToken cancellationToken)
+        {
+            return await DbSet.FindAsync(id.ToString(), cancellationToken);
+        }
 
         public virtual async Task<bool> DeleteByIdAsync(Guid id, CancellationToken cancellationToken)
         {
