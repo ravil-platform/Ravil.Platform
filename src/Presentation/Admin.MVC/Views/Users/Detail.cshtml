@@ -86,17 +86,17 @@
                         <table class="table table-borderless line-height-1">
                             <tbody>
                                 <tr>
-                                    <td>نام و نام خانوادگی:</td>
+                                    <td>@(Resources.General.DisplayNames.FullName):</td>
                                     <td class="users-view-name">@Model.Firstname @Model.Lastname</td>
                                 </tr>
 
                                 <tr>
-                                    <td>نام کاربری:</td>
+                                    <td>@Html.DisplayNameFor(a => a.UserName):</td>
                                     <td class="users-view-username">@Model.UserName</td>
                                 </tr>
 
                                 <tr>
-                                    <td>موبایل:</td>
+                                    <td>@(Resources.General.DisplayNames.CellPhoneNumber):</td>
                                     @if (Model.PhoneNumberConfirmed)
                                     {
                                         <td class="users-view-username text-success">@Model.Phone</td>
@@ -108,7 +108,7 @@
                                 </tr>
 
                                 <tr>
-                                    <td>ایمیل:</td>
+                                    <td>@(Resources.General.DisplayNames.EmailAddress):</td>
                                     @if (Model.EmailConfirmed)
                                     {
                                         <td class="users-view-email text-success">@Model.Email</td>

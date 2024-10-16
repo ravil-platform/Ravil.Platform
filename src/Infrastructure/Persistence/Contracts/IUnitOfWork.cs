@@ -1,4 +1,6 @@
-﻿namespace Persistence.Contracts
+﻿using Persistence.Entities.User.Repositories.Interfaces;
+
+namespace Persistence.Contracts
 {
     public interface IUnitOfWork : RNX.Persistence.IUnitOfWork
     {

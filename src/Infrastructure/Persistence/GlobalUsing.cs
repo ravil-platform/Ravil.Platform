@@ -66,6 +66,11 @@ global using Persistence.Entities.Team.Repositories;
 global using Persistence.Entities.Transaction.Repositories;
 global using Persistence.Entities.UploadedFile.Repositories;
 global using Persistence.Entities.User.Repositories;
+global using Persistence.Entities.User.Repositories.Interfaces;
+global using Persistence.Entities.User.Repositories.Implementations;
+
 global using RNX.Persistence;
+
 global using System.Globalization;
 global using ViewModels.Filter.User;
+
