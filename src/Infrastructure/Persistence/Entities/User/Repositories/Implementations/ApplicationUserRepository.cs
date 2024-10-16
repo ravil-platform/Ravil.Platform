@@ -1,4 +1,4 @@
-﻿namespace Persistence.Entities.User.Repositories;
+﻿namespace Persistence.Entities.User.Repositories.Implementations;
 
 public class ApplicationUserRepository : Repository<ApplicationUser>, IApplicationUserRepository
 {
