@@ -1672,6 +1672,15 @@ namespace Resources.General {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to موردی برای نمایش وجود ندارد!.
+        /// </summary>
+        public static string ListEmpty {
+            get {
+                return ResourceManager.GetString("ListEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to لوگو.
         /// </summary>
         public static string Logo {
@@ -1843,6 +1852,15 @@ namespace Resources.General {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to والد.
+        /// </summary>
+        public static string Parent {
+            get {
+                return ResourceManager.GetString("Parent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to گذرواژه.
         /// </summary>
         public static string Password {
@@ -1965,6 +1983,15 @@ namespace Resources.General {
         public static string Recovery {
             get {
                 return ResourceManager.GetString("Recovery", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to تاریخ ثبت نام.
+        /// </summary>
+        public static string RegisterDate {
+            get {
+                return ResourceManager.GetString("RegisterDate", resourceCulture);
             }
         }
         

@@ -16,5 +16,12 @@ public class CityBaseConfigurations : IEntityTypeConfiguration<CityBase>
             .HasOne(c => c.City)
             .WithOne(c => c.CityBase)
             .HasForeignKey<Domain.Entities.City.City>(c => c.CityBaseId);
+
+        builder
+            .HasOne(c => c.StateBase)
+            .WithOne(s => s.CityBase)
+            .HasForeignKey<CityBase>(c => c.StateBaseId)
+            .IsRequired(false);
+
     }
 }

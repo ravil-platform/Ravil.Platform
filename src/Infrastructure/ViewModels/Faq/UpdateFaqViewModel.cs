@@ -1,4 +1,6 @@
-﻿namespace ViewModels.Faq;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+
+namespace ViewModels.Faq;
 
 public class UpdateFaqViewModel
 {
@@ -28,4 +30,10 @@ public class UpdateFaqViewModel
     [Display(Name = nameof(DisplayNames.Icon), ResourceType = typeof(DisplayNames))]
     [Required(ErrorMessageResourceName = nameof(Validations.Required), ErrorMessageResourceType = typeof(Validations))]
     public int CategoryId { get; set; }
+
+    public SelectList? FaqCategories { get; set; }
+
+    public string CategoryName { get; set; } = null!;
+
+    public string IconName { get; set; } = null!;
 }

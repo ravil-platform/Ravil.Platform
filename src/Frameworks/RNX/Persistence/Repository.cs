@@ -1,4 +1,6 @@
-﻿namespace RNX.Persistence
+﻿using System.Linq.Expressions;
+
+namespace RNX.Persistence
 {
     public abstract class Repository<T> :
         object, IRepository<T> where T : class, Domain.IEntity
@@ -17,14 +19,14 @@
         protected DbContext DatabaseContext { get; }
 
 
-        public virtual async Task InsertAsync(T entity, CancellationToken cancellationToken)
+        public virtual async Task InsertAsync(T entity)
         {
             if (entity == null)
             {
                 throw new ArgumentNullException(paramName: nameof(entity));
             }
 
-            await DbSet.AddAsync(entity, cancellationToken);
+            await DbSet.AddAsync(entity);
         }
 
         protected virtual void Update(T entity)
@@ -37,7 +39,7 @@
             DbSet.Update(entity);
         }
 
-        public virtual async Task UpdateAsync(T entity, CancellationToken cancellationToken)
+        public virtual async Task UpdateAsync(T entity)
         {
             if (entity == null)
             {
@@ -47,10 +49,10 @@
             await Task.Run(() =>
             {
                 DbSet.Update(entity);
-            }, cancellationToken);
+            });
         }
 
-        public virtual async Task DeleteAsync(T entity, CancellationToken cancellationToken)
+        public virtual async Task DeleteAsync(T entity)
         {
             if (entity == null)
             {
@@ -60,36 +62,50 @@
             await Task.Run(() =>
             {
                 DbSet.Remove(entity);
-            }, cancellationToken);
+            });
         }
 
-        public virtual async Task<T> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+        public virtual async Task<T?> GetByIdAsync(Guid id)
         {
-            return await DbSet.FindAsync(id.ToString(), cancellationToken);
-        }
-        
-        public virtual async Task<T> GetByIdAsync(int id, CancellationToken cancellationToken)
-        {
-            return await DbSet.FindAsync(id.ToString(), cancellationToken);
+            return await DbSet.FindAsync(id.ToString());
         }
 
-        public virtual async Task<bool> DeleteByIdAsync(Guid id, CancellationToken cancellationToken)
+        public virtual async Task<T?> GetByIdAsync(int id)
         {
-            T entity = await GetByIdAsync(id, cancellationToken);
+            return await DbSet.FindAsync(id);
+        }
+
+        public async Task<T?> GetByPredicate(Expression<Func<T, bool>> predicate)
+        {
+            var result = await DbSet.Where(predicate).SingleOrDefaultAsync();
+
+            return result;
+        }
+
+        public async Task<ICollection<T>> GetAllAsync(Expression<Func<T, bool>> predicate)
+        {
+            var result = await DbSet.Where(predicate).ToListAsync();
+
+            return result;
+        }
+
+        public virtual async Task<bool> DeleteByIdAsync(Guid id)
+        {
+            T entity = await GetByIdAsync(id);
 
             if (entity == null)
             {
                 return false;
             }
 
-            await DeleteAsync(entity, cancellationToken);
+            await DeleteAsync(entity);
 
             return true;
         }
 
-        public virtual async Task<IList<T>> GetAllAsync(CancellationToken cancellationToken)
+        public virtual async Task<ICollection<T?>> GetAllAsync()
         {
-            var result = await DbSet.ToListAsync(cancellationToken);
+            var result = await DbSet.ToListAsync();
 
             return result;
         }

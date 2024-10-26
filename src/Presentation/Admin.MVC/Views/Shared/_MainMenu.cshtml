@@ -25,29 +25,23 @@
                     </li>
                 </ul>
             </li>
+            
             <li class=" navigation-header">
                 <span>مدیریت صفحات</span>
             </li>
-            <li class="disabled nav-item">
-                <a href="#"><i class="menu-livicon" data-icon="notebook"></i><span class="menu-title" data-i18n="Invoice">صورتحساب</span></a>
+
+            <li class="nav-item">
+                <a><i class="menu-livicon" data-icon="notebook"></i><span class="menu-title" data-i18n="Invoice">سوالات متداول</span></a>
                 <ul class="menu-content">
                     <li>
-                        <a href="app-invoice-list.html"><i class="bx bx-left-arrow-alt"></i><span class="menu-item" data-i18n="Invoice List">لیست صورتحساب ها</span></a>
+                        <a asp-controller="Faq" asp-action="Index"><i class="bx bx-left-arrow-alt"></i><span class="menu-item" >مشاهده لیست</span></a>
                     </li>
                     <li>
-                        <a href="app-invoice.html"><i class="bx bx-left-arrow-alt"></i><span class="menu-item" data-i18n="Invoice">صورتحساب</span></a>
-                    </li>
-                    <li>
-                        <a href="app-invoice-edit.html"><i class="bx bx-left-arrow-alt"></i><span class="menu-item" data-i18n="Invoice Edit">ویرایش صورتحساب</span></a>
-                    </li>
-                    <li>
-                        <a href="app-invoice-add.html"><i class="bx bx-left-arrow-alt"></i><span class="menu-item" data-i18n="Invoice Add">افزودن صورتحساب</span></a>
+                        <a asp-controller="Faq" asp-action="IndexFaqCategories"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">دسته بندی</span></a>
                     </li>
                 </ul>
             </li>
-   
-           
-          
+            
             <li class="disabled nav-item">
                 <a href="#"><i class="menu-livicon" data-icon="morph-preview"></i><span class="menu-title" data-i18n="Disabled Menu">گزینه غیرفعال</span></a>
             </li>

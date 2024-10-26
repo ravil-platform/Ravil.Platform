@@ -1,3 +1,6 @@
+﻿using Domain.Entities.Histories.Enums;
+using Domain.Entities.Histories;
+
 namespace Admin.MVC.Controllers
 {
     public class HomeController : BaseController
@@ -13,5 +16,9 @@ namespace Admin.MVC.Controllers
         {
             return View();
         }
+
+
+
+     
     }
 }

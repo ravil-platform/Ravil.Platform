@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-
-namespace Admin.MVC.Controllers
+﻿namespace Admin.MVC.Controllers
 {
     public class UsersController : BaseController
     {
@@ -29,14 +27,14 @@ namespace Admin.MVC.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ErrorAlert();
+                ErrorAlert(Errors.ModelStateIsNotValidForm);
 
-                return RedirectToAction();
+                return RedirectToAction("Index");
             }
 
             var user = Mapper.Map<ApplicationUser>(createUserViewModel);
 
-            await UnitOfWork.ApplicationUserRepository.InsertAsync(user, CancellationToken.None);
+            await UnitOfWork.ApplicationUserRepository.InsertAsync(user);
 
             try
             {
@@ -57,7 +55,7 @@ namespace Admin.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Update(Guid id)
         {
-            var user = await UnitOfWork.ApplicationUserRepository.GetByIdAsync(id, CancellationToken.None);
+            var user = await UnitOfWork.ApplicationUserRepository.GetByIdAsync(id);
 
             var model = Mapper.Map<UpdateUserViewModel>(user);
 
@@ -67,11 +65,11 @@ namespace Admin.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(UpdateUserViewModel updateUserViewModel, bool detailPage = false)
         {
-            var user = await UnitOfWork.ApplicationUserRepository.GetByIdAsync(updateUserViewModel.Id, CancellationToken.None);
+            var user = await UnitOfWork.ApplicationUserRepository.GetByIdAsync(updateUserViewModel.Id);
 
             user = Mapper.Map(updateUserViewModel, user);
 
-            await UnitOfWork.ApplicationUserRepository.UpdateAsync(user, CancellationToken.None);
+            await UnitOfWork.ApplicationUserRepository.UpdateAsync(user);
 
             try
             {
@@ -93,7 +91,7 @@ namespace Admin.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Detail(Guid id)
         {
-            var model = await UnitOfWork.ApplicationUserRepository.GetByIdAsync(id, CancellationToken.None);
+            var model = await UnitOfWork.ApplicationUserRepository.GetByIdAsync(id);
 
             return View(model);
         }
@@ -104,7 +102,7 @@ namespace Admin.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Remove(Guid id)
         {
-            await UnitOfWork.ApplicationUserRepository.RemoveAsync(id, CancellationToken.None);
+            await UnitOfWork.ApplicationUserRepository.RemoveAsync(id);
 
             try
             {
@@ -125,7 +123,7 @@ namespace Admin.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(Guid id)
         {
-            await UnitOfWork.ApplicationUserRepository.DeleteAsync(id, CancellationToken.None);
+            await UnitOfWork.ApplicationUserRepository.DeleteAsync(id);
 
             try
             {
@@ -146,7 +144,7 @@ namespace Admin.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Restore(Guid id)
         {
-            await UnitOfWork.ApplicationUserRepository.RestoreAsync(id, CancellationToken.None);
+            await UnitOfWork.ApplicationUserRepository.RestoreAsync(id);
 
             try
             {
@@ -218,7 +216,7 @@ namespace Admin.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> ConfirmPhone(Guid id)
         {
-            await UnitOfWork.ApplicationUserRepository.ConfirmPhoneAsync(id, CancellationToken.None);
+            await UnitOfWork.ApplicationUserRepository.ConfirmPhoneAsync(id);
 
             try
             {
@@ -239,7 +237,7 @@ namespace Admin.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> UnConfirmPhone(Guid id)
         {
-            await UnitOfWork.ApplicationUserRepository.UnConfirmPhoneAsync(id, CancellationToken.None);
+            await UnitOfWork.ApplicationUserRepository.UnConfirmPhoneAsync(id);
 
             try
             {
@@ -261,7 +259,7 @@ namespace Admin.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> ConfirmEmail(Guid id)
         {
-            await UnitOfWork.ApplicationUserRepository.ConfirmEmailAsync(id, CancellationToken.None);
+            await UnitOfWork.ApplicationUserRepository.ConfirmEmailAsync(id);
 
             try
             {
@@ -282,7 +280,7 @@ namespace Admin.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> UnConfirmEmail(Guid id)
         {
-            await UnitOfWork.ApplicationUserRepository.UnConfirmEmailAsync(id, CancellationToken.None);
+            await UnitOfWork.ApplicationUserRepository.UnConfirmEmailAsync(id);
 
             try
             {

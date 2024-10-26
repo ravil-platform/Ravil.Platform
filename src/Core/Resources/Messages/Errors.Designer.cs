@@ -22,7 +22,7 @@ namespace Resources.Messages {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Errors {
+    public class Errors {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Resources.Messages {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Resources.Messages.Errors", typeof(Errors).Assembly);
@@ -51,7 +51,7 @@ namespace Resources.Messages {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Resources.Messages {
         /// <summary>
         ///   Looks up a localized string similar to عملیات با خطا مواجه شد..
         /// </summary>
-        internal static string ActionsHasError {
+        public static string ActionsHasError {
             get {
                 return ResourceManager.GetString("ActionsHasError", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace Resources.Messages {
         /// <summary>
         ///   Looks up a localized string similar to امکان حذف این {0} وجود ندارد!.
         /// </summary>
-        internal static string CanNotDelete {
+        public static string CanNotDelete {
             get {
                 return ResourceManager.GetString("CanNotDelete", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace Resources.Messages {
         /// <summary>
         ///   Looks up a localized string similar to شماره تلفن همراه قبلا تایید شده است!.
         /// </summary>
-        internal static string CellPhoneNumberAlreadyVerified {
+        public static string CellPhoneNumberAlreadyVerified {
             get {
                 return ResourceManager.GetString("CellPhoneNumberAlreadyVerified", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace Resources.Messages {
         /// <summary>
         ///   Looks up a localized string similar to تکرار کلمه عبور با کلمه عبور وارد شده یکسان نیست..
         /// </summary>
-        internal static string ComparePasswordIsInValid {
+        public static string ComparePasswordIsInValid {
             get {
                 return ResourceManager.GetString("ComparePasswordIsInValid", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace Resources.Messages {
         /// <summary>
         ///   Looks up a localized string similar to عملیات با خطا مواجه شد. جزئیات: {0}.
         /// </summary>
-        internal static string DefaultExceptionError {
+        public static string DefaultExceptionError {
             get {
                 return ResourceManager.GetString("DefaultExceptionError", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace Resources.Messages {
         /// <summary>
         ///   Looks up a localized string similar to  کاربر گرامی ایمیل شما تکراری میباشد..
         /// </summary>
-        internal static string EmailAddressAlreadyExsist {
+        public static string EmailAddressAlreadyExsist {
             get {
                 return ResourceManager.GetString("EmailAddressAlreadyExsist", resourceCulture);
             }
@@ -117,7 +117,7 @@ namespace Resources.Messages {
         /// <summary>
         ///   Looks up a localized string similar to نشانی پست الکترونیکی قبلا تایید شده است!.
         /// </summary>
-        internal static string EmailAddressAlreadyVerified {
+        public static string EmailAddressAlreadyVerified {
             get {
                 return ResourceManager.GetString("EmailAddressAlreadyVerified", resourceCulture);
             }
@@ -126,7 +126,7 @@ namespace Resources.Messages {
         /// <summary>
         ///   Looks up a localized string similar to نشانی پست الکترونیکی شما تایید نشده است!.
         /// </summary>
-        internal static string EmailAddressNotVerified {
+        public static string EmailAddressNotVerified {
             get {
                 return ResourceManager.GetString("EmailAddressNotVerified", resourceCulture);
             }
@@ -135,7 +135,7 @@ namespace Resources.Messages {
         /// <summary>
         ///   Looks up a localized string similar to عملیات ارسال ایمیل بازیابی با خطا مواجه شد. لطفا با پشتیبانی تماس بگیرید.
         /// </summary>
-        internal static string ErrorSendEmailResetPassword {
+        public static string ErrorSendEmailResetPassword {
             get {
                 return ResourceManager.GetString("ErrorSendEmailResetPassword", resourceCulture);
             }
@@ -144,7 +144,7 @@ namespace Resources.Messages {
         /// <summary>
         ///   Looks up a localized string similar to عملیات ارسال ایمیل فعالسازی با خطا مواجه شد. لطفا با پشتیبانی تماس بگیرید.
         /// </summary>
-        internal static string ErrorSendEmailVerification {
+        public static string ErrorSendEmailVerification {
             get {
                 return ResourceManager.GetString("ErrorSendEmailVerification", resourceCulture);
             }
@@ -153,7 +153,7 @@ namespace Resources.Messages {
         /// <summary>
         ///   Looks up a localized string similar to کد فعال‌سازی صحیح نمی‌باشد!.
         /// </summary>
-        internal static string InvalidVerificationKey {
+        public static string InvalidVerificationKey {
             get {
                 return ResourceManager.GetString("InvalidVerificationKey", resourceCulture);
             }
@@ -162,7 +162,7 @@ namespace Resources.Messages {
         /// <summary>
         ///   Looks up a localized string similar to عملیات با خطا مواجه شد. جزئیات: خطای اعتبار سنجی فرم رخ داده است؛ لطفا فرم را بررسی کنید.
         /// </summary>
-        internal static string ModelStateIsNotValid {
+        public static string ModelStateIsNotValid {
             get {
                 return ResourceManager.GetString("ModelStateIsNotValid", resourceCulture);
             }
@@ -171,7 +171,7 @@ namespace Resources.Messages {
         /// <summary>
         ///   Looks up a localized string similar to درخواست شما غیر مجاز است. لطفا فرم ارسالی را بررسی و دوباره ارسال نمائید..
         /// </summary>
-        internal static string ModelStateIsNotValidForm {
+        public static string ModelStateIsNotValidForm {
             get {
                 return ResourceManager.GetString("ModelStateIsNotValidForm", resourceCulture);
             }
@@ -180,7 +180,7 @@ namespace Resources.Messages {
         /// <summary>
         ///   Looks up a localized string similar to متأسفیم که نتوانستید وارد شوید. لطفاً با مالک این سایت تماس بگیرید و مستقیماً برای دسترسی با آنها تماس بگیرید..
         /// </summary>
-        internal static string ModelStateIsNotValidForm1 {
+        public static string ModelStateIsNotValidForm1 {
             get {
                 return ResourceManager.GetString("ModelStateIsNotValidForm1", resourceCulture);
             }
@@ -189,7 +189,7 @@ namespace Resources.Messages {
         /// <summary>
         ///   Looks up a localized string similar to برای ثبت سفارش باید روش پرداخت را انتخاب کنید.
         /// </summary>
-        internal static string NotSelectingPaymentMethod {
+        public static string NotSelectingPaymentMethod {
             get {
                 return ResourceManager.GetString("NotSelectingPaymentMethod", resourceCulture);
             }
@@ -198,7 +198,7 @@ namespace Resources.Messages {
         /// <summary>
         ///   Looks up a localized string similar to خطای ارتباط با سرور رخ داده است. در صورت کسر وجه با فروشگاه تماس حاصل فرمائید. کد پیگیری:  {0}.
         /// </summary>
-        internal static string PaymentExceptionError {
+        public static string PaymentExceptionError {
             get {
                 return ResourceManager.GetString("PaymentExceptionError", resourceCulture);
             }
@@ -207,7 +207,7 @@ namespace Resources.Messages {
         /// <summary>
         ///   Looks up a localized string similar to پرداخت ناموفق بود.
         /// </summary>
-        internal static string PaymentFailedError {
+        public static string PaymentFailedError {
             get {
                 return ResourceManager.GetString("PaymentFailedError", resourceCulture);
             }
@@ -216,7 +216,7 @@ namespace Resources.Messages {
         /// <summary>
         ///   Looks up a localized string similar to خطای ارتباط با سرور درگاه پرداخت.
         /// </summary>
-        internal static string PaymentGatewayServer {
+        public static string PaymentGatewayServer {
             get {
                 return ResourceManager.GetString("PaymentGatewayServer", resourceCulture);
             }
@@ -225,7 +225,7 @@ namespace Resources.Messages {
         /// <summary>
         ///   Looks up a localized string similar to  کاربر گرامی شماره همراه شما تکراری میباشد..
         /// </summary>
-        internal static string PhoneNumberAlreadyExsist {
+        public static string PhoneNumberAlreadyExsist {
             get {
                 return ResourceManager.GetString("PhoneNumberAlreadyExsist", resourceCulture);
             }
@@ -234,7 +234,7 @@ namespace Resources.Messages {
         /// <summary>
         ///   Looks up a localized string similar to شماره تلفن همراه شما تایید نشده است..
         /// </summary>
-        internal static string PhoneNumberNotVerified {
+        public static string PhoneNumberNotVerified {
             get {
                 return ResourceManager.GetString("PhoneNumberNotVerified", resourceCulture);
             }
@@ -243,7 +243,7 @@ namespace Resources.Messages {
         /// <summary>
         ///   Looks up a localized string similar to خطای ورود به سیستم! شماره تلفن همراه یا کلمه عبور را اشتباه وارد کرده باشید..
         /// </summary>
-        internal static string SignInError {
+        public static string SignInError {
             get {
                 return ResourceManager.GetString("SignInError", resourceCulture);
             }
@@ -252,7 +252,7 @@ namespace Resources.Messages {
         /// <summary>
         ///   Looks up a localized string similar to خطای ناشناخته‌ای صورت گرفته است! لطفا با تیم پشتیبانی تماس حاصل فرمایید..
         /// </summary>
-        internal static string UnexpectedError {
+        public static string UnexpectedError {
             get {
                 return ResourceManager.GetString("UnexpectedError", resourceCulture);
             }
@@ -261,7 +261,7 @@ namespace Resources.Messages {
         /// <summary>
         ///   Looks up a localized string similar to خطا در جایگزینی فایل. احتمال دارد فایل در حال استفاده باشد یا مجوز دسترسی در سرور صادر نشده باشد..
         /// </summary>
-        internal static string UnexpectedFileUploadError {
+        public static string UnexpectedFileUploadError {
             get {
                 return ResourceManager.GetString("UnexpectedFileUploadError", resourceCulture);
             }
@@ -270,7 +270,7 @@ namespace Resources.Messages {
         /// <summary>
         ///   Looks up a localized string similar to موجودی کیف پول شما برای پرداخت این سفارش کافی نیست. لطفا کیف پول خود را شارژ کنید.
         /// </summary>
-        internal static string UserWalletInventoryIsNotEnougth {
+        public static string UserWalletInventoryIsNotEnougth {
             get {
                 return ResourceManager.GetString("UserWalletInventoryIsNotEnougth", resourceCulture);
             }

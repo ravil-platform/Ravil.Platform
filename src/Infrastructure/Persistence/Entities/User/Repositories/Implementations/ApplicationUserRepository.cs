@@ -89,9 +89,9 @@ public class ApplicationUserRepository : Repository<ApplicationUser>, IApplicati
         return usersFilterViewModel;
     }
 
-    public async Task RemoveAsync(Guid id, CancellationToken cancellationToken)
+    public async Task RemoveAsync(Guid id)
     {
-        var user = await GetByIdAsync(id, cancellationToken);
+        var user = await GetByIdAsync(id);
 
         if (user is null) return;
 
@@ -100,18 +100,18 @@ public class ApplicationUserRepository : Repository<ApplicationUser>, IApplicati
         ApplicationDbContext.Users.Update(user);
     }
 
-    public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
+    public async Task DeleteAsync(Guid id)
     {
-        var user = await GetByIdAsync(id, cancellationToken);
+        var user = await GetByIdAsync(id);
 
         if (user is null) return;
 
-        await DeleteAsync(user, cancellationToken);
+        await DeleteAsync(user);
     }
 
-    public async Task RestoreAsync(Guid id, CancellationToken cancellationToken)
+    public async Task RestoreAsync(Guid id)
     {
-        var user = await GetByIdAsync(id, cancellationToken);
+        var user = await GetByIdAsync(id);
 
         if (user is null) return;
 
@@ -120,9 +120,9 @@ public class ApplicationUserRepository : Repository<ApplicationUser>, IApplicati
         ApplicationDbContext.Users.Update(user);
     }
 
-    public async Task ConfirmPhoneAsync(Guid id, CancellationToken cancellationToken)
+    public async Task ConfirmPhoneAsync(Guid id)
     {
-        var user = await GetByIdAsync(id, cancellationToken);
+        var user = await GetByIdAsync(id);
 
         if (user is null) return;
 
@@ -131,9 +131,9 @@ public class ApplicationUserRepository : Repository<ApplicationUser>, IApplicati
         ApplicationDbContext.Users.Update(user);
     }
 
-    public async Task UnConfirmPhoneAsync(Guid id, CancellationToken cancellationToken)
+    public async Task UnConfirmPhoneAsync(Guid id)
     {
-        var user = await GetByIdAsync(id, cancellationToken);
+        var user = await GetByIdAsync(id);
 
         if (user is null) return;
 
@@ -142,9 +142,9 @@ public class ApplicationUserRepository : Repository<ApplicationUser>, IApplicati
         ApplicationDbContext.Users.Update(user);
     }
 
-    public async Task ConfirmEmailAsync(Guid id, CancellationToken cancellationToken)
+    public async Task ConfirmEmailAsync(Guid id)
     {
-        var user = await GetByIdAsync(id, cancellationToken);
+        var user = await GetByIdAsync(id);
 
         if (user is null) return;
 
@@ -153,9 +153,9 @@ public class ApplicationUserRepository : Repository<ApplicationUser>, IApplicati
         ApplicationDbContext.Users.Update(user);
     }
 
-    public async Task UnConfirmEmailAsync(Guid id, CancellationToken cancellationToken)
+    public async Task UnConfirmEmailAsync(Guid id)
     {
-        var user = await GetByIdAsync(id, cancellationToken);
+        var user = await GetByIdAsync(id);
 
         if (user is null) return;
 
@@ -203,11 +203,11 @@ public class ApplicationUserRepository : Repository<ApplicationUser>, IApplicati
     }
 
 
-    public override Task InsertAsync(ApplicationUser entity, CancellationToken cancellationToken)
+    public override Task InsertAsync(ApplicationUser entity)
     {
         entity.PasswordHash = Security.GetSha256Hash(entity.PasswordHash!);
         entity.PhoneNumberConfirmed = true;
 
-        return base.InsertAsync(entity, cancellationToken);
+        return base.InsertAsync(entity);
     }
 }

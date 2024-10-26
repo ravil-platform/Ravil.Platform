@@ -8,7 +8,7 @@
 
             builder.HasKey(c => c.Id);
             builder.Property(c => c.Subtitle).IsRequired().HasMaxLength(MaxLength.Title);
-            builder.Property(c => c.Route).IsRequired().HasMaxLength(MaxLength.Slug);
+            builder.Property(c => c.Route).IsRequired(false).HasMaxLength(MaxLength.Slug);
             builder.Property(c => c.Picture).IsRequired(false).HasMaxLength(MaxLength.Picture);
             builder.Property(c => c.Status).IsRequired();
             builder.Property(c => c.IsResizePicture).IsRequired();

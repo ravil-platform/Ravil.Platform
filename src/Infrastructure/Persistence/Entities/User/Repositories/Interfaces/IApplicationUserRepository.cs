@@ -4,15 +4,15 @@ public interface IApplicationUserRepository : IRepository<ApplicationUser>
 {
     UsersFilterViewModel GetUsersByFilter(UsersFilterViewModel usersFilterViewModel);
 
-    Task RemoveAsync(Guid id, CancellationToken cancellationToken);
-    Task DeleteAsync(Guid id, CancellationToken cancellationToken);
-    Task RestoreAsync(Guid id, CancellationToken cancellationToken);
+    Task RemoveAsync(Guid id);
+    Task DeleteAsync(Guid id);
+    Task RestoreAsync(Guid id);
 
-    Task ConfirmPhoneAsync(Guid id, CancellationToken cancellationToken);
-    Task UnConfirmPhoneAsync(Guid id, CancellationToken cancellationToken);
+    Task ConfirmPhoneAsync(Guid id);
+    Task UnConfirmPhoneAsync(Guid id);
 
-    Task ConfirmEmailAsync(Guid id, CancellationToken cancellationToken);
-    Task UnConfirmEmailAsync(Guid id, CancellationToken cancellationToken);
+    Task ConfirmEmailAsync(Guid id);
+    Task UnConfirmEmailAsync(Guid id);
 
     Task<bool> LockAsync(Guid id, string lockoutReason, UserManager<ApplicationUser> UserManager);
     Task<bool> UnLockAsync(Guid id, UserManager<ApplicationUser> UserManager);

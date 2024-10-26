@@ -13,7 +13,7 @@ namespace Persistence.Context
         }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-            Database.EnsureCreated();
+            //Database.EnsureCreated();
         }
         #endregion
 
@@ -176,6 +176,8 @@ namespace Persistence.Context
         public DbSet<UserBlogLike> UserBlogLike { get; set; }
         public DbSet<UserBookMark> UserBookMark { get; set; }
         #endregion
+
+        public DbSet<JobCategoriesView> JobCategoriesView { get; set; }
         #endregion
 
 
@@ -213,8 +215,21 @@ namespace Persistence.Context
             modelBuilder.Entity<JobBranchAttr>().HasOne(i => i.AttrValue)
                 .WithMany(a => a.JobBranchAttrs).OnDelete(DeleteBehavior.NoAction);
 
+
+            ///
+            /// 
+            modelBuilder
+                .Entity<JobCategoriesView>(
+                eb =>
+                {
+                    eb.HasNoKey();
+                    eb.ToView("JobCategoriesView");
+                });
+            /// 
+
             modelBuilder.AddSequentialGuidForIdConvention();
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AccountConfigurations).Assembly);
+            modelBuilder.HasDefaultSchema(DatabaseSchemas.Dbo);
         }
     }
 }
