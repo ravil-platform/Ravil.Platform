@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Persistence.Migrations
+namespace Ravil.Infrastructure.Data.Migrations
 {
     public partial class FixJobBranchPicture : Migration
     {

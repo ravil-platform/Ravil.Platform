@@ -1,4 +1,4 @@
-﻿using Persistence.Entities.User.Repositories.Interfaces;
+﻿using Persistence.Entities.Job.Repositories.Interfaces;
 
 namespace Persistence.Contracts
 {
@@ -160,5 +160,7 @@ namespace Persistence.Contracts
         #region ( Action Histories )
         public IActionHistoriesRepository ActionHistoriesRepository { get; }
         #endregion
+
+        public IJobCategoriesViewRepository JobCategoriesViewRepository { get; }
     }
 }

@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Domain.Entities.Faq;
+﻿using Domain.Entities.Faq;
 using ViewModels.Faq;
 
 namespace Admin.MVC.Controllers
@@ -16,10 +15,27 @@ namespace Admin.MVC.Controllers
         }
         #endregion
 
+        #region ( Faq )
         #region ( Index )
         public async Task<IActionResult> Index()
         {
-            var model = await UnitOfWork.FaqRepository.GetAllAsync(CancellationToken.None);
+            var model = await UnitOfWork.FaqRepository.GetAllFaqsAsync();
+
+            #region ( Fill Faq Categories For Create Partial )
+            var categories = await UnitOfWork.FaqCategoryRepository.GetAllAsync();
+
+            if (categories.Count == 0)
+            {
+                categories = new List<FaqCategory>();
+            }
+
+            var createFaqModel = new CreateFaqViewModel
+            {
+                FaqCategories = new SelectList(categories, "Id", "Title")
+            };
+
+            ViewBag.FaqCategories = createFaqModel;
+            #endregion
 
             return View(model);
         }
@@ -31,14 +47,21 @@ namespace Admin.MVC.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ErrorAlert();
+                ErrorAlert(Errors.ModelStateIsNotValidForm);
 
-                return RedirectToAction();
+                return RedirectToAction("Index");
             }
+
 
             var faq = Mapper.Map<Faq>(createFaqViewModel);
 
-            await UnitOfWork.FaqRepository.InsertAsync(faq, CancellationToken.None);
+            var iconName = Guid.NewGuid().ToString("N") + Path.GetExtension(createFaqViewModel.File.FileName);
+
+            createFaqViewModel.File.AddImageToServer(iconName, Paths.FaqImageServer, TypeFile.Image);
+
+            faq.IconPicture = iconName;
+
+            await UnitOfWork.FaqRepository.InsertAsync(faq);
 
             try
             {
@@ -57,11 +80,29 @@ namespace Admin.MVC.Controllers
 
         #region ( Update )
         [HttpGet]
-        public async Task<IActionResult> Update(Guid id)
+        public async Task<IActionResult> Update(int id)
         {
-            var faq = await UnitOfWork.FaqRepository.GetByIdAsync(id, CancellationToken.None);
+            var faq = await UnitOfWork.FaqRepository.GetByIdAsync(id);
 
             var model = Mapper.Map<UpdateFaqViewModel>(faq);
+
+            #region ( Fill Faq Categories For Partial )
+            var categories = await UnitOfWork.FaqCategoryRepository.GetAllAsync();
+            var faqCategory = categories.First(c => c.Id == faq.CategoryId);
+
+            if (categories.Count == 0)
+            {
+                categories = new List<FaqCategory>();
+            }
+            else
+            {
+                categories.Remove(faqCategory);
+            }
+
+            model.FaqCategories = new SelectList(categories, "Id", "Title");
+            model.IconName = faq.IconPicture;
+            model.CategoryName = faqCategory.Title;
+            #endregion
 
             return PartialView("_Update", model);
         }
@@ -69,11 +110,18 @@ namespace Admin.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(UpdateFaqViewModel updateFaqViewModel)
         {
-            var faq = await UnitOfWork.FaqRepository.GetByIdAsync(updateFaqViewModel.Id, CancellationToken.None);
+            var faq = await UnitOfWork.FaqRepository.GetByIdAsync(updateFaqViewModel.Id);
 
             faq = Mapper.Map(updateFaqViewModel, faq);
 
-            await UnitOfWork.FaqRepository.UpdateAsync(faq, CancellationToken.None);
+            var iconName = Guid.NewGuid().ToString("N") + Path.GetExtension(updateFaqViewModel.File.FileName);
+
+            updateFaqViewModel.File.AddImageToServer(iconName, Paths.FaqImageServer, TypeFile.Image, null, null, null, faq.IconPicture);
+
+            faq.IconPicture = iconName;
+
+            await UnitOfWork.FaqRepository.UpdateAsync(faq);
+
 
             try
             {
@@ -94,7 +142,7 @@ namespace Admin.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Detail(Guid id)
         {
-            var model = await UnitOfWork.FaqRepository.GetByIdAsync(id, CancellationToken.None);
+            var model = await UnitOfWork.FaqRepository.GetByIdAsync(id);
 
             return View(model);
         }
@@ -104,7 +152,7 @@ namespace Admin.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
-            await UnitOfWork.FaqRepository.DeleteAsync(id, CancellationToken.None);
+            await UnitOfWork.FaqRepository.DeleteAsync(id);
 
             try
             {
@@ -119,6 +167,107 @@ namespace Admin.MVC.Controllers
 
             return RedirectToAction("Detail", new { Id = id });
         }
+        #endregion
+        #endregion
+
+        #region ( Faq Categories )
+        #region ( Index )
+        public async Task<IActionResult> IndexFaqCategories()
+        {
+            var model = await UnitOfWork.FaqCategoryRepository.GetAllParents(CancellationToken.None);
+
+            #region ( Fill Faq Categories For Create Partial )
+            var categories = model;
+
+            if (categories.Count == 0)
+            {
+                categories = new List<FaqCategory>();
+            }
+
+            var createFaqCategoryModel = new CreateFaqCategoryViewModel()
+            {
+                FaqCategories = new SelectList(categories, "Id", "Title")
+            };
+
+            ViewBag.FaqCategories = createFaqCategoryModel;
+            #endregion
+
+            return View(model);
+        }
+        #endregion
+
+        #region ( Create )
+        [HttpPost]
+        public async Task<IActionResult> CreateFaqCategories(CreateFaqCategoryViewModel createFaqCategoryViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                ErrorAlert(Errors.ModelStateIsNotValidForm);
+
+                return RedirectToAction("IndexFaqCategories");
+            }
+
+            var faqCategory = Mapper.Map<FaqCategory>(createFaqCategoryViewModel);
+
+            await UnitOfWork.FaqCategoryRepository.InsertAsync(faqCategory);
+
+            try
+            {
+                await UnitOfWork.SaveAsync();
+
+                SuccessAlert();
+            }
+            catch (Exception e)
+            {
+                ErrorAlert(e.Message);
+            }
+
+            return RedirectToAction("IndexFaqCategories");
+        }
+        #endregion
+
+        #region ( Update )
+        [HttpGet]
+        public async Task<IActionResult> UpdateFaqCategories(int id)
+        {
+            var faqCategories = await UnitOfWork.FaqCategoryRepository.GetByIdAsync(id);
+
+            var model = Mapper.Map<UpdateFaqCategoryViewModel>(faqCategories);
+
+            #region ( Fill Faq Categories For Partial )
+            var categories = await 
+                UnitOfWork.FaqCategoryRepository.GetAllAsync();
+
+            var currentFaqCategory = categories.First(c => c.Id == faqCategories.Id);
+
+            #region ( Remove Curren Category From List )
+            if (categories.Count == 0)
+            {
+                categories = new List<FaqCategory>();
+            }
+            else
+            {
+                categories.Remove(currentFaqCategory);
+            }
+            #endregion
+
+            #region ( Fill Parent Name If Exist )
+            if (faqCategories.ParentId != 0)
+            {
+                var parent = await UnitOfWork.FaqCategoryRepository.GetByIdAsync(faqCategories.ParentId);
+
+                model.ParentName = parent.Title;
+            }
+            #endregion
+
+            model.FaqCategories = new SelectList(categories, "Id", "Title");
+            #endregion
+
+            return PartialView("_UpdateFaqCategories", model);
+        }
+
+        #endregion
+
         #endregion
     }
 }

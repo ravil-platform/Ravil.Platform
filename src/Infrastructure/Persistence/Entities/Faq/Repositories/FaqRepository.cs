@@ -9,12 +9,21 @@ public class FaqRepository : Repository<Domain.Entities.Faq.Faq>, IFaqRepository
         ApplicationDbContext = applicationDbContext;
     }
 
-    public async Task DeleteAsync(int id, CancellationToken cancellationToken)
+    public async Task DeleteAsync(int id)
     {
-        var faq = await GetByIdAsync(id, cancellationToken);
+        var faq = await GetByIdAsync(id);
 
         if (faq is null) return;
 
-        await DeleteAsync(faq, cancellationToken);
+        await DeleteAsync(faq);
+    }
+
+    public async Task<ICollection<Domain.Entities.Faq.Faq>> GetAllFaqsAsync()
+    {
+        var faq = await ApplicationDbContext.Faqs
+            .Include(f => f.FaqCategory)
+            .ToListAsync();
+
+        return faq;
     }
 }

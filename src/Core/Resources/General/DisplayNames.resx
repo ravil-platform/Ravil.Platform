@@ -955,4 +955,13 @@
   <data name="NationalCode" xml:space="preserve">
     <value>کد ملی</value>
   </data>
+  <data name="RegisterDate" xml:space="preserve">
+    <value>تاریخ ثبت نام</value>
+  </data>
+  <data name="ListEmpty" xml:space="preserve">
+    <value>موردی برای نمایش وجود ندارد!</value>
+  </data>
+  <data name="Parent" xml:space="preserve">
+    <value>والد</value>
+  </data>
 </root>

@@ -67,6 +67,21 @@
                 .Replace("+", " ");
         }
 
+        public static string ArrayToString(this string[] strArray)
+        {
+            var sb = new StringBuilder();
+            foreach (var item in strArray)
+            {
+                sb.Append(item);
+                if (!item.Equals(strArray[^1]))
+                {
+                    sb.Append(",");
+                }
+            }
+
+            return sb.ToString();
+        }
+
         public static string RandomString(int length = 6)
         {
             const string chars = "0123456789aAbBcCdDeE";

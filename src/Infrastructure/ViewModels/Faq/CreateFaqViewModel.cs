@@ -1,4 +1,6 @@
-﻿namespace ViewModels.Faq
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+
+namespace ViewModels.Faq
 {
     public class CreateFaqViewModel
     {
@@ -22,8 +24,10 @@
         public IFormFile File { get; set; } = null!;
 
 
-        [Display(Name = nameof(DisplayNames.Icon), ResourceType = typeof(DisplayNames))]
+        [Display(Name = nameof(DisplayNames.Category), ResourceType = typeof(DisplayNames))]
         [Required(ErrorMessageResourceName = nameof(Validations.Required), ErrorMessageResourceType = typeof(Validations))]
         public int CategoryId { get; set; }
+
+        public SelectList? FaqCategories { get; set; }
     }
 }

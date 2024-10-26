@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities.Location
 {
-    public class Location : BaseEntity
+    public class Location : Entity
     {
         #region (Fields)
         [Key]
@@ -16,7 +16,7 @@
         #endregion
 
         #region (Relations)
-        public string AddressId { get; set; } = null!;
+        public string? AddressId { get; set; } 
         public virtual required Address.Address Address { get; set; }
         #endregion
     }

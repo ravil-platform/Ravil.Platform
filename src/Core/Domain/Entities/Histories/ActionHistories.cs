@@ -22,6 +22,7 @@
         /// نام دسته بندی مثلا  : رستوران
         /// </summary>
         public string CategoryName { get; set; } = null!;
+        public int CategoryId { get; set; }
 
         /// <summary>
         /// آدرس آی پی
@@ -33,10 +34,13 @@
         /// </summary>
         public string Location { get; set; } = null!;
 
+        public string JobId { get; set; }
+        public string JobTitle { get; set; }
+
         /// <summary>
         /// نوع عملیات کاربر مثلا : لایک کردن
         /// </summary>
-        public ActionType ActionType { get; set; }
+        public string ActionType { get; set; }
 
 
         /// <summary>

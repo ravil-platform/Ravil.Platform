@@ -1,4 +1,7 @@
-﻿namespace Persistence.Contracts
+﻿using Persistence.Entities.Job.Repositories.Implementations;
+using Persistence.Entities.Job.Repositories.Interfaces;
+
+namespace Persistence.Contracts
 {
     public class UnitOfWork : UnitOfWork<ApplicationDbContext>, IUnitOfWork
     {
@@ -979,6 +982,22 @@
                 }
 
                 return _actionHistoriesRepository;
+            }
+        }
+        #endregion
+
+        #region ( JobCategoriesView )
+        private IJobCategoriesViewRepository? _jobCategoriesViewRepository;
+        public IJobCategoriesViewRepository JobCategoriesViewRepository
+        {
+            get
+            {
+                if (_jobCategoriesViewRepository == null)
+                {
+                    _jobCategoriesViewRepository = new JobCategoriesViewRepository(DatabaseContext);
+                }
+
+                return _jobCategoriesViewRepository;
             }
         }
         #endregion

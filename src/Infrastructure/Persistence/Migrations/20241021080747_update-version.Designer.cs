@@ -9,17 +9,18 @@ using Persistence.Context;
 
 #nullable disable
 
-namespace Persistence.Migrations
+namespace Ravil.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241013132623_addHistoriesTable")]
-    partial class addHistoriesTable
+    [Migration("20241021080747_update-version")]
+    partial class updateversion
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasDefaultSchema("dbo")
                 .HasAnnotation("ProductVersion", "8.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
@@ -92,13 +93,13 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Subtitle")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.HasKey("Id");
 
@@ -106,7 +107,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("AccountLevelId");
 
-                    b.ToTable("Account", "Accounts");
+                    b.ToTable("Account", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.Account.AccountAttr", b =>
@@ -149,7 +150,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("ValueId");
 
-                    b.ToTable("AccountAttr", "Accounts");
+                    b.ToTable("AccountAttr", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.Account.AccountCategory", b =>
@@ -187,12 +188,12 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("AccountCategory", "Accounts");
+                    b.ToTable("AccountCategory", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.Account.AccountLevel", b =>
@@ -219,17 +220,17 @@ namespace Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("LevelStyle")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.Property<string>("LevelTitle")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("AccountLevel", "Accounts");
+                    b.ToTable("AccountLevel", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.Address.Address", b =>
@@ -252,23 +253,18 @@ namespace Persistence.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Neighbourhood")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OtherAddress")
                         .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PostalAddress")
-                        .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PostalCode")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
 
                     b.Property<int>("StateId")
                         .HasColumnType("int");
@@ -276,7 +272,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("UpdateDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 10, 13, 16, 56, 21, 822, DateTimeKind.Local).AddTicks(1013));
+                        .HasDefaultValue(new DateTime(2024, 10, 21, 11, 37, 46, 832, DateTimeKind.Local).AddTicks(363));
 
                     b.HasKey("Id");
 
@@ -290,7 +286,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("StateId");
 
-                    b.ToTable("Address", "Addresses");
+                    b.ToTable("Address", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.AdminTheme.AdminTheme", b =>
@@ -311,7 +307,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AdminTheme", "AdminThemes");
+                    b.ToTable("AdminTheme", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.Attr.Attr", b =>
@@ -364,8 +360,8 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.HasKey("Id");
 
@@ -373,7 +369,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Attr", "Attrs");
+                    b.ToTable("Attr", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.Attr.AttrAccount", b =>
@@ -402,14 +398,14 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AttrCategoryId");
 
-                    b.ToTable("AttrAccount", "Attrs");
+                    b.ToTable("AttrAccount", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.Attr.AttrAccountValue", b =>
@@ -428,14 +424,14 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Value")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AttrAccountId");
 
-                    b.ToTable("AttrAccountValue", "Attrs");
+                    b.ToTable("AttrAccountValue", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.Attr.AttrCategory", b =>
@@ -457,12 +453,12 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("AttrCategory", "Attrs");
+                    b.ToTable("AttrCategory", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.Attr.AttrValue", b =>
@@ -481,14 +477,14 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Value")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AttrId");
 
-                    b.ToTable("AttrValue", "Attrs");
+                    b.ToTable("AttrValue", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.Banner.Banner", b =>
@@ -513,8 +509,8 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(700)
-                        .HasColumnType("nvarchar(700)");
+                        .HasMaxLength(800)
+                        .HasColumnType("nvarchar(800)");
 
                     b.Property<DateTime?>("ExpireDate")
                         .IsRequired()
@@ -531,8 +527,8 @@ namespace Persistence.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LargePicture")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<DateTime>("LastDeleteBicycleDate")
                         .HasColumnType("datetime2");
@@ -547,16 +543,16 @@ namespace Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SmallPicture")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<byte>("Sort")
                         .HasColumnType("tinyint");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.Property<int>("ViewCount")
                         .HasColumnType("int");
@@ -565,7 +561,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("JobBranchId");
 
-                    b.ToTable("Banner", "Banners");
+                    b.ToTable("Banner", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.Blog.Blog", b =>
@@ -578,16 +574,16 @@ namespace Persistence.Migrations
 
                     b.Property<string>("AuthorName")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.Property<bool>("CanonicalMeta")
                         .HasColumnType("bit");
 
                     b.Property<string>("Content")
                         .IsRequired()
-                        .HasMaxLength(3000)
-                        .HasColumnType("nvarchar(3000)");
+                        .HasMaxLength(8000)
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
@@ -602,8 +598,8 @@ namespace Persistence.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("LargePicture")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<DateTime>("LastDeleteBicycleDate")
                         .HasColumnType("datetime2");
@@ -615,16 +611,15 @@ namespace Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("MetaCanonicalUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MetaDesc")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("MetaTitle")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<short>("ReadingTime")
                         .HasColumnType("smallint");
@@ -635,23 +630,23 @@ namespace Persistence.Migrations
                         .HasColumnType("nvarchar(300)");
 
                     b.Property<string>("SmallPicture")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("SubTitle")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.Property<string>("Summary")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasMaxLength(800)
+                        .HasColumnType("nvarchar(800)");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.Property<string>("TitleListContent")
                         .HasColumnType("nvarchar(max)");
@@ -661,7 +656,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Blog", "Blogs");
+                    b.ToTable("Blog", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.Blog.BlogCategory", b =>
@@ -695,12 +690,12 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("BlogCategory", "Blogs");
+                    b.ToTable("BlogCategory", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.Blog.BlogCategoryRel", b =>
@@ -738,7 +733,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("BlogId");
 
-                    b.ToTable("BlogCategoryRel", "Blogs");
+                    b.ToTable("BlogCategoryRel", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.Blog.BlogTag", b =>
@@ -776,7 +771,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("TagId");
 
-                    b.ToTable("BlogTag", "Blogs");
+                    b.ToTable("BlogTag", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.Brand.Brand", b =>
@@ -788,8 +783,8 @@ namespace Persistence.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("AlternateTitle")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
@@ -810,8 +805,8 @@ namespace Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Picture")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("SearchLink")
                         .HasColumnType("nvarchar(max)");
@@ -821,12 +816,12 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Brand", "Brands");
+                    b.ToTable("Brand", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.Category.Category", b =>
@@ -847,12 +842,12 @@ namespace Persistence.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("HeadingTitle")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.Property<string>("IconPicture")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<bool>("IndexMeta")
                         .HasColumnType("bit");
@@ -879,36 +874,35 @@ namespace Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("MetaCanonicalUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MetaDesc")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("MetaTitle")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.Property<short>("NodeLevel")
                         .HasColumnType("smallint");
 
                     b.Property<string>("PageContent")
                         .IsRequired()
-                        .HasMaxLength(3000)
-                        .HasColumnType("nvarchar(3000)");
+                        .HasMaxLength(8000)
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ParentId")
                         .HasColumnType("int");
 
                     b.Property<string>("Picture")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("Route")
                         .IsRequired()
@@ -928,7 +922,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Category", "Categories");
+                    b.ToTable("Category", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.Category.CategoryService", b =>
@@ -966,7 +960,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("ServiceId");
 
-                    b.ToTable("CategoryService", "Categories");
+                    b.ToTable("CategoryService", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.City.City", b =>
@@ -1005,20 +999,19 @@ namespace Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("MetaCanonicalUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MetaDesc")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("MetaTitle")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("Picture")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("Route")
                         .IsRequired()
@@ -1030,15 +1023,15 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Subtitle")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CityBaseId")
                         .IsUnique();
 
-                    b.ToTable("City", "Cities");
+                    b.ToTable("City", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.City.CityBase", b =>
@@ -1069,20 +1062,18 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.Property<int>("StateBaseId")
                         .HasColumnType("int");
 
-                    b.Property<int>("StateId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("StateBaseId");
+                    b.HasIndex("StateBaseId")
+                        .IsUnique();
 
-                    b.ToTable("CityBase", "Cities");
+                    b.ToTable("CityBase", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.City.CityCategory", b =>
@@ -1120,7 +1111,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("CityId");
 
-                    b.ToTable("CityCategory", "Cities");
+                    b.ToTable("CityCategory", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.Comment.AnswerComment", b =>
@@ -1142,12 +1133,12 @@ namespace Persistence.Migrations
                         .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("AnswerCommentTitle")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.Property<string>("Avatar")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<int>("CommentId")
                         .HasColumnType("int");
@@ -1196,7 +1187,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("CommentId");
 
-                    b.ToTable("AnswerComment", "Comments");
+                    b.ToTable("AnswerComment", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.Comment.Comment", b =>
@@ -1209,8 +1200,8 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Avatar")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<int?>("BlogId")
                         .HasColumnType("int");
@@ -1231,8 +1222,8 @@ namespace Persistence.Migrations
 
                     b.Property<string>("FullName")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.Property<bool>("IsConfirmed")
                         .HasColumnType("bit");
@@ -1273,7 +1264,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Comment", "Comments");
+                    b.ToTable("Comment", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.Config.Config", b =>
@@ -1555,7 +1546,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Config", "Configs");
+                    b.ToTable("Config", "dbo");
 
                     b.HasData(
                         new
@@ -1611,8 +1602,8 @@ namespace Persistence.Migrations
 
                     b.Property<string>("FullName")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -1655,7 +1646,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ContactUs", "ContactUs");
+                    b.ToTable("ContactUs", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.DayOfWeek.DayOfWeek", b =>
@@ -1674,8 +1665,8 @@ namespace Persistence.Migrations
 
                     b.Property<string>("PersianName")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.Property<byte>("Sort")
                         .HasColumnType("tinyint");
@@ -1701,8 +1692,8 @@ namespace Persistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("IconPicture")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("Question")
                         .IsRequired()
@@ -1715,7 +1706,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Faq", "Faqs");
+                    b.ToTable("Faq", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.Faq.FaqCategory", b =>
@@ -1734,12 +1725,12 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("FaqCategory", "Faqs");
+                    b.ToTable("FaqCategory", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.FeedbackSlider.FeedbackSlider", b =>
@@ -1755,13 +1746,13 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(700)
-                        .HasColumnType("nvarchar(700)");
+                        .HasMaxLength(800)
+                        .HasColumnType("nvarchar(800)");
 
                     b.Property<string>("Picture")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<byte>("Sort")
                         .HasColumnType("tinyint");
@@ -1778,11 +1769,15 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FeedbackSlider", "FeedbackSliders");
+                    b.ToTable("FeedbackSlider", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.Histories.ActionHistories", b =>
                 {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("ActionType")
                         .HasColumnType("int");
 
@@ -1791,14 +1786,25 @@ namespace Persistence.Migrations
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
                     b.Property<string>("CategoryName")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.Property<string>("FullName")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
+
+                    b.Property<string>("JobId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("JobTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Location")
                         .IsRequired()
@@ -1812,7 +1818,41 @@ namespace Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("ActionHistories", "ActionHistories");
+                    b.HasKey("Id");
+
+                    b.ToTable("ActionHistories", "dbo");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Histories.JobCategoriesView", b =>
+                {
+                    b.Property<string>("BranchTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CityName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("JobId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToTable((string)null);
+
+                    b.ToView("JobCategoriesView", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.Job.Job", b =>
@@ -1834,8 +1874,8 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Content")
                         .IsRequired()
-                        .HasMaxLength(3000)
-                        .HasColumnType("nvarchar(3000)");
+                        .HasMaxLength(8000)
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
@@ -1857,9 +1897,8 @@ namespace Persistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("LargePicture")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<DateTime>("LastDeleteBicycleDate")
                         .HasColumnType("datetime2");
@@ -1871,8 +1910,7 @@ namespace Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PhoneNumberInfos")
-                        .HasMaxLength(11)
-                        .HasColumnType("nvarchar(11)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Route")
                         .IsRequired()
@@ -1886,40 +1924,37 @@ namespace Persistence.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("SmallPicture")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("SocialMediaInfos")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SubTitle")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.Property<string>("Summary")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasMaxLength(800)
+                        .HasColumnType("nvarchar(800)");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.Property<int>("ViewCountTotal")
                         .HasColumnType("int");
 
                     b.Property<string>("WebSiteName")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("JobBrandId");
 
-                    b.ToTable("Job", "Jobs");
+                    b.ToTable("Job", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.Job.JobBranch", b =>
@@ -1934,20 +1969,18 @@ namespace Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("AdminName")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.Property<int>("AverageRate")
                         .HasColumnType("int");
 
                     b.Property<string>("BranchContent")
-                        .IsRequired()
-                        .HasMaxLength(3000)
-                        .HasColumnType("nvarchar(3000)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("BranchVideo")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<bool>("CanonicalMeta")
                         .HasColumnType("bit");
@@ -1961,13 +1994,13 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(700)
-                        .HasColumnType("nvarchar(700)");
+                        .HasMaxLength(800)
+                        .HasColumnType("nvarchar(800)");
 
                     b.Property<string>("HeadingTitle")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.Property<bool>("IndexMeta")
                         .HasColumnType("bit");
@@ -1994,8 +2027,8 @@ namespace Persistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("LargePicture")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<DateTime>("LastDeleteBicycleDate")
                         .HasColumnType("datetime2");
@@ -2010,16 +2043,15 @@ namespace Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MetaCanonicalUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MetaDesc")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("MetaTitle")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("Route")
                         .IsRequired()
@@ -2027,13 +2059,13 @@ namespace Persistence.Migrations
                         .HasColumnType("nvarchar(300)");
 
                     b.Property<string>("SmallPicture")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.Property<string>("UserId")
                         .IsRequired()
@@ -2048,7 +2080,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("JobBranch", "Jobs");
+                    b.ToTable("JobBranch", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.Job.JobBranchAttr", b =>
@@ -2076,7 +2108,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("ValueId");
 
-                    b.ToTable("JobBranchAttr", "Jobs");
+                    b.ToTable("JobBranchAttr", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.Job.JobBranchGallery", b =>
@@ -2088,22 +2120,22 @@ namespace Persistence.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ImageName")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("JobBranchId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<byte>("Sort")
-                        .HasMaxLength(50)
+                        .HasMaxLength(150)
                         .HasColumnType("tinyint");
 
                     b.HasKey("Id");
 
                     b.HasIndex("JobBranchId");
 
-                    b.ToTable("JobBranchGallery", "Jobs");
+                    b.ToTable("JobBranchGallery", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.Job.JobBranchShortLink", b =>
@@ -2129,7 +2161,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("JobBranchId");
 
-                    b.ToTable("JobBranchShortLink", "Jobs");
+                    b.ToTable("JobBranchShortLink", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.Job.JobBranchTag", b =>
@@ -2153,7 +2185,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("TagId");
 
-                    b.ToTable("JobBranchTag", "Jobs");
+                    b.ToTable("JobBranchTag", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.Job.JobCategory", b =>
@@ -2176,7 +2208,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("JobId");
 
-                    b.ToTable("JobCategory");
+                    b.ToTable("JobCategory", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.Job.JobSelectionSlider", b =>
@@ -2201,7 +2233,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("JobBranchId");
 
-                    b.ToTable("JobSelectionSlider", "Jobs");
+                    b.ToTable("JobSelectionSlider", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.Job.JobService", b =>
@@ -2225,7 +2257,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("ServiceId");
 
-                    b.ToTable("JobService", "Jobs");
+                    b.ToTable("JobService", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.Job.JobTag", b =>
@@ -2248,7 +2280,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("TagId");
 
-                    b.ToTable("JobTag", "Jobs");
+                    b.ToTable("JobTag", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.Job.JobTimeWork", b =>
@@ -2264,8 +2296,8 @@ namespace Persistence.Migrations
 
                     b.Property<string>("EndTime")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.Property<string>("JobBranchId")
                         .IsRequired()
@@ -2273,8 +2305,8 @@ namespace Persistence.Migrations
 
                     b.Property<string>("StartTime")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.HasKey("Id");
 
@@ -2282,7 +2314,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("JobBranchId");
 
-                    b.ToTable("JobTimeWork", "Jobs");
+                    b.ToTable("JobTimeWork", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.Location.Location", b =>
@@ -2309,7 +2341,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Location", "Locations");
+                    b.ToTable("Location", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.MainSlider.MainSlider", b =>
@@ -2340,8 +2372,8 @@ namespace Persistence.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LargePicture")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<DateTime>("LastDeleteBicycleDate")
                         .HasColumnType("datetime2");
@@ -2357,8 +2389,8 @@ namespace Persistence.Migrations
                         .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("SmallPicture")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<byte>("Sort")
                         .HasColumnType("tinyint");
@@ -2368,8 +2400,8 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.HasKey("Id");
 
@@ -2379,7 +2411,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("StateId");
 
-                    b.ToTable("MainSlider", "MainSliders");
+                    b.ToTable("MainSlider", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.Order.Order", b =>
@@ -2476,7 +2508,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Order", "Orders");
+                    b.ToTable("Order", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.Order.PromotionCode", b =>
@@ -2530,8 +2562,8 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.Property<int>("Type")
                         .HasColumnType("int");
@@ -2541,7 +2573,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PromotionCode", "Orders");
+                    b.ToTable("PromotionCode", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.PaymentPortal.PaymentPortal", b =>
@@ -2554,20 +2586,20 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Picture")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("PaymentPortal", "PaymentPortals");
+                    b.ToTable("PaymentPortal", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.RedirectionUrl.RedirectionUrl", b =>
@@ -2594,7 +2626,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RedirectionUrl", "RedirectionUrls");
+                    b.ToTable("RedirectionUrl", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.Service.Service", b =>
@@ -2628,20 +2660,20 @@ namespace Persistence.Migrations
 
                     b.Property<string>("ServiceSummary")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasMaxLength(800)
+                        .HasColumnType("nvarchar(800)");
 
                     b.Property<string>("ServiceTitle")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.Property<byte>("Sort")
                         .HasColumnType("tinyint");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Service", "Services");
+                    b.ToTable("Service", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.ShortLink.ShortLink", b =>
@@ -2665,7 +2697,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ShortLink", "ShortLinks");
+                    b.ToTable("ShortLink", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.State.State", b =>
@@ -2701,38 +2733,37 @@ namespace Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("MetaCanonicalUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MetaDesc")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("MetaTitle")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<double>("Multiplier")
                         .HasColumnType("float");
 
                     b.Property<string>("Picture")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<int>("StateBaseId")
                         .HasColumnType("int");
 
                     b.Property<string>("Subtitle")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("StateBaseId")
                         .IsUnique();
 
-                    b.ToTable("State", "States");
+                    b.ToTable("State", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.State.StateBase", b =>
@@ -2748,12 +2779,12 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("StateBase", "States");
+                    b.ToTable("StateBase", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.Tag.Tag", b =>
@@ -2765,17 +2796,17 @@ namespace Persistence.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("IconHtmlCode")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("IconPicture")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
@@ -2790,7 +2821,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tag", "Tags");
+                    b.ToTable("Tag", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.Team.Team", b =>
@@ -2802,8 +2833,8 @@ namespace Persistence.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Avatar")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("Degree")
                         .IsRequired()
@@ -2811,17 +2842,17 @@ namespace Persistence.Migrations
                         .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("Description")
-                        .HasMaxLength(700)
-                        .HasColumnType("nvarchar(700)");
+                        .HasMaxLength(800)
+                        .HasColumnType("nvarchar(800)");
 
                     b.Property<string>("FullName")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.Property<string>("HoverPic")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("Instagram")
                         .HasColumnType("nvarchar(max)");
@@ -2840,7 +2871,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Team", "Teams");
+                    b.ToTable("Team", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.UploadedFile.UploadedFile", b =>
@@ -2860,12 +2891,12 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("UploadedFile", "UploadedFiles");
+                    b.ToTable("UploadedFile", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.User.ApplicationUser", b =>
@@ -2881,8 +2912,8 @@ namespace Persistence.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("Avatar")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<DateTime?>("BirthDate")
                         .HasColumnType("datetime2");
@@ -2901,8 +2932,9 @@ namespace Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasMaxLength(512)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(512)");
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
@@ -2911,8 +2943,8 @@ namespace Persistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Firstname")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.Property<int>("Gender")
                         .HasColumnType("int");
@@ -2927,8 +2959,8 @@ namespace Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Lastname")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -2937,20 +2969,22 @@ namespace Persistence.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("LockoutReason")
-                        .HasMaxLength(700)
-                        .HasColumnType("nvarchar(700)");
+                        .HasMaxLength(800)
+                        .HasColumnType("nvarchar(800)");
 
                     b.Property<string>("NationalCode")
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasMaxLength(512)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(512)");
 
                     b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasMaxLength(512)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(512)");
 
                     b.Property<string>("OneTimeUseCode")
                         .HasMaxLength(20)
@@ -2994,8 +3028,9 @@ namespace Persistence.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasMaxLength(512)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(512)");
 
                     b.Property<int>("UserNameType")
                         .HasColumnType("int");
@@ -3016,7 +3051,63 @@ namespace Persistence.Migrations
 
                     b.HasIndex("StateId");
 
-                    b.ToTable("ApplicationUser", "Users");
+                    b.ToTable("ApplicationUser", "dbo");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "05446344-f9cc-4566-bd2c-36791b4e28ed",
+                            AccessFailedCount = 0,
+                            BlockedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ConcurrencyStamp = "d3d1b98b-017b-4ac9-838b-e975bd4ea51b",
+                            Email = "admin@localhost.com",
+                            EmailConfirmed = true,
+                            ExpireTimeSpanBlock = 0,
+                            Firstname = "Admin",
+                            Gender = 0,
+                            IsDeleted = false,
+                            LastDeleteBicycleDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Lastname = "System",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@LOCALHOST.COM",
+                            NormalizedUserName = "ADMIN@LOCALHOST.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMfeXEgV9hyujyXapGJRa4r5lXUgDEIaiGCsGA/NWKe12c9R3ISb9wxYqEPhW+aghQ==",
+                            PhoneNumberConfirmed = false,
+                            RegisterDate = new DateTime(2024, 10, 21, 11, 37, 46, 855, DateTimeKind.Local).AddTicks(3622),
+                            SecurityStamp = "00cc59a6-27bb-4ed7-91d3-50a0067eec2c",
+                            TwoFactorEnabled = false,
+                            UpdateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UserIsBlocked = false,
+                            UserName = "admin@localhost.com",
+                            UserNameType = 0
+                        },
+                        new
+                        {
+                            Id = "2ec9f480-7288-4d0f-a1cd-53cc89968b45",
+                            AccessFailedCount = 0,
+                            BlockedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ConcurrencyStamp = "b10529e2-ea01-4955-9b7b-95bd5dfd108e",
+                            Email = "user@localhost.com",
+                            EmailConfirmed = true,
+                            ExpireTimeSpanBlock = 0,
+                            Firstname = "System",
+                            Gender = 0,
+                            IsDeleted = false,
+                            LastDeleteBicycleDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Lastname = "User",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "USER@LOCALHOST.COM",
+                            NormalizedUserName = "USER@LOCALHOST.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFMtc4VUdzwsuLEmgO4NKyEAdAuyXplksrpxVPQhbVcMLEcG0XhJyCu1k0CeVlfWNw==",
+                            PhoneNumberConfirmed = false,
+                            RegisterDate = new DateTime(2024, 10, 21, 11, 37, 46, 937, DateTimeKind.Local).AddTicks(1899),
+                            SecurityStamp = "9e655b5a-e2df-4c4f-8ecf-efd6e3843a80",
+                            TwoFactorEnabled = false,
+                            UpdateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UserIsBlocked = false,
+                            UserName = "user@localhost.com",
+                            UserNameType = 0
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.User.UserAddress", b =>
@@ -3056,13 +3147,13 @@ namespace Persistence.Migrations
 
                     b.Property<string>("PostalCode")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
 
                     b.Property<string>("ReceiverName")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.Property<int>("StateBaseId")
                         .HasColumnType("int");
@@ -3079,7 +3170,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserAddresse", "Users");
+                    b.ToTable("UserAddresse", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.User.UserBannerClick", b =>
@@ -3106,7 +3197,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserBannerClick", "Users");
+                    b.ToTable("UserBannerClick", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.User.UserBannerView", b =>
@@ -3130,7 +3221,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserBannerView", "Users");
+                    b.ToTable("UserBannerView", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.User.UserBlogLike", b =>
@@ -3157,7 +3248,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserBlogLike", "Users");
+                    b.ToTable("UserBlogLike", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.User.UserBookMark", b =>
@@ -3205,7 +3296,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserBookMark", "Users");
+                    b.ToTable("UserBookMark", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.User.UsersFeedbackSlider", b =>
@@ -3251,7 +3342,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("JobBranchId");
 
-                    b.ToTable("UsersFeedbackSlider");
+                    b.ToTable("UsersFeedbackSlider", "dbo");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -3278,7 +3369,21 @@ namespace Persistence.Migrations
                         .HasDatabaseName("RoleNameIndex")
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
-                    b.ToTable("AspNetRoles", (string)null);
+                    b.ToTable("AspNetRoles", "dbo");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "9845f909-799c-45fd-9158-58c1336ffddc",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        },
+                        new
+                        {
+                            Id = "cb275765-1cac-4652-a03f-f8871dd575d1",
+                            Name = "Administrator",
+                            NormalizedName = "ADMINISTRATOR"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -3303,7 +3408,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetRoleClaims", (string)null);
+                    b.ToTable("AspNetRoleClaims", "dbo");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -3328,7 +3433,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserClaims", (string)null);
+                    b.ToTable("AspNetUserClaims", "dbo");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
@@ -3350,7 +3455,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserLogins", (string)null);
+                    b.ToTable("AspNetUserLogins", "dbo");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
@@ -3365,7 +3470,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetUserRoles", (string)null);
+                    b.ToTable("AspNetUserRoles", "dbo");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -3384,7 +3489,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("AspNetUserTokens", (string)null);
+                    b.ToTable("AspNetUserTokens", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.Account.Account", b =>
@@ -3596,10 +3701,8 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Entities.City.CityBase", b =>
                 {
                     b.HasOne("Domain.Entities.State.StateBase", "StateBase")
-                        .WithMany()
-                        .HasForeignKey("StateBaseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithOne("CityBase")
+                        .HasForeignKey("Domain.Entities.City.CityBase", "StateBaseId");
 
                     b.Navigation("StateBase");
                 });
@@ -4295,6 +4398,9 @@ namespace Persistence.Migrations
                     b.Navigation("Addresses");
 
                     b.Navigation("ApplicationUsers");
+
+                    b.Navigation("CityBase")
+                        .IsRequired();
 
                     b.Navigation("MainSliders");
 

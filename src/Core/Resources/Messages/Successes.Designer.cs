@@ -22,7 +22,7 @@ namespace Resources.Messages {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Successes {
+    public class Successes {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Resources.Messages {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Resources.Messages.Successes", typeof(Successes).Assembly);
@@ -51,7 +51,7 @@ namespace Resources.Messages {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Resources.Messages {
         /// <summary>
         ///   Looks up a localized string similar to عملیات موفقیت آمیز بود..
         /// </summary>
-        internal static string ActionIsSuccessfully {
+        public static string ActionIsSuccessfully {
             get {
                 return ResourceManager.GetString("ActionIsSuccessfully", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace Resources.Messages {
         /// <summary>
         ///   Looks up a localized string similar to شماره تلفن همراه با موفقیت تایید گردید..
         /// </summary>
-        internal static string CellPhoneNumberVerified {
+        public static string CellPhoneNumberVerified {
             get {
                 return ResourceManager.GetString("CellPhoneNumberVerified", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace Resources.Messages {
         /// <summary>
         ///   Looks up a localized string similar to نقد و بررسی شما با موفقیت ثبت شد. پس از بررسی توسط مدیر سایت به نمایش گذاشته می شود..
         /// </summary>
-        internal static string CommentSend {
+        public static string CommentSend {
             get {
                 return ResourceManager.GetString("CommentSend", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace Resources.Messages {
         /// <summary>
         ///   Looks up a localized string similar to نشانی پست الکترونیکی با موفقیت تایید گردید..
         /// </summary>
-        internal static string EmailAddressVerified {
+        public static string EmailAddressVerified {
             get {
                 return ResourceManager.GetString("EmailAddressVerified", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace Resources.Messages {
         /// <summary>
         ///   Looks up a localized string similar to سفارش شما با موفقیت پرداخت و نهایی شد. کد پیگیری:  {0}.
         /// </summary>
-        internal static string PaymentResult {
+        public static string PaymentResult {
             get {
                 return ResourceManager.GetString("PaymentResult", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace Resources.Messages {
         /// <summary>
         ///   Looks up a localized string similar to اطلاعات {0} با موفقیت درج گردید..
         /// </summary>
-        internal static string SuccessCreate {
+        public static string SuccessCreate {
             get {
                 return ResourceManager.GetString("SuccessCreate", resourceCulture);
             }
@@ -117,7 +117,7 @@ namespace Resources.Messages {
         /// <summary>
         ///   Looks up a localized string similar to اطلاعات {0} با موفقیت حذف گردید..
         /// </summary>
-        internal static string SuccessDelete {
+        public static string SuccessDelete {
             get {
                 return ResourceManager.GetString("SuccessDelete", resourceCulture);
             }
@@ -126,7 +126,7 @@ namespace Resources.Messages {
         /// <summary>
         ///   Looks up a localized string similar to لینک بازیابی رمزعبور با موفقیت به آدرس ایمیل شما {0} ارسال شد. برای بازیابی روی لینک موجود در ایمیل ارسالی ما کلیک نمائید..
         /// </summary>
-        internal static string SuccessSendEmailResetPassword {
+        public static string SuccessSendEmailResetPassword {
             get {
                 return ResourceManager.GetString("SuccessSendEmailResetPassword", resourceCulture);
             }
@@ -135,7 +135,7 @@ namespace Resources.Messages {
         /// <summary>
         ///   Looks up a localized string similar to لینک فعال سازی ایمیل با موفقیت به آدرس ایمیل شما {0} ارسال شد. برای فعال سازی روی لینک موجود در ایمیل ارسالی ما کلیک نمائید..
         /// </summary>
-        internal static string SuccessSendEmailVerification {
+        public static string SuccessSendEmailVerification {
             get {
                 return ResourceManager.GetString("SuccessSendEmailVerification", resourceCulture);
             }
@@ -144,7 +144,7 @@ namespace Resources.Messages {
         /// <summary>
         ///   Looks up a localized string similar to شما با موفقیت وارد سایت شدید..
         /// </summary>
-        internal static string SuccessSignIn {
+        public static string SuccessSignIn {
             get {
                 return ResourceManager.GetString("SuccessSignIn", resourceCulture);
             }
@@ -153,7 +153,7 @@ namespace Resources.Messages {
         /// <summary>
         ///   Looks up a localized string similar to با موفقیت از سیستم خارج شدید..
         /// </summary>
-        internal static string SuccessSignOut {
+        public static string SuccessSignOut {
             get {
                 return ResourceManager.GetString("SuccessSignOut", resourceCulture);
             }
@@ -162,7 +162,7 @@ namespace Resources.Messages {
         /// <summary>
         ///   Looks up a localized string similar to اطلاعات {0} با موفقیت ویرایش گردید..
         /// </summary>
-        internal static string SuccessUpdate {
+        public static string SuccessUpdate {
             get {
                 return ResourceManager.GetString("SuccessUpdate", resourceCulture);
             }
@@ -171,7 +171,7 @@ namespace Resources.Messages {
         /// <summary>
         ///   Looks up a localized string similar to فایل با موفقیت بارگزاری شد..
         /// </summary>
-        internal static string SuccessUploadFile {
+        public static string SuccessUploadFile {
             get {
                 return ResourceManager.GetString("SuccessUploadFile", resourceCulture);
             }
@@ -180,7 +180,7 @@ namespace Resources.Messages {
         /// <summary>
         ///   Looks up a localized string similar to گذرواژه با موفقیت تغییر کرد..
         /// </summary>
-        internal static string SuccessUserPasswordChanged {
+        public static string SuccessUserPasswordChanged {
             get {
                 return ResourceManager.GetString("SuccessUserPasswordChanged", resourceCulture);
             }

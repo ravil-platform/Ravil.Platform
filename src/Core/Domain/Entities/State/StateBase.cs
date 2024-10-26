@@ -12,6 +12,7 @@ public class StateBase : BaseEntity
 
     #region (Relations)
     public virtual State State { get; set; }
+    public virtual CityBase CityBase { get; set; }
     public virtual ICollection<MainSlider.MainSlider> MainSliders { get; set; }
     public virtual ICollection<Address.Address> Addresses { get; set; }
     public virtual ICollection<UserAddress> UserAddresses { get; set; }

@@ -7,17 +7,17 @@
             builder.ToTable("JobBranch", DatabaseSchemas.Jobs);
 
             builder.HasKey(j => j.Id);
-            builder.Property(j => j.Route).IsRequired().HasMaxLength(MaxLength.Slug);
+            builder.Property(j => j.Route).IsRequired(false).HasMaxLength(MaxLength.Slug);
             builder.Property(j => j.JobTimeWorkType).IsRequired();
             builder.Property(j => j.Title).IsRequired().HasMaxLength(MaxLength.Title);
-            builder.Property(j => j.HeadingTitle).IsRequired().HasMaxLength(MaxLength.Title);
+            builder.Property(j => j.HeadingTitle).IsRequired(false).HasMaxLength(MaxLength.Title);
             builder.Property(j => j.Description).IsRequired().HasMaxLength(MaxLength.Description);
-            builder.Property(j => j.BranchContent).IsRequired().HasMaxLength(MaxLength.Content);
+            builder.Property(j => j.BranchContent).IsRequired(false);
             builder.Property(j => j.BranchVideo).IsRequired(false).HasMaxLength(MaxLength.Video);
             builder.Property(j => j.LargePicture).IsRequired(false).HasMaxLength(MaxLength.Picture);
             builder.Property(j => j.SmallPicture).IsRequired(false).HasMaxLength(MaxLength.Picture);
             builder.Property(j => j.IsConfirmedByAdmin).IsRequired();
-            builder.Property(j => j.ConfirmationDate).IsRequired();
+            builder.Property(j => j.ConfirmationDate).IsRequired(false);
             builder.Property(j => j.MapUrl).IsRequired(false);
             builder.Property(j => j.ViewCount).IsRequired();
             builder.Property(j => j.AverageRate).IsRequired();

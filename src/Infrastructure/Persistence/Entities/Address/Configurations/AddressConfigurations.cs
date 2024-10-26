@@ -7,10 +7,10 @@
             builder.ToTable("Address", DatabaseSchemas.Addresses);
 
             builder.HasKey(a => a.Id);
-            builder.Property(a => a.PostalAddress).IsRequired().HasMaxLength(MaxLength.Address);
-            builder.Property(a => a.PostalCode).IsRequired().HasMaxLength(MaxLength.PostalCode);
-            builder.Property(a => a.OtherAddress).IsRequired().HasMaxLength(MaxLength.Address);
-            builder.Property(a => a.Neighbourhood).IsRequired(false).HasMaxLength(MaxLength.Address);
+            builder.Property(a => a.PostalAddress).IsRequired(false);
+            builder.Property(a => a.PostalCode).IsRequired(false).HasMaxLength(MaxLength.PostalCode);
+            builder.Property(a => a.OtherAddress).IsRequired();
+            builder.Property(a => a.Neighbourhood).IsRequired(false);
             builder.Property(a => a.CreateDate).IsRequired();
             builder.Property(a => a.UpdateDate).IsRequired().HasDefaultValue(DateTime.Now);
 
@@ -37,7 +37,7 @@
                 .HasOne(a => a.Location)
                 .WithOne(s => s.Address)
                 .HasForeignKey<Domain.Entities.Address.Address>(a => a.LocationId)
-                .IsRequired();
+                .IsRequired(false);
         }
     }
 }
