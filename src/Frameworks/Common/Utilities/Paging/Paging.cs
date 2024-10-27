@@ -1,5 +1,12 @@
-﻿namespace Common.Utilities.Paging
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+
+namespace Common.Utilities.Paging
 {
+    /// <summary>
+    /// Admin Pagination
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class Paging<T>
     {
         #region ( Constructor )
@@ -47,12 +54,68 @@
         #endregion
 
         #region (Set Entities)
-        public Paging<T> SetEntities(IQueryable<T> queryable)
+        public virtual Paging<T> SetEntities(IQueryable<T> queryable)
         {
             Entities = queryable
                 .Skip(StartPosition)
                 .Take(PageSize)
                 .ToList();
+            return this;
+        }
+        #endregion
+    }
+
+    /// <summary>
+    /// Api Pagination
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="TDto"></typeparam>
+    public class Paging<T, TDto>
+    {
+        #region ( Fields )
+        public int CurrentPage { get; set; } = 1;
+
+        public int PagesCount { get; set; }
+
+        public int EntitiesCount { get; set; }
+
+        public int StartPage { get; set; }
+
+        public int EndPage { get; set; }
+
+        public int PageSize { get; set; } = 9;
+
+        public int StartPosition { get; set; }
+
+        public int Step { get; set; } = 5;
+
+        public List<TDto> DtoEntities { get; set; } = null!;
+        #endregion
+
+        #region ( Build )
+        public new Paging<T, TDto> Build(int entitiesCount)
+        {
+            PagesCount = (int)Math.Ceiling(entitiesCount / (double)PageSize);
+
+            this.EntitiesCount = entitiesCount;
+            StartPosition = (CurrentPage - 1) * PageSize;
+
+            StartPage = CurrentPage - Step <= 0 ? 1 : CurrentPage - Step;
+            EndPage = CurrentPage + Step > PagesCount ? PagesCount : CurrentPage + Step;
+
+            return this;
+        }
+        #endregion
+
+        #region (Set Entities)
+        public Paging<T, TDto> SetEntities(IQueryable<T> queryable, IMapper mapper)
+        {
+            DtoEntities = queryable
+                .Skip(StartPosition)
+                .Take(PageSize)
+                .ProjectTo<TDto>(mapper.ConfigurationProvider)
+                .ToList();
+
             return this;
         }
         #endregion

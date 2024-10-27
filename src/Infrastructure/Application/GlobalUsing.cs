@@ -18,3 +18,5 @@ global using Persistence.Context;
 global using System.Globalization;
 global using System.IdentityModel.Tokens.Jwt;
 global using System.Reflection;
+global using Application.Features.Users.Commands.Create;
+global using FluentValidation;

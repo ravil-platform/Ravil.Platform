@@ -51,7 +51,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain.UnitTest", "tests\Do
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Persistance.UnitTest", "tests\Persistance\Persistance.UnitTest\Persistance.UnitTest.csproj", "{6E01F493-665B-4182-B21E-F27638BF3985}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RNX", "src\Frameworks\RNX\RNX.csproj", "{D7DEE7DC-4A9F-4D8A-BBA9-3B0C069DADE5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RNX", "src\Frameworks\RNX\RNX.csproj", "{D7DEE7DC-4A9F-4D8A-BBA9-3B0C069DADE5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

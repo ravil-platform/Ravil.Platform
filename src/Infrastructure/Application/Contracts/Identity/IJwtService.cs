@@ -2,6 +2,6 @@
 {
     public interface IJwtService
     {
-        //Task<AccessToken> GenerateAsync(User user);
+        Task<AccessToken> GenerateAsync(ApplicationUser user);
     }
 }

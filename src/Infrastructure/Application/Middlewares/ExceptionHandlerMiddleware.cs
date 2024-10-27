@@ -1,4 +1,8 @@
-﻿namespace Application.Middlewares
+﻿using Common.Exceptions;
+using System.Net;
+using System;
+
+namespace Application.Middlewares
 {
     public class ExceptionHandlerMiddleware
     {
@@ -18,6 +22,10 @@
             try
             {
                 await Next(context);
+            }
+            catch (AppException ex)
+            {
+         await HandleExceptionAsync(context, ex);
             }
             catch (Exception ex)
             {
