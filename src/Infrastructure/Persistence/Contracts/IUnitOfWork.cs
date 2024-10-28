@@ -1,4 +1,5 @@
-﻿using Persistence.Entities.Job.Repositories.Interfaces;
+﻿using Persistence.Entities.Category.Repositories;
+using Persistence.Entities.Job.Repositories.Interfaces;
 
 namespace Persistence.Contracts
 {
@@ -40,6 +41,11 @@ namespace Persistence.Contracts
 
         #region ( Brand )
         public IBrandRepository BrandRepository { get; }
+        #endregion
+
+        #region ( Category )
+        public ICategoryRepository CategoryRepository { get; }
+        public ICategoryServiceRepository CategoryServiceRepository { get; }
         #endregion
 
         #region ( City )

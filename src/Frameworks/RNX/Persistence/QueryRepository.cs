@@ -17,6 +17,9 @@ namespace RNX.Persistence
 
         protected DbContext DatabaseContext { get; }
 
+        public virtual IQueryable<TEntity> Table => DbSet;
+        public virtual IQueryable<TEntity> TableNoTracking => DbSet.AsNoTracking();
+
 
         public virtual async Task<TEntity?> GetByIdAsync(Guid id)
         {

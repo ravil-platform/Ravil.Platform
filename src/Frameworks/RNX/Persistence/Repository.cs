@@ -18,6 +18,9 @@ namespace RNX.Persistence
 
         protected DbContext DatabaseContext { get; }
 
+        public virtual IQueryable<T> Table => DbSet;
+        public virtual IQueryable<T> TableNoTracking => DbSet.AsNoTracking();
+
 
         public virtual async Task InsertAsync(T entity)
         {

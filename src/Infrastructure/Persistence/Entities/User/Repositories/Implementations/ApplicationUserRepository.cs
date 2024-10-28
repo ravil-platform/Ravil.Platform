@@ -1,8 +1,11 @@
-﻿namespace Persistence.Entities.User.Repositories.Implementations;
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace Persistence.Entities.User.Repositories.Implementations;
 
 public class ApplicationUserRepository : Repository<ApplicationUser>, IApplicationUserRepository
 {
     public ApplicationDbContext ApplicationDbContext { get; }
+
     internal ApplicationUserRepository(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
     {
         ApplicationDbContext = applicationDbContext;
@@ -16,13 +19,16 @@ public class ApplicationUserRepository : Repository<ApplicationUser>, IApplicati
         if (usersFilterViewModel.FindAll)
         {
             #region (Find All Users)
+
             usersFilterViewModel.Build(query.Count()).SetEntities(query);
 
             return usersFilterViewModel;
+
             #endregion
         }
 
         #region (Filter)
+
         if (!string.IsNullOrWhiteSpace(usersFilterViewModel.Firstname))
         {
             query = query.Where(a => a.Firstname!.Contains(usersFilterViewModel.Firstname.Trim()));
@@ -81,7 +87,10 @@ public class ApplicationUserRepository : Repository<ApplicationUser>, IApplicati
                 query = query.Where(a => a.RegisterDate <= registerDateTo);
             }
         }
-        catch { }
+        catch
+        {
+        }
+
         #endregion
 
         usersFilterViewModel.Build(query.Count()).SetEntities(query);
@@ -202,12 +211,4 @@ public class ApplicationUserRepository : Repository<ApplicationUser>, IApplicati
         return updateResult.Succeeded;
     }
 
-
-    public override Task InsertAsync(ApplicationUser entity)
-    {
-        entity.PasswordHash = Security.GetSha256Hash(entity.PasswordHash!);
-        entity.PhoneNumberConfirmed = true;
-
-        return base.InsertAsync(entity);
-    }
 }

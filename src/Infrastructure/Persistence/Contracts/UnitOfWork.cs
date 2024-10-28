@@ -1,4 +1,5 @@
-﻿using Persistence.Entities.Job.Repositories.Implementations;
+﻿using Persistence.Entities.Category.Repositories;
+using Persistence.Entities.Job.Repositories.Implementations;
 using Persistence.Entities.Job.Repositories.Interfaces;
 
 namespace Persistence.Contracts
@@ -270,6 +271,37 @@ namespace Persistence.Contracts
                 }
 
                 return _brandRepository;
+            }
+        }
+        #endregion
+
+        #region ( Category )
+        public ICategoryRepository? _categoryRepository;
+        public ICategoryRepository CategoryRepository
+        {
+            get
+            {
+                if (_categoryRepository == null)
+                {
+                    _categoryRepository = new CategoryRepository(DatabaseContext);
+                }
+
+                return _categoryRepository;
+            }
+        }
+
+
+        public ICategoryServiceRepository? _categoryServiceRepository;
+        public ICategoryServiceRepository CategoryServiceRepository
+        {
+            get
+            {
+                if (_categoryServiceRepository == null)
+                {
+                    _categoryServiceRepository = new CategoryServiceRepository(DatabaseContext);
+                }
+
+                return _categoryServiceRepository;
             }
         }
         #endregion

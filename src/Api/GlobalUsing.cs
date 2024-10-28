@@ -1,3 +1,12 @@
-﻿global using Application.Middlewares;
-global using Application;
+﻿global using Application;
+global using Application.Api;
+global using Application.Features.Blogs.Queries.GetAllByFilter;
+global using Application.Features.Users.Commands.Create;
+global using Application.Features.Users.Commands.GenerateToken;
+global using Application.Features.Users.Commands.Register;
+global using Application.Middlewares;
+global using Domain.Entities.Blog;
+global using MediatR;
+global using Microsoft.AspNetCore.Authorization;
+global using Microsoft.AspNetCore.Mvc;
 global using Persistence;

@@ -1,13 +1,20 @@
+using Application;
+using Common.Options;
+
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 var configuration = builder.Configuration;
+
+var _siteSetting = configuration.GetSection(nameof(SiteSettings)).Get<SiteSettings>();
+
+services.Configure<SiteSettings>(configuration.GetSection(nameof(SiteSettings)));
 
 services.AddControllers();
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
 
 
-services.AddApplicationServices(configuration);
+services.AddApplicationServices(configuration, _siteSetting.JwtSettings);
 services.AddPersistenceServices(configuration);
 
 

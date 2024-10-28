@@ -2,6 +2,6 @@
 {
     public interface IBlogRepository : IRepository<Domain.Entities.Blog.Blog>
     {
-
+        
     }
 }
