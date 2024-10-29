@@ -119,13 +119,16 @@
                 }
 
                 #region  ( Resize Image )
-                if (string.IsNullOrEmpty(thumbSavePath)) return;
-
-                if (!Directory.Exists(thumbSavePath)) Directory.CreateDirectory(thumbSavePath);
-
-                if (resizeWidth != null && resizeHeight != null)
+                if (typeFile == TypeFile.Image)
                 {
-                    ImageResizer(originSavePath + fileName, thumbSavePath + fileName, resizeWidth, resizeHeight);
+                    if (string.IsNullOrEmpty(thumbSavePath)) return;
+
+                    if (!Directory.Exists(thumbSavePath)) Directory.CreateDirectory(thumbSavePath);
+
+                    if (resizeWidth != null && resizeHeight != null)
+                    {
+                        ImageResizer(originSavePath + fileName, thumbSavePath + fileName, resizeWidth, resizeHeight);
+                    }
                 }
                 #endregion
                 #endregion

@@ -1,4 +1,6 @@
-﻿namespace Admin.MVC.Controllers
+﻿using ViewModels.AdminPannel.User;
+
+namespace Admin.MVC.Controllers
 {
     public class UsersController : BaseController
     {

@@ -8,7 +8,6 @@ global using Domain.Entities.Banner;
 global using Domain.Entities.Blog;
 global using Domain.Entities.Brand;
 global using Domain.Entities.Category;
-global using Domain.Entities.Category.Enums;
 global using Domain.Entities.City;
 global using Domain.Entities.Comment;
 global using Domain.Entities.Config;
@@ -68,9 +67,10 @@ global using Persistence.Entities.UploadedFile.Repositories;
 global using Persistence.Entities.User.Repositories;
 global using Persistence.Entities.User.Repositories.Interfaces;
 global using Persistence.Entities.User.Repositories.Implementations;
-
+global using Enums;
 global using RNX.Persistence;
-
 global using System.Globalization;
 global using ViewModels.Filter.User;
+global using ViewModels.Filter.Blog;
+
 

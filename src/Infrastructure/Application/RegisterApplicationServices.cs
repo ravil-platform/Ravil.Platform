@@ -6,6 +6,7 @@ using System.Text;
 using Application.Contracts.Identity;
 using Common.Utilities.Extensions;
 using Persistence.Entities.User.Repositories.Interfaces;
+using Application.Features.User.Commands.Create;
 
 namespace Application
 {

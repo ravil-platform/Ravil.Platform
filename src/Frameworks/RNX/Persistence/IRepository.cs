@@ -9,5 +9,8 @@
         Task DeleteAsync(T entity);
 
         Task<bool> DeleteByIdAsync(Guid id);
+
+        Task BeginTransactionAsync();
+        Task CommitTransactionAsync();
     }
 }

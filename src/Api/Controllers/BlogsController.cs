@@ -1,11 +1,6 @@
-﻿using Application.Features.Blogs.Queries.GetAllByFilter;
-using Application.Features.Blogs.Queries.GetBlogCategories;
-using Application.Features.Blogs.Queries.GetBlogCategoriesByParentId;
-using Application.Features.Blogs.Queries.GetByRoute;
-
-namespace Api.Controllers
+﻿namespace Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route(Constants.Routes.Controller)]
     [ApiController]
     public class BlogsController : GenericBaseController<BlogsController>
     {
@@ -14,7 +9,7 @@ namespace Api.Controllers
         {
         }
 
-        [HttpPost("[action]")]
+        [HttpPost(Constants.Routes.Action)]
         public async Task<IActionResult> GetAllByFilter(GetAllBlogsByFilterQuery query)
         {
             var result = await Mediator.Send(query);
@@ -22,15 +17,15 @@ namespace Api.Controllers
             return FluentResult(result);
         }
 
-        [HttpPost("[action]")]
-        public async Task<IActionResult> GetByRoute(GetBlogByRouteQuery query)
+        [HttpGet(Constants.Routes.Action)]
+        public async Task<IActionResult> GetByRoute([FromQuery] GetBlogByRouteQuery query)
         {
             var result = await Mediator.Send(query);
 
             return FluentResult(result);
         }
 
-        [HttpPost("[action]")]
+        [HttpPost(Constants.Routes.Action)]
         public async Task<IActionResult> GetBlogCategories(GetBlogCategoriesQuery query)
         {
             var result = await Mediator.Send(query);
@@ -38,7 +33,7 @@ namespace Api.Controllers
             return FluentResult(result);
         }
 
-        [HttpPost("[action]")]
+        [HttpPost(Constants.Routes.Action)]
         public async Task<IActionResult> GetBlogCategoriesByParentId(GetBlogCategoriesByParentIdQuery query)
         {
             var result = await Mediator.Send(query);

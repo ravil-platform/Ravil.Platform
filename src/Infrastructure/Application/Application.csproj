@@ -26,11 +26,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Features\Blogs\Commands\" />
+	  <Folder Include="Features\Blog\Commands\" />
 	  <Folder Include="Features\Category\Commands\" />
-	  <Folder Include="Features\Users\Commands\ChangePassword\" />
-	  <Folder Include="Features\Users\Queries\GetAll\" />
-	  <Folder Include="Features\Users\Queries\GetById\" />
+	  <Folder Include="Features\User\Commands\ChangePassword\" />
+	  <Folder Include="Features\User\Queries\GetAll\" />
+	  <Folder Include="Features\User\Queries\GetById\" />
 	</ItemGroup>
 	
 </Project>

@@ -160,6 +160,15 @@ namespace Resources.General {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to مخصوص اکانت.
+        /// </summary>
+        public static string AccountPage {
+            get {
+                return ResourceManager.GetString("AccountPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to عملیات.
         /// </summary>
         public static string Actions {
@@ -228,6 +237,15 @@ namespace Resources.General {
         public static string Answer {
             get {
                 return ResourceManager.GetString("Answer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to آپارات.
+        /// </summary>
+        public static string Aparat {
+            get {
+                return ResourceManager.GetString("Aparat", resourceCulture);
             }
         }
         
@@ -457,7 +475,7 @@ namespace Resources.General {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to صفحه مجله پزشکی.
+        ///   Looks up a localized string similar to وبلاگ.
         /// </summary>
         public static string Blog {
             get {
@@ -489,6 +507,15 @@ namespace Resources.General {
         public static string BlogMetaDescription {
             get {
                 return ResourceManager.GetString("BlogMetaDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to مخصوص وبلاگ.
+        /// </summary>
+        public static string BlogPage {
+            get {
+                return ResourceManager.GetString("BlogPage", resourceCulture);
             }
         }
         
@@ -565,6 +592,15 @@ namespace Resources.General {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to مخصوص دسته بندی.
+        /// </summary>
+        public static string CategoryPage {
+            get {
+                return ResourceManager.GetString("CategoryPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to شماره تلفن همراه.
         /// </summary>
         public static string CellPhoneNumber {
@@ -606,6 +642,15 @@ namespace Resources.General {
         public static string CityName {
             get {
                 return ResourceManager.GetString("CityName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to مخصوص شهر.
+        /// </summary>
+        public static string CityPage {
+            get {
+                return ResourceManager.GetString("CityPage", resourceCulture);
             }
         }
         
@@ -1159,6 +1204,15 @@ namespace Resources.General {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to فکس.
+        /// </summary>
+        public static string FaxNumber {
+            get {
+                return ResourceManager.GetString("FaxNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to خانم.
         /// </summary>
         public static string Female {
@@ -1321,6 +1375,15 @@ namespace Resources.General {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to پیدا شد 302.
+        /// </summary>
+        public static string Found302 {
+            get {
+                return ResourceManager.GetString("Found302", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to نام و نام خانوادگی.
         /// </summary>
         public static string FullName {
@@ -1335,6 +1398,15 @@ namespace Resources.General {
         public static string Gender {
             get {
                 return ResourceManager.GetString("Gender", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to محتوای حذف شده 410.
+        /// </summary>
+        public static string Gone410 {
+            get {
+                return ResourceManager.GetString("Gone410", resourceCulture);
             }
         }
         
@@ -1425,6 +1497,15 @@ namespace Resources.General {
         public static string HomeMetaDescription {
             get {
                 return ResourceManager.GetString("HomeMetaDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to مخصوص صفحه اصلی.
+        /// </summary>
+        public static string HomePage {
+            get {
+                return ResourceManager.GetString("HomePage", resourceCulture);
             }
         }
         
@@ -1609,6 +1690,24 @@ namespace Resources.General {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to کسب و کار.
+        /// </summary>
+        public static string JobBranch {
+            get {
+                return ResourceManager.GetString("JobBranch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to مخصوص کسب و کار.
+        /// </summary>
+        public static string JobBranchPage {
+            get {
+                return ResourceManager.GetString("JobBranchPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to زبان.
         /// </summary>
         public static string Language {
@@ -1650,6 +1749,15 @@ namespace Resources.General {
         public static string LastUpdateDate {
             get {
                 return ResourceManager.GetString("LastUpdateDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to جدید ترین ها.
+        /// </summary>
+        public static string LatestJobs {
+            get {
+                return ResourceManager.GetString("LatestJobs", resourceCulture);
             }
         }
         
@@ -1789,11 +1897,29 @@ namespace Resources.General {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to پیشنهاد لحظه ای.
+        /// </summary>
+        public static string MomentJobs {
+            get {
+                return ResourceManager.GetString("MomentJobs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to مبلغ.
         /// </summary>
         public static string Money {
             get {
                 return ResourceManager.GetString("Money", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to کاملا انتقال یافت 301.
+        /// </summary>
+        public static string MovedPermanently301 {
+            get {
+                return ResourceManager.GetString("MovedPermanently301", resourceCulture);
             }
         }
         
@@ -1906,6 +2032,15 @@ namespace Resources.General {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to تلفن ثابت.
+        /// </summary>
+        public static string PhoneNumberTel {
+            get {
+                return ResourceManager.GetString("PhoneNumberTel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to تصویر.
         /// </summary>
         public static string Picture {
@@ -1920,6 +2055,24 @@ namespace Resources.General {
         public static string Price {
             get {
                 return ResourceManager.GetString("Price", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to محصول.
+        /// </summary>
+        public static string Product {
+            get {
+                return ResourceManager.GetString("Product", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to مخصوص محصولات.
+        /// </summary>
+        public static string ProductPage {
+            get {
+                return ResourceManager.GetString("ProductPage", resourceCulture);
             }
         }
         
@@ -2366,6 +2519,15 @@ namespace Resources.General {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to به طور موقت تغییر مسیر داده شد 307.
+        /// </summary>
+        public static string TemporaryRedirect307 {
+            get {
+                return ResourceManager.GetString("TemporaryRedirect307", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to متن.
         /// </summary>
         public static string Text {
@@ -2389,6 +2551,15 @@ namespace Resources.General {
         public static string Today {
             get {
                 return ResourceManager.GetString("Today", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to برترین ها.
+        /// </summary>
+        public static string TopScoreJobs {
+            get {
+                return ResourceManager.GetString("TopScoreJobs", resourceCulture);
             }
         }
         
@@ -2443,6 +2614,15 @@ namespace Resources.General {
         public static string Type {
             get {
                 return ResourceManager.GetString("Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to به دلایل امنیتی غیرقابل دسترسی است 451.
+        /// </summary>
+        public static string UnavailableForLegalReasons451 {
+            get {
+                return ResourceManager.GetString("UnavailableForLegalReasons451", resourceCulture);
             }
         }
         

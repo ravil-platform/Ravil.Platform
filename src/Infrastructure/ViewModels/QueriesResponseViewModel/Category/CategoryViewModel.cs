@@ -1,6 +1,4 @@
-﻿using Domain.Entities.Category.Enums;
-
-namespace ViewModels.QueriesResponseViewModel.Category
+﻿namespace ViewModels.QueriesResponseViewModel.Category
 {
     public class CategoryViewModel
     {

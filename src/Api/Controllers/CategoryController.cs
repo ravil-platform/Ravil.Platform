@@ -1,12 +1,6 @@
-﻿using Application.Features.Category.Queries.GetAll;
-using Application.Features.Category.Queries.GetAllByFilter;
-using Application.Features.Category.Queries.GetAllByParentId;
-using Application.Features.Category.Queries.GetAllCategoryService;
-using Application.Features.Category.Queries.GetByRoute;
-
-namespace Api.Controllers
+﻿namespace Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route(Constants.Routes.Controller)]
     [ApiController]
     public class CategoryController : GenericBaseController<CategoryController>
     {
@@ -14,7 +8,7 @@ namespace Api.Controllers
         {
         }
 
-        [HttpPost("[action]")]
+        [HttpPost(Constants.Routes.Action)]
         public async Task<IActionResult> GetAll(GetAllCategoriesQuery query)
         {
             var result = await Mediator.Send(query);
@@ -22,7 +16,7 @@ namespace Api.Controllers
             return FluentResult(result);
         }
 
-        [HttpPost("[action]")]
+        [HttpPost(Constants.Routes.Action)]
         public async Task<IActionResult> GetAllByParentId(GetAllCategoriesByParentIdQuery query)
         {
             var result = await Mediator.Send(query);
@@ -30,7 +24,7 @@ namespace Api.Controllers
             return FluentResult(result);
         }
 
-        [HttpPost("[action]")]
+        [HttpPost(Constants.Routes.Action)]
         public async Task<IActionResult> GetAllByFilter(GetAllCategoriesByFilterQuery query)
         {
             var result = await Mediator.Send(query);
@@ -39,7 +33,7 @@ namespace Api.Controllers
         }
 
 
-        [HttpPost("[action]")]
+        [HttpPost(Constants.Routes.Action)]
         public async Task<IActionResult> GetByRoute(GetCategoryByRouteQuery query)
         {
             var result = await Mediator.Send(query);
@@ -47,7 +41,7 @@ namespace Api.Controllers
             return FluentResult(result);
         }
 
-        [HttpPost("[action]")]
+        [HttpPost(Constants.Routes.Action)]
         public async Task<IActionResult> GetCategoryServices(GetAllCategoryServiceQuery query)
         {
             var result = await Mediator.Send(query);
