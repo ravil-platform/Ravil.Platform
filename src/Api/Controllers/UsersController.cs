@@ -1,16 +1,16 @@
 ﻿namespace Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route(Constants.Routes.Controller)]
     [ApiController]
     public class UsersController : GenericBaseController<UsersController>
     {
-        public UsersController(IMediator mediator, Logging.Base.ILogger<UsersController> logger) 
+        public UsersController(IMediator mediator, Logging.Base.ILogger<UsersController> logger)
             : base(mediator, logger)
         {
         }
 
         //for test api
-        [HttpPost("[action]")]
+        [HttpPost(Constants.Routes.Action)]
         public async Task<IActionResult> Create(CreateUserCommand command)
         {
             var result = await Mediator.Send(command);
@@ -19,7 +19,7 @@
         }
 
 
-        [HttpPost("[action]")]
+        [HttpPost(Constants.Routes.Action)]
         public async Task<IActionResult> Register(RegisterUserCommand command)
         {
             var result = await Mediator.Send(command);
@@ -27,7 +27,7 @@
             return FluentResult(result);
         }
 
-        [HttpPost("[action]")]
+        [HttpPost(Constants.Routes.Action)]
         [AllowAnonymous]
         public virtual async Task<IActionResult> GenerateToken(GenerateTokenCommand command)
         {

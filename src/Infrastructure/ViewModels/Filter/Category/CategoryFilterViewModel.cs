@@ -1,5 +1,4 @@
-﻿using Domain.Entities.Category.Enums;
-using ViewModels.QueriesResponseViewModel.Category;
+﻿using ViewModels.QueriesResponseViewModel.Category;
 
 namespace ViewModels.Filter.Category
 {

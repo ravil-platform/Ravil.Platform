@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Constants\Constants.csproj" />
+    <ProjectReference Include="..\..\Core\Enums\Enums.csproj" />
   </ItemGroup>
 
 </Project>

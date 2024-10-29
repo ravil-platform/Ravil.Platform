@@ -20,4 +20,16 @@ public class BaseController : ControllerBase
             return BadRequest(error: result.ToResult());
         }
     }
+
+    protected IActionResult FluentResult(FluentResults.Result result)
+    {
+        if (result.IsSuccess)
+        {
+            return Ok(value: result);
+        }
+        else
+        {
+            return BadRequest(error: result.WithError(Resources.Messages.Errors.ActionsHasError));
+        }
+    }
 }

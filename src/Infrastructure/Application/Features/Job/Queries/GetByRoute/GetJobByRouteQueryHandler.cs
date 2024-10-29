@@ -1,0 +1,27 @@
+﻿using AutoMapper;
+using FluentResults;
+using Persistence.Contracts;
+using RNX.Mediator;
+using ViewModels.QueriesResponseViewModel.Job;
+
+namespace Application.Features.Job.Queries.GetByRoute;
+
+public class GetJobByRouteQueryHandler : IRequestHandler<GetJobByRouteQuery, JobViewModel>
+{
+    protected IUnitOfWork UnitOfWork { get; }
+    protected IMapper Mapper { get; }
+    public GetJobByRouteQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
+    {
+        UnitOfWork = unitOfWork;
+        Mapper = mapper;
+    }
+
+    public async Task<Result<JobViewModel>> Handle(GetJobByRouteQuery request, CancellationToken cancellationToken)
+    {
+        var job = await UnitOfWork.JobRepository.GetByPredicate(j => j.Route == request.Route);
+
+        var jobViewModel = Mapper.Map<JobViewModel>(job);
+
+        return jobViewModel;
+    }
+}

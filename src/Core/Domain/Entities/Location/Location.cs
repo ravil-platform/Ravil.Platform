@@ -17,7 +17,7 @@
 
         #region (Relations)
         public string? AddressId { get; set; } 
-        public virtual required Address.Address Address { get; set; }
+        public virtual  Address.Address? Address { get; set; }
         #endregion
     }
 }

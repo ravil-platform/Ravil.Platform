@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
 @using Constants.Files
-@model ViewModels.Faq.UpdateFaqViewModel
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model ViewModels.AdminPannel.Faq.UpdateFaqViewModel
 <form asp-controller="Faq" asp-action="Update" method="post" enctype="multipart/form-data">
     <div class="modal-body">
         <input type="hidden" asp-for="Id" />

@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Frameworks\RNX\RNX.csproj" />
+    <ProjectReference Include="..\Enums\Enums.csproj" />
   </ItemGroup>
 
 </Project>

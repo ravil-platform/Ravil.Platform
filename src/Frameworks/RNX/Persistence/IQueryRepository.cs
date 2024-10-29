@@ -8,6 +8,7 @@ namespace RNX.Persistence
         IQueryable<T> TableNoTracking { get; }
 
         Task<T?> GetByIdAsync(Guid id);
+        Task<T?> GetByIdAsync(string id);
         Task<T?> GetByIdAsync(int id);
         Task<T?> GetByPredicate(Expression<Func<T, bool>> predicate);
 

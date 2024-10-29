@@ -1,13 +1,4 @@
-﻿using AutoMapper;
-using Domain.Entities.Blog;
-using Domain.Entities.Category;
-using Domain.Entities.Faq;
-using ViewModels.Faq;
-using ViewModels.QueriesResponseViewModel.Blog;
-using ViewModels.QueriesResponseViewModel.Category;
-using ViewModels.User;
-
-namespace Application.Profiles
+﻿namespace Application.Profiles
 {
     public class MappingProfile : Profile
     {
@@ -29,6 +20,20 @@ namespace Application.Profiles
 
             CreateMap<Category, CategoryViewModel>().ReverseMap();
             CreateMap<CategoryService, CategoryServiceViewModel>().ReverseMap();
+
+            CreateMap<Job, JobViewModel>().ReverseMap();
+            CreateMap<Job, CreateJobCommand>().ReverseMap();
+
+            CreateMap<Job, CreateJobViewModel>().ReverseMap();
+            CreateMap<JobBranch, CreateJobBranchViewModel>().ReverseMap();
+
+            CreateMap<Job, UpdateJobCommand>().ReverseMap();
+
+            CreateMap<JobCategory, CreateJobCategoryCommand>().ReverseMap();
+            CreateMap<JobCategory, UpdateJobCategoryCommand>().ReverseMap();
+
+            CreateMap<JobBranch, JobBranchViewModel>().ReverseMap();
+            CreateMap<JobBranch, CreateJobBranchCommand>().ReverseMap();
         }
     }
 }

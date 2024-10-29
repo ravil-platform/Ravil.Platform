@@ -250,7 +250,7 @@
     <value>تاریخ تولد</value>
   </data>
   <data name="Blog" xml:space="preserve">
-    <value>صفحه مجله پزشکی</value>
+    <value>وبلاگ</value>
   </data>
   <data name="BlogHeadingContent" xml:space="preserve">
     <value>محتوا صفحه مجله پزشکی</value>
@@ -963,5 +963,65 @@
   </data>
   <data name="Parent" xml:space="preserve">
     <value>والد</value>
+  </data>
+  <data name="AccountPage" xml:space="preserve">
+    <value>مخصوص اکانت</value>
+  </data>
+  <data name="Aparat" xml:space="preserve">
+    <value>آپارات</value>
+  </data>
+  <data name="BlogPage" xml:space="preserve">
+    <value>مخصوص وبلاگ</value>
+  </data>
+  <data name="CategoryPage" xml:space="preserve">
+    <value>مخصوص دسته بندی</value>
+  </data>
+  <data name="CityPage" xml:space="preserve">
+    <value>مخصوص شهر</value>
+  </data>
+  <data name="FaxNumber" xml:space="preserve">
+    <value>فکس</value>
+  </data>
+  <data name="Found302" xml:space="preserve">
+    <value>پیدا شد 302</value>
+  </data>
+  <data name="Gone410" xml:space="preserve">
+    <value>محتوای حذف شده 410</value>
+  </data>
+  <data name="HomePage" xml:space="preserve">
+    <value>مخصوص صفحه اصلی</value>
+  </data>
+  <data name="JobBranch" xml:space="preserve">
+    <value>کسب و کار</value>
+  </data>
+  <data name="JobBranchPage" xml:space="preserve">
+    <value>مخصوص کسب و کار</value>
+  </data>
+  <data name="LatestJobs" xml:space="preserve">
+    <value>جدید ترین ها</value>
+  </data>
+  <data name="MomentJobs" xml:space="preserve">
+    <value>پیشنهاد لحظه ای</value>
+  </data>
+  <data name="MovedPermanently301" xml:space="preserve">
+    <value>کاملا انتقال یافت 301</value>
+  </data>
+  <data name="PhoneNumberTel" xml:space="preserve">
+    <value>تلفن ثابت</value>
+  </data>
+  <data name="Product" xml:space="preserve">
+    <value>محصول</value>
+  </data>
+  <data name="ProductPage" xml:space="preserve">
+    <value>مخصوص محصولات</value>
+  </data>
+  <data name="TemporaryRedirect307" xml:space="preserve">
+    <value>به طور موقت تغییر مسیر داده شد 307</value>
+  </data>
+  <data name="TopScoreJobs" xml:space="preserve">
+    <value>برترین ها</value>
+  </data>
+  <data name="UnavailableForLegalReasons451" xml:space="preserve">
+    <value>به دلایل امنیتی غیرقابل دسترسی است 451</value>
   </data>
 </root>

@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace RNX.Persistence
 {
@@ -25,6 +26,10 @@ namespace RNX.Persistence
         {
             return await DbSet.FindAsync(id);
         }
+        public virtual async Task<TEntity?> GetByIdAsync(string id)
+        {
+            return await DbSet.FindAsync(id);
+        }
         public async Task<TEntity?> GetByIdAsync(int id)
         {
             return await DbSet.FindAsync(id);
@@ -32,14 +37,14 @@ namespace RNX.Persistence
 
         public async Task<TEntity?> GetByPredicate(Expression<Func<TEntity, bool>> predicate)
         {
-            var result = await DbSet.Where(predicate).SingleOrDefaultAsync();
+            var result = await DbSet.AsNoTracking().Where(predicate).SingleOrDefaultAsync();
 
             return result;
         }
 
         public async Task<ICollection<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate)
         {
-            var result = await DbSet.Where(predicate).ToListAsync();
+            var result = await DbSet.AsNoTracking().Where(predicate).ToListAsync();
 
             return result;
         }
@@ -48,7 +53,7 @@ namespace RNX.Persistence
         {
             // ToListAsync -> Extension Method -> using Microsoft.EntityFrameworkCore;
 
-            var result = await DbSet.ToListAsync();
+            var result = await DbSet.AsNoTracking().ToListAsync();
 
             return result;
         }

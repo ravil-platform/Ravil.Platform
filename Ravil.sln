@@ -53,6 +53,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Persistance.UnitTest", "tes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RNX", "src\Frameworks\RNX\RNX.csproj", "{D7DEE7DC-4A9F-4D8A-BBA9-3B0C069DADE5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enums", "src\Core\Enums\Enums.csproj", "{4A868269-4E0F-4B7C-8D65-92BA459AFC65}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -115,6 +117,10 @@ Global
 		{D7DEE7DC-4A9F-4D8A-BBA9-3B0C069DADE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D7DEE7DC-4A9F-4D8A-BBA9-3B0C069DADE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D7DEE7DC-4A9F-4D8A-BBA9-3B0C069DADE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A868269-4E0F-4B7C-8D65-92BA459AFC65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A868269-4E0F-4B7C-8D65-92BA459AFC65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A868269-4E0F-4B7C-8D65-92BA459AFC65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A868269-4E0F-4B7C-8D65-92BA459AFC65}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -142,6 +148,7 @@ Global
 		{7820EA39-F715-4B5F-8882-DCAAACB4446C} = {6D92556C-E0CD-4D5C-9D83-BC14C428FB97}
 		{6E01F493-665B-4182-B21E-F27638BF3985} = {F784D878-F819-467E-8637-AF4790AB1D53}
 		{D7DEE7DC-4A9F-4D8A-BBA9-3B0C069DADE5} = {80AB33E6-A0BA-44BC-AD5E-B442D67129E0}
+		{4A868269-4E0F-4B7C-8D65-92BA459AFC65} = {934A7E09-D320-46DE-B13F-715F13EF1459}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {19C4F60E-A67A-4F08-8481-C3FEDF3FADB0}

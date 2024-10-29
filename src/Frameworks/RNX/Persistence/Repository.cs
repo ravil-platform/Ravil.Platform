@@ -73,6 +73,11 @@ namespace RNX.Persistence
             return await DbSet.FindAsync(id.ToString());
         }
 
+        public virtual async Task<T?> GetByIdAsync(string id)
+        {
+            return await DbSet.FindAsync(id);
+        }
+
         public virtual async Task<T?> GetByIdAsync(int id)
         {
             return await DbSet.FindAsync(id);
@@ -80,14 +85,14 @@ namespace RNX.Persistence
 
         public async Task<T?> GetByPredicate(Expression<Func<T, bool>> predicate)
         {
-            var result = await DbSet.Where(predicate).SingleOrDefaultAsync();
+            var result = await DbSet.AsNoTracking().Where(predicate).SingleOrDefaultAsync();
 
             return result;
         }
 
         public async Task<ICollection<T>> GetAllAsync(Expression<Func<T, bool>> predicate)
         {
-            var result = await DbSet.Where(predicate).ToListAsync();
+            var result = await DbSet.AsNoTracking().Where(predicate).ToListAsync();
 
             return result;
         }
@@ -106,9 +111,19 @@ namespace RNX.Persistence
             return true;
         }
 
+        public async Task BeginTransactionAsync()
+        {
+            await DatabaseContext.Database.BeginTransactionAsync();
+        }
+
+        public async Task CommitTransactionAsync()
+        {
+            await DatabaseContext.Database.CommitTransactionAsync();
+        }
+
         public virtual async Task<ICollection<T?>> GetAllAsync()
         {
-            var result = await DbSet.ToListAsync();
+            var result = await DbSet.AsNoTracking().ToListAsync();
 
             return result;
         }
