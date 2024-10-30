@@ -1,7 +1,4 @@
-﻿using RNX.Mediator;
-using ViewModels.QueriesResponseViewModel.Job;
-
-namespace Application.Features.Job.Queries.GetBestJobs
+﻿namespace Application.Features.Job.Queries.GetBestJobs
 {
     public class GetBestJobsQuery : IRequest<List<JobViewModel>>
     {

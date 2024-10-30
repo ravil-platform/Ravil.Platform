@@ -1,6 +1,4 @@
-﻿using Enums;
-
-namespace Persistence.Entities.ShortLink.Repositories;
+﻿namespace Persistence.Entities.ShortLink.Repositories;
 
 public class ShortLinkRepository : Repository<Domain.Entities.ShortLink.ShortLink>, IShortLinkRepository
 {

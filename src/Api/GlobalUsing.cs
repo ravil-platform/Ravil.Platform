@@ -30,3 +30,7 @@ global using Application.Features.Blog.Queries.GetAllByFilter;
 global using Application.Features.Blog.Queries.GetBlogCategories;
 global using Application.Features.Blog.Queries.GetBlogCategoriesByParentId;
 global using Application.Features.Blog.Queries.GetByRoute;
+global using Application.Features.MainSlider.Queries.GetAllByFilter;
+global using Constants;
+global using FluentResults;
+global using ViewModels.QueriesResponseViewModel.MainSlider;

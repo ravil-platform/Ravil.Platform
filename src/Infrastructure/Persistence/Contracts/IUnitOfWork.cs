@@ -133,7 +133,7 @@ namespace Persistence.Contracts
         #endregion
 
         #region ( Team )
-        public ITeamRepository TamRepository { get; }
+        public ITeamRepository TeamRepository { get; }
         #endregion
 
         #region ( Transaction )

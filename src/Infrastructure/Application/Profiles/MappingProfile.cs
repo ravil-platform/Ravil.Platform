@@ -1,4 +1,27 @@
-﻿namespace Application.Profiles
+﻿using Application.Features.Comment.Commands.Create;
+using Application.Features.Comment.Commands.CreateAnswer;
+using Domain.Entities.Banner;
+using Domain.Entities.Brand;
+using Domain.Entities.City;
+using Domain.Entities.Comment;
+using Domain.Entities.MainSlider;
+using Domain.Entities.Service;
+using Domain.Entities.ShortLink;
+using Domain.Entities.State;
+using Domain.Entities.Tag;
+using Domain.Entities.Team;
+using ViewModels.QueriesResponseViewModel.Banner;
+using ViewModels.QueriesResponseViewModel.City;
+using ViewModels.QueriesResponseViewModel.Comment;
+using ViewModels.QueriesResponseViewModel.Faq;
+using ViewModels.QueriesResponseViewModel.MainSlider;
+using ViewModels.QueriesResponseViewModel.Service;
+using ViewModels.QueriesResponseViewModel.ShortLink;
+using ViewModels.QueriesResponseViewModel.State;
+using ViewModels.QueriesResponseViewModel.Tag;
+using ViewModels.QueriesResponseViewModel.Team;
+
+namespace Application.Profiles
 {
     public class MappingProfile : Profile
     {
@@ -34,6 +57,48 @@
 
             CreateMap<JobBranch, JobBranchViewModel>().ReverseMap();
             CreateMap<JobBranch, CreateJobBranchCommand>().ReverseMap();
+
+            CreateMap<MainSlider, MainSliderViewModel>().ReverseMap();
+            CreateMap<Service, ServiceViewModel>().ReverseMap();
+
+            CreateMap<JobService, JobServiceViewModel>().ReverseMap();
+
+            CreateMap<ShortLink, ShortLinkViewModel>().ReverseMap();
+            CreateMap<JobSelectionSliderViewModel, JobSelectionSlider>().ReverseMap();
+
+
+            CreateMap<JobBranchShortLink, JobBranchShortLinkViewModel>().ReverseMap();
+            CreateMap<JobBranchGalleryViewModel, JobBranchGallery>().ReverseMap();
+
+            CreateMap<JobTimeWork, JobTimeWorkViewModel>().ReverseMap();
+
+            CreateMap<State, StateViewModel>().ReverseMap();
+            CreateMap<StateBase, StateBaseViewModel>().ReverseMap();
+
+            CreateMap<Tag, TagViewModel>().ReverseMap();
+            CreateMap<BlogTag, BlogTagViewModel>().ReverseMap();
+
+            CreateMap<JobTag, JobTagViewModel>().ReverseMap();
+            CreateMap<JobBranchTag, JobBranchTagViewModel>().ReverseMap();
+
+            CreateMap<Team, TeamViewModel>().ReverseMap();
+            CreateMap<Banner, BannerViewModel>().ReverseMap();
+
+            CreateMap<Brand, BrandViewModel>().ReverseMap();
+            CreateMap<City, CityViewModel>().ReverseMap();
+
+            CreateMap<CityCategoryViewModel, CityCategory>().ReverseMap();
+            CreateMap<CityBaseViewModel, CityBase>().ReverseMap();
+
+            CreateMap<Comment, CommentViewModel>().ReverseMap();
+            CreateMap<AnswerComment, AnswerCommentViewModel>().ReverseMap();
+
+            CreateMap<Faq, FaqViewModel>().ReverseMap();
+            CreateMap<FaqCategory, FaqCategoryViewModel>().ReverseMap();
+
+
+            CreateMap<CreateCommentCommand, Comment>().ReverseMap();
+            CreateMap<CreateAnswerCommentCommand, AnswerComment>().ReverseMap();
         }
     }
 }

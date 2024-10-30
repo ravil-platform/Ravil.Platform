@@ -1,11 +1,4 @@
-﻿using AutoMapper;
-using Domain.Entities.Category;
-using FluentResults;
-using Persistence.Contracts;
-using RNX.Mediator;
-using ViewModels.QueriesResponseViewModel.Category;
-
-namespace Application.Features.Category.Queries.GetAllCategoryService;
+﻿namespace Application.Features.Category.Queries.GetAllCategoryService;
 
 public class GetAllCategoryServiceQueryHandler : IRequestHandler<GetAllCategoryServiceQuery, List<CategoryServiceViewModel>>
 {

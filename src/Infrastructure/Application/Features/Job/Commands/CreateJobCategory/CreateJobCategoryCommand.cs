@@ -1,6 +1,4 @@
-﻿using RNX.Mediator;
-
-namespace Application.Features.Job.Commands.CreateJobCategory
+﻿namespace Application.Features.Job.Commands.CreateJobCategory
 {
     public class CreateJobCategoryCommand : IRequest
     {
