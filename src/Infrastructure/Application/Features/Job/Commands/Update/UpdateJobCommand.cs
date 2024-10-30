@@ -1,9 +1,4 @@
-﻿using Domain.Entities.Job;
-using Microsoft.Extensions.Hosting;
-using RNX.Mediator;
-using ViewModels.QueriesResponseViewModel.Job;
-
-namespace Application.Features.Job.Commands.Update
+﻿namespace Application.Features.Job.Commands.Update
 {
     public class UpdateJobCommand : IRequest<JobViewModel>
     {

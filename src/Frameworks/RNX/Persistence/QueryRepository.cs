@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace RNX.Persistence
 {
@@ -30,21 +31,61 @@ namespace RNX.Persistence
         {
             return await DbSet.FindAsync(id);
         }
-        public async Task<TEntity?> GetByIdAsync(int id)
+        public virtual async Task<TEntity?> GetByIdAsync(int id)
         {
             return await DbSet.FindAsync(id);
         }
 
-        public async Task<TEntity?> GetByPredicate(Expression<Func<TEntity, bool>> predicate)
+        public virtual async Task<TEntity?> GetByPredicate(Expression<Func<TEntity, bool>> predicate)
         {
             var result = await DbSet.AsNoTracking().Where(predicate).SingleOrDefaultAsync();
 
             return result;
         }
 
-        public async Task<ICollection<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate)
+        public virtual async Task<ICollection<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate)
         {
             var result = await DbSet.AsNoTracking().Where(predicate).ToListAsync();
+
+            return result;
+        }
+
+        public virtual async Task<ICollection<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includes = "", int? takeEntities = null)
+        {
+            var query = DbSet.AsNoTracking();
+
+            if (predicate != null)
+            {
+                query = query.Where(predicate);
+            }
+
+            if (orderBy != null)
+            {
+                query = orderBy(query);
+
+            }
+
+            if (includes != "")
+            {
+                foreach (string include in includes.Split(','))
+                {
+                    query = query.Include(include);
+                }
+            }
+
+            if (takeEntities != null)
+            {
+                return await query.Take((int)takeEntities).ToListAsync();
+            }
+            else
+            {
+                return await query.ToListAsync();
+            }
+        }
+
+        public virtual async Task<ICollection<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate, int takeEntities)
+        {
+            var result = await DbSet.AsNoTracking().Where(predicate).Take(takeEntities).ToListAsync();
 
             return result;
         }

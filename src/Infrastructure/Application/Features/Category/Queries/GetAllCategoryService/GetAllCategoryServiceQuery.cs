@@ -1,7 +1,4 @@
-﻿using RNX.Mediator;
-using ViewModels.QueriesResponseViewModel.Category;
-
-namespace Application.Features.Category.Queries.GetAllCategoryService
+﻿namespace Application.Features.Category.Queries.GetAllCategoryService
 {
     public class GetAllCategoryServiceQuery : IRequest<List<CategoryServiceViewModel>>
     {

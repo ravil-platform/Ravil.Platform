@@ -27,7 +27,16 @@
 
 	<ItemGroup>
 	  <Folder Include="Features\Blog\Commands\" />
+	  <Folder Include="Features\Brand\Commands\" />
 	  <Folder Include="Features\Category\Commands\" />
+	  <Folder Include="Features\City\Commands\" />
+	  <Folder Include="Features\Faq\Commands\" />
+	  <Folder Include="Features\MainSlider\Commands\" />
+	  <Folder Include="Features\Service\Commands\" />
+	  <Folder Include="Features\ShortLink\Commands\" />
+	  <Folder Include="Features\State\Commands\" />
+	  <Folder Include="Features\Tag\Commands\" />
+	  <Folder Include="Features\Team\Commands\" />
 	  <Folder Include="Features\User\Commands\ChangePassword\" />
 	  <Folder Include="Features\User\Queries\GetAll\" />
 	  <Folder Include="Features\User\Queries\GetById\" />

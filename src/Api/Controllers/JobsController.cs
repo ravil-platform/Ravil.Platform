@@ -1,4 +1,12 @@
-﻿namespace Api.Controllers
+﻿using Application.Features.Job.Queries.GetAllJobService;
+using Application.Features.Job.Queries.GetJobBranchGalleries;
+using Application.Features.Job.Queries.GetJobBranchShortLinks;
+using Application.Features.Job.Queries.GetJobSelectionSlider;
+using Application.Features.Job.Queries.GetJobTimeWork;
+using ViewModels.QueriesResponseViewModel.Job;
+using ViewModels.QueriesResponseViewModel.Service;
+
+namespace Api.Controllers
 {
     [Route(Constants.Routes.Controller)]
     [ApiController]
@@ -9,7 +17,20 @@
 
         }
 
+        [HttpGet(Routes.Action)]
+        [ProducesResponseType(type: typeof(Result<List<ServiceViewModel>>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetJobServices([FromQuery] GetAllJobServiceQuery query)
+        {
+            var result = await Mediator.Send(query);
+
+            return FluentResult(result);
+        }
+
+
         [HttpGet(Constants.Routes.Action)]
+        [ProducesResponseType(type: typeof(Result<List<JobViewModel>>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetNewestJobs([FromQuery] GetNewestJobsQuery query)
         {
             var result = await Mediator.Send(query);
@@ -17,7 +38,10 @@
             return FluentResult(result);
         }
 
+
         [HttpGet(Constants.Routes.Action)]
+        [ProducesResponseType(type: typeof(Result<List<JobViewModel>>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetBestJobs([FromQuery] GetBestJobsQuery query)
         {
             var result = await Mediator.Send(query);
@@ -25,7 +49,10 @@
             return FluentResult(result);
         }
 
+
         [HttpGet(Constants.Routes.Action)]
+        [ProducesResponseType(type: typeof(Result<List<JobViewModel>>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetRelatedJobs([FromQuery] GetRelatedJobsQuery query)
         {
             var result = await Mediator.Send(query);
@@ -33,7 +60,10 @@
             return FluentResult(result);
         }
 
+
         [HttpGet(Constants.Routes.Action)]
+        [ProducesResponseType(type: typeof(Result<JobViewModel>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetByRoute([FromQuery] GetJobByRouteQuery query)
         {
             var result = await Mediator.Send(query);
@@ -41,7 +71,10 @@
             return FluentResult(result);
         }
 
+
         [HttpGet(Constants.Routes.Action)]
+        [ProducesResponseType(type: typeof(Result<List<JobViewModel>>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetJobsByCategoryId([FromQuery] GetAllJobsByCategoryIdQuery query)
         {
             var result = await Mediator.Send(query);
@@ -50,7 +83,54 @@
         }
 
 
+        [HttpGet(Routes.Action)]
+        [ProducesResponseType(type: typeof(Result<List<JobSelectionSliderViewModel>>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetJobSelectionSliderByFilter([FromQuery] GetJobSelectionSliderQuery query)
+        {
+            var result = await Mediator.Send(query);
+
+            return FluentResult(result);
+        }
+
+
+        [HttpGet(Routes.Action)]
+        [ProducesResponseType(type: typeof(Result<List<JobBranchShortLinkViewModel>>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetJobBranchShortLinksByJobBranchId([FromQuery] GetJobBranchShortLinksQuery query)
+        {
+            var result = await Mediator.Send(query);
+
+            return FluentResult(result);
+        }
+
+
+        [HttpGet(Routes.Action)]
+        [ProducesResponseType(type: typeof(Result<List<JobBranchGalleryViewModel>>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetJobBranchGalleriesByJobBranchId([FromQuery] GetJobBranchGalleriesQuery query)
+        {
+            var result = await Mediator.Send(query);
+
+            return FluentResult(result);
+        }
+
+
+        [HttpGet(Routes.Action)]
+        [ProducesResponseType(type: typeof(Result<List<JobTimeWorkViewModel>>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetJobTimeWorkByJobBranchId([FromQuery] GetJobTimeWorksQuery query)
+        {
+            var result = await Mediator.Send(query);
+
+            return FluentResult(result);
+        }
+        
+
+
         [HttpPost(Constants.Routes.Action)]
+        [ProducesResponseType(type: typeof(Result<JobViewModel>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateJob([FromForm] CreateJobCommand command)
         {
             var result = await Mediator.Send(command);
@@ -58,7 +138,10 @@
             return FluentResult(result);
         }
 
+
         [HttpPut(Constants.Routes.Action)]
+        [ProducesResponseType(type: typeof(Result<JobViewModel>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateJob(UpdateJobCommand command)
         {
             var result = await Mediator.Send(command);
@@ -66,7 +149,10 @@
             return FluentResult(result);
         }
 
+
         [HttpPost(Constants.Routes.Action)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateJobCategory(CreateJobCategoryCommand command)
         {
             var result = await Mediator.Send(command);
@@ -74,7 +160,10 @@
             return FluentResult(result);
         }
 
+
         [HttpPut(Constants.Routes.Action)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateJobCategory(UpdateJobCategoryCommand command)
         {
             var result = await Mediator.Send(command);
@@ -82,7 +171,10 @@
             return FluentResult(result);
         }
 
+
         [HttpPost(Constants.Routes.Action)]
+        [ProducesResponseType(type: typeof(Result<JobBranchViewModel>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateJobBranch([FromForm] CreateJobBranchCommand command)
         {
             var result = await Mediator.Send(command);
@@ -90,7 +182,10 @@
             return FluentResult(result);
         }
 
+
         [HttpPost(Constants.Routes.Action)]
+        [ProducesResponseType(type: typeof(Result<JobBranchViewModel>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateFreeJobBranch([FromForm] CreateFreeJobBranchCommand command)
         {
             var result = await Mediator.Send(command);

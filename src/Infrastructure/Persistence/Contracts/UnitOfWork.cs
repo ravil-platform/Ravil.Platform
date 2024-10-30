@@ -816,17 +816,17 @@ namespace Persistence.Contracts
         #endregion
 
         #region ( Team )
-        private ITeamRepository? _tamRepository;
-        public ITeamRepository TamRepository
+        private ITeamRepository? _teamRepository;
+        public ITeamRepository TeamRepository
         {
             get
             {
-                if (_tamRepository == null)
+                if (_teamRepository == null)
                 {
-                    _tamRepository = new TeamRepository(DatabaseContext);
+                    _teamRepository = new TeamRepository(DatabaseContext);
                 }
 
-                return _tamRepository;
+                return _teamRepository;
             }
         }
         #endregion

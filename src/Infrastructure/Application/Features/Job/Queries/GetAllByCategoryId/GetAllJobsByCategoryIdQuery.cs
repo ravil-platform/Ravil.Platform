@@ -1,7 +1,4 @@
-﻿using RNX.Mediator;
-using ViewModels.QueriesResponseViewModel.Job;
-
-namespace Application.Features.Job.Queries.GetAllByCategoryId
+﻿namespace Application.Features.Job.Queries.GetAllByCategoryId
 {
     public class GetAllJobsByCategoryIdQuery : IRequest<List<JobViewModel>>
     {

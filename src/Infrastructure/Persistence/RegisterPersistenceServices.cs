@@ -1,4 +1,5 @@
-﻿using Persistence.Contracts;
+﻿using System.Reflection;
+using Persistence.Contracts;
 
 namespace Persistence
 {
@@ -6,9 +7,15 @@ namespace Persistence
     {
         public static void AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
         {
+            var assembly = typeof(ApplicationDbContext).GetTypeInfo().Assembly.GetName();
+
             services.AddDbContext<ApplicationDbContext>(option =>
             {
-                option.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+                option.UseLazyLoadingProxies(false);
+                option.EnableSensitiveDataLogging();
+                option.EnableDetailedErrors();
+                option.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
+                    acion => acion.MigrationsAssembly(assembly.Name));
             });
 
             services.AddTransient<Contracts.IUnitOfWork, UnitOfWork>(current =>

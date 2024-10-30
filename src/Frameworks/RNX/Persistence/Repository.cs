@@ -83,16 +83,56 @@ namespace RNX.Persistence
             return await DbSet.FindAsync(id);
         }
 
-        public async Task<T?> GetByPredicate(Expression<Func<T, bool>> predicate)
+        public virtual async Task<T?> GetByPredicate(Expression<Func<T, bool>> predicate)
         {
             var result = await DbSet.AsNoTracking().Where(predicate).SingleOrDefaultAsync();
 
             return result;
         }
 
-        public async Task<ICollection<T>> GetAllAsync(Expression<Func<T, bool>> predicate)
+        public virtual async Task<ICollection<T>> GetAllAsync(Expression<Func<T, bool>> predicate)
         {
             var result = await DbSet.AsNoTracking().Where(predicate).ToListAsync();
+
+            return result;
+        }
+
+        public virtual async Task<ICollection<T>> GetAllAsync(Expression<Func<T, bool>> predicate = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includes = "", int? takeEntities = null)
+        {
+            var query = DbSet.AsNoTracking();
+
+            if (predicate != null)
+            {
+                query = query.Where(predicate);
+            }
+
+            if (orderBy != null)
+            {
+                query = orderBy(query);
+
+            }
+
+            if (includes != "")
+            {
+                foreach (string include in includes.Split(','))
+                {
+                    query = query.Include(include);
+                }
+            }
+
+            if (takeEntities != null)
+            {
+                return await query.Take((int)takeEntities).ToListAsync();
+            }
+            else
+            {
+                return await query.ToListAsync();
+            }
+        }
+
+        public virtual async Task<ICollection<T>> GetAllAsync(Expression<Func<T, bool>> predicate, int takeEntities)
+        {
+            var result = await DbSet.AsNoTracking().Where(predicate).Take(takeEntities).ToListAsync();
 
             return result;
         }
@@ -111,12 +151,12 @@ namespace RNX.Persistence
             return true;
         }
 
-        public async Task BeginTransactionAsync()
+        public virtual async Task BeginTransactionAsync()
         {
             await DatabaseContext.Database.BeginTransactionAsync();
         }
 
-        public async Task CommitTransactionAsync()
+        public virtual async Task CommitTransactionAsync()
         {
             await DatabaseContext.Database.CommitTransactionAsync();
         }

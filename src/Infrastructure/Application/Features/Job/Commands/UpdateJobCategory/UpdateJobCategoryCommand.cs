@@ -1,6 +1,4 @@
-﻿using RNX.Mediator;
-
-namespace Application.Features.Job.Commands.UpdateJobCategory
+﻿namespace Application.Features.Job.Commands.UpdateJobCategory
 {
     public class UpdateJobCategoryCommand : IRequest
     {

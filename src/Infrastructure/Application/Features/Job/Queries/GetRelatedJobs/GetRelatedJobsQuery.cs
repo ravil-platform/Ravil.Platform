@@ -1,7 +1,4 @@
-﻿using RNX.Mediator;
-using ViewModels.QueriesResponseViewModel.Job;
-
-namespace Application.Features.Job.Queries.GetRelatedJobs
+﻿namespace Application.Features.Job.Queries.GetRelatedJobs
 {
     public class GetRelatedJobsQuery : IRequest<List<JobViewModel>>
     {

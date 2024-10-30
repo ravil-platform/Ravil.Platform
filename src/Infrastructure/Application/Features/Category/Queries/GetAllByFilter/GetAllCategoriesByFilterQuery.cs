@@ -1,6 +1,4 @@
-﻿using RNX.Mediator;
-using ViewModels.Filter.Category;
-using ViewModels.QueriesResponseViewModel.Category;
+﻿using ViewModels.Filter.Category;
 
 namespace Application.Features.Category.Queries.GetAllByFilter
 {
