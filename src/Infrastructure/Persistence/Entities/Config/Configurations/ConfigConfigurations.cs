@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace Persistence.Entities.Config.Configurations
+﻿namespace Persistence.Entities.Config.Configurations
 {
     public class ConfigConfigurations : IEntityTypeConfiguration<Domain.Entities.Config.Config>
     {

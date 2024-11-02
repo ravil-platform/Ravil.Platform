@@ -1,4 +1,5 @@
-﻿using Domain.Entities.Brand;
+﻿
+using ViewModels.QueriesResponseViewModel.Brand;
 
 namespace Application.Features.Brand.Queries.GetAll
 {

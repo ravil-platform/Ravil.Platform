@@ -1,6 +1,4 @@
-﻿using RNX.Mediator;
-
-namespace Application.Features.User.Commands.Create
+﻿namespace Application.Features.User.Commands.Create
 {
     public class CreateUserCommand : IRequest<ApplicationUser>
     {

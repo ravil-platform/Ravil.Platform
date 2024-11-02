@@ -1,9 +1,4 @@
-﻿using Application.Features.State.Queries.GetAll;
-using Application.Features.State.Queries.GetAllByStateBaseId;
-using Application.Features.State.Queries.GetAllStateBase;
-using ViewModels.QueriesResponseViewModel.State;
-
-namespace Api.Controllers
+﻿namespace Api.Controllers
 {
     [Route(Routes.Controller)]
     [ApiController]

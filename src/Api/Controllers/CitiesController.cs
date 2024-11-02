@@ -1,10 +1,4 @@
-﻿using Application.Features.City.Queries.GetAll;
-using Application.Features.City.Queries.GetAllByCityBaseId;
-using Application.Features.City.Queries.GetAllCityBase;
-using Application.Features.City.Queries.GetAllCityCategory;
-using ViewModels.QueriesResponseViewModel.City;
-
-namespace Api.Controllers
+﻿namespace Api.Controllers
 {
     [Route(Routes.Controller)]
     [ApiController]

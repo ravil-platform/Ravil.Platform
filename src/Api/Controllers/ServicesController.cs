@@ -1,9 +1,4 @@
-﻿using Application.Features.Job.Queries.GetAllJobService;
-using Application.Features.Service.Queries.GetAll;
-using ViewModels.QueriesResponseViewModel.Category;
-using ViewModels.QueriesResponseViewModel.Service;
-
-namespace Api.Controllers
+﻿namespace Api.Controllers
 {
     [Route(Routes.Controller)]
     [ApiController]

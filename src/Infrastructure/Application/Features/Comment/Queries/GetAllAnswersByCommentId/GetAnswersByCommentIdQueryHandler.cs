@@ -1,5 +1,4 @@
-﻿using ViewModels.QueriesResponseViewModel.Comment;
-
+﻿
 namespace Application.Features.Comment.Queries.GetAllAnswersByCommentId;
 
 public class GetAnswersByCommentIdQueryHandler : IRequestHandler<GetAnswersByCommentIdQuery, List<AnswerCommentViewModel>>

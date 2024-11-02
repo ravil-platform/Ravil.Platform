@@ -1,12 +1,4 @@
-﻿using Application.Features.Job.Queries.GetAllJobService;
-using Application.Features.Job.Queries.GetJobBranchGalleries;
-using Application.Features.Job.Queries.GetJobBranchShortLinks;
-using Application.Features.Job.Queries.GetJobSelectionSlider;
-using Application.Features.Job.Queries.GetJobTimeWork;
-using ViewModels.QueriesResponseViewModel.Job;
-using ViewModels.QueriesResponseViewModel.Service;
-
-namespace Api.Controllers
+﻿namespace Api.Controllers
 {
     [Route(Constants.Routes.Controller)]
     [ApiController]
@@ -16,6 +8,40 @@ namespace Api.Controllers
         {
 
         }
+
+        [HttpPost(Routes.Action)]
+        [ProducesResponseType(type: typeof(Result<JobBranchFilter>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetJobBranchesByFilter(GetAllJobBranchByFilterQuery query)
+        {
+            var result = await Mediator.Send(query);
+
+            return FluentResult(result);
+        }
+
+
+        [HttpGet(Routes.Action)]
+        [ProducesResponseType(type: typeof(Result<List<JobBranchViewModel>>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetJobBranchesByJobId([FromQuery] GetAllJobBranchByJobIdQuery query)
+        {
+            var result = await Mediator.Send(query);
+
+            return FluentResult(result);
+        }
+
+
+        [HttpGet(Routes.Action)]
+        [ProducesResponseType(type: typeof(Result<JobBranchViewModel>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetJobBranchById([FromQuery] GetJobBranchByIdQuery query)
+        {
+            var result = await Mediator.Send(query);
+
+            return FluentResult(result);
+        }
+
+
 
         [HttpGet(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<List<ServiceViewModel>>), statusCode: StatusCodes.Status200OK)]
@@ -125,7 +151,7 @@ namespace Api.Controllers
 
             return FluentResult(result);
         }
-        
+
 
 
         [HttpPost(Constants.Routes.Action)]

@@ -1,12 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Net;
-using System.Security.Claims;
-using System.Text;
-using Application.Contracts.Identity;
-using Common.Utilities.Extensions;
 using Persistence.Entities.User.Repositories.Interfaces;
-using Application.Features.User.Commands.Create;
 
 namespace Application
 {

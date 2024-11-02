@@ -1,7 +1,4 @@
-﻿using Common.Utilities.Extensions;
-using Persistence.Entities.Account.Configurations;
-
-namespace Persistence.Context
+﻿namespace Persistence.Context
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {

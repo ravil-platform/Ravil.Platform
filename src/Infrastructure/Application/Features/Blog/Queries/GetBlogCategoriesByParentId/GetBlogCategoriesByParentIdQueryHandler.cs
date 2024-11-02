@@ -1,10 +1,4 @@
-﻿using AutoMapper;
-using FluentResults;
-using Persistence.Contracts;
-using RNX.Mediator;
-using ViewModels.QueriesResponseViewModel.Blog;
-
-namespace Application.Features.Blog.Queries.GetBlogCategoriesByParentId;
+﻿namespace Application.Features.Blog.Queries.GetBlogCategoriesByParentId;
 
 public class GetBlogCategoriesByParentIdQueryHandler : IRequestHandler<GetBlogCategoriesByParentIdQuery, List<BlogCategoryViewModel>>
 {

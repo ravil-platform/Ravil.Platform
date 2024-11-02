@@ -1,7 +1,4 @@
-﻿using RNX.Mediator;
-using ViewModels.QueriesResponseViewModel.Blog;
-
-namespace Application.Features.Blog.Queries.GetBlogCategoriesByParentId
+﻿namespace Application.Features.Blog.Queries.GetBlogCategoriesByParentId
 {
     public class GetBlogCategoriesByParentIdQuery : IRequest<List<BlogCategoryViewModel>>
     {

@@ -1,8 +1,4 @@
-﻿using FluentResults;
-using Persistence.Contracts;
-using RNX.Mediator;
-
-namespace Application.Features.User.Commands.Register;
+﻿namespace Application.Features.User.Commands.Register;
 
 public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, string>
 {

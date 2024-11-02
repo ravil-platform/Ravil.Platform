@@ -1,6 +1,4 @@
-﻿using RNX.Mediator;
-
-namespace Application.Features.User.Commands.Register
+﻿namespace Application.Features.User.Commands.Register
 {
     public class RegisterUserCommand : IRequest<string>
     {

@@ -1,6 +1,4 @@
-﻿using ViewModels.QueriesResponseViewModel.Service;
-
-namespace Application.Features.Job.Queries.GetAllJobService;
+﻿namespace Application.Features.Job.Queries.GetAllJobService;
 
 public class GetAllJobServiceQueryHandler : IRequestHandler<GetAllJobServiceQuery, List<JobServiceViewModel>>
 {

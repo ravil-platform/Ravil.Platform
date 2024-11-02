@@ -1,6 +1,4 @@
-﻿using ViewModels.QueriesResponseViewModel.Service;
-
-namespace Application.Features.Service.Queries.GetAll;
+﻿namespace Application.Features.Service.Queries.GetAll;
 
 public class GetAllServicesQueryHandler : IRequestHandler<GetAllServicesQuery, List<ServiceViewModel>>
 {

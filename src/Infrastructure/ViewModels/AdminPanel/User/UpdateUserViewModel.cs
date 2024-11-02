@@ -1,4 +1,4 @@
-﻿namespace ViewModels.AdminPannel.User
+﻿namespace ViewModels.AdminPanel.User
 {
     public class UpdateUserViewModel
     {

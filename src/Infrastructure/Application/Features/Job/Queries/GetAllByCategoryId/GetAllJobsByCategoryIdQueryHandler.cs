@@ -1,10 +1,4 @@
-﻿using AutoMapper;
-using FluentResults;
-using Persistence.Contracts;
-using RNX.Mediator;
-using ViewModels.QueriesResponseViewModel.Job;
-
-namespace Application.Features.Job.Queries.GetAllByCategoryId;
+﻿namespace Application.Features.Job.Queries.GetAllByCategoryId;
 
 public class GetAllJobsByCategoryIdQueryHandler : IRequestHandler<GetAllJobsByCategoryIdQuery, List<JobViewModel>>
 {

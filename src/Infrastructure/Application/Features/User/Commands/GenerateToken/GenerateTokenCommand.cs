@@ -1,6 +1,4 @@
-﻿using RNX.Mediator;
-
-namespace Application.Features.User.Commands.GenerateToken
+﻿namespace Application.Features.User.Commands.GenerateToken
 {
     public class GenerateTokenCommand : IRequest<JsonResult>
     {

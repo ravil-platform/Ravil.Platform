@@ -1,7 +1,4 @@
-﻿using Persistence.Entities.Category.Repositories;
-using Persistence.Entities.Job.Repositories.Interfaces;
-
-namespace Persistence.Contracts
+﻿namespace Persistence.Contracts
 {
     public interface IUnitOfWork : RNX.Persistence.IUnitOfWork
     {

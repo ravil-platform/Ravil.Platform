@@ -1,7 +1,4 @@
-﻿using Common.Utilities.Extensions;
-using Constants.Files;
-
-namespace Application.Features.Job.Commands.CreateJobBranch;
+﻿namespace Application.Features.Job.Commands.CreateJobBranch;
 
 public class CreateJobBranchCommandHandler : IRequestHandler<CreateJobBranchCommand, JobBranchViewModel>
 {

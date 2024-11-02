@@ -1,4 +1,4 @@
-﻿using ViewModels.AdminPannel.User;
+﻿using ViewModels.AdminPanel.User;
 
 namespace Admin.MVC.Controllers
 {

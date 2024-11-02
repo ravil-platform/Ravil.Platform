@@ -1,7 +1,4 @@
-﻿using System.Reflection;
-using Persistence.Contracts;
-
-namespace Persistence
+﻿namespace Persistence
 {
     public static class RegisterPersistenceServices
     {

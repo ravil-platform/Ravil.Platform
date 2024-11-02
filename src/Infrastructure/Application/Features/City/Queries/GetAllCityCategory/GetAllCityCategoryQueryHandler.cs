@@ -1,5 +1,4 @@
-﻿using ViewModels.QueriesResponseViewModel.City;
-
+﻿
 namespace Application.Features.City.Queries.GetAllCityCategory;
 
 public class GetAllCityCategoryQueryHandler : IRequestHandler<GetAllCityCategoryQuery, List<CityCategoryViewModel>>

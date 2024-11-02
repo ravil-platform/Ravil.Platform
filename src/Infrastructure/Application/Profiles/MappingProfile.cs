@@ -1,25 +1,6 @@
-﻿using Application.Features.Comment.Commands.Create;
-using Application.Features.Comment.Commands.CreateAnswer;
-using Domain.Entities.Banner;
-using Domain.Entities.Brand;
-using Domain.Entities.City;
-using Domain.Entities.Comment;
-using Domain.Entities.MainSlider;
-using Domain.Entities.Service;
-using Domain.Entities.ShortLink;
-using Domain.Entities.State;
-using Domain.Entities.Tag;
-using Domain.Entities.Team;
-using ViewModels.QueriesResponseViewModel.Banner;
-using ViewModels.QueriesResponseViewModel.City;
-using ViewModels.QueriesResponseViewModel.Comment;
-using ViewModels.QueriesResponseViewModel.Faq;
-using ViewModels.QueriesResponseViewModel.MainSlider;
-using ViewModels.QueriesResponseViewModel.Service;
-using ViewModels.QueriesResponseViewModel.ShortLink;
-using ViewModels.QueriesResponseViewModel.State;
-using ViewModels.QueriesResponseViewModel.Tag;
-using ViewModels.QueriesResponseViewModel.Team;
+﻿using ViewModels.AdminPanel.Faq;
+using ViewModels.AdminPanel.User;
+using ViewModels.QueriesResponseViewModel.Brand;
 
 namespace Application.Profiles
 {
@@ -96,9 +77,11 @@ namespace Application.Profiles
             CreateMap<Faq, FaqViewModel>().ReverseMap();
             CreateMap<FaqCategory, FaqCategoryViewModel>().ReverseMap();
 
-
             CreateMap<CreateCommentCommand, Comment>().ReverseMap();
             CreateMap<CreateAnswerCommentCommand, AnswerComment>().ReverseMap();
+
+            CreateMap<Config, ConfigViewModel>().ReverseMap();
+            CreateMap<Domain.Entities.DayOfWeek.DayOfWeek, DayOfWeekViewModel>().ReverseMap();
         }
     }
 }

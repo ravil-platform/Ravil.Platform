@@ -1,9 +1,4 @@
-﻿using Application.Contracts.Identity;
-using FluentResults;
-using Persistence.Contracts;
-using RNX.Mediator;
-
-namespace Application.Features.User.Commands.GenerateToken;
+﻿namespace Application.Features.User.Commands.GenerateToken;
 
 public class GenerateTokenCommandHandler : IRequestHandler<GenerateTokenCommand, JsonResult>
 {

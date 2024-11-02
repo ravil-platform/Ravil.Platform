@@ -1,5 +1,4 @@
-﻿using Application.Features.Brand.Queries.GetAll;
-using Domain.Entities.Brand;
+﻿using ViewModels.QueriesResponseViewModel.Brand;
 
 namespace Api.Controllers
 {

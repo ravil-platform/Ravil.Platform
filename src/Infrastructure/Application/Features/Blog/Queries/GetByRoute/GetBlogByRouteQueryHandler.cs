@@ -1,10 +1,4 @@
-﻿using AutoMapper;
-using Common.Exceptions;
-using FluentResults;
-using Persistence.Contracts;
-using RNX.Mediator;
-using ViewModels.QueriesResponseViewModel.Blog;
-
+﻿
 namespace Application.Features.Blog.Queries.GetByRoute;
 
 public class GetBlogByRouteQueryHandler : IRequestHandler<GetBlogByRouteQuery, BlogViewModel>

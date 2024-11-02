@@ -1,7 +1,4 @@
-﻿using Application.Features.Team.Queries.GetAll;
-using ViewModels.QueriesResponseViewModel.Team;
-
-namespace Api.Controllers
+﻿namespace Api.Controllers
 {
     [Route(Routes.Controller)]
     [ApiController]

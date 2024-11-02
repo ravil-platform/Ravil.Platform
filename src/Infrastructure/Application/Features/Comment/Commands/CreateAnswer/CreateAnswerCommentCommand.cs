@@ -1,5 +1,4 @@
-﻿using ViewModels.QueriesResponseViewModel.Comment;
-
+﻿
 namespace Application.Features.Comment.Commands.CreateAnswer
 {
     public class CreateAnswerCommentCommand : IRequest<AnswerCommentViewModel>

@@ -1,6 +1,4 @@
-﻿using Domain.Entities.Comment;
-using ViewModels.QueriesResponseViewModel.Comment;
-
+﻿
 namespace Application.Features.Comment.Commands.CreateAnswer;
 
 public class CreateAnswerCommentCommandHandler : IRequestHandler<CreateAnswerCommentCommand, AnswerCommentViewModel>

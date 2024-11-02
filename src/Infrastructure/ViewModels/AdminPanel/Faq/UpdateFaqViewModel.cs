@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
-
-namespace ViewModels.AdminPannel.Faq;
+﻿namespace ViewModels.AdminPanel.Faq;
 
 public class UpdateFaqViewModel
 {

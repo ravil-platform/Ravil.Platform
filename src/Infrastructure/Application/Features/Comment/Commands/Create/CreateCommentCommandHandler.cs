@@ -1,5 +1,4 @@
-﻿using ViewModels.QueriesResponseViewModel.Comment;
-
+﻿
 namespace Application.Features.Comment.Commands.Create;
 
 public class CreateCommentCommandHandler : IRequestHandler<CreateCommentCommand, CommentViewModel>

@@ -1,11 +1,4 @@
-﻿using AutoMapper;
-using Common.Exceptions;
-using FluentResults;
-using Persistence.Contracts;
-using RNX.Mediator;
-using ViewModels.QueriesResponseViewModel.Blog;
-using ViewModels.QueriesResponseViewModel.Category;
-
+﻿
 namespace Application.Features.Category.Queries.GetByRoute;
 
 public class GetCategoryByRouteQueryHandler : IRequestHandler<GetCategoryByRouteQuery, CategoryViewModel>

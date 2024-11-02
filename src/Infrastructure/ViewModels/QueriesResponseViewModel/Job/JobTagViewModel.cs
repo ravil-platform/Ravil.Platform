@@ -1,6 +1,4 @@
-﻿using ViewModels.QueriesResponseViewModel.Tag;
-
-namespace ViewModels.QueriesResponseViewModel.Job;
+﻿namespace ViewModels.QueriesResponseViewModel.Job;
 
 public class JobTagViewModel
 {

@@ -1,6 +1,4 @@
-﻿using ViewModels.QueriesResponseViewModel.State;
-
-namespace Application.Features.State.Queries.GetAllByStateBaseId;
+﻿namespace Application.Features.State.Queries.GetAllByStateBaseId;
 
 public class GetAllStatesByStateBaseIdQueryHandler : IRequestHandler<GetAllStatesByStateBaseIdQuery, List<StateViewModel>>
 {

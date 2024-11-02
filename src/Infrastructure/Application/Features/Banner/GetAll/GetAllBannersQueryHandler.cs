@@ -1,5 +1,4 @@
-﻿using ViewModels.QueriesResponseViewModel.Banner;
-
+﻿
 namespace Application.Features.Banner.GetAll;
 
 public class GetAllBannersQueryHandler : IRequestHandler<GetAllBannersQuery, List<BannerViewModel>>

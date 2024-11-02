@@ -1,6 +1,4 @@
-﻿using ViewModels.QueriesResponseViewModel.Faq;
-
-namespace Application.Features.Faq.Queries.GetAllByCategoryId
+﻿namespace Application.Features.Faq.Queries.GetAllByCategoryId
 {
     public class GetAllFaqsByCategoryIdQuery : IRequest<List<FaqViewModel>>
     {

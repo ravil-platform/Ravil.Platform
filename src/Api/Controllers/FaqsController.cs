@@ -1,9 +1,4 @@
-﻿using Application.Features.Faq.Queries.GetAll;
-using Application.Features.Faq.Queries.GetAllByCategoryId;
-using Application.Features.Faq.Queries.GetAllFaqCategories;
-using ViewModels.QueriesResponseViewModel.Faq;
-
-namespace Api.Controllers
+﻿namespace Api.Controllers
 {
     [Route(Routes.Controller)]
     [ApiController]

@@ -1,5 +1,5 @@
 ﻿using Domain.Entities.Faq;
-using ViewModels.AdminPannel.Faq;
+using ViewModels.AdminPanel.Faq;
 
 namespace Admin.MVC.Controllers
 {

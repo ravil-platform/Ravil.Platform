@@ -1,10 +1,4 @@
-﻿using AutoMapper;
-using FluentResults;
-using Persistence.Contracts;
-using RNX.Mediator;
-using System;
-
-namespace Application.Features.User.Commands.Create;
+﻿namespace Application.Features.User.Commands.Create;
 
 public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, ApplicationUser>
 {

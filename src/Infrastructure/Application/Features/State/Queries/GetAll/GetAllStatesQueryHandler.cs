@@ -1,6 +1,4 @@
-﻿using ViewModels.QueriesResponseViewModel.State;
-
-namespace Application.Features.State.Queries.GetAll;
+﻿namespace Application.Features.State.Queries.GetAll;
 
 public class GetAllStatesQueryHandler : IRequestHandler<GetAllStatesQuery, List<StateViewModel>>
 {

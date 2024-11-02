@@ -2,7 +2,17 @@
 
 public class ConfigRepository : Repository<Domain.Entities.Config.Config>, IConfigRepository
 {
-    internal ConfigRepository(DbContext databaseContext) : base(databaseContext)
+    protected ApplicationDbContext ApplicationDbContext { get; }
+
+    internal ConfigRepository(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
     {
+        ApplicationDbContext = applicationDbContext;
+    }
+
+    public async Task<Domain.Entities.Config.Config> GetFirstAsync()
+    {
+        var result = await ApplicationDbContext.Config.FirstAsync();
+
+        return result;
     }
 }

@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using ViewModels.QueriesResponseViewModel.Comment;
-
+﻿
 namespace Application.Features.Comment.Queries.GetAll;
 
 public class GetCommentsByFilterQueryHandler : IRequestHandler<GetCommentsByFilterQuery, List<CommentViewModel>>

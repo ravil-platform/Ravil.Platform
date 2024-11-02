@@ -1,10 +1,4 @@
-﻿using Application.Features.Comment.Commands.Create;
-using Application.Features.Comment.Commands.CreateAnswer;
-using Application.Features.Comment.Queries.GetAll;
-using Application.Features.Comment.Queries.GetAllAnswersByCommentId;
-using ViewModels.QueriesResponseViewModel.Comment;
-
-namespace Api.Controllers
+﻿namespace Api.Controllers
 {
     [Route(Routes.Controller)]
     [ApiController]
@@ -48,7 +42,7 @@ namespace Api.Controllers
         [HttpPost(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<AnswerCommentViewModel>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> CreateAsnwerComment(CreateAnswerCommentCommand command)
+        public async Task<IActionResult> CreateAnswerComment(CreateAnswerCommentCommand command)
         {
             var result = await Mediator.Send(command);
 

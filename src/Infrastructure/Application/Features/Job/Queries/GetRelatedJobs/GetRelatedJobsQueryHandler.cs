@@ -1,10 +1,4 @@
-﻿using AutoMapper;
-using FluentResults;
-using Persistence.Contracts;
-using RNX.Mediator;
-using ViewModels.QueriesResponseViewModel.Job;
-
-namespace Application.Features.Job.Queries.GetRelatedJobs;
+﻿namespace Application.Features.Job.Queries.GetRelatedJobs;
 
 public class GetRelatedJobsQueryHandler : IRequestHandler<GetRelatedJobsQuery, List<JobViewModel>>
 {

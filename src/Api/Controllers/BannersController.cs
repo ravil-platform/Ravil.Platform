@@ -1,9 +1,4 @@
-﻿using Application.Features.Banner.GetAll;
-using Application.Features.Banner.GetAllByBranchId;
-using Application.Features.Banner.GetAllByType;
-using ViewModels.QueriesResponseViewModel.Banner;
-
-namespace Api.Controllers
+﻿namespace Api.Controllers
 {
     [Route(Routes.Controller)]
     [ApiController]

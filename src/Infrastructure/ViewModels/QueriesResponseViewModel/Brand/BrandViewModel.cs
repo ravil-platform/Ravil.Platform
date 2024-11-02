@@ -1,4 +1,4 @@
-﻿namespace Domain.Entities.Brand
+﻿namespace ViewModels.QueriesResponseViewModel.Brand
 {
     public class BrandViewModel
     {

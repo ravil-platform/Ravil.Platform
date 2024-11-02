@@ -1,5 +1,4 @@
-﻿using ViewModels.QueriesResponseViewModel.Comment;
-
+﻿
 namespace Application.Features.Comment.Queries.GetAll
 {
     public class GetCommentsByFilterQuery : IRequest<List<CommentViewModel>>

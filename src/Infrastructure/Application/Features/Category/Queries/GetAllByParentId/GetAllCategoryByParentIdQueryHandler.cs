@@ -1,10 +1,4 @@
-﻿using AutoMapper;
-using FluentResults;
-using Persistence.Contracts;
-using RNX.Mediator;
-using ViewModels.QueriesResponseViewModel.Category;
-
-namespace Application.Features.Category.Queries.GetAllByParentId;
+﻿namespace Application.Features.Category.Queries.GetAllByParentId;
 
 public class GetAllCategoryByParentIdQueryHandler : IRequestHandler<GetAllCategoriesByParentIdQuery, List<CategoryViewModel>>
 {

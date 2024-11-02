@@ -1,5 +1,4 @@
-﻿using ViewModels.QueriesResponseViewModel.Tag;
-
+﻿
 namespace ViewModels.QueriesResponseViewModel.Blog
 {
     public class BlogTagViewModel

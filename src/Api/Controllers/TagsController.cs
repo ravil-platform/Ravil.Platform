@@ -1,13 +1,4 @@
-﻿using Application.Features.Blog.Queries.GetTags;
-using Application.Features.Job.Queries.GetJobBranchTags;
-using Application.Features.Job.Queries.GetTags;
-using Application.Features.Tag.Queries.GetAll;
-using Application.Features.Tag.Queries.GetAllByType;
-using ViewModels.QueriesResponseViewModel.Blog;
-using ViewModels.QueriesResponseViewModel.Job;
-using ViewModels.QueriesResponseViewModel.Tag;
-
-namespace Api.Controllers
+﻿namespace Api.Controllers
 {
     [Route(Routes.Controller)]
     [ApiController]

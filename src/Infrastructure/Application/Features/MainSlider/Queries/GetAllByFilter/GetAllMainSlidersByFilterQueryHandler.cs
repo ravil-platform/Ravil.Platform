@@ -1,6 +1,4 @@
-﻿using ViewModels.QueriesResponseViewModel.MainSlider;
-
-namespace Application.Features.MainSlider.Queries.GetAllByFilter;
+﻿namespace Application.Features.MainSlider.Queries.GetAllByFilter;
 
 public class GetAllMainSlidersByFilterQueryHandler : IRequestHandler<GetAllMainSlidersByFilterQuery,
     List<MainSliderViewModel>>

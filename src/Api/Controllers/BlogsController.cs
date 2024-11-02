@@ -1,8 +1,4 @@
-﻿using FluentResults;
-using ViewModels.Filter.Blog;
-using ViewModels.QueriesResponseViewModel.Blog;
-
-namespace Api.Controllers
+﻿namespace Api.Controllers
 {
     [Route(Constants.Routes.Controller)]
     [ApiController]

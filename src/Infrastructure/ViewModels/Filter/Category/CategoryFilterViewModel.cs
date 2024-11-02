@@ -1,6 +1,4 @@
-﻿using ViewModels.QueriesResponseViewModel.Category;
-
-namespace ViewModels.Filter.Category
+﻿namespace ViewModels.Filter.Category
 {
     public class CategoryFilterViewModel : Paging<Domain.Entities.Category.Category, CategoryViewModel>
     {

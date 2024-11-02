@@ -1,7 +1,4 @@
-﻿using ViewModels.Filter.Category;
-using ViewModels.QueriesResponseViewModel.Category;
-
-namespace Api.Controllers
+﻿namespace Api.Controllers
 {
     [Route(Constants.Routes.Controller)]
     [ApiController]

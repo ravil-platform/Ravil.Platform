@@ -1,10 +1,4 @@
-﻿using AutoMapper;
-using FluentResults;
-using Persistence.Contracts;
-using RNX.Mediator;
-using ViewModels.QueriesResponseViewModel.Job;
-
-namespace Application.Features.Job.Queries.GetBestJobs;
+﻿namespace Application.Features.Job.Queries.GetBestJobs;
 
 public class GetBestJobsQueryHandler : IRequestHandler<GetBestJobsQuery, List<JobViewModel>>
 {

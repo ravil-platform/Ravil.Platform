@@ -1,8 +1,4 @@
-﻿using Application.Features.ShortLink.Queries.GetAll;
-using Application.Features.ShortLink.Queries.GetAllByItemId;
-using ViewModels.QueriesResponseViewModel.ShortLink;
-
-namespace Api.Controllers
+﻿namespace Api.Controllers
 {
     [Route(Routes.Controller)]
     [ApiController]

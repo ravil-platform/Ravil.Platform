@@ -1,6 +1,4 @@
-﻿using ViewModels.QueriesResponseViewModel.ShortLink;
-
-namespace Application.Features.ShortLink.Queries.GetAllByItemId;
+﻿namespace Application.Features.ShortLink.Queries.GetAllByItemId;
 
 public class GetAllShortLinkByItemIdQueryHandler : IRequestHandler<GetAllShortLinkByItemIdQuery, List<ShortLinkViewModel>>
 {

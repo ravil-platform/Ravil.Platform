@@ -1,8 +1,4 @@
-﻿using Microsoft.IdentityModel.Tokens;
-using System.Security.Claims;
-using System.Text;
-
-namespace Application.Contracts.Identity
+﻿namespace Application.Contracts.Identity
 {
     public class JwtService : IJwtService
     {

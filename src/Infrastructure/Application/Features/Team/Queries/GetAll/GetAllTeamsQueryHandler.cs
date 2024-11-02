@@ -1,6 +1,4 @@
-﻿using ViewModels.QueriesResponseViewModel.Team;
-
-namespace Application.Features.Team.Queries.GetAll;
+﻿namespace Application.Features.Team.Queries.GetAll;
 
 public class GetAllTeamsQueryHandler : IRequestHandler<GetAllTeamsQuery, List<TeamViewModel>>
 {

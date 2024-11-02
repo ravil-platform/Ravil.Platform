@@ -1,7 +1,4 @@
-﻿using Common.Utilities.Extensions;
-using Constants.Files;
-
-namespace Application.Features.Job.Commands.Create;
+﻿namespace Application.Features.Job.Commands.Create;
 
 public class CreateJobCommandHandler : IRequestHandler<CreateJobCommand, JobViewModel>
 {

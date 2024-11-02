@@ -1,10 +1,4 @@
-﻿using AutoMapper;
-using FluentResults;
-using Persistence.Contracts;
-using RNX.Mediator;
-using ViewModels.QueriesResponseViewModel.Job;
-
-namespace Application.Features.Job.Commands.Update;
+﻿namespace Application.Features.Job.Commands.Update;
 
 public class UpdateJobCommandHandler : IRequestHandler<UpdateJobCommand, JobViewModel>
 {

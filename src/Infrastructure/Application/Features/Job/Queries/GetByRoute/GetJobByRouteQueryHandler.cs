@@ -1,10 +1,4 @@
-﻿using AutoMapper;
-using FluentResults;
-using Persistence.Contracts;
-using RNX.Mediator;
-using ViewModels.QueriesResponseViewModel.Job;
-
-namespace Application.Features.Job.Queries.GetByRoute;
+﻿namespace Application.Features.Job.Queries.GetByRoute;
 
 public class GetJobByRouteQueryHandler : IRequestHandler<GetJobByRouteQuery, JobViewModel>
 {

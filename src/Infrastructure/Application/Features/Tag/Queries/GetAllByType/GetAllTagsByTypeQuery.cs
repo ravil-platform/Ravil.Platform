@@ -1,6 +1,4 @@
-﻿using ViewModels.QueriesResponseViewModel.Tag;
-
-namespace Application.Features.Tag.Queries.GetAllByType
+﻿namespace Application.Features.Tag.Queries.GetAllByType
 {
     public class GetAllTagsByTypeQuery : IRequest<List<TagViewModel>>
     {

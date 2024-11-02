@@ -1,9 +1,4 @@
-﻿using AutoMapper;
-using FluentResults;
-using Persistence.Contracts;
-using RNX.Mediator;
-
-namespace Application.Features.Job.Commands.UpdateJobCategory;
+﻿namespace Application.Features.Job.Commands.UpdateJobCategory;
 
 public class UpdateJobCategoryCommandHandler : IRequestHandler<UpdateJobCategoryCommand>
 {
