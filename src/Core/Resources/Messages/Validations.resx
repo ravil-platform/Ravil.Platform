@@ -186,4 +186,16 @@
   <data name="VerificationCodeIsInvalid" xml:space="preserve">
     <value>کد وارد شده صحیح نیست.</value>
   </data>
+  <data name="RequiredFluent" xml:space="preserve">
+    <value>تکمیل {PropertyName} الزامی است!</value>
+  </data>
+  <data name="NotFoundException" xml:space="preserve">
+    <value>چیزی یافت نشد!</value>
+  </data>
+  <data name="LogicException" xml:space="preserve">
+    <value>خطایی رخ داد!</value>
+  </data>
+  <data name="BadRequestException" xml:space="preserve">
+    <value>خطا</value>
+  </data>
 </root>

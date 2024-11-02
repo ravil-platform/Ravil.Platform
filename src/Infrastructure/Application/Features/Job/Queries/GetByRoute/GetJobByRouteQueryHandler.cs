@@ -14,6 +14,11 @@ public class GetJobByRouteQueryHandler : IRequestHandler<GetJobByRouteQuery, Job
     {
         var job = await UnitOfWork.JobRepository.GetByPredicate(j => j.Route == request.Route);
 
+        if (job is null)
+        {
+            throw new NotFoundException();
+        }
+
         var jobViewModel = Mapper.Map<JobViewModel>(job);
 
         return jobViewModel;

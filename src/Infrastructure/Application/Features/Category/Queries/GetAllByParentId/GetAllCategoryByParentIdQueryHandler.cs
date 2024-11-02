@@ -14,6 +14,11 @@ public class GetAllCategoryByParentIdQueryHandler : IRequestHandler<GetAllCatego
     {
         var categories = await UnitOfWork.CategoryRepository.GetAllAsync(c => c.ParentId == request.ParentId);
 
+        if (categories is null || categories.Count == 0)
+        {
+            throw new NotFoundException();
+        }
+
         var categoriesViewModel = Mapper.Map<List<CategoryViewModel>>(categories);
 
         return categoriesViewModel;

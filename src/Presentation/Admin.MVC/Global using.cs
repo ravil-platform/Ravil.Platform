@@ -11,3 +11,5 @@ global using Persistence;
 global using Persistence.Contracts;
 global using Resources.Messages;
 global using ViewModels.Filter.User;
+global using ViewModels.AdminPanel.Faq;
+global using ViewModels.AdminPanel.User;

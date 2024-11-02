@@ -16,6 +16,11 @@ public class GetJobBranchByIdQueryHandler : IRequestHandler<GetJobBranchByIdQuer
     {
         var result = await UnitOfWork.JobBranchRepository.GetByIdAsync(request.Id);
 
+        if (result is null)
+        {
+            throw new NotFoundException();
+        }
+
         var jobBranchViewModel = Mapper.Map<JobBranchViewModel>(result);
 
         return jobBranchViewModel;

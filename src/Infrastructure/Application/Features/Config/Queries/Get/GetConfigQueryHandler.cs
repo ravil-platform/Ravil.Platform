@@ -1,5 +1,4 @@
-﻿
-namespace Application.Features.Config.Queries.Get;
+﻿namespace Application.Features.Config.Queries.Get;
 
 public class GetConfigQueryHandler : IRequestHandler<GetConfigQuery, ConfigViewModel>
 {

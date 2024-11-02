@@ -15,6 +15,11 @@ public class GetBlogCategoriesByParentIdQueryHandler : IRequestHandler<GetBlogCa
     {
         var blogCategories = await UnitOfWork.BlogCategoryRepository.GetAllAsync(b => b.ParentId == request.ParentId);
 
+        if (blogCategories is null || blogCategories.Count == 0)
+        {
+            throw new NotFoundException();
+        }
+
         var blogCategoryViewModel = Mapper.Map<List<BlogCategoryViewModel>>(blogCategories);
 
         return blogCategoryViewModel;

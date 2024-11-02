@@ -77,6 +77,8 @@
                 context.Response.StatusCode = (int)code;
                 context.Response.ContentType = "application/json";
 
+                Logger.LogError(exception, message);
+
                 result.WithError(message);
             }
 

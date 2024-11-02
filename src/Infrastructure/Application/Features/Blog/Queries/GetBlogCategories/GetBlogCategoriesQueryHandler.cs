@@ -15,6 +15,11 @@ public class GetBlogCategoriesQueryHandler : IRequestHandler<GetBlogCategoriesQu
     {
         var blogCategories = await UnitOfWork.BlogCategoryRepository.GetAllAsync();
 
+        if (blogCategories.Count is 0 || blogCategories is null)
+        {
+            throw new NotFoundException();
+        }
+
         var blogCategoryViewModel = Mapper.Map<List<BlogCategoryViewModel>>(blogCategories);
 
         return blogCategoryViewModel;

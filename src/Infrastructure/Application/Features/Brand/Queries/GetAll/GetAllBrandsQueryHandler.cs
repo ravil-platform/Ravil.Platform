@@ -16,7 +16,7 @@ public class GetAllBrandsQueryHandler : IRequestHandler<GetAllBrandsQuery, List<
     public async Task<Result<List<BrandViewModel>>> Handle(GetAllBrandsQuery request, CancellationToken cancellationToken)
     {
         var result = await UnitOfWork.BrandRepository.GetAllAsync(b => b.Status);
-
+        
         var brandsViewModel = Mapper.Map<List<BrandViewModel>>(result);
 
         return brandsViewModel;

@@ -13,7 +13,12 @@ public class GetBlogTagsByIdQueryHandler : IRequestHandler<GetBlogTagsByIdQuery,
 
     public async Task<Result<List<BlogTagViewModel>>> Handle(GetBlogTagsByIdQuery request, CancellationToken cancellationToken)
     {
-        var result = await UnitOfWork.BlogTagRepository.GetAllAsync(b => b.BlogId == request.BlogId,null,"Tag");
+        var result = await UnitOfWork.BlogTagRepository.GetAllAsync(b => b.BlogId == request.BlogId, null, "Tag");
+
+        if (result is null || result.Count == 0)
+        {
+            throw new NotFoundException();
+        }
 
         var blogTagsViewModel = Mapper.Map<List<BlogTagViewModel>>(result);
 

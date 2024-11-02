@@ -61,6 +61,15 @@ namespace Resources.Messages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to خطا.
+        /// </summary>
+        public static string BadRequestException {
+            get {
+                return ResourceManager.GetString("BadRequestException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to تکرار کلمه عبور با کلمه عبور وارد شده یکسان نیست..
         /// </summary>
         public static string ComparePasswordIsInValid {
@@ -142,6 +151,15 @@ namespace Resources.Messages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to خطایی رخ داد!.
+        /// </summary>
+        public static string LogicException {
+            get {
+                return ResourceManager.GetString("LogicException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to طول فیلد {0} می‌تواند حداکثر {1} کاراکتر باشد!.
         /// </summary>
         public static string MaxLength {
@@ -165,6 +183,15 @@ namespace Resources.Messages {
         public static string NotFound {
             get {
                 return ResourceManager.GetString("NotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to چیزی یافت نشد!.
+        /// </summary>
+        public static string NotFoundException {
+            get {
+                return ResourceManager.GetString("NotFoundException", resourceCulture);
             }
         }
         
@@ -246,6 +273,15 @@ namespace Resources.Messages {
         public static string Required {
             get {
                 return ResourceManager.GetString("Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to تکمیل {PropertyName} الزامی است!.
+        /// </summary>
+        public static string RequiredFluent {
+            get {
+                return ResourceManager.GetString("RequiredFluent", resourceCulture);
             }
         }
         

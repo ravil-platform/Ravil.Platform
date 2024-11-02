@@ -1,5 +1,4 @@
-﻿
-namespace Application.Features.Banner.GetAllByType
+﻿namespace Application.Features.Banner.GetAllByType
 {
     public class GetAllBannersByTypeQuery : IRequest<List<BannerViewModel>>
     {

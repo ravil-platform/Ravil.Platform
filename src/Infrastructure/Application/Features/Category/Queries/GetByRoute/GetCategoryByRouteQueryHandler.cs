@@ -17,8 +17,7 @@ public class GetCategoryByRouteQueryHandler : IRequestHandler<GetCategoryByRoute
 
         if (category is null)
         {
-            //بعدا باید از  Resource  بیاد پیامام
-            throw new AppException("یافت نشد");
+            throw new NotFoundException();
         }
 
         var categoryViewModel = Mapper.Map<CategoryViewModel>(category);

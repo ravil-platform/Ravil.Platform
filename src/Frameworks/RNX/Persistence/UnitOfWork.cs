@@ -8,15 +8,7 @@
 
         public async Task SaveAsync()
         {
-            try
-            {
-                await DatabaseContext.SaveChangesAsync();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
+            await DatabaseContext.SaveChangesAsync();
         }
     }
 }

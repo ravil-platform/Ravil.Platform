@@ -17,8 +17,7 @@ public class GetBlogByRouteQueryHandler : IRequestHandler<GetBlogByRouteQuery, B
 
         if (blog is null)
         {
-            //بعدا باید از  Resource  بیاد پیامام
-            throw new AppException("وبلاگ یافت نشد");
+            throw new NotFoundException();
         }
 
         var blogViewModel = Mapper.Map<BlogViewModel>(blog);
