@@ -196,6 +196,18 @@
     <value>خطایی رخ داد!</value>
   </data>
   <data name="BadRequestException" xml:space="preserve">
-    <value>خطا</value>
+    <value>حطایی در سرور رخ داد</value>
+  </data>
+  <data name="OnlyTypeEnglish" xml:space="preserve">
+    <value>فقط حروف انگلیسی مجاز است!</value>
+  </data>
+  <data name="MaxLengthFluent" xml:space="preserve">
+    <value>طول فیلد {PropertyName} می‌تواند حداکثر {MaxLength} کاراکتر باشد!</value>
+  </data>
+  <data name="MinLengthFluent" xml:space="preserve">
+    <value>طول فیلد {PropertyName} باید حداقل {MinLength} کاراکتر باشد!</value>
+  </data>
+  <data name="OnlyTypeNumbers" xml:space="preserve">
+    <value>فقط اعداد مجاز است!</value>
   </data>
 </root>

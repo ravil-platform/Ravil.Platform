@@ -16,13 +16,13 @@
 
         public IFormFile SmallPictureFile { get; set; }
 
-        public string Email { get; set; }
+        public string? Email { get; set; }
 
-        public string WebSiteName { get; set; }
+        public string? WebSiteName { get; set; }
 
-        public List<SocialMediaInfosViewModel?> SocialMediaInfos { get; set; }
+        public List<SocialMediaInfosViewModel>? SocialMediaInfos { get; set; }
 
-        public List<PhoneNumberInfosViewModel?> PhoneNumberInfos { get; set; }
+        public List<PhoneNumberInfosViewModel>? PhoneNumberInfos { get; set; }
 
         public bool? ShowPhoneTelInSite { get; set; }
 

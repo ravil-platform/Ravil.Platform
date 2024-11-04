@@ -23,6 +23,13 @@
         public const string PostalCode = @"\d{10}";
         public const string VerificationCode = @"^[0-9]{6}$";
 
+        public const string FileName = @"[a-zA-Z0-9_]{1,100}";
+
+        public const string Percentage = @"100(.0{0,2})?|\d{1,2}(.\d{1,2})?";
+
+        public const string NationalCode = @"\d{10}";
+        public const string Money = @"\d+(.\d{0,2})?";
+
         public const string UserName = @"^@?[a-z0-9_-]{3,16}$";
         public const string Password = @"((?=.*\d)(?=.*[a-z]).{6,100})";
         public const string PhoneNumber = @"09(0[0-9]|1[0-9]|3[0-9]|2[1-9]|9[0-9])-?[0-9]{3}-?[0-9]{4}";

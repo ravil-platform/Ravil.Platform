@@ -10,6 +10,8 @@
 
         Task<bool> DeleteByIdAsync(Guid id);
 
+        void RemoveRange(IEnumerable<T> entity);
+
         Task BeginTransactionAsync();
         Task CommitTransactionAsync();
     }

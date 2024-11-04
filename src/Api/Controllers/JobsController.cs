@@ -1,4 +1,7 @@
-﻿namespace Api.Controllers
+﻿using Application.Features.Job.Commands.UpdateJobBranch;
+using Application.Features.Job.Commands.UpdateJobBranchLocation;
+
+namespace Api.Controllers
 {
     [Route(Constants.Routes.Controller)]
     [ApiController]
@@ -213,6 +216,26 @@
         [ProducesResponseType(type: typeof(Result<JobBranchViewModel>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateFreeJobBranch([FromForm] CreateFreeJobBranchCommand command)
+        {
+            var result = await Mediator.Send(command);
+
+            return FluentResult(result);
+        }
+
+        [HttpPost(Routes.Action)]
+        [ProducesResponseType(type: typeof(Result<UpdateJobBranchViewModel>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> UpdateJobBranch([FromForm] UpdateJobBranchCommand command)
+        {
+            var result = await Mediator.Send(command);
+
+            return FluentResult(result);
+        }  
+        
+        [HttpPost(Routes.Action)]
+        [ProducesResponseType(type: typeof(Result<UpdateJobBranchLocationViewModel>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> UpdateJobBranchLocation([FromForm] UpdateJobBranchLocationCommand command)
         {
             var result = await Mediator.Send(command);
 

@@ -12,3 +12,5 @@ global using ViewModels.QueriesResponseViewModel.Category;
 global using Domain.Entities.Job;
 global using ViewModels.QueriesResponseViewModel.Job;
 global using ViewModels.QueriesResponseViewModel.Tag;
+global using ViewModels.QueriesResponseViewModel.Address;
+global using ViewModels.QueriesResponseViewModel.Location;

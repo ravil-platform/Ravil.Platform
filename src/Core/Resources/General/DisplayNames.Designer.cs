@@ -2050,6 +2050,15 @@ namespace Resources.General {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to کد پستی.
+        /// </summary>
+        public static string PostalCode {
+            get {
+                return ResourceManager.GetString("PostalCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to قیمت.
         /// </summary>
         public static string Price {
@@ -2244,6 +2253,15 @@ namespace Resources.General {
         public static string ReviewPage {
             get {
                 return ResourceManager.GetString("ReviewPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to مسیر یکتا.
+        /// </summary>
+        public static string Route {
+            get {
+                return ResourceManager.GetString("Route", resourceCulture);
             }
         }
         

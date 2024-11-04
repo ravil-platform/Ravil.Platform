@@ -1,4 +1,7 @@
-﻿namespace Api.Controllers
+﻿using ViewModels.QueriesResponseViewModel.Brand;
+using ViewModels.QueriesResponseViewModel.User;
+
+namespace Api.Controllers
 {
     [Route(Constants.Routes.Controller)]
     [ApiController]
@@ -20,7 +23,9 @@
 
 
         [HttpPost(Constants.Routes.Action)]
-        public async Task<IActionResult> Register(RegisterUserCommand command)
+        [ProducesResponseType(type: typeof(Result<RegisterUserResponseViewModel>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> RegisterAndLogin(RegisterUserCommand command)
         {
             var result = await Mediator.Send(command);
 

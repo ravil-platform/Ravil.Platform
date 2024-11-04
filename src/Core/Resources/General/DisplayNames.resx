@@ -1024,4 +1024,10 @@
   <data name="UnavailableForLegalReasons451" xml:space="preserve">
     <value>به دلایل امنیتی غیرقابل دسترسی است 451</value>
   </data>
+  <data name="PostalCode" xml:space="preserve">
+    <value>کد پستی</value>
+  </data>
+  <data name="Route" xml:space="preserve">
+    <value>مسیر یکتا</value>
+  </data>
 </root>

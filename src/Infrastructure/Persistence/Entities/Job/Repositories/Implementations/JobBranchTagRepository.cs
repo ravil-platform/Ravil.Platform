@@ -2,7 +2,11 @@
 
 public class JobBranchTagRepository : Repository<JobBranchTag>, IJobBranchTagRepository
 {
-    internal JobBranchTagRepository(DbContext databaseContext) : base(databaseContext)
+    protected ApplicationDbContext ApplicationDbContext { get; }
+
+    internal JobBranchTagRepository(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
     {
+        ApplicationDbContext = applicationDbContext;
     }
+
 }

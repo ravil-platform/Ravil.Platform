@@ -43,6 +43,21 @@ namespace RNX.Persistence
             return result;
         }
 
+        public virtual async Task<TEntity?> GetByPredicate(Expression<Func<TEntity, bool>> predicate, string includes = "")
+        {
+            var result = DbSet.AsNoTracking().Where(predicate);
+
+            if (includes != "")
+            {
+                foreach (string include in includes.Split(','))
+                {
+                    result = result.Include(include);
+                }
+            }
+
+            return await result.SingleOrDefaultAsync();
+        }
+
         public virtual async Task<ICollection<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate)
         {
             var result = await DbSet.AsNoTracking().Where(predicate).ToListAsync();

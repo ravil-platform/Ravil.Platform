@@ -1,5 +1,4 @@
-﻿
-namespace Application.Features.Comment.Queries.GetAllAnswersByCommentId;
+﻿namespace Application.Features.Comment.Queries.GetAllAnswersByCommentId;
 
 public class GetAnswersByCommentIdQueryHandler : IRequestHandler<GetAnswersByCommentIdQuery, List<AnswerCommentViewModel>>
 {

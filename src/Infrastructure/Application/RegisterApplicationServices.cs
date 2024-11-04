@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Application.Services.SMS;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Persistence.Entities.User.Repositories.Interfaces;
 
 namespace Application
@@ -27,6 +28,9 @@ namespace Application
             services.AddTransient(typeof(MediatR.IPipelineBehavior<,>), typeof(RNX.Mediator.ValidationBehavior<,>));
 
             services.AddTransient<IJwtService, JwtService>();
+            services.AddTransient<ISmsSender, SmsSender>();
+
+            services.AddHttpClient();
 
             services.AddJwtAuthentication(jwtSettings);
         }
@@ -173,5 +177,6 @@ namespace Application
                 };
             });
         }
+
     }
 }

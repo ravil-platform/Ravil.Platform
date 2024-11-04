@@ -1,13 +1,12 @@
-﻿namespace Application.Features.Job.Commands.CreateFreeJobBranch
+﻿namespace ViewModels.QueriesResponseViewModel.Job
 {
-    public class CreateFreeJobBranchCommand : IRequest<JobBranchViewModel>
+    public class UpdateJobBranchViewModel
     {
-        public CreateJobViewModel Job { get; set; }
-        public CreateJobBranchViewModel JobBranch { get; set; }
+        public JobBranchViewModel JobBranchViewModel { get; set; }
 
-        public int[]? Tags { get; set; }
-        public int[]? Services { get; set; }
-        public int[]? Categories { get; set; }
+        public int[] Tags { get; set; }
+        public int[] Services { get; set; }
+        public int[] Categories { get; set; }
 
         /// <summary>
         /// طول جغرافیایی

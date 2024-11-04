@@ -13,11 +13,11 @@ public class CreateJobBranchViewModel
 
     public string? MapUrl { get; set; }
 
-    public bool IsOffer { get; set; }
-    public JobTimeWorkType JobTimeWorkType { get; set; }
+    public bool? IsOffer { get; set; }
+    public JobTimeWorkType? JobTimeWorkType { get; set; }
     public string? UserId { get; set; }
     public string? AddressId { get; set; }
 
-    public List<IFormFile?> Gallery { get; set; }
+    public List<IFormFile>? Gallery { get; set; }
 
 }

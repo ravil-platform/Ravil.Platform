@@ -9,7 +9,7 @@
         }
 
         [HttpGet(Routes.Action)]
-        [ProducesResponseType(type: typeof(Result<CommentViewModel>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result<List<CommentViewModel>>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetAllCommentsByFilter([FromQuery] GetCommentsByFilterQuery query)
         {
@@ -20,7 +20,7 @@
 
 
         [HttpGet(Routes.Action)]
-        [ProducesResponseType(type: typeof(Result<AnswerCommentViewModel>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result<List<AnswerCommentViewModel>>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetAllAnswersByFilter([FromQuery] GetAnswersByCommentIdQuery query)
         {
@@ -28,6 +28,7 @@
 
             return FluentResult(result);
         }
+
 
         [HttpPost(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<CommentViewModel>), statusCode: StatusCodes.Status200OK)]
@@ -38,6 +39,7 @@
 
             return FluentResult(result);
         }
+
 
         [HttpPost(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<AnswerCommentViewModel>), statusCode: StatusCodes.Status200OK)]

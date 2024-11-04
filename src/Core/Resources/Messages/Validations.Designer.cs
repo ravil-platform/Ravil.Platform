@@ -61,7 +61,7 @@ namespace Resources.Messages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to خطا.
+        ///   Looks up a localized string similar to حطایی در سرور رخ داد.
         /// </summary>
         public static string BadRequestException {
             get {
@@ -169,11 +169,29 @@ namespace Resources.Messages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to طول فیلد {PropertyName} می‌تواند حداکثر {MaxLength} کاراکتر باشد!.
+        /// </summary>
+        public static string MaxLengthFluent {
+            get {
+                return ResourceManager.GetString("MaxLengthFluent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to طول فیلد {0} باید حداقل {1} کاراکتر باشد!.
         /// </summary>
         public static string MinLength {
             get {
                 return ResourceManager.GetString("MinLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to طول فیلد {PropertyName} باید حداقل {MinLength} کاراکتر باشد!.
+        /// </summary>
+        public static string MinLengthFluent {
+            get {
+                return ResourceManager.GetString("MinLengthFluent", resourceCulture);
             }
         }
         
@@ -192,6 +210,24 @@ namespace Resources.Messages {
         public static string NotFoundException {
             get {
                 return ResourceManager.GetString("NotFoundException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to فقط حروف انگلیسی مجاز است!.
+        /// </summary>
+        public static string OnlyTypeEnglish {
+            get {
+                return ResourceManager.GetString("OnlyTypeEnglish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to فقط اعداد مجاز است!.
+        /// </summary>
+        public static string OnlyTypeNumbers {
+            get {
+                return ResourceManager.GetString("OnlyTypeNumbers", resourceCulture);
             }
         }
         

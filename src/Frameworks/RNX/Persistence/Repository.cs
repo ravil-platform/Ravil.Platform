@@ -90,6 +90,21 @@ namespace RNX.Persistence
             return result;
         }
 
+        public virtual async Task<T?> GetByPredicate(Expression<Func<T, bool>> predicate, string includes = "")
+        {
+            var result = DbSet.AsNoTracking().Where(predicate);
+
+            if (includes != "")
+            {
+                foreach (string include in includes.Split(','))
+                {
+                    result = result.Include(include);
+                }
+            }
+
+            return await result.SingleOrDefaultAsync();
+        }
+
         public virtual async Task<ICollection<T>> GetAllAsync(Expression<Func<T, bool>> predicate)
         {
             var result = await DbSet.AsNoTracking().Where(predicate).ToListAsync();
@@ -149,6 +164,11 @@ namespace RNX.Persistence
             await DeleteAsync(entity);
 
             return true;
+        }
+
+        public virtual void RemoveRange(IEnumerable<T> entity)
+        {
+            DbSet.RemoveRange(entity);
         }
 
         public virtual async Task BeginTransactionAsync()

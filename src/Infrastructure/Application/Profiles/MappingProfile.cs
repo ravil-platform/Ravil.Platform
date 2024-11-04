@@ -1,6 +1,9 @@
-﻿using ViewModels.AdminPanel.Faq;
-using ViewModels.AdminPanel.User;
+﻿using Application.Features.Job.Commands.UpdateJobBranchLocation;
+using Application.Features.User.Commands.Register;
+using Domain.Entities.Histories;
+using ViewModels.QueriesResponseViewModel.Address;
 using ViewModels.QueriesResponseViewModel.Brand;
+using ViewModels.QueriesResponseViewModel.Location;
 
 namespace Application.Profiles
 {
@@ -10,12 +13,16 @@ namespace Application.Profiles
         {
             CreateMap<CreateUserViewModel, ApplicationUser>().ReverseMap();
             CreateMap<UpdateUserViewModel, ApplicationUser>().ReverseMap();
+            CreateMap<RegisterUserCommand, ApplicationUser>().ReverseMap();
+            CreateMap<ApplicationUser, RegisterUserResponseViewModel>().ReverseMap();
+
 
             CreateMap<CreateFaqViewModel, Faq>().ReverseMap();
             CreateMap<UpdateFaqViewModel, Faq>().ReverseMap();
 
             CreateMap<CreateFaqCategoryViewModel, FaqCategory>().ReverseMap();
             CreateMap<UpdateFaqCategoryViewModel, FaqCategory>().ReverseMap();
+
 
             CreateMap<CreateUserCommand, ApplicationUser>().ReverseMap();
 
@@ -82,6 +89,17 @@ namespace Application.Profiles
 
             CreateMap<Config, ConfigViewModel>().ReverseMap();
             CreateMap<Domain.Entities.DayOfWeek.DayOfWeek, DayOfWeekViewModel>().ReverseMap();
+
+
+            CreateMap<UpdateJobBranchViewModel, JobBranch>().ReverseMap();
+            CreateMap<TagViewModel, Tag>().ReverseMap();
+            CreateMap<JobCategoriesView, JobCategory>().ReverseMap();
+
+
+            CreateMap<UpdateJobBranchLocationCommand, JobBranch>().ReverseMap();
+
+            CreateMap<Location, LocationViewModel>().ReverseMap();
+            CreateMap<Address, AddressViewModel>().ReverseMap();
         }
     }
 }
