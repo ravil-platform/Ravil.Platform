@@ -8,10 +8,10 @@
         {
         }
 
-        [HttpPost(Routes.Action)]
+        [HttpGet(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<ConfigViewModel>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Get(GetConfigQuery query)
+        public async Task<IActionResult> Get([FromQuery] GetConfigQuery query)
         {
             var result = await Mediator.Send(query);
 

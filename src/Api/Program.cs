@@ -33,6 +33,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCustomExceptionHandler();
+app.UseStaticFiles();
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();

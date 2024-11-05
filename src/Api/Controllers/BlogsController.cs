@@ -9,10 +9,10 @@
         {
         }
 
-        [HttpPost(Constants.Routes.Action)]
+        [HttpGet(Constants.Routes.Action)]
         [ProducesResponseType(type: typeof(Result<BlogFilterViewModel>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetAllByFilter(GetAllBlogsByFilterQuery query)
+        public async Task<IActionResult> GetAllByFilter([FromQuery] GetAllBlogsByFilterQuery query)
         {
             var result = await Mediator.Send(query);
 
@@ -31,10 +31,10 @@
         }
 
 
-        [HttpPost(Constants.Routes.Action)]
+        [HttpGet(Constants.Routes.Action)]
         [ProducesResponseType(type: typeof(Result<List<BlogCategoryViewModel>>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetBlogCategories(GetBlogCategoriesQuery query)
+        public async Task<IActionResult> GetBlogCategories([FromQuery] GetBlogCategoriesQuery query)
         {
             var result = await Mediator.Send(query);
 
@@ -42,10 +42,10 @@
         }
 
 
-        [HttpPost(Constants.Routes.Action)]
+        [HttpGet(Constants.Routes.Action)]
         [ProducesResponseType(type: typeof(Result<List<BlogCategoryViewModel>>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetBlogCategoriesByParentId(GetBlogCategoriesByParentIdQuery query)
+        public async Task<IActionResult> GetBlogCategoriesByParentId([FromQuery] GetBlogCategoriesByParentIdQuery query)
         {
             var result = await Mediator.Send(query);
 

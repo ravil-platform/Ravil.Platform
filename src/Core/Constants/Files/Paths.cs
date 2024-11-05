@@ -25,6 +25,8 @@
 
         public static string JobBranchVideo = "/video/branch/";
         public static string JobBranchVideoServer = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot{JobBranchVideo}");
+       
+        
         #endregion
     }
 }

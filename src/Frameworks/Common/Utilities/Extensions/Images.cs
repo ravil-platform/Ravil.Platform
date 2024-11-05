@@ -97,21 +97,25 @@
                 #region  ( Delete Old File )
                 if (!string.IsNullOrEmpty(deleteFileName))
                 {
-                    var fullPath = originSavePath + deleteFileName;
-
-                    if (File.Exists(fullPath)) File.Delete(fullPath);
-
-                    var fullThumbPath = thumbSavePath + deleteFileName;
-
-                    if (!string.IsNullOrEmpty(thumbSavePath))
+                    try
                     {
-                        if (File.Exists(fullThumbPath)) File.Delete(fullThumbPath);
+                        var fullPath = $"{originSavePath}/{deleteFileName}";
+
+                        if (File.Exists(fullPath)) File.Delete(fullPath);
+
+                        var fullThumbPath = thumbSavePath + deleteFileName;
+
+                        if (!string.IsNullOrEmpty(thumbSavePath))
+                        {
+                            if (File.Exists(fullThumbPath)) File.Delete(fullThumbPath);
+                        }
                     }
+                    catch { }
                 }
                 #endregion
 
                 #region  ( Create Current File )
-                var originPath = originSavePath + fileName;
+                var originPath = $"{originSavePath}/{fileName}";
 
                 using (var stream = new FileStream(originPath, FileMode.Create))
                 {
