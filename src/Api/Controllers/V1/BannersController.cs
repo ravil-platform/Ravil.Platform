@@ -1,13 +1,17 @@
-﻿namespace Api.Controllers
+﻿namespace Api.Controllers.V1
 {
     [Route(Routes.Controller)]
-    [ApiController]
     public class BannersController : GenericBaseController<BannersController>
     {
         public BannersController(IMediator mediator, Logging.Base.ILogger<BannersController> logger) : base(mediator, logger)
         {
         }
 
+        /// <summary>
+        /// Returns all banners
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         [HttpGet(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<List<BannerViewModel>>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
@@ -18,6 +22,11 @@
             return FluentResult(result);
         }
 
+        /// <summary>
+        /// Returns all banners by given jobBranch id
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         [HttpGet(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<List<BannerViewModel>>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
@@ -28,7 +37,11 @@
             return FluentResult(result);
         }
 
-
+        /// <summary>
+        /// Returns all banners by given type
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         [HttpGet(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<List<BannerViewModel>>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]

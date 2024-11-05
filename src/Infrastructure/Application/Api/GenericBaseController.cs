@@ -1,5 +1,6 @@
 ﻿namespace Application.Api
 {
+    [ApiController]
     public class GenericBaseController<T> : BaseController where T : class
     {
         protected Logging.Base.ILogger<T> Logger { get; }

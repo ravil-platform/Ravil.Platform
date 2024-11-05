@@ -1,14 +1,17 @@
-﻿namespace Api.Controllers
+﻿namespace Api.Controllers.V1
 {
     [Route(Routes.Controller)]
-    [ApiController]
     public class CitiesController : GenericBaseController<CitiesController>
     {
         public CitiesController(IMediator mediator, Logging.Base.ILogger<CitiesController> logger) : base(mediator, logger)
         {
         }
 
-
+        /// <summary>
+        /// Returns all cities
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         [HttpGet(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<List<CityViewModel>>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
@@ -20,7 +23,11 @@
         }
 
 
-
+        /// <summary>
+        /// Returns all cities by given city base id
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         [HttpGet(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<List<CityViewModel>>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
@@ -32,7 +39,11 @@
         }
 
 
-
+        /// <summary>
+        /// Returns all cityBases
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         [HttpGet(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<List<CityBaseViewModel>>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
@@ -44,7 +55,11 @@
         }
 
 
-
+        /// <summary>
+        /// Returns all cityCategories
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         [HttpGet(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<List<CityCategoryViewModel>>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]

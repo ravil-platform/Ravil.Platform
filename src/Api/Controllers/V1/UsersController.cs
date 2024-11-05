@@ -1,10 +1,8 @@
-﻿using ViewModels.QueriesResponseViewModel.Brand;
-using ViewModels.QueriesResponseViewModel.User;
+﻿using ViewModels.QueriesResponseViewModel.User;
 
-namespace Api.Controllers
+namespace Api.Controllers.V1
 {
-    [Route(Constants.Routes.Controller)]
-    [ApiController]
+    [Route(Routes.Controller)]
     public class UsersController : GenericBaseController<UsersController>
     {
         public UsersController(IMediator mediator, Logging.Base.ILogger<UsersController> logger)
@@ -12,8 +10,7 @@ namespace Api.Controllers
         {
         }
 
-        //for test api
-        [HttpPost(Constants.Routes.Action)]
+        [HttpPost(Routes.Action)]
         public async Task<IActionResult> Create(CreateUserCommand command)
         {
             var result = await Mediator.Send(command);
@@ -22,7 +19,7 @@ namespace Api.Controllers
         }
 
 
-        [HttpPost(Constants.Routes.Action)]
+        [HttpPost(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<RegisterUserResponseViewModel>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> RegisterAndLogin(RegisterUserCommand command)
@@ -32,7 +29,7 @@ namespace Api.Controllers
             return FluentResult(result);
         }
 
-        [HttpPost(Constants.Routes.Action)]
+        [HttpPost(Routes.Action)]
         [AllowAnonymous]
         public virtual async Task<IActionResult> GenerateToken(GenerateTokenCommand command)
         {

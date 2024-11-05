@@ -1,7 +1,6 @@
-﻿namespace Api.Controllers
+﻿namespace Api.Controllers.V1
 {
-    [Route(Constants.Routes.Controller)]
-    [ApiController]
+    [Route(Routes.Controller)]
     public class JobsController : GenericBaseController<JobsController>
     {
         public JobsController(IMediator mediator, Logging.Base.ILogger<JobsController> logger) : base(mediator, logger)
@@ -9,6 +8,11 @@
 
         }
 
+        /// <summary>
+        /// Returns all job branches by given filter
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         [HttpGet(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<JobBranchFilter>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
@@ -19,7 +23,11 @@
             return FluentResult(result);
         }
 
-
+        /// <summary>
+        /// Returns all job branches by given job id
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         [HttpGet(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<List<JobBranchViewModel>>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
@@ -30,7 +38,11 @@
             return FluentResult(result);
         }
 
-
+        /// <summary>
+        /// Returns job branch by unique id
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         [HttpGet(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<JobBranchViewModel>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
@@ -41,9 +53,13 @@
             return FluentResult(result);
         }
 
-
+        /// <summary>
+        /// Returns all job services 
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         [HttpGet(Routes.Action)]
-        [ProducesResponseType(type: typeof(Result<List<ServiceViewModel>>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result<List<JobServiceViewModel>>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetJobServices([FromQuery] GetAllJobServiceQuery query)
         {
@@ -52,8 +68,12 @@
             return FluentResult(result);
         }
 
-
-        [HttpGet(Constants.Routes.Action)]
+        /// <summary>
+        /// Returns newest jobs
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        [HttpGet(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<List<JobViewModel>>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetNewestJobs([FromQuery] GetNewestJobsQuery query)
@@ -63,8 +83,12 @@
             return FluentResult(result);
         }
 
-
-        [HttpGet(Constants.Routes.Action)]
+        /// <summary>
+        /// Returns best jobs
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        [HttpGet(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<List<JobViewModel>>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetBestJobs([FromQuery] GetBestJobsQuery query)
@@ -74,8 +98,12 @@
             return FluentResult(result);
         }
 
-
-        [HttpGet(Constants.Routes.Action)]
+        /// <summary>
+        /// Returns Related jobs
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        [HttpGet(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<List<JobViewModel>>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetRelatedJobs([FromQuery] GetRelatedJobsQuery query)
@@ -85,8 +113,12 @@
             return FluentResult(result);
         }
 
-
-        [HttpGet(Constants.Routes.Action)]
+        /// <summary>
+        /// Returns a job by given route
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        [HttpGet(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<JobViewModel>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetByRoute([FromQuery] GetJobByRouteQuery query)
@@ -96,8 +128,12 @@
             return FluentResult(result);
         }
 
-
-        [HttpGet(Constants.Routes.Action)]
+        /// <summary>
+        /// Returns all jobs by given category id
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        [HttpGet(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<List<JobViewModel>>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetJobsByCategoryId([FromQuery] GetAllJobsByCategoryIdQuery query)
@@ -107,7 +143,11 @@
             return FluentResult(result);
         }
 
-
+        /// <summary>
+        /// Returns all job selection slider by given filter
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         [HttpGet(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<List<JobSelectionSliderViewModel>>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
@@ -118,7 +158,11 @@
             return FluentResult(result);
         }
 
-
+        /// <summary>
+        /// Returns all job branch short links by given job branch id 
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         [HttpGet(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<List<JobBranchShortLinkViewModel>>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
@@ -130,6 +174,11 @@
         }
 
 
+        /// <summary>
+        /// Returns all job branch galleries by given job branch id 
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         [HttpGet(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<List<JobBranchGalleryViewModel>>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
@@ -141,6 +190,11 @@
         }
 
 
+        /// <summary>
+        /// Returns all job time works by given job branch id
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         [HttpGet(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<List<JobTimeWorkViewModel>>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
@@ -151,8 +205,12 @@
             return FluentResult(result);
         }
 
-
-        [HttpPost(Constants.Routes.Action)]
+        /// <summary>
+        /// Creates a job
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpPost(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<JobViewModel>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateJob([FromForm] CreateJobCommand command)
@@ -162,8 +220,12 @@
             return FluentResult(result);
         }
 
-
-        [HttpPost(Constants.Routes.Action)]
+        /// <summary>
+        /// Creates a job category
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpPost(Routes.Action)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateJobCategory(CreateJobCategoryCommand command)
@@ -173,8 +235,12 @@
             return FluentResult(result);
         }
 
-
-        [HttpPost(Constants.Routes.Action)]
+        /// <summary>
+        /// Creates a job branch
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpPost(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<JobBranchViewModel>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateJobBranch([FromForm] CreateJobBranchCommand command)
@@ -184,8 +250,12 @@
             return FluentResult(result);
         }
 
-
-        [HttpPost(Constants.Routes.Action)]
+        /// <summary>
+        /// Creates a job and also job branch ( add free job in ravil ) 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpPost(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<JobBranchViewModel>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateFreeJobBranch([FromForm] CreateFreeJobBranchCommand command)
@@ -195,6 +265,12 @@
             return FluentResult(result);
         }
 
+
+        /// <summary>
+        /// Upload job branch video
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [HttpPost(Routes.Action)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
@@ -205,6 +281,12 @@
             return FluentResult(result);
         }
 
+
+        /// <summary>
+        /// Upload job branch galleries
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [HttpPost(Routes.Action)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
@@ -215,6 +297,11 @@
             return FluentResult(result);
         }
 
+        /// <summary>
+        /// Upload job branch image
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [HttpPost(Routes.Action)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
@@ -225,6 +312,11 @@
             return FluentResult(result);
         }
 
+        /// <summary>
+        /// Update a job branch 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [HttpPut(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<UpdateJobBranchViewModel>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
@@ -235,6 +327,11 @@
             return FluentResult(result);
         }
 
+        /// <summary>
+        /// Update a job branch location
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [HttpPut(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<UpdateJobBranchLocationViewModel>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
@@ -245,8 +342,12 @@
             return FluentResult(result);
         }
 
-
-        [HttpPut(Constants.Routes.Action)]
+        /// <summary>
+        /// Update a job 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpPut(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<JobViewModel>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateJob(UpdateJobCommand command)
@@ -256,7 +357,12 @@
             return FluentResult(result);
         }
 
-        [HttpPut(Constants.Routes.Action)]
+        /// <summary>
+        /// Update a job category
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpPut(Routes.Action)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateJobCategory(UpdateJobCategoryCommand command)
@@ -265,7 +371,5 @@
 
             return FluentResult(result);
         }
-
-    
     }
 }

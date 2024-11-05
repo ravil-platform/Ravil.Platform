@@ -14,22 +14,25 @@ services.AddSwaggerGen();
 services.AddApplicationServices(configuration, _siteSetting.JwtSettings);
 services.AddPersistenceServices(configuration);
 
-
+services.AddSwaggerDocumentation();
 
 var app = builder.Build();
-
-
-//using (var scope = app.Services.CreateScope())
-//{
-//    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-//    // use context
-//    dbContext.Database.EnsureCreated();
-//}
 
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options =>
+    {
+        var descriptions = app.DescribeApiVersions();
+
+        // Build a swagger endpoint for each discovered API version
+        foreach (var description in descriptions)
+        {
+            var url = $"/swagger/{description.GroupName}/swagger.json";
+            var name = description.GroupName.ToUpperInvariant();
+            options.SwaggerEndpoint(url, name);
+        }
+    });
 }
 
 app.UseCustomExceptionHandler();

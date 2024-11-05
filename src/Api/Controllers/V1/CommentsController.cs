@@ -1,13 +1,17 @@
-﻿namespace Api.Controllers
+﻿namespace Api.Controllers.V1
 {
     [Route(Routes.Controller)]
-    [ApiController]
     public class CommentsController : GenericBaseController<CommentsController>
     {
         public CommentsController(IMediator mediator, Logging.Base.ILogger<CommentsController> logger) : base(mediator, logger)
         {
         }
 
+        /// <summary>
+        /// Returns all comments by given filter
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         [HttpGet(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<List<CommentViewModel>>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
@@ -18,7 +22,11 @@
             return FluentResult(result);
         }
 
-
+        /// <summary>
+        /// Returns all replies to a comment with the given comment id
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         [HttpGet(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<List<AnswerCommentViewModel>>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
@@ -29,7 +37,11 @@
             return FluentResult(result);
         }
 
-
+        /// <summary>
+        /// Creates a comment
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [HttpPost(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<CommentViewModel>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
@@ -40,7 +52,11 @@
             return FluentResult(result);
         }
 
-
+        /// <summary>
+        /// Creates a reply to a comment
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [HttpPost(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<AnswerCommentViewModel>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]

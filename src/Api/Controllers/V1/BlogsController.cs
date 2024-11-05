@@ -1,7 +1,6 @@
-﻿namespace Api.Controllers
+﻿namespace Api.Controllers.V1
 {
-    [Route(Constants.Routes.Controller)]
-    [ApiController]
+    [Route(Routes.Controller)]
     public class BlogsController : GenericBaseController<BlogsController>
     {
         public BlogsController(IMediator mediator, Logging.Base.ILogger<BlogsController> logger)
@@ -9,7 +8,12 @@
         {
         }
 
-        [HttpGet(Constants.Routes.Action)]
+        /// <summary>
+        /// Returns all blogs by given filter
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        [HttpGet(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<BlogFilterViewModel>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetAllByFilter([FromQuery] GetAllBlogsByFilterQuery query)
@@ -19,8 +23,12 @@
             return FluentResult(result);
         }
 
-
-        [HttpGet(Constants.Routes.Action)]
+        /// <summary>
+        /// Returns a blog by given route
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        [HttpGet(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<BlogViewModel>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetByRoute([FromQuery] GetBlogByRouteQuery query)
@@ -30,8 +38,12 @@
             return FluentResult(result);
         }
 
-
-        [HttpGet(Constants.Routes.Action)]
+        /// <summary>
+        /// Returns all blog categories 
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        [HttpGet(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<List<BlogCategoryViewModel>>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetBlogCategories([FromQuery] GetBlogCategoriesQuery query)
@@ -41,8 +53,12 @@
             return FluentResult(result);
         }
 
-
-        [HttpGet(Constants.Routes.Action)]
+        /// <summary>
+        /// Returns all blog categories by given parent id
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        [HttpGet(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<List<BlogCategoryViewModel>>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetBlogCategoriesByParentId([FromQuery] GetBlogCategoriesByParentIdQuery query)
@@ -51,7 +67,5 @@
 
             return FluentResult(result);
         }
-
-        //todo : Crud
     }
 }

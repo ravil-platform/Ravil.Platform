@@ -1,14 +1,18 @@
-﻿namespace Api.Controllers
+﻿namespace Api.Controllers.V1
 {
-    [Route(Constants.Routes.Controller)]
-    [ApiController]
+    [Route(Routes.Controller)]
     public class CategoriesController : GenericBaseController<CategoriesController>
     {
         public CategoriesController(IMediator mediator, Logging.Base.ILogger<CategoriesController> logger) : base(mediator, logger)
         {
         }
 
-        [HttpGet(Constants.Routes.Action)]
+        /// <summary>
+        /// Returns all categories
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        [HttpGet(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<List<CategoryViewModel>>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetAll([FromQuery] GetAllCategoriesQuery query)
@@ -18,8 +22,12 @@
             return FluentResult(result);
         }
 
-
-        [HttpGet(Constants.Routes.Action)]
+        /// <summary>
+        /// Returns all categories by parent id
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        [HttpGet(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<List<CategoryViewModel>>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetAllByParentId([FromQuery] GetAllCategoriesByParentIdQuery query)
@@ -29,8 +37,12 @@
             return FluentResult(result);
         }
 
-
-        [HttpGet(Constants.Routes.Action)]
+        /// <summary>
+        /// Returns all categories by given filter
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        [HttpGet(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<CategoryFilterViewModel>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetAllByFilter([FromQuery] GetAllCategoriesByFilterQuery query)
@@ -40,8 +52,12 @@
             return FluentResult(result);
         }
 
-
-        [HttpGet(Constants.Routes.Action)]
+        /// <summary>
+        /// Returns a category by given route
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        [HttpGet(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<CategoryViewModel>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetByRoute([FromQuery] GetCategoryByRouteQuery query)
@@ -51,8 +67,12 @@
             return FluentResult(result);
         }
 
-
-        [HttpGet(Constants.Routes.Action)]
+        /// <summary>
+        /// Returns all category services
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        [HttpGet(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<List<CategoryServiceViewModel>>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetCategoryServices([FromQuery] GetAllCategoryServiceQuery query)

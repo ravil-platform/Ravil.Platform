@@ -1,15 +1,19 @@
 ﻿using ViewModels.QueriesResponseViewModel.Brand;
 
-namespace Api.Controllers
+namespace Api.Controllers.V1
 {
     [Route(Routes.Controller)]
-    [ApiController]
     public class BrandsController : GenericBaseController<BrandsController>
     {
         public BrandsController(IMediator mediator, Logging.Base.ILogger<BrandsController> logger) : base(mediator, logger)
         {
         }
 
+        /// <summary>
+        /// Returns all brands
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         [HttpGet(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<List<BrandViewModel>>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]

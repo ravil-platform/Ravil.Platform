@@ -92,3 +92,4 @@ global using ViewModels.QueriesResponseViewModel.ShortLink;
 global using ViewModels.QueriesResponseViewModel.State;
 global using ViewModels.QueriesResponseViewModel.Tag;
 global using ViewModels.QueriesResponseViewModel.Team;
+global using Api.Configuration.Extensions;
