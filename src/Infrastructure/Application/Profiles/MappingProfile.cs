@@ -1,5 +1,8 @@
 ﻿using Application.Features.Job.Commands.UpdateJobBranchLocation;
+using Application.Features.User.Commands.AddBlogLike;
+using Application.Features.User.Commands.AddToBookMark;
 using Application.Features.User.Commands.Register;
+using Application.Features.User.Commands.UpdateInfo;
 using Domain.Entities.Histories;
 using ViewModels.QueriesResponseViewModel.Address;
 using ViewModels.QueriesResponseViewModel.Brand;
@@ -100,6 +103,13 @@ namespace Application.Profiles
 
             CreateMap<Location, LocationViewModel>().ReverseMap();
             CreateMap<Address, AddressViewModel>().ReverseMap();
+
+
+            CreateMap<AddToBookMarkCommand, UserBookMark>().ReverseMap();
+            CreateMap<AddBlogLikeCommand, UserBlogLike>().ReverseMap();
+
+
+            CreateMap<UpdateUserInfoCommand, ApplicationUser>().ReverseMap();
         }
     }
 }

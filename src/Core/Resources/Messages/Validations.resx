@@ -184,7 +184,7 @@
     <value>{0} باید بین {2} تا {1} کاراکتر باشد</value>
   </data>
   <data name="VerificationCodeIsInvalid" xml:space="preserve">
-    <value>کد وارد شده صحیح نیست.</value>
+    <value>کد وارد شده صحیح نیست!</value>
   </data>
   <data name="RequiredFluent" xml:space="preserve">
     <value>تکمیل {PropertyName} الزامی است!</value>
@@ -209,5 +209,11 @@
   </data>
   <data name="OnlyTypeNumbers" xml:space="preserve">
     <value>فقط اعداد مجاز است!</value>
+  </data>
+  <data name="NationalCodeIsInvalid" xml:space="preserve">
+    <value>کد ملی وارد شده صحیح نیست!</value>
+  </data>
+  <data name="RangeInvalidFluent" xml:space="preserve">
+    <value>{PropertyName} باید بین {MaxLength} تا {MinLength} باشد</value>
   </data>
 </root>

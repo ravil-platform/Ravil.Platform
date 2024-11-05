@@ -196,6 +196,15 @@ namespace Resources.Messages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to کد ملی وارد شده صحیح نیست!.
+        /// </summary>
+        public static string NationalCodeIsInvalid {
+            get {
+                return ResourceManager.GetString("NationalCodeIsInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} یافت نشد!.
         /// </summary>
         public static string NotFound {
@@ -286,6 +295,15 @@ namespace Resources.Messages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {PropertyName} باید بین {MaxLength} تا {MinLength} باشد.
+        /// </summary>
+        public static string RangeInvalidFluent {
+            get {
+                return ResourceManager.GetString("RangeInvalidFluent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to مقدار {0} معتبر نمی‌باشد!.
         /// </summary>
         public static string RegularExpression {
@@ -331,7 +349,7 @@ namespace Resources.Messages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to کد وارد شده صحیح نیست..
+        ///   Looks up a localized string similar to کد وارد شده صحیح نیست!.
         /// </summary>
         public static string VerificationCodeIsInvalid {
             get {

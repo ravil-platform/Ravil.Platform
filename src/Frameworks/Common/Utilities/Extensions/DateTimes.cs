@@ -114,5 +114,20 @@
             return time.ToString("HH:mm");
         }
         #endregion
+
+        #region ( Shamsi Date To DateTime )
+        public static DateTime ShamsiDateToDateTime(this string time)
+        {
+            string[] dateTime = time.Split('/');
+
+            PersianCalendar persianCalendar = new PersianCalendar();
+
+            var year = Convert.ToInt32(dateTime[0]);
+            var month = Convert.ToInt32(dateTime[1]);
+            var day = Convert.ToInt32(dateTime[2]);
+
+            return persianCalendar.ToDateTime(year, month, day, 0, 0, 0, 0);
+        }
+        #endregion
     }
 }

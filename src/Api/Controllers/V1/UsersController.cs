@@ -1,4 +1,4 @@
-﻿using ViewModels.QueriesResponseViewModel.User;
+﻿using Application.Contracts.Identity;
 
 namespace Api.Controllers.V1
 {
@@ -9,7 +9,11 @@ namespace Api.Controllers.V1
             : base(mediator, logger)
         {
         }
-
+        /// <summary>
+        /// this action for test
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [HttpPost(Routes.Action)]
         public async Task<IActionResult> Create(CreateUserCommand command)
         {
@@ -18,7 +22,11 @@ namespace Api.Controllers.V1
             return FluentResult(result);
         }
 
-
+        /// <summary>
+        /// this action used for login or register user and gives you a JWT token
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [HttpPost(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<RegisterUserResponseViewModel>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
@@ -29,8 +37,16 @@ namespace Api.Controllers.V1
             return FluentResult(result);
         }
 
-        [HttpPost(Routes.Action)]
+
+        /// <summary>
+        /// Generate JWT token for given user
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [AllowAnonymous]
+        [HttpPost(Routes.Action)]
+        [ProducesResponseType(type: typeof(Result<AccessToken>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public virtual async Task<IActionResult> GenerateToken(GenerateTokenCommand command)
         {
             var result = await Mediator.Send(command);

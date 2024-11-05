@@ -459,5 +459,68 @@
             <param name="query"></param>
             <returns></returns>
         </member>
+        <member name="M:Api.Controllers.V1.UserProfileController.GetUserJobBranches(Application.Features.User.Queries.GetUserJobBranches.GetUserJobBranchesQuery)">
+            <summary>
+            Returns user job branches for given user id
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Api.Controllers.V1.UserProfileController.AddBlogLike(Application.Features.User.Commands.AddBlogLike.AddBlogLikeCommand)">
+            <summary>
+            add blog like with given blog id and user id
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Api.Controllers.V1.UserProfileController.AddToBookMark(Application.Features.User.Commands.AddToBookMark.AddToBookMarkCommand)">
+            <summary>
+            add blog or branch to bookmark for given user id
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Api.Controllers.V1.UserProfileController.RemoveBookMark(Application.Features.User.Commands.RemoveBookMark.RemoveBookMarkCommand)">
+            <summary>
+            remove a bookmark from unique id
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Api.Controllers.V1.UserProfileController.UploadUserAvatar(Application.Features.User.Commands.UploadUserAvatar.UploadUserAvatarCommand)">
+            <summary>
+            Upload user avatar for given user id
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Api.Controllers.V1.UserProfileController.UpdateUserInfo(Application.Features.User.Commands.UpdateInfo.UpdateUserInfoCommand)">
+            <summary>
+            Updates user info for given user id
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Api.Controllers.V1.UsersController.Create(Application.Features.User.Commands.Create.CreateUserCommand)">
+            <summary>
+            this action for test
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Api.Controllers.V1.UsersController.RegisterAndLogin(Application.Features.User.Commands.Register.RegisterUserCommand)">
+            <summary>
+            this action used for login or register user and gives you a JWT token
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Api.Controllers.V1.UsersController.GenerateToken(Application.Features.User.Commands.GenerateToken.GenerateTokenCommand)">
+            <summary>
+            Generate JWT token for given user
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>
