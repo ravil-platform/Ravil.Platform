@@ -1,9 +1,11 @@
-﻿namespace Api.Controllers.V1
+﻿using AutoMapper;
+
+namespace Api.Controllers.V1
 {
     [Route(Routes.Controller)]
     public class CitiesController : GenericBaseController<CitiesController>
     {
-        public CitiesController(IMediator mediator, Logging.Base.ILogger<CitiesController> logger) : base(mediator, logger)
+        public CitiesController(IMediator mediator, Logging.Base.ILogger<CitiesController> logger, IMapper mapper) : base(mediator, logger, mapper)
         {
         }
 

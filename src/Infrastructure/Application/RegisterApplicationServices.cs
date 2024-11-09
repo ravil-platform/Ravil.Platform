@@ -1,6 +1,5 @@
 ﻿using Application.Services.SMS;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Persistence.Entities.User.Repositories.Interfaces;
 
 namespace Application
 {
@@ -9,6 +8,7 @@ namespace Application
         public static void AddApplicationServices(this IServiceCollection services, IConfiguration configuration, JwtSettings jwtSettings = null)
         {
             services.AddHttpContextAccessor();
+            services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddMediatR(options =>
             {
@@ -140,7 +140,7 @@ namespace Application
                     OnTokenValidated = async context =>
                     {
                         var signInManager = context.HttpContext.RequestServices.GetRequiredService<SignInManager<ApplicationUser>>();
-                        var userRepository = context.HttpContext.RequestServices.GetRequiredService<IApplicationUserRepository>();
+                        var userManager = context.HttpContext.RequestServices.GetRequiredService<UserManager<ApplicationUser>>();
 
                         var claimsIdentity = context.Principal.Identity as ClaimsIdentity;
                         if (claimsIdentity.Claims?.Any() != true)
@@ -151,8 +151,8 @@ namespace Application
                             context.Fail("This token has no security stamp");
 
                         //Find user and token from database and perform your custom validation
-                        var userId = claimsIdentity.GetUserId<int>();
-                        var user = await userRepository.GetByIdAsync(userId);
+                        var userId = claimsIdentity.GetUserId<string>();
+                        var user = await userManager.FindByIdAsync(userId);
 
 
                         var validatedUser = await signInManager.ValidateSecurityStampAsync(context.Principal);

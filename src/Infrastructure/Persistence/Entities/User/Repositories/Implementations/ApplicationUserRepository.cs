@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-
-namespace Persistence.Entities.User.Repositories.Implementations;
+﻿namespace Persistence.Entities.User.Repositories.Implementations;
 
 public class ApplicationUserRepository : Repository<ApplicationUser>, IApplicationUserRepository
 {
@@ -9,6 +7,11 @@ public class ApplicationUserRepository : Repository<ApplicationUser>, IApplicati
     internal ApplicationUserRepository(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
     {
         ApplicationDbContext = applicationDbContext;
+    }
+
+    public override Task InsertAsync(ApplicationUser entity)
+    {
+        return base.InsertAsync(entity);
     }
 
     public UsersFilterViewModel GetUsersByFilter(UsersFilterViewModel usersFilterViewModel)

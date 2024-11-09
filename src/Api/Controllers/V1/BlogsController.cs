@@ -1,10 +1,12 @@
-﻿namespace Api.Controllers.V1
+﻿using AutoMapper;
+
+namespace Api.Controllers.V1
 {
     [Route(Routes.Controller)]
     public class BlogsController : GenericBaseController<BlogsController>
     {
-        public BlogsController(IMediator mediator, Logging.Base.ILogger<BlogsController> logger)
-            : base(mediator, logger)
+        public BlogsController(IMediator mediator, Logging.Base.ILogger<BlogsController> logger,IMapper mapper)
+            : base(mediator, logger, mapper)
         {
         }
 

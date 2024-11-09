@@ -71,7 +71,7 @@ namespace Admin.MVC.Controllers
 
             user = Mapper.Map(updateUserViewModel, user);
 
-            await UnitOfWork.ApplicationUserRepository.UpdateAsync(user);
+            await UserManager.UpdateAsync(user);
 
             try
             {

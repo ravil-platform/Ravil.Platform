@@ -1,38 +1,52 @@
-﻿using Application.Services.SMS;
+﻿using AngleSharp.Io;
+using Application.Services.SMS;
+using UAParser;
 
-namespace Application.Features.User.Commands.Register;
+namespace Application.Features.User.Commands.RegisterOrLogin;
 
-public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, RegisterUserResponseViewModel>
+public class RegisterOrLoginUserCommandHandler : IRequestHandler<RegisterOrLoginUserCommand, RegisterUserResponseViewModel>
 {
     protected IUnitOfWork UnitOfWork { get; }
     protected IMapper Mapper { get; }
     protected IJwtService JwtService { get; }
     protected ISmsSender SmsSender { get; }
     protected UserManager<ApplicationUser> UserManager { get; }
+    protected IHttpContextAccessor HttpContextAccessor { get; }
 
-    public RegisterUserCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IJwtService jwtService, ISmsSender smsSender, UserManager<ApplicationUser> userManager)
+    public RegisterOrLoginUserCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IJwtService jwtService, ISmsSender smsSender, UserManager<ApplicationUser> userManager, IHttpContextAccessor httpContextAccessor)
     {
         UnitOfWork = unitOfWork;
         Mapper = mapper;
         JwtService = jwtService;
         SmsSender = smsSender;
         UserManager = userManager;
+        HttpContextAccessor = httpContextAccessor;
     }
 
-    public async Task<Result<RegisterUserResponseViewModel>> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
-    {
 
+    public async Task<Result<RegisterUserResponseViewModel>> Handle(RegisterOrLoginUserCommand request, CancellationToken cancellationToken)
+    {
         //Todo: Check User Account Is Active and ... 
+
+        var uaParser = Parser.GetDefault();
+        var header = HttpContextAccessor.HttpContext.Request.Headers[HeaderNames.UserAgent].ToString();
+
+        var device = "windows";
+        if (header != null)
+        {
+            var info = uaParser.Parse(header);
+            device = $"{info.Device.Family}/{info.OS.Family} {info.OS.Major}.{info.OS.Minor} - {info.UA.Family}";
+        }
 
         var currentUser = await UnitOfWork.ApplicationUserRepository
             .GetByPredicate(u => u.PhoneNumber == request.PhoneNumber);
 
         if (request.SmsCode == null)
         {
+            #region ( Register New User Or Send Sms For Existing User  )
+            #region (Send Sms For current User )
             if (currentUser is not null)
             {
-                //Send For Current User
-
                 var code = Strings.CodeGenerator();
                 var responseSms = await SmsSender.SendPattern(currentUser.PhoneNumber, code, "login-code");
 
@@ -44,6 +58,18 @@ public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, R
                 var result = Mapper.Map<RegisterUserResponseViewModel>(currentUser);
                 var token = await JwtService.GenerateAsync(currentUser);
 
+                await UnitOfWork.UserTokensRepository.InsertAsync(new UserTokens()
+                {
+                    UserId = currentUser.Id,
+                    HashJwtToken = Security.GetSha256Hash(token.access_token),
+                    HashRefreshToken = Security.GetSha256Hash(token.refresh_token),
+                    TokenExpireDate = DateTime.Now.AddDays(30),
+                    RefreshTokenExpireDate = DateTime.Now.AddDays(40),
+                    Device = device
+                });
+
+                await UnitOfWork.SaveAsync();
+
                 if (responseSms.Equals("ok"))
                 {
                     result.Jwt = new JsonResult(token);
@@ -55,6 +81,9 @@ public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, R
                     throw new BadRequestException("به علت شلوغی خطوط پیامک تایید برای شما ارسال نشد. لطفا دوباره تلاش کنید.");
                 }
             }
+            #endregion
+
+            #region ( Register User )
             else
             {
                 //Register New User
@@ -66,13 +95,11 @@ public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, R
                 user.Lastname = "سایت";
                 user.Gender = GenderPerson.Other;
 
-                await UnitOfWork.ApplicationUserRepository.InsertAsync(user);
+                await UserManager.CreateAsync(user);
                 await UnitOfWork.SaveAsync();
 
 
                 var result = Mapper.Map<RegisterUserResponseViewModel>(user);
-
-                var token = await JwtService.GenerateAsync(user);
 
                 var code = await UserManager.GenerateChangePhoneNumberTokenAsync(user, request.PhoneNumber);
                 var responseSms = await SmsSender.SendPattern(user.PhoneNumber, code, "activate");
@@ -82,10 +109,10 @@ public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, R
 
                 var updateResult = await UserManager.UpdateAsync(user);
 
+                await UnitOfWork.SaveAsync();
+
                 if (responseSms.Equals("ok"))
                 {
-                    result.Jwt = new JsonResult(token);
-
                     return result;
                 }
                 else
@@ -93,9 +120,12 @@ public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, R
                     throw new BadRequestException("به علت شلوغی خطوط پیامک تایید برای شما ارسال نشد. لطفا دوباره تلاش کنید.");
                 }
             }
+            #endregion
+            #endregion
         }
         else
         {
+            #region ( Login )
             //check for login
             if (request.SmsCode == currentUser.OneTimeUseCode)
             {
@@ -105,7 +135,30 @@ public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, R
                 }
                 else
                 {
-                    //generate token for user and every thing is ok
+                    var user = await UnitOfWork.ApplicationUserRepository
+                        .GetByPredicate(u => u.PhoneNumber == request.PhoneNumber);
+
+                    var token = await JwtService.GenerateAsync(currentUser);
+
+                    await UnitOfWork.UserTokensRepository.InsertAsync(new UserTokens()
+                    {
+                        UserId = currentUser.Id,
+                        HashJwtToken = Security.GetSha256Hash(token.access_token),
+                        HashRefreshToken = Security.GetSha256Hash(token.refresh_token),
+                        TokenExpireDate = DateTime.Now.AddDays(30),
+                        RefreshTokenExpireDate = DateTime.Now.AddDays(40),
+                        Device = device
+                    });
+
+                    await UnitOfWork.SaveAsync();
+
+                    var result = new RegisterUserResponseViewModel
+                    {
+                        PhoneNumber = user.PhoneNumber,
+                        Jwt = new JsonResult(token)
+                    };
+
+                    return result;
                 }
             }
             else
@@ -114,6 +167,7 @@ public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, R
             }
 
             return new Result<RegisterUserResponseViewModel>();
+            #endregion
         }
     }
 }

@@ -53,8 +53,10 @@ namespace Api.Configuration.Extensions
                 Description =
                     "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
                 Name = "Authorization",
+                Scheme = "Bearer",
+                BearerFormat = "JWT",
                 In = ParameterLocation.Header,
-                Type = SecuritySchemeType.ApiKey
+                Type = SecuritySchemeType.Http
             });
         }
 

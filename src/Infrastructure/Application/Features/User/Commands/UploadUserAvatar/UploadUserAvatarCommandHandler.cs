@@ -4,10 +4,13 @@ public class UploadUserAvatarCommandHandler : IRequestHandler<UploadUserAvatarCo
 {
     protected IMapper Mapper { get; }
     protected IUnitOfWork UnitOfWork { get; }
-    public UploadUserAvatarCommandHandler(IMapper mapper, IUnitOfWork unitOfWork)
+    protected UserManager<ApplicationUser> UserManager { get; }
+
+    public UploadUserAvatarCommandHandler(IMapper mapper, IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager)
     {
         Mapper = mapper;
         UnitOfWork = unitOfWork;
+        UserManager = userManager;
     }
 
     public async Task<Result> Handle(UploadUserAvatarCommand request, CancellationToken cancellationToken)
@@ -31,7 +34,7 @@ public class UploadUserAvatarCommandHandler : IRequestHandler<UploadUserAvatarCo
         user.UpdateDate = DateTime.Now;
         user.LastUpdateDateReason = "تغییر آواتار";
 
-        await UnitOfWork.ApplicationUserRepository.UpdateAsync(user);
+        await UserManager.UpdateAsync(user);
         await UnitOfWork.SaveAsync();
 
         return Result.Ok();

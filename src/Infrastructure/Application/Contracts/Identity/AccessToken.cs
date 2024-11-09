@@ -12,6 +12,7 @@
             access_token = new JwtSecurityTokenHandler().WriteToken(securityToken);
             token_type = "Bearer";
             expires_in = (int)(securityToken.ValidTo - DateTime.UtcNow).TotalSeconds;
+            refresh_token = Guid.NewGuid().ToString();
         }
     }
 }

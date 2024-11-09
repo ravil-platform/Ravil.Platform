@@ -68,7 +68,7 @@ global using Application.Features.User.Commands.AddBlogLike;
 global using Application.Features.User.Commands.AddToBookMark;
 global using Application.Features.User.Commands.Create;
 global using Application.Features.User.Commands.GenerateToken;
-global using Application.Features.User.Commands.Register;
+global using Application.Features.User.Commands.RegisterOrLogin;
 global using Application.Features.User.Commands.RemoveBookMark;
 global using Application.Features.User.Commands.UpdateInfo;
 global using Application.Features.User.Commands.UploadUserAvatar;

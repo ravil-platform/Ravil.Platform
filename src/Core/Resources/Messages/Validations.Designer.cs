@@ -250,7 +250,7 @@ namespace Resources.Messages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to شماره همراه وارد شده معتبر نیست..
+        ///   Looks up a localized string similar to شماره همراه وارد شده صحیح نیست..
         /// </summary>
         public static string PhoneNumberIsInvalid {
             get {

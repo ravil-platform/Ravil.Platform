@@ -1,12 +1,6 @@
-﻿using Application.Features.Job.Commands.UpdateJobBranchLocation;
-using Application.Features.User.Commands.AddBlogLike;
-using Application.Features.User.Commands.AddToBookMark;
-using Application.Features.User.Commands.Register;
-using Application.Features.User.Commands.UpdateInfo;
-using Domain.Entities.Histories;
-using ViewModels.QueriesResponseViewModel.Address;
-using ViewModels.QueriesResponseViewModel.Brand;
-using ViewModels.QueriesResponseViewModel.Location;
+﻿using Application.Features.User.Commands.RegisterOrLogin;
+using Microsoft.AspNetCore.Http.HttpResults;
+using RNX.CustomResult;
 
 namespace Application.Profiles
 {
@@ -16,8 +10,9 @@ namespace Application.Profiles
         {
             CreateMap<CreateUserViewModel, ApplicationUser>().ReverseMap();
             CreateMap<UpdateUserViewModel, ApplicationUser>().ReverseMap();
-            CreateMap<RegisterUserCommand, ApplicationUser>().ReverseMap();
+            CreateMap<RegisterOrLoginUserCommand, ApplicationUser>().ReverseMap();
             CreateMap<ApplicationUser, RegisterUserResponseViewModel>().ReverseMap();
+            CreateMap<ApplicationUser, ApplicationUserViewModel>().ReverseMap();
 
 
             CreateMap<CreateFaqViewModel, Faq>().ReverseMap();
@@ -110,6 +105,8 @@ namespace Application.Profiles
 
 
             CreateMap<UpdateUserInfoCommand, ApplicationUser>().ReverseMap();
+
+            CreateMap(typeof(CustomResult<>),typeof(Result<>)).ReverseMap();
         }
     }
 }

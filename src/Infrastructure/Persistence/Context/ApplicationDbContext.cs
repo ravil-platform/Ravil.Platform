@@ -105,6 +105,7 @@
         public DbSet<JobService> JobService { get; set; }
         //public DbSet<JobLocation> JobLocation { get; set; }
         //public DbSet<JobRanking> JobRanking { get; set; }
+        public DbSet<JobCategoriesView> JobCategoriesView { get; set; }
         #endregion
 
         #region ( Location )
@@ -172,11 +173,10 @@
         public DbSet<UserBannerView> UserBannerView { get; set; }
         public DbSet<UserBlogLike> UserBlogLike { get; set; }
         public DbSet<UserBookMark> UserBookMark { get; set; }
-        #endregion
 
-        public DbSet<JobCategoriesView> JobCategoriesView { get; set; }
+        public DbSet<UserTokens> UserToken { get; set; }
         #endregion
-
+        #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

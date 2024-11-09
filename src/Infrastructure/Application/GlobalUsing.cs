@@ -1,4 +1,11 @@
-﻿global using Constants;
+﻿global using Application.Features.Job.Commands.UpdateJobBranchLocation;
+global using Application.Features.User.Commands.AddBlogLike;
+global using Application.Features.User.Commands.AddToBookMark;
+global using Application.Features.User.Commands.RegisterOrLogin;
+global using Application.Features.User.Commands.UpdateInfo;
+global using Domain.Entities.Histories;
+global using ViewModels.QueriesResponseViewModel.Brand;
+global using Constants;
 global using Application.Api;
 global using Application.Contracts.Identity;
 global using Application.Features.Comment.Commands.Create;

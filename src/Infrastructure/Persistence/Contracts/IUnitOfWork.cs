@@ -155,6 +155,8 @@
         public IUserBookMarkRepository UserBookMarkRepository { get; }
 
         public IUserFeedbackSliderRepository UserFeedbackSliderRepository { get; }
+
+        public IUserTokensRepository UserTokensRepository { get; }
         #endregion
 
 

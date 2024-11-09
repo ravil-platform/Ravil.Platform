@@ -1,3 +1,5 @@
+using Common.Utilities.ModelState;
+
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 var configuration = builder.Configuration;
@@ -6,11 +8,18 @@ var _siteSetting = configuration.GetSection(nameof(SiteSettings)).Get<SiteSettin
 
 services.Configure<SiteSettings>(configuration.GetSection(nameof(SiteSettings)));
 
-services.AddControllers();
+services.AddControllers().ConfigureApiBehaviorOptions(option =>
+{
+    option.InvalidModelStateResponseFactory = (context =>
+    {
+        var result = new Result();
+
+        result.WithError(ModelState.GetModelStateErrors(context.ModelState));
+
+        return new BadRequestObjectResult(result);
+    });
+});
 services.AddEndpointsApiExplorer();
-services.AddSwaggerGen();
-
-
 services.AddApplicationServices(configuration, _siteSetting.JwtSettings);
 services.AddPersistenceServices(configuration);
 

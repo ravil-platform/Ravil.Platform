@@ -993,6 +993,20 @@
                 return _userFeedbackSliderRepository;
             }
         }
+
+        private IUserTokensRepository? _userTokensRepository;
+        public IUserTokensRepository UserTokensRepository
+        {
+            get
+            {
+                if (_userTokensRepository == null)
+                {
+                    _userTokensRepository = new UserTokensRepository(DatabaseContext);
+                }
+
+                return _userTokensRepository;
+            }
+        }
         #endregion
 
 

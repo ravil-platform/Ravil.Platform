@@ -15,9 +15,9 @@ public class GenerateTokenCommandHandler : IRequestHandler<GenerateTokenCommand,
     {
         var user = await UnitOfWork.ApplicationUserRepository.GetByIdAsync(request.UserId);
 
-        if (user == null)
+        if (user is null)
         {
-            throw new Exception();
+            throw new NotFoundException();
         }
 
         var jwt = await JwtService.GenerateAsync(user);

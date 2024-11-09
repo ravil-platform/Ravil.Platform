@@ -1,19 +1,27 @@
-﻿namespace Application.Api;
+﻿using MediatR;
+using RNX.CustomResult;
+
+namespace Application.Api;
 
 public class BaseController : ControllerBase
 {
-    protected BaseController(MediatR.IMediator mediator) : base()
+    protected MediatR.IMediator Mediator { get; }
+    protected IMapper Mapper { get; }
+
+    public BaseController(IMediator mediator, IMapper mapper)
     {
         Mediator = mediator;
+        Mapper = mapper;
     }
 
-    protected MediatR.IMediator Mediator { get; }
 
     protected IActionResult FluentResult<T>(FluentResults.Result<T> result)
     {
         if (result.IsSuccess)
         {
-            return Ok(value: result);
+            var customResult = Mapper.Map<CustomResult<T>>(result);
+
+            return Ok(value: customResult);
         }
         else
         {

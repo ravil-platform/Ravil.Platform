@@ -157,7 +157,7 @@
     <value>کلمه عبور باید حداقل 6 کاراکتر طول داشته باشد و ترکیبی از اعداد ('0'-'9') و حروف انگلیسی کوچک ('a'-'z') باشد.</value>
   </data>
   <data name="PhoneNumberIsInvalid" xml:space="preserve">
-    <value>شماره همراه وارد شده معتبر نیست.</value>
+    <value>شماره همراه وارد شده صحیح نیست.</value>
   </data>
   <data name="PostalCodeIsInvalid" xml:space="preserve">
     <value>کد پستی وارد شده صحیح نیست.</value>
