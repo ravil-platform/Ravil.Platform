@@ -1,27 +1,21 @@
 ﻿using MediatR;
-using RNX.CustomResult;
 
 namespace Application.Api;
 
 public class BaseController : ControllerBase
 {
     protected MediatR.IMediator Mediator { get; }
-    protected IMapper Mapper { get; }
 
-    public BaseController(IMediator mediator, IMapper mapper)
+    public BaseController(IMediator mediator)
     {
         Mediator = mediator;
-        Mapper = mapper;
     }
-
 
     protected IActionResult FluentResult<T>(FluentResults.Result<T> result)
     {
         if (result.IsSuccess)
         {
-            var customResult = Mapper.Map<CustomResult<T>>(result);
-
-            return Ok(value: customResult);
+            return Ok(value: result);
         }
         else
         {

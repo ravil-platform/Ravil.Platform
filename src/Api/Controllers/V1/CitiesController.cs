@@ -1,11 +1,9 @@
-﻿using AutoMapper;
-
-namespace Api.Controllers.V1
+﻿namespace Api.Controllers.V1
 {
     [Route(Routes.Controller)]
     public class CitiesController : GenericBaseController<CitiesController>
     {
-        public CitiesController(IMediator mediator, Logging.Base.ILogger<CitiesController> logger, IMapper mapper) : base(mediator, logger, mapper)
+        public CitiesController(IMediator mediator, Logging.Base.ILogger<CitiesController> logger) : base(mediator, logger)
         {
         }
 

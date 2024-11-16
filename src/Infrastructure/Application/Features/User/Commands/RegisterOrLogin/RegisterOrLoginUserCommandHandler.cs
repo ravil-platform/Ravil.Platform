@@ -1,5 +1,6 @@
 ﻿using AngleSharp.Io;
 using Application.Services.SMS;
+using Constants.Security;
 using UAParser;
 
 namespace Application.Features.User.Commands.RegisterOrLogin;
@@ -26,8 +27,6 @@ public class RegisterOrLoginUserCommandHandler : IRequestHandler<RegisterOrLogin
 
     public async Task<Result<RegisterUserResponseViewModel>> Handle(RegisterOrLoginUserCommand request, CancellationToken cancellationToken)
     {
-        //Todo: Check User Account Is Active and ... 
-
         var uaParser = Parser.GetDefault();
         var header = HttpContextAccessor.HttpContext.Request.Headers[HeaderNames.UserAgent].ToString();
 
@@ -40,6 +39,11 @@ public class RegisterOrLoginUserCommandHandler : IRequestHandler<RegisterOrLogin
 
         var currentUser = await UnitOfWork.ApplicationUserRepository
             .GetByPredicate(u => u.PhoneNumber == request.PhoneNumber);
+        
+        if (currentUser is not null && currentUser.UserIsBlocked || currentUser.LockoutEnabled || currentUser.IsDeleted)
+        {
+            throw new BadRequestException("حساب کاربری شما مسدود است");
+        }
 
         if (request.SmsCode == null)
         {
@@ -145,8 +149,8 @@ public class RegisterOrLoginUserCommandHandler : IRequestHandler<RegisterOrLogin
                         UserId = currentUser.Id,
                         HashJwtToken = Security.GetSha256Hash(token.access_token),
                         HashRefreshToken = Security.GetSha256Hash(token.refresh_token),
-                        TokenExpireDate = DateTime.Now.AddDays(30),
-                        RefreshTokenExpireDate = DateTime.Now.AddDays(40),
+                        TokenExpireDate = DateTime.Now.AddDays(Jwt.TokenExpireDate),
+                        RefreshTokenExpireDate = DateTime.Now.AddDays(Jwt.RefreshTokenExpireDate),
                         Device = device
                     });
 

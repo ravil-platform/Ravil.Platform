@@ -5,7 +5,7 @@
     {
         protected Logging.Base.ILogger<T> Logger { get; }
      
-        public GenericBaseController(MediatR.IMediator mediator, Logging.Base.ILogger<T> logger, IMapper mapper) : base(mediator, mapper)
+        public GenericBaseController(MediatR.IMediator mediator, Logging.Base.ILogger<T> logger) : base(mediator)
         {
             Logger = logger;
       }

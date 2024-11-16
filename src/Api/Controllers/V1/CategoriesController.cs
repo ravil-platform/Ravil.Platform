@@ -1,11 +1,9 @@
-﻿using AutoMapper;
-
-namespace Api.Controllers.V1
+﻿namespace Api.Controllers.V1
 {
     [Route(Routes.Controller)]
     public class CategoriesController : GenericBaseController<CategoriesController>
     {
-        public CategoriesController(IMediator mediator, Logging.Base.ILogger<CategoriesController> logger, IMapper mapper) : base(mediator, logger, mapper)
+        public CategoriesController(IMediator mediator, Logging.Base.ILogger<CategoriesController> logger) : base(mediator, logger)
         {
         }
 
