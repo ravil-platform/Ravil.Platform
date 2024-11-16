@@ -2,7 +2,7 @@
 
 namespace ViewModels.QueriesResponseViewModel.User
 {
-    public class RegisterUserResponseViewModel
+    public class RegisterOrLoginUserResponseViewModel
     {
         public Guid Id { get; set; }
 

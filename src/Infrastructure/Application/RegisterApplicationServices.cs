@@ -39,7 +39,6 @@ namespace Application
         public static IdentityBuilder AddIdentityService(this IServiceCollection services)
         {
             #region ( Identity )
-
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
                 options.Password.RequiredLength = 6;
@@ -52,7 +51,6 @@ namespace Application
                 options.User.RequireUniqueEmail = true;
                 options.User.AllowedUserNameCharacters = "0123456789";
 
-                options.SignIn.RequireConfirmedEmail = false;
                 options.SignIn.RequireConfirmedAccount = false;
                 options.SignIn.RequireConfirmedPhoneNumber = true;
 
@@ -61,8 +59,7 @@ namespace Application
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
 
                 options.Tokens.PasswordResetTokenProvider = TokenOptions.DefaultPhoneProvider;
-                options.Tokens.EmailConfirmationTokenProvider = TokenOptions.DefaultEmailProvider;
-                options.Tokens.ChangeEmailTokenProvider = TokenOptions.DefaultEmailProvider;
+                options.Tokens.ChangePhoneNumberTokenProvider = TokenOptions.DefaultPhoneProvider;
 
             }).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
@@ -88,7 +85,6 @@ namespace Application
             #endregion
 
             return new IdentityBuilder(typeof(ApplicationUser), typeof(IdentityRole), services);
-
             #endregion
         }
 

@@ -11,6 +11,7 @@ namespace Api.Controllers.V1
             : base(mediator, logger)
         {
         }
+
         /// <summary>
         /// Returns a user by unique id
         /// </summary>
@@ -47,9 +48,24 @@ namespace Api.Controllers.V1
         /// <param name="command"></param>
         /// <returns></returns>
         [HttpPost(Routes.Action)]
-        [ProducesResponseType(type: typeof(Result<RegisterUserResponseViewModel>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result<RegisterOrLoginUserResponseViewModel>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> RegisterOrLogin(RegisterOrLoginUserCommand command)
+        {
+            var result = await Mediator.Send(command);
+
+            return FluentResult(result);
+        }
+
+        /// <summary>
+        /// Send sms code again for register or login user for given phone number (do not fill sms code)
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpPost(Routes.Action)]
+        [ProducesResponseType(type: typeof(Result<RegisterOrLoginUserResponseViewModel>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> SendSmsCode(RegisterOrLoginUserCommand command)
         {
             var result = await Mediator.Send(command);
 

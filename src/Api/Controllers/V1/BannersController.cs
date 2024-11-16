@@ -13,8 +13,8 @@
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
-        
-        //[Authorize]
+
+        [Authorize]
         [HttpGet(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<List<BannerViewModel>>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]

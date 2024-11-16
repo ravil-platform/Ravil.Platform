@@ -5,41 +5,54 @@ using UAParser;
 
 namespace Application.Features.User.Commands.RegisterOrLogin;
 
-public class RegisterOrLoginUserCommandHandler : IRequestHandler<RegisterOrLoginUserCommand, RegisterUserResponseViewModel>
+public class RegisterOrLoginUserCommandHandler : IRequestHandler<RegisterOrLoginUserCommand, RegisterOrLoginUserResponseViewModel>
 {
     protected IUnitOfWork UnitOfWork { get; }
     protected IMapper Mapper { get; }
     protected IJwtService JwtService { get; }
     protected ISmsSender SmsSender { get; }
     protected UserManager<ApplicationUser> UserManager { get; }
+    protected SignInManager<ApplicationUser> SignInManager { get; }
     protected IHttpContextAccessor HttpContextAccessor { get; }
 
-    public RegisterOrLoginUserCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IJwtService jwtService, ISmsSender smsSender, UserManager<ApplicationUser> userManager, IHttpContextAccessor httpContextAccessor)
+    public RegisterOrLoginUserCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IJwtService jwtService, ISmsSender smsSender, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IHttpContextAccessor httpContextAccessor)
     {
         UnitOfWork = unitOfWork;
         Mapper = mapper;
         JwtService = jwtService;
         SmsSender = smsSender;
         UserManager = userManager;
+        SignInManager = signInManager;
         HttpContextAccessor = httpContextAccessor;
     }
 
 
-    public async Task<Result<RegisterUserResponseViewModel>> Handle(RegisterOrLoginUserCommand request, CancellationToken cancellationToken)
+    public async Task<Result<RegisterOrLoginUserResponseViewModel>> Handle(RegisterOrLoginUserCommand request, CancellationToken cancellationToken)
     {
+        var result = new Result<RegisterOrLoginUserResponseViewModel>();
+
+        #region ( Check LogedIn User )
+        if (HttpContextAccessor.HttpContext?.User != null && SignInManager.IsSignedIn(HttpContextAccessor.HttpContext?.User!))
+        {
+            throw new BadRequestException("شما قبلا وارد سایت شده اید");
+        }
+        #endregion
+
+        #region ( Detect Client DeviceName )
+        var device = "windows";
         var uaParser = Parser.GetDefault();
         var header = HttpContextAccessor.HttpContext.Request.Headers[HeaderNames.UserAgent].ToString();
 
-        var device = "windows";
         if (header != null)
         {
             var info = uaParser.Parse(header);
             device = $"{info.Device.Family}/{info.OS.Family} {info.OS.Major}.{info.OS.Minor} - {info.UA.Family}";
         }
+        #endregion
 
-        var currentUser = await UnitOfWork.ApplicationUserRepository
-            .GetByPredicate(u => u.PhoneNumber == request.PhoneNumber);
-        
+        #region ( SignIn/Out Operations )
+        var currentUser = await UserManager.FindByNameAsync(request.PhoneNumber);
+
         if (currentUser is not null && currentUser.UserIsBlocked || currentUser.LockoutEnabled || currentUser.IsDeleted)
         {
             throw new BadRequestException("حساب کاربری شما مسدود است");
@@ -51,33 +64,39 @@ public class RegisterOrLoginUserCommandHandler : IRequestHandler<RegisterOrLogin
             #region (Send Sms For current User )
             if (currentUser is not null)
             {
-                var code = Strings.CodeGenerator();
-                var responseSms = await SmsSender.SendPattern(currentUser.PhoneNumber, code, "login-code");
+                #region ( SecurityStamp )
 
-                currentUser.OneTimeUseCode = code;
+                if (string.IsNullOrWhiteSpace(currentUser.SecurityStamp))
+                {
+                    await UserManager.UpdateSecurityStampAsync(currentUser);
+                }
+
+                #endregion
+
+                #region ( Check Confirm Account )
+
+                string codeVerification;
+                if (!await UserManager.IsPhoneNumberConfirmedAsync(currentUser))
+                {
+                    codeVerification = await UserManager.GenerateChangePhoneNumberTokenAsync(currentUser, request.PhoneNumber);
+                }
+                else codeVerification = Strings.CodeGenerator();
+
+                #endregion
+
+                var responseSms = await SmsSender.SendPattern(currentUser.PhoneNumber, codeVerification, "login-code");
+
+                currentUser.OneTimeUseCode = codeVerification;
                 currentUser.OneTimeUseCodeEnd = DateTime.Now.AddMinutes(2);
 
                 var updateResult = await UserManager.UpdateAsync(currentUser);
 
-                var result = Mapper.Map<RegisterUserResponseViewModel>(currentUser);
-                var token = await JwtService.GenerateAsync(currentUser);
-
-                await UnitOfWork.UserTokensRepository.InsertAsync(new UserTokens()
-                {
-                    UserId = currentUser.Id,
-                    HashJwtToken = Security.GetSha256Hash(token.access_token),
-                    HashRefreshToken = Security.GetSha256Hash(token.refresh_token),
-                    TokenExpireDate = DateTime.Now.AddDays(30),
-                    RefreshTokenExpireDate = DateTime.Now.AddDays(40),
-                    Device = device
-                });
+                result.WithValue(Mapper.Map<RegisterOrLoginUserResponseViewModel>(currentUser));
 
                 await UnitOfWork.SaveAsync();
 
                 if (responseSms.Equals("ok"))
                 {
-                    result.Jwt = new JsonResult(token);
-
                     return result;
                 }
                 else
@@ -87,11 +106,10 @@ public class RegisterOrLoginUserCommandHandler : IRequestHandler<RegisterOrLogin
             }
             #endregion
 
+            //Register New User
             #region ( Register User )
             else
             {
-                //Register New User
-
                 var user = Mapper.Map<ApplicationUser>(request);
 
                 user.UserName = request.PhoneNumber;
@@ -103,7 +121,7 @@ public class RegisterOrLoginUserCommandHandler : IRequestHandler<RegisterOrLogin
                 await UnitOfWork.SaveAsync();
 
 
-                var result = Mapper.Map<RegisterUserResponseViewModel>(user);
+                result.WithValue(Mapper.Map<RegisterOrLoginUserResponseViewModel>(user));
 
                 var code = await UserManager.GenerateChangePhoneNumberTokenAsync(user, request.PhoneNumber);
                 var responseSms = await SmsSender.SendPattern(user.PhoneNumber, code, "activate");
@@ -111,7 +129,15 @@ public class RegisterOrLoginUserCommandHandler : IRequestHandler<RegisterOrLogin
                 user.OneTimeUseCode = code;
                 user.OneTimeUseCodeEnd = DateTime.Now.AddMinutes(2);
 
+                await UserManager.UpdateSecurityStampAsync(user);
+
                 var updateResult = await UserManager.UpdateAsync(user);
+
+                if (!updateResult.Succeeded)
+                {
+                    result.WithErrors(updateResult.Errors.Select(a => a.Description).ToList());
+                    return result;
+                }
 
                 await UnitOfWork.SaveAsync();
 
@@ -139,8 +165,57 @@ public class RegisterOrLoginUserCommandHandler : IRequestHandler<RegisterOrLogin
                 }
                 else
                 {
-                    var user = await UnitOfWork.ApplicationUserRepository
-                        .GetByPredicate(u => u.PhoneNumber == request.PhoneNumber);
+                    if (!await UserManager.IsPhoneNumberConfirmedAsync(currentUser))
+                    {
+                        #region ( SecurityStamp )
+                        var validatedUser = await SignInManager.ValidateSecurityStampAsync(currentUser, currentUser.SecurityStamp);
+                        if (!validatedUser)
+                        {
+                            await UserManager.UpdateSecurityStampAsync(currentUser);
+                        }
+                        #endregion
+
+                        var resultConfirmation = await UserManager.ChangePhoneNumberAsync(currentUser, request.PhoneNumber, request.SmsCode);
+
+                        if (resultConfirmation.Succeeded)
+                        {
+                            currentUser.ConfirmationDate = DateTime.Now;
+                            currentUser.UpdateDate = DateTime.Now;
+
+                            var updateResult = await UserManager.UpdateAsync(currentUser);
+                            if (!updateResult.Succeeded)
+                            {
+                                result.WithErrors(updateResult.Errors.Select(a => a.Description).ToList());
+                                return result;
+                            }
+                        }
+                        else
+                        {
+                            throw new BadRequestException("عملیات با خطا مواجه شد. کد وارد شده صحیح نیست.");
+                        }
+                    }
+                    else
+                    {
+                        currentUser.UpdateDate = DateTime.Now;
+                        currentUser.ConfirmationDate = DateTime.Now;
+
+                        #region ( SecurityStamp )
+
+                        var validatedUser = await SignInManager.ValidateSecurityStampAsync(currentUser, currentUser.SecurityStamp);
+                        if (!validatedUser)
+                        {
+                            await UserManager.UpdateSecurityStampAsync(currentUser);
+                        }
+
+                        #endregion
+
+                        var updateResult = await UserManager.UpdateAsync(currentUser);
+                        if (!updateResult.Succeeded)
+                        {
+                            result.WithErrors(updateResult.Errors.Select(a => a.Description).ToList());
+                            return result;
+                        }
+                    }
 
                     var token = await JwtService.GenerateAsync(currentUser);
 
@@ -156,11 +231,13 @@ public class RegisterOrLoginUserCommandHandler : IRequestHandler<RegisterOrLogin
 
                     await UnitOfWork.SaveAsync();
 
-                    var result = new RegisterUserResponseViewModel
+                    await SignInManager.SignInAsync(currentUser, true);
+
+                    result.WithValue(new RegisterOrLoginUserResponseViewModel
                     {
-                        PhoneNumber = user.PhoneNumber,
+                        PhoneNumber = currentUser.PhoneNumber,
                         Jwt = new JsonResult(token)
-                    };
+                    });
 
                     return result;
                 }
@@ -169,9 +246,8 @@ public class RegisterOrLoginUserCommandHandler : IRequestHandler<RegisterOrLogin
             {
                 throw new BadRequestException("کد وارد شده اشتباه است");
             }
-
-            return new Result<RegisterUserResponseViewModel>();
             #endregion
         }
+        #endregion
     }
 }

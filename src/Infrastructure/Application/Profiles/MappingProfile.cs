@@ -1,6 +1,4 @@
-﻿using Application.Features.User.Commands.RegisterOrLogin;
-using Microsoft.AspNetCore.Http.HttpResults;
-using RNX.CustomResult;
+﻿using RNX.CustomResult;
 
 namespace Application.Profiles
 {
@@ -11,7 +9,7 @@ namespace Application.Profiles
             CreateMap<CreateUserViewModel, ApplicationUser>().ReverseMap();
             CreateMap<UpdateUserViewModel, ApplicationUser>().ReverseMap();
             CreateMap<RegisterOrLoginUserCommand, ApplicationUser>().ReverseMap();
-            CreateMap<ApplicationUser, RegisterUserResponseViewModel>().ReverseMap();
+            CreateMap<ApplicationUser, RegisterOrLoginUserResponseViewModel>().ReverseMap();
             CreateMap<ApplicationUser, ApplicationUserViewModel>().ReverseMap();
 
 
@@ -106,7 +104,7 @@ namespace Application.Profiles
 
             CreateMap<UpdateUserInfoCommand, ApplicationUser>().ReverseMap();
 
-            CreateMap(typeof(CustomResult<>),typeof(Result<>)).ReverseMap();
+            CreateMap(typeof(CustomResult<>), typeof(Result<>)).ReverseMap();
         }
     }
 }

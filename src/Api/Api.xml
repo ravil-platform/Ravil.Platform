@@ -4,6 +4,13 @@
         <name>Api</name>
     </assembly>
     <members>
+        <member name="M:Api.Controllers.V1.ActionHistoriesController.Create(Application.Features.ActionHistories.Create.CreateActionHistoriesCommand)">
+            <summary>
+            Creates an Action History
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
         <member name="M:Api.Controllers.V1.BannersController.GetAll(Application.Features.Banner.GetAll.GetAllBannersQuery)">
             <summary>
             Returns all banners
@@ -518,6 +525,13 @@
         <member name="M:Api.Controllers.V1.UsersController.RegisterOrLogin(Application.Features.User.Commands.RegisterOrLogin.RegisterOrLoginUserCommand)">
             <summary>
             This action used for login or register user and gives you a JWT token and refresh token
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Api.Controllers.V1.UsersController.SendSmsCode(Application.Features.User.Commands.RegisterOrLogin.RegisterOrLoginUserCommand)">
+            <summary>
+            Send sms code again for register or login user for given phone number 
             </summary>
             <param name="command"></param>
             <returns></returns>
