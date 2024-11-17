@@ -1,9 +1,4 @@
-﻿using AngleSharp.Io;
-using Application.Services.SMS;
-using Constants.Security;
-using UAParser;
-
-namespace Application.Features.User.Commands.RegisterOrLogin;
+﻿namespace Application.Features.User.Commands.RegisterOrLogin;
 
 public class RegisterOrLoginUserCommandHandler : IRequestHandler<RegisterOrLoginUserCommand, RegisterOrLoginUserResponseViewModel>
 {

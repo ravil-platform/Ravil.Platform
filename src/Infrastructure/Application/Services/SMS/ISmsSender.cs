@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Text.Encodings.Web;
 using Persistence.Entities.Config.Repositories;
+using HttpMethod = System.Net.Http.HttpMethod;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Application.Services.SMS

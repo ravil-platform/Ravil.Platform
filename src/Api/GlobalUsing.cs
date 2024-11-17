@@ -100,3 +100,6 @@ global using ViewModels.QueriesResponseViewModel.State;
 global using ViewModels.QueriesResponseViewModel.Tag;
 global using ViewModels.QueriesResponseViewModel.Team;
 global using ViewModels.QueriesResponseViewModel.User;
+global using Application.Contracts.Identity;
+global using Application.Features.User.Commands.RefreshToken;
+global using Application.Features.User.Queries.GetById;

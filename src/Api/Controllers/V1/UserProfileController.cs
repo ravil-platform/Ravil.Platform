@@ -1,7 +1,10 @@
-﻿namespace Api.Controllers.V1
+﻿using Application.Features.User.Commands.RemoveToken;
+
+namespace Api.Controllers.V1
 {
 
     [Route(Routes.Controller)]
+    [Authorize]
     public class UserProfileController : GenericBaseController<UserProfileController>
     {
         public UserProfileController(IMediator mediator, Logging.Base.ILogger<UserProfileController> logger) : base(mediator, logger)
@@ -96,6 +99,19 @@
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateUserInfo(UpdateUserInfoCommand command)
+        {
+            var result = await Mediator.Send(command);
+
+            return FluentResult(result);
+        }
+
+        /// <summary>
+        /// Remove user token by given jwt token
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpPost(Routes.Action)]
+        public async Task<IActionResult> Logout(RemoveUserTokenCommand command)
         {
             var result = await Mediator.Send(command);
 

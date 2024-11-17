@@ -508,6 +508,13 @@
             <param name="command"></param>
             <returns></returns>
         </member>
+        <member name="M:Api.Controllers.V1.UserProfileController.Logout(Application.Features.User.Commands.RemoveToken.RemoveUserTokenCommand)">
+            <summary>
+            Remove user token by given jwt token
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
         <member name="M:Api.Controllers.V1.UsersController.GetById(Application.Features.User.Queries.GetById.GetUserByIdQuery)">
             <summary>
             Returns a user by unique id
@@ -531,7 +538,7 @@
         </member>
         <member name="M:Api.Controllers.V1.UsersController.SendSmsCode(Application.Features.User.Commands.RegisterOrLogin.RegisterOrLoginUserCommand)">
             <summary>
-            Send sms code again for register or login user for given phone number 
+            Send sms code again for register or login user for given phone number (do not fill sms code)
             </summary>
             <param name="command"></param>
             <returns></returns>

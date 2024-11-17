@@ -1,8 +1,4 @@
-﻿using Application.Contracts.Identity;
-using Application.Features.User.Commands.RefreshToken;
-using Application.Features.User.Queries.GetById;
-
-namespace Api.Controllers.V1
+﻿namespace Api.Controllers.V1
 {
     [Route(Routes.Controller)]
     public class UsersController : GenericBaseController<UsersController>

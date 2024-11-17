@@ -5,6 +5,7 @@ namespace Application
 {
     public static class RegisterApplicationServices
     {
+
         public static void AddApplicationServices(this IServiceCollection services, IConfiguration configuration, JwtSettings jwtSettings = null)
         {
             services.AddHttpContextAccessor();
@@ -27,6 +28,7 @@ namespace Application
 
             services.AddTransient(typeof(MediatR.IPipelineBehavior<,>), typeof(RNX.Mediator.ValidationBehavior<,>));
 
+            services.AddTransient<JwtCustomValidation>();
             services.AddTransient<IJwtService, JwtService>();
             services.AddTransient<ISmsSender, SmsSender>();
 
@@ -135,28 +137,9 @@ namespace Application
                     },
                     OnTokenValidated = async context =>
                     {
-                        var signInManager = context.HttpContext.RequestServices.GetRequiredService<SignInManager<ApplicationUser>>();
-                        var userManager = context.HttpContext.RequestServices.GetRequiredService<UserManager<ApplicationUser>>();
-
-                        var claimsIdentity = context.Principal.Identity as ClaimsIdentity;
-                        if (claimsIdentity.Claims?.Any() != true)
-                            context.Fail("This token has no claims.");
-
-                        var securityStamp = claimsIdentity.FindFirstValue(new ClaimsIdentityOptions().SecurityStampClaimType);
-                        if (!securityStamp.HasValue())
-                            context.Fail("This token has no security stamp");
-
-                        //Find user and token from database and perform your custom validation
-                        var userId = claimsIdentity.GetUserId<string>();
-                        var user = await userManager.FindByIdAsync(userId);
-
-
-                        var validatedUser = await signInManager.ValidateSecurityStampAsync(context.Principal);
-                        if (validatedUser == null)
-                            context.Fail("Token security stamp is not valid.");
-
-                        if (user.UserIsBlocked)
-                            context.Fail("User is blocked.");
+                        var customValidate = context.HttpContext.RequestServices
+                            .GetRequiredService<JwtCustomValidation>();
+                        await customValidate.Validate(context);
                     },
                     OnChallenge = context =>
                     {
