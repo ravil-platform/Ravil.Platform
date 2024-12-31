@@ -10,14 +10,14 @@ public class JobRepository : Repository<Domain.Entities.Job.Job>, IJobRepository
 
     public async Task<List<Domain.Entities.Job.Job>> GetNewestJobs(int take = 10)
     {
-        var result = await ApplicationDbContext.Job.AsNoTracking().Where(j => !j.IsDeleted).OrderByDescending(j => j.CreateDate).Take(take).ToListAsync();
+        var result = await ApplicationDbContext.Job.AsNoTracking().Where(j => !(bool)j.IsDeleted).OrderByDescending(j => j.CreateDate).Take(take).ToListAsync();
 
         return result;
     }
 
     public async Task<List<Domain.Entities.Job.Job>> GetBestJobs(int take = 10)
     {
-        var result = await ApplicationDbContext.Job.AsNoTracking().Where(j => !j.IsDeleted).OrderByDescending(j => j.ViewCountTotal).Take(take).ToListAsync();
+        var result = await ApplicationDbContext.Job.AsNoTracking().Where(j => !(bool)j.IsDeleted).OrderByDescending(j => j.ViewCountTotal).Take(take).ToListAsync();
 
         return result;
     }

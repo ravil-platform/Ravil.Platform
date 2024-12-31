@@ -23,6 +23,8 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Appli
         var result = new Result<ApplicationUser>();
 
         var user = Mapper.Map<ApplicationUser>(request);
+        
+        user.UserName = request.PhoneNumber;
 
         var createdResult = await UserManager.CreateAsync(user);
 

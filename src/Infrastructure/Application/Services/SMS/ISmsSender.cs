@@ -59,7 +59,7 @@ namespace Application.Services.SMS
 
             if (type.Equals("activate"))
             {
-                patternCode = "gt1123z7nbqxrvq";
+                patternCode = "rtawk1bpa9g5kjl";
                 input_data = JsonSerializer.Serialize(new Dictionary<string, string>
                 {
                     ["code"] = message
@@ -67,7 +67,7 @@ namespace Application.Services.SMS
             }
             else if (type.Equals("login-code"))
             {
-                patternCode = "fqsw9b9pcbhzy2g";
+                patternCode = "1u62cjhob0vgumy";
                 var messageFormat = message.Split('|');
                 input_data = JsonSerializer.Serialize(new Dictionary<string, string>
                 {
@@ -125,9 +125,21 @@ namespace Application.Services.SMS
                     ["link"] = $"{domain}/profile/order"
                 });
             }
+            else if (type.Equals("acceptedJob"))
+            {
+                patternCode = "krkraekbj44uw8j";
+            }
+            else if (type.Equals("rejectedJob"))
+            {
+                patternCode = "2sa1f61ju06l1jv";
+            }
+            else if (type.Equals("addJobToAdmin"))
+            {
+                patternCode = "u6qkpr49r8y5h6b";
+            }
 
             string toIp = "http://188.0.240.110";
-            string to = JsonSerializer.Serialize(new string[] { receiver });
+            string to = receiver;
             string url = $"https://ippanel.com/patterns/pattern?username={uname}&password={UrlEncoder.Default.Encode(pass)}&from={from}&to={to}&input_data={UrlEncoder.Default.Encode(input_data)}&pattern_code={patternCode}";
             var request = new HttpRequestMessage(HttpMethod.Post, url);
             using var client = ClientFactory.CreateClient();

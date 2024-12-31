@@ -321,4 +321,14 @@ namespace Enums
         [Display(Name = "کسب وکار", GroupName = "نوع")]
         JobBranch
     }
+
+    public enum JobBranchStatus
+    {
+        [Display(Name = "تایید شده")]
+        Accepted,
+        [Display(Name = "رد شده")]
+        Rejected,
+        [Display(Name = "در انتظار بررسی")]
+        WaitingToCheck
+    }
 }

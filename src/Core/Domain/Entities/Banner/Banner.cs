@@ -5,7 +5,7 @@
         #region ( Fields )
         public string Title { get; set; } = null!;
 
-        public string Description { get; set; } = null!;
+        public string? Description { get; set; } 
 
         public int? ExpireDay { get; set; }
 

@@ -524,14 +524,14 @@
         </member>
         <member name="M:Api.Controllers.V1.UsersController.Create(Application.Features.User.Commands.Create.CreateUserCommand)">
             <summary>
-            This action for test
+            Using this action for create a user and test the system if you want (test)
             </summary>
             <param name="command"></param>
             <returns></returns>
         </member>
         <member name="M:Api.Controllers.V1.UsersController.RegisterOrLogin(Application.Features.User.Commands.RegisterOrLogin.RegisterOrLoginUserCommand)">
             <summary>
-            This action used for login or register user and gives you a JWT token and refresh token
+            This action used for login or register user and gives you a JWT token and refresh token . (send sms code as null for register)
             </summary>
             <param name="command"></param>
             <returns></returns>

@@ -48,9 +48,12 @@ public class RegisterOrLoginUserCommandHandler : IRequestHandler<RegisterOrLogin
         #region ( SignIn/Out Operations )
         var currentUser = await UserManager.FindByNameAsync(request.PhoneNumber);
 
-        if (currentUser is not null && currentUser.UserIsBlocked || currentUser.LockoutEnabled || currentUser.IsDeleted)
+        if (currentUser is not null)
         {
-            throw new BadRequestException("حساب کاربری شما مسدود است");
+            if (currentUser.UserIsBlocked || currentUser.LockoutEnabled || currentUser.IsDeleted)
+            {
+                throw new BadRequestException("حساب کاربری شما مسدود است");
+            }
         }
 
         if (request.SmsCode == null)
@@ -111,6 +114,7 @@ public class RegisterOrLoginUserCommandHandler : IRequestHandler<RegisterOrLogin
                 user.Firstname = "کاربر";
                 user.Lastname = "سایت";
                 user.Gender = GenderPerson.Other;
+                user.LockoutEnabled = false;
 
                 await UserManager.CreateAsync(user);
                 await UnitOfWork.SaveAsync();
@@ -119,13 +123,14 @@ public class RegisterOrLoginUserCommandHandler : IRequestHandler<RegisterOrLogin
                 result.WithValue(Mapper.Map<RegisterOrLoginUserResponseViewModel>(user));
 
                 var code = await UserManager.GenerateChangePhoneNumberTokenAsync(user, request.PhoneNumber);
+
                 var responseSms = await SmsSender.SendPattern(user.PhoneNumber, code, "activate");
 
                 user.OneTimeUseCode = code;
                 user.OneTimeUseCodeEnd = DateTime.Now.AddMinutes(2);
 
                 await UserManager.UpdateSecurityStampAsync(user);
-
+                
                 var updateResult = await UserManager.UpdateAsync(user);
 
                 if (!updateResult.Succeeded)
@@ -176,6 +181,7 @@ public class RegisterOrLoginUserCommandHandler : IRequestHandler<RegisterOrLogin
                         {
                             currentUser.ConfirmationDate = DateTime.Now;
                             currentUser.UpdateDate = DateTime.Now;
+                            currentUser.PhoneNumberConfirmed = true;
 
                             var updateResult = await UserManager.UpdateAsync(currentUser);
                             if (!updateResult.Succeeded)

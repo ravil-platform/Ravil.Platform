@@ -19,7 +19,7 @@
             builder.Property(c => c.IconPicture).IsRequired(false).HasMaxLength(MaxLength.Picture);
             builder.Property(c => c.IsResizePicture).IsRequired();
             builder.Property(c => c.Sort).IsRequired();
-            builder.Property(c => c.PageContent).IsRequired().HasMaxLength(MaxLength.Content);
+            builder.Property(c => c.PageContent).IsRequired(false).HasMaxLength(MaxLength.Content);
             builder.Property(c => c.ViewCount).IsRequired();
 
             //relations 

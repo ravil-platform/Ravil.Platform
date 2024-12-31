@@ -15,7 +15,7 @@
             builder.Property(c => c.CommentText).IsRequired().HasMaxLength(MaxLength.Comment);
             builder.Property(c => c.Phone).IsRequired().HasMaxLength(MaxLength.Phone);
             builder.Property(c => c.FullName).IsRequired().HasMaxLength(MaxLength.FullName);
-            builder.Property(c => c.Avatar).IsRequired().HasMaxLength(MaxLength.Picture);
+            builder.Property(c => c.Avatar).IsRequired(false).HasMaxLength(MaxLength.Picture);
             builder.Property(c => c.UserIp).IsRequired(false).HasMaxLength(MaxLength.Ip);
 
             //relations

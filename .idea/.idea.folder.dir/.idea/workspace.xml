@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="f7dfdaa9-da16-40b0-b303-33d30cc309b0" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/Ravil.sln" beforeDir="false" afterPath="$PROJECT_DIR$/Ravil.sln" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Api/Api.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/Api/Api.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Api/Controllers/V1/UsersController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Api/Controllers/V1/UsersController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Api/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/Api/appsettings.Development.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Api/appsettings.Production.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/Api/appsettings.Production.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Core/Domain/Entities/Category/Category.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Domain/Entities/Category/Category.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Core/Domain/Entities/City/CityBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Domain/Entities/City/CityBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Core/Domain/Entities/Faq/Faq.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Domain/Entities/Faq/Faq.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Core/Domain/Entities/Job/Job.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Domain/Entities/Job/Job.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Core/Domain/Entities/Job/JobBranch.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Domain/Entities/Job/JobBranch.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Core/Enums/Enums.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Enums/Enums.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Application/Features/User/Commands/Create/CreateUserCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Infrastructure/Application/Features/User/Commands/Create/CreateUserCommand.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Application/Features/User/Commands/Create/CreateUserCommandHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Infrastructure/Application/Features/User/Commands/Create/CreateUserCommandHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Application/Features/User/Commands/Create/CreateUserCommandValidator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Infrastructure/Application/Features/User/Commands/Create/CreateUserCommandValidator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Application/Features/User/Commands/RegisterOrLogin/RegisterOrLoginUserCommandHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Infrastructure/Application/Features/User/Commands/RegisterOrLogin/RegisterOrLoginUserCommandHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Application/RegisterApplicationServices.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Infrastructure/Application/RegisterApplicationServices.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Application/Services/SMS/ISmsSender.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Infrastructure/Application/Services/SMS/ISmsSender.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Context/ApplicationDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Infrastructure/Persistence/Context/ApplicationDbContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Entities/City/Configurations/CityBaseConfigurations.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Infrastructure/Persistence/Entities/City/Configurations/CityBaseConfigurations.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Entities/Faq/Configurations/FaqConfigurations.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Infrastructure/Persistence/Entities/Faq/Configurations/FaqConfigurations.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210621145926_InitializeDatabase.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210621145926_InitializeDatabase.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210629121554_updateFixSomeTable.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210629121554_updateFixSomeTable.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210630060852_AddHasAttrFieldCategory.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210630060852_AddHasAttrFieldCategory.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210630101512_UpdateCategory.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210630101512_UpdateCategory.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210703065714_FixOrderTransaction.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210703065714_FixOrderTransaction.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210705133736_FixUpdateAccount.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210705133736_FixUpdateAccount.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210708051622_AddCustomizeResizeImages.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210708051622_AddCustomizeResizeImages.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210712052756_FixDateTimeAddress.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210712052756_FixDateTimeAddress.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210717142330_FixJobBranchPicture.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210717142330_FixJobBranchPicture.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210719054910_AddAndFixJobBranch.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210719054910_AddAndFixJobBranch.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210719064034_FxJobBranchPictures.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210719064034_FxJobBranchPictures.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210719123337_FixLocationAddressId.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210719123337_FixLocationAddressId.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210719140433_AddCityStateBase.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210719140433_AddCityStateBase.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210721094053_FixCityBaseStateId.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210721094053_FixCityBaseStateId.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210722075009_AddBranchIdToAddress.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210722075009_AddBranchIdToAddress.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210722135753_FixJobBranchIdStringLength.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210722135753_FixJobBranchIdStringLength.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210725101546_FixAddressCityStateNavigation.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210725101546_FixAddressCityStateNavigation.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210727112939_AddAttrOfAccount.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210727112939_AddAttrOfAccount.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210727113210_ChangeAttrAccountValueNavigation.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210727113210_ChangeAttrAccountValueNavigation.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210801071639_AddSomeJobBranchTagSystem.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210801071639_AddSomeJobBranchTagSystem.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210801111858_RemoveAccountAttrsNav.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210801111858_RemoveAccountAttrsNav.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210802065842_RemoveBranchBrandIdNav.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210802065842_RemoveBranchBrandIdNav.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210803053605_FixBranchBrandId.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210803053605_FixBranchBrandId.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210803054306_AddJobBrandIdNav.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210803054306_AddJobBrandIdNav.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210803054444_FixBranchBrandNav.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210803054444_FixBranchBrandNav.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210803054942_JobBrandIdNullable.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210803054942_JobBrandIdNullable.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210805120317_FixSliderNavigation.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210805120317_FixSliderNavigation.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210807053544_FixMoreConfig.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210807053544_FixMoreConfig.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210807070712_AddSupportBoxConfig.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210807070712_AddSupportBoxConfig.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210817115139_AddConfigActiveCityId.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210817115139_AddConfigActiveCityId.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210824122703_AddSomeHomeConfig.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210824122703_AddSomeHomeConfig.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210914105544_FixAndAddSomeDataBase.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210914105544_FixAndAddSomeDataBase.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210923143400_UpdateAttrCategoryModel.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210923143400_UpdateAttrCategoryModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210928134711_AddExternalLoginStateToConfigTable.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210928134711_AddExternalLoginStateToConfigTable.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210929115101_AddUserNameTypeToApplicationUser.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210929115101_AddUserNameTypeToApplicationUser.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210929125003_UpdateUserNameApplicationUser.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210929125003_UpdateUserNameApplicationUser.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210929131301_UpdateAvatarMaxLenghtApplicationUser.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20210929131301_UpdateAvatarMaxLenghtApplicationUser.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20211001215403_AddJobUserBookMarksNavigation.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20211001215403_AddJobUserBookMarksNavigation.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20211028090758_UpdateBrandProperties.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20211028090758_UpdateBrandProperties.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20211112190247_UpdateSomeJobBranchProperties.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20211112190247_UpdateSomeJobBranchProperties.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20211113091054_NullableAddressIdInJobBranch.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20211113091054_NullableAddressIdInJobBranch.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20211114091501_UpdateJobBranchSeoProperties.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20211114091501_UpdateJobBranchSeoProperties.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20211225105151_mig-AddHomeBackgroundPictureToConfig.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20211225105151_mig-AddHomeBackgroundPictureToConfig.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20211225131424_mig-AddLinkPropToBanner.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20211225131424_mig-AddLinkPropToBanner.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20220117091154_mig-AddTitleListContentToBlog.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20220117091154_mig-AddTitleListContentToBlog.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20221205091657_mig-addRoutePropToCityModel.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20221205091657_mig-addRoutePropToCityModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20221206132319_mig-addIsRecommendedPropToAccountModelAndRemoveSomeRequiredPropsOfSomeModels.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20221206132319_mig-addIsRecommendedPropToAccountModelAndRemoveSomeRequiredPropsOfSomeModels.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20221206140151_mig-addStatusPropToTagModel.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20221206140151_mig-addStatusPropToTagModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20230228091843_addRestrictActionDeleteToUserBlogActionAndBlogUserLikeModels.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20230228091843_addRestrictActionDeleteToUserBlogActionAndBlogUserLikeModels.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20230228094546_addNullableBlogIdAndNoActionDeleteToUserBlogActionAndBlogUserLikeModels.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20230228094546_addNullableBlogIdAndNoActionDeleteToUserBlogActionAndBlogUserLikeModels.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20230228101013_addRestrictActionDeleteToUserBlogActionAndBlogUserLikeModels2.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20230228101013_addRestrictActionDeleteToUserBlogActionAndBlogUserLikeModels2.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20230228123212_addAuthorNamePropToBlogModel.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20230228123212_addAuthorNamePropToBlogModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20230310150814_mig-removeApplicationUserIdPropFromUserBookMarkModel.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20230310150814_mig-removeApplicationUserIdPropFromUserBookMarkModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20230412102449_mig-addBannerPictureTypePropToBannerModel.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20230412102449_mig-addBannerPictureTypePropToBannerModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20230611090733_mig-AddContactInformationPropsToJobBranchModel.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20230611090733_mig-AddContactInformationPropsToJobBranchModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20230612075735_mig-AddMetaCanonicalUrlPropToBaseMetaDataEntityModel.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20230612075735_mig-AddMetaCanonicalUrlPropToBaseMetaDataEntityModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20230615052337_mig-AddPhoneNumberAdditionalInfoPropsToJobBranchModel.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20230615052337_mig-AddPhoneNumberAdditionalInfoPropsToJobBranchModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20230623095633_mig-MoveContactInformationPropsToJobModel.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20230623095633_mig-MoveContactInformationPropsToJobModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20230627122517_mig-UpdateEmailAndWebsitePropsDataAttributesFromJobModel.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20230627122517_mig-UpdateEmailAndWebsitePropsDataAttributesFromJobModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20231019104912_mig-AddStatusPropToCityModel.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20231019104912_mig-AddStatusPropToCityModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20231101135753_mig-UpdateStringLengthOfMetaTitleProp.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20231101135753_mig-UpdateStringLengthOfMetaTitleProp.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20231102101804_mig-AddRedirectionUrlModel.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20231102101804_mig-AddRedirectionUrlModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20231105131212_mig-RemoveRequiredAttrFromBannerModel.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20231105131212_mig-RemoveRequiredAttrFromBannerModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20231111085553_mig-AddJobSelectionSliderModelToDb.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20231111085553_mig-AddJobSelectionSliderModelToDb.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20231112131114_mig-AddCategoryIdToFeedbackSliderModel.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20231112131114_mig-AddCategoryIdToFeedbackSliderModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20231122113700_mig-AddHeadingTitlePropToCategoryModel.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20231122113700_mig-AddHeadingTitlePropToCategoryModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20231122133421_mig-AddHeadingTitlePropToJobBranchModel.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20231122133421_mig-AddHeadingTitlePropToJobBranchModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20231127142456_mig-RemoveTitlePropFromCommentModel.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20231127142456_mig-RemoveTitlePropFromCommentModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20231204095731_mig-UpdateContactModel.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20231204095731_mig-UpdateContactModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20231212113354_mig-AddTestPropForTestDB.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20231212113354_mig-AddTestPropForTestDB.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20231212113849_mig-RemoveTestPropForTestDbMigration.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20231212113849_mig-RemoveTestPropForTestDbMigration.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20231230081024_mig-AddOneTimeLoginPropsToUserModel.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20231230081024_mig-AddOneTimeLoginPropsToUserModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20240109080800_mig-AddNeighbourhoodPropToAddressModel.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20240109080800_mig-AddNeighbourhoodPropToAddressModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20240413092828_mig-AddNoIndexSeoPagesPropToConfigModel.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20240413092828_mig-AddNoIndexSeoPagesPropToConfigModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20240413134157_mig-AddMetaSeoPatternPropsToConfigModel.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20240413134157_mig-AddMetaSeoPatternPropsToConfigModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20240414084916_mig-AddSeoPatternPropsToConfiModel.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20240414084916_mig-AddSeoPatternPropsToConfiModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20240502122209_mig-AddIsGoogleDataPropToJobModel.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20240502122209_mig-AddIsGoogleDataPropToJobModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20240916130327_add-wallet-transaction.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20240916130327_add-wallet-transaction.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20241021080747_update-version.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20241021080747_update-version.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20241021081952_update-version2.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20241021081952_update-version2.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20241021083716_update-version3.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20241021083716_update-version3.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20241021083815_update-version4.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20241021083815_update-version4.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20241021090302_update-version5.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20241021090302_update-version5.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20241021092229_update-version6.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20241021092229_update-version6.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20241021092414_update-version7.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20241021092414_update-version7.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20241021112301_update-version8.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20241021112301_update-version8.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20241104051339_fix-location.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20241104051339_fix-location.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20241106112609_add-usersToken.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/20241106112609_add-usersToken.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/ApplicationDbContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Infrastructure/Persistence/Migrations/ApplicationDbContextModelSnapshot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Presentation/Admin.MVC/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/Presentation/Admin.MVC/appsettings.Development.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Presentation/Admin.MVC/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/Presentation/Admin.MVC/appsettings.json" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="SWEA" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 8
+}]]></component>
+  <component name="ProjectId" id="2qyGFMtCNaiuQ5aNBn7cVIAxpK0" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "rider.external.source.directories": [
+      "C:\\Users\\ASUS\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\DecompilerCache",
+      "C:\\Users\\ASUS\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\SourcesCache",
+      "C:\\Users\\ASUS\\AppData\\Local\\Symbols\\src"
+    ]
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f7dfdaa9-da16-40b0-b303-33d30cc309b0" name="Changes" comment="" />
+      <created>1735627298785</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1735627298785</updated>
+      <workItem from="1735627302359" duration="29000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+</project>

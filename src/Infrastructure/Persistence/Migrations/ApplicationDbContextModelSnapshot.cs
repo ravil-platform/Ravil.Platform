@@ -8,7 +8,7 @@ using Persistence.Context;
 
 #nullable disable
 
-namespace Ravil.Infrastructure.Data.Migrations
+namespace Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -41,7 +41,7 @@ namespace Ravil.Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("CreateDate")
+                    b.Property<DateTime?>("CreateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Discount")
@@ -60,19 +60,19 @@ namespace Ravil.Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsDeleted")
+                    b.Property<bool?>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsRecommended")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("LastDeleteBicycleDate")
+                    b.Property<DateTime?>("LastDeleteBicycleDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastDeletePermanentDate")
+                    b.Property<DateTime?>("LastDeletePermanentDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastUpdateDate")
+                    b.Property<DateTime?>("LastUpdateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Picture")
@@ -121,19 +121,19 @@ namespace Ravil.Infrastructure.Data.Migrations
                     b.Property<int>("AttrId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreateDate")
+                    b.Property<DateTime?>("CreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsDeleted")
+                    b.Property<bool?>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("LastDeleteBicycleDate")
+                    b.Property<DateTime?>("LastDeleteBicycleDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastDeletePermanentDate")
+                    b.Property<DateTime?>("LastDeletePermanentDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastUpdateDate")
+                    b.Property<DateTime?>("LastUpdateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("ValueId")
@@ -158,23 +158,23 @@ namespace Ravil.Infrastructure.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreateDate")
+                    b.Property<DateTime?>("CreateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("IconPicture")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsDeleted")
+                    b.Property<bool?>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("LastDeleteBicycleDate")
+                    b.Property<DateTime?>("LastDeleteBicycleDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastDeletePermanentDate")
+                    b.Property<DateTime?>("LastDeletePermanentDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastUpdateDate")
+                    b.Property<DateTime?>("LastUpdateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<short>("Sort")
@@ -201,19 +201,19 @@ namespace Ravil.Infrastructure.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreateDate")
+                    b.Property<DateTime?>("CreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsDeleted")
+                    b.Property<bool?>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("LastDeleteBicycleDate")
+                    b.Property<DateTime?>("LastDeleteBicycleDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastDeletePermanentDate")
+                    b.Property<DateTime?>("LastDeletePermanentDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastUpdateDate")
+                    b.Property<DateTime?>("LastUpdateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("LevelStyle")
@@ -268,7 +268,7 @@ namespace Ravil.Infrastructure.Data.Migrations
                     b.Property<DateTime>("UpdateDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2024, 11, 6, 14, 56, 8, 155, DateTimeKind.Local).AddTicks(4403));
+                        .HasDefaultValue(new DateTime(2024, 12, 31, 14, 20, 58, 316, DateTimeKind.Local).AddTicks(579));
 
                     b.HasKey("Id");
 
@@ -324,7 +324,7 @@ namespace Ravil.Infrastructure.Data.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreateDate")
+                    b.Property<DateTime?>("CreateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("Filter")
@@ -337,16 +337,16 @@ namespace Ravil.Infrastructure.Data.Migrations
                     b.Property<string>("IconPicture")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsDeleted")
+                    b.Property<bool?>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("LastDeleteBicycleDate")
+                    b.Property<DateTime?>("LastDeleteBicycleDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastDeletePermanentDate")
+                    b.Property<DateTime?>("LastDeletePermanentDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastUpdateDate")
+                    b.Property<DateTime?>("LastUpdateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("ShowInPage")
@@ -501,11 +501,10 @@ namespace Ravil.Infrastructure.Data.Migrations
                     b.Property<int>("ClickCount")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreateDate")
+                    b.Property<DateTime?>("CreateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(800)
                         .HasColumnType("nvarchar(800)");
 
@@ -516,7 +515,7 @@ namespace Ravil.Infrastructure.Data.Migrations
                     b.Property<int?>("ExpireDay")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsDeleted")
+                    b.Property<bool?>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<string>("JobBranchId")
@@ -527,13 +526,13 @@ namespace Ravil.Infrastructure.Data.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
-                    b.Property<DateTime>("LastDeleteBicycleDate")
+                    b.Property<DateTime?>("LastDeleteBicycleDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastDeletePermanentDate")
+                    b.Property<DateTime?>("LastDeletePermanentDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastUpdateDate")
+                    b.Property<DateTime?>("LastUpdateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("LinkPage")
@@ -582,13 +581,13 @@ namespace Ravil.Infrastructure.Data.Migrations
                         .HasMaxLength(8000)
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("CreateDate")
+                    b.Property<DateTime?>("CreateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IndexMeta")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsDeleted")
+                    b.Property<bool?>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsResizePicture")
@@ -598,13 +597,13 @@ namespace Ravil.Infrastructure.Data.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
-                    b.Property<DateTime>("LastDeleteBicycleDate")
+                    b.Property<DateTime?>("LastDeleteBicycleDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastDeletePermanentDate")
+                    b.Property<DateTime?>("LastDeletePermanentDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastUpdateDate")
+                    b.Property<DateTime?>("LastUpdateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("MetaCanonicalUrl")
@@ -664,19 +663,19 @@ namespace Ravil.Infrastructure.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreateDate")
+                    b.Property<DateTime?>("CreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsDeleted")
+                    b.Property<bool?>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("LastDeleteBicycleDate")
+                    b.Property<DateTime?>("LastDeleteBicycleDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastDeletePermanentDate")
+                    b.Property<DateTime?>("LastDeletePermanentDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastUpdateDate")
+                    b.Property<DateTime?>("LastUpdateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("ParentId")
@@ -709,19 +708,19 @@ namespace Ravil.Infrastructure.Data.Migrations
                     b.Property<int>("BlogId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreateDate")
+                    b.Property<DateTime?>("CreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsDeleted")
+                    b.Property<bool?>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("LastDeleteBicycleDate")
+                    b.Property<DateTime?>("LastDeleteBicycleDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastDeletePermanentDate")
+                    b.Property<DateTime?>("LastDeletePermanentDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastUpdateDate")
+                    b.Property<DateTime?>("LastUpdateDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -744,19 +743,19 @@ namespace Ravil.Infrastructure.Data.Migrations
                     b.Property<int>("BlogId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreateDate")
+                    b.Property<DateTime?>("CreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsDeleted")
+                    b.Property<bool?>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("LastDeleteBicycleDate")
+                    b.Property<DateTime?>("LastDeleteBicycleDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastDeletePermanentDate")
+                    b.Property<DateTime?>("LastDeletePermanentDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastUpdateDate")
+                    b.Property<DateTime?>("LastUpdateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("TagId")
@@ -783,22 +782,22 @@ namespace Ravil.Infrastructure.Data.Migrations
                         .HasMaxLength(350)
                         .HasColumnType("nvarchar(350)");
 
-                    b.Property<DateTime>("CreateDate")
+                    b.Property<DateTime?>("CreateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Introduction")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsDeleted")
+                    b.Property<bool?>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("LastDeleteBicycleDate")
+                    b.Property<DateTime?>("LastDeleteBicycleDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastDeletePermanentDate")
+                    b.Property<DateTime?>("LastDeletePermanentDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastUpdateDate")
+                    b.Property<DateTime?>("LastUpdateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Picture")
@@ -832,7 +831,7 @@ namespace Ravil.Infrastructure.Data.Migrations
                     b.Property<bool>("CanonicalMeta")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("CreateDate")
+                    b.Property<DateTime?>("CreateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("HasAttribute")
@@ -852,7 +851,7 @@ namespace Ravil.Infrastructure.Data.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsDeleted")
+                    b.Property<bool?>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsLastNode")
@@ -861,13 +860,13 @@ namespace Ravil.Infrastructure.Data.Migrations
                     b.Property<bool>("IsResizePicture")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("LastDeleteBicycleDate")
+                    b.Property<DateTime?>("LastDeleteBicycleDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastDeletePermanentDate")
+                    b.Property<DateTime?>("LastDeletePermanentDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastUpdateDate")
+                    b.Property<DateTime?>("LastUpdateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("MetaCanonicalUrl")
@@ -890,7 +889,6 @@ namespace Ravil.Infrastructure.Data.Migrations
                         .HasColumnType("smallint");
 
                     b.Property<string>("PageContent")
-                        .IsRequired()
                         .HasMaxLength(8000)
                         .HasColumnType("nvarchar(max)");
 
@@ -933,19 +931,19 @@ namespace Ravil.Infrastructure.Data.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreateDate")
+                    b.Property<DateTime?>("CreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsDeleted")
+                    b.Property<bool?>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("LastDeleteBicycleDate")
+                    b.Property<DateTime?>("LastDeleteBicycleDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastDeletePermanentDate")
+                    b.Property<DateTime?>("LastDeletePermanentDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastUpdateDate")
+                    b.Property<DateTime?>("LastUpdateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("ServiceId")
@@ -958,6 +956,33 @@ namespace Ravil.Infrastructure.Data.Migrations
                     b.HasIndex("ServiceId");
 
                     b.ToTable("CategoryService", "dbo");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Category.Target", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("DestinationCategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("DestinationCategoryName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("OriginCategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("OriginCategoryName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Target", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.City.City", b =>
@@ -974,25 +999,25 @@ namespace Ravil.Infrastructure.Data.Migrations
                     b.Property<int>("CityBaseId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreateDate")
+                    b.Property<DateTime?>("CreateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IndexMeta")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsDeleted")
+                    b.Property<bool?>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsResizePicture")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("LastDeleteBicycleDate")
+                    b.Property<DateTime?>("LastDeleteBicycleDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastDeletePermanentDate")
+                    b.Property<DateTime?>("LastDeletePermanentDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastUpdateDate")
+                    b.Property<DateTime?>("LastUpdateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("MetaCanonicalUrl")
@@ -1041,19 +1066,19 @@ namespace Ravil.Infrastructure.Data.Migrations
                     b.Property<int>("CountyId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreateDate")
+                    b.Property<DateTime?>("CreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsDeleted")
+                    b.Property<bool?>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("LastDeleteBicycleDate")
+                    b.Property<DateTime?>("LastDeleteBicycleDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastDeletePermanentDate")
+                    b.Property<DateTime?>("LastDeletePermanentDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastUpdateDate")
+                    b.Property<DateTime?>("LastUpdateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
@@ -1061,13 +1086,17 @@ namespace Ravil.Infrastructure.Data.Migrations
                         .HasMaxLength(350)
                         .HasColumnType("nvarchar(350)");
 
-                    b.Property<int>("StateBaseId")
+                    b.Property<int?>("StateBaseId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StateId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("StateBaseId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[StateBaseId] IS NOT NULL");
 
                     b.ToTable("CityBase", "dbo");
                 });
@@ -1086,19 +1115,19 @@ namespace Ravil.Infrastructure.Data.Migrations
                     b.Property<int>("CityId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreateDate")
+                    b.Property<DateTime?>("CreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsDeleted")
+                    b.Property<bool?>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("LastDeleteBicycleDate")
+                    b.Property<DateTime?>("LastDeleteBicycleDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastDeletePermanentDate")
+                    b.Property<DateTime?>("LastDeletePermanentDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastUpdateDate")
+                    b.Property<DateTime?>("LastUpdateDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -1139,7 +1168,7 @@ namespace Ravil.Infrastructure.Data.Migrations
                     b.Property<int>("CommentId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreateDate")
+                    b.Property<DateTime?>("CreateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
@@ -1154,16 +1183,16 @@ namespace Ravil.Infrastructure.Data.Migrations
                     b.Property<bool>("IsConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsDeleted")
+                    b.Property<bool?>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("LastDeleteBicycleDate")
+                    b.Property<DateTime?>("LastDeleteBicycleDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastDeletePermanentDate")
+                    b.Property<DateTime?>("LastDeletePermanentDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastUpdateDate")
+                    b.Property<DateTime?>("LastUpdateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Phone")
@@ -1195,7 +1224,6 @@ namespace Ravil.Infrastructure.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Avatar")
-                        .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
@@ -1210,7 +1238,7 @@ namespace Ravil.Infrastructure.Data.Migrations
                     b.Property<int>("CommentType")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreateDate")
+                    b.Property<DateTime?>("CreateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
@@ -1224,19 +1252,19 @@ namespace Ravil.Infrastructure.Data.Migrations
                     b.Property<bool>("IsConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsDeleted")
+                    b.Property<bool?>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<string>("JobBranchId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("LastDeleteBicycleDate")
+                    b.Property<DateTime?>("LastDeleteBicycleDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastDeletePermanentDate")
+                    b.Property<DateTime?>("LastDeletePermanentDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastUpdateDate")
+                    b.Property<DateTime?>("LastUpdateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Phone")
@@ -1588,7 +1616,7 @@ namespace Ravil.Infrastructure.Data.Migrations
                     b.Property<DateTime?>("AnswerDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("CreateDate")
+                    b.Property<DateTime?>("CreateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
@@ -1601,19 +1629,19 @@ namespace Ravil.Infrastructure.Data.Migrations
                         .HasMaxLength(350)
                         .HasColumnType("nvarchar(350)");
 
-                    b.Property<bool>("IsDeleted")
+                    b.Property<bool?>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsReadByAdmin")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("LastDeleteBicycleDate")
+                    b.Property<DateTime?>("LastDeleteBicycleDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastDeletePermanentDate")
+                    b.Property<DateTime?>("LastDeletePermanentDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastUpdateDate")
+                    b.Property<DateTime?>("LastUpdateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Message")
@@ -1727,6 +1755,29 @@ namespace Ravil.Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("FaqCategory", "dbo");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Faq.FaqJobCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("FaqId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("JobCategoryId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FaqId");
+
+                    b.HasIndex("JobCategoryId");
+
+                    b.ToTable("FaqJobCategory", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.FeedbackSlider.FeedbackSlider", b =>
@@ -1871,14 +1922,14 @@ namespace Ravil.Infrastructure.Data.Migrations
                         .HasMaxLength(8000)
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("CreateDate")
+                    b.Property<DateTime?>("CreateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
-                    b.Property<bool>("IsDeleted")
+                    b.Property<bool?>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsGoogleData")
@@ -1894,20 +1945,22 @@ namespace Ravil.Infrastructure.Data.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
-                    b.Property<DateTime>("LastDeleteBicycleDate")
+                    b.Property<DateTime?>("LastDeleteBicycleDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastDeletePermanentDate")
+                    b.Property<DateTime?>("LastDeletePermanentDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastUpdateDate")
+                    b.Property<DateTime?>("LastUpdateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PhoneNumberInfos")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("RejectedReason")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Route")
-                        .IsRequired()
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
@@ -1923,6 +1976,9 @@ namespace Ravil.Infrastructure.Data.Migrations
 
                     b.Property<string>("SocialMediaInfos")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Status")
+                        .HasColumnType("int");
 
                     b.Property<string>("SubTitle")
                         .HasMaxLength(350)
@@ -1982,7 +2038,7 @@ namespace Ravil.Infrastructure.Data.Migrations
                     b.Property<DateTime?>("ConfirmationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("CreateDate")
+                    b.Property<DateTime?>("CreateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
@@ -2003,7 +2059,7 @@ namespace Ravil.Infrastructure.Data.Migrations
                     b.Property<bool>("IsConfirmedByAdmin")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsDeleted")
+                    b.Property<bool?>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsOffer")
@@ -2022,13 +2078,13 @@ namespace Ravil.Infrastructure.Data.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
-                    b.Property<DateTime>("LastDeleteBicycleDate")
+                    b.Property<DateTime?>("LastDeleteBicycleDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastDeletePermanentDate")
+                    b.Property<DateTime?>("LastDeletePermanentDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastUpdateDate")
+                    b.Property<DateTime?>("LastUpdateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("MapUrl")
@@ -2045,6 +2101,9 @@ namespace Ravil.Infrastructure.Data.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
+                    b.Property<string>("RejectedReason")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Route")
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
@@ -2052,6 +2111,9 @@ namespace Ravil.Infrastructure.Data.Migrations
                     b.Property<string>("SmallPicture")
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
+
+                    b.Property<int?>("Status")
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -2072,6 +2134,40 @@ namespace Ravil.Infrastructure.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("JobBranch", "dbo");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Job.JobBranchAds", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("JobBranchId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("JobBranchName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Pinned")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Sort")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("JobBranchAds", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.Job.JobBranchAttr", b =>
@@ -2127,6 +2223,36 @@ namespace Ravil.Infrastructure.Data.Migrations
                     b.HasIndex("JobBranchId");
 
                     b.ToTable("JobBranchGallery", "dbo");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Job.JobBranchRelatedJob", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CurrentCityId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CurrentCityName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DisplayedCityId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("DisplayedCityName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Sort")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("JobBranchRelatedJob", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.Job.JobBranchShortLink", b =>
@@ -2316,6 +2442,21 @@ namespace Ravil.Infrastructure.Data.Migrations
                     b.Property<string>("AddressId")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool?>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastDeleteBicycleDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("LastDeletePermanentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("LastUpdateDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<double>("Lat")
                         .HasColumnType("float");
 
@@ -2345,7 +2486,7 @@ namespace Ravil.Infrastructure.Data.Migrations
                     b.Property<int>("CityId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreateDate")
+                    b.Property<DateTime?>("CreateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("Date")
@@ -2354,7 +2495,7 @@ namespace Ravil.Infrastructure.Data.Migrations
                     b.Property<int?>("ExpireDay")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsDeleted")
+                    b.Property<bool?>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<string>("JobBranchId")
@@ -2365,13 +2506,13 @@ namespace Ravil.Infrastructure.Data.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
-                    b.Property<DateTime>("LastDeleteBicycleDate")
+                    b.Property<DateTime?>("LastDeleteBicycleDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastDeletePermanentDate")
+                    b.Property<DateTime?>("LastDeletePermanentDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastUpdateDate")
+                    b.Property<DateTime?>("LastUpdateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("LinkPage")
@@ -2425,7 +2566,7 @@ namespace Ravil.Infrastructure.Data.Migrations
                     b.Property<string>("CookieValue")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("CreateDate")
+                    b.Property<DateTime?>("CreateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Discount")
@@ -2443,7 +2584,7 @@ namespace Ravil.Infrastructure.Data.Migrations
                     b.Property<bool>("IsActiveAccount")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsDeleted")
+                    b.Property<bool?>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<string>("JobBranchId")
@@ -2453,13 +2594,13 @@ namespace Ravil.Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("LastDeleteBicycleDate")
+                    b.Property<DateTime?>("LastDeleteBicycleDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastDeletePermanentDate")
+                    b.Property<DateTime?>("LastDeletePermanentDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastUpdateDate")
+                    b.Property<DateTime?>("LastUpdateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("OrderNumber")
@@ -2523,7 +2664,8 @@ namespace Ravil.Infrastructure.Data.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<DateTime>("CreateDate")
+                    b.Property<DateTime?>("CreateDate")
+                        .IsRequired()
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("ExpireDate")
@@ -2532,19 +2674,19 @@ namespace Ravil.Infrastructure.Data.Migrations
                     b.Property<bool>("IsActiveForDiscounts")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsDeleted")
+                    b.Property<bool?>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsUseLimit")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("LastDeleteBicycleDate")
+                    b.Property<DateTime?>("LastDeleteBicycleDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastDeletePermanentDate")
+                    b.Property<DateTime?>("LastDeletePermanentDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastUpdateDate")
+                    b.Property<DateTime?>("LastUpdateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("Status")
@@ -2627,19 +2769,19 @@ namespace Ravil.Infrastructure.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreateDate")
+                    b.Property<DateTime?>("CreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsDeleted")
+                    b.Property<bool?>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("LastDeleteBicycleDate")
+                    b.Property<DateTime?>("LastDeleteBicycleDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastDeletePermanentDate")
+                    b.Property<DateTime?>("LastDeletePermanentDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastUpdateDate")
+                    b.Property<DateTime?>("LastUpdateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("ParentId")
@@ -2701,25 +2843,25 @@ namespace Ravil.Infrastructure.Data.Migrations
                     b.Property<bool>("CanonicalMeta")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("CreateDate")
+                    b.Property<DateTime?>("CreateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IndexMeta")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsDeleted")
+                    b.Property<bool?>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsResizePicture")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("LastDeleteBicycleDate")
+                    b.Property<DateTime?>("LastDeleteBicycleDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastDeletePermanentDate")
+                    b.Property<DateTime?>("LastDeletePermanentDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastUpdateDate")
+                    b.Property<DateTime?>("LastUpdateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("MetaCanonicalUrl")
@@ -3049,7 +3191,7 @@ namespace Ravil.Infrastructure.Data.Migrations
                             Id = "05446344-f9cc-4566-bd2c-36791b4e28ed",
                             AccessFailedCount = 0,
                             BlockedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "c7aa7263-6226-4dcb-b04a-55e33ec7ecb1",
+                            ConcurrencyStamp = "5bf05544-a158-4cfd-a461-61b9e0b65bb1",
                             Email = "admin@localhost.com",
                             EmailConfirmed = true,
                             ExpireTimeSpanBlock = 0,
@@ -3061,10 +3203,10 @@ namespace Ravil.Infrastructure.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "ADMIN@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEP5XknxJOUK9iwJyX3QDWapNyEO9DOYGdshOejknxqVea1C/pFtJxv8p1DcHKXFzTA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEAdSWAFcCefHB45KX3uCk5jj/XDhpu2x9R97wpKWYgRsqctUu/blgZDP/dRnM32Dmg==",
                             PhoneNumberConfirmed = false,
-                            RegisterDate = new DateTime(2024, 11, 6, 14, 56, 8, 167, DateTimeKind.Local).AddTicks(6846),
-                            SecurityStamp = "096196de-295d-4c17-9936-ef15c61df6ed",
+                            RegisterDate = new DateTime(2024, 12, 31, 14, 20, 58, 336, DateTimeKind.Local).AddTicks(9888),
+                            SecurityStamp = "65a5d7a5-6e66-4050-b5ed-35067966eace",
                             TwoFactorEnabled = false,
                             UpdateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserIsBlocked = false,
@@ -3076,7 +3218,7 @@ namespace Ravil.Infrastructure.Data.Migrations
                             Id = "2ec9f480-7288-4d0f-a1cd-53cc89968b45",
                             AccessFailedCount = 0,
                             BlockedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "11267502-1e21-4d32-a39a-013b1558c684",
+                            ConcurrencyStamp = "047ea722-3438-4c34-8d01-13a231955811",
                             Email = "user@localhost.com",
                             EmailConfirmed = true,
                             ExpireTimeSpanBlock = 0,
@@ -3088,10 +3230,10 @@ namespace Ravil.Infrastructure.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "USER@LOCALHOST.COM",
                             NormalizedUserName = "USER@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEPBBpM/OZZ6Buhsqz1HeyN0XDfoSr66gGnT5pp6BeLcPYIsNkMXPVMPVaks3ltPAZw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEDjQPtExCIotMDoMrwrxPWYbYrIG8+r+Cpv0+xJtTPopkvgVhuh/A1YEjbTwtmxmHA==",
                             PhoneNumberConfirmed = false,
-                            RegisterDate = new DateTime(2024, 11, 6, 14, 56, 8, 215, DateTimeKind.Local).AddTicks(7274),
-                            SecurityStamp = "864c443f-1136-4c40-aa97-afe7ca4b3852",
+                            RegisterDate = new DateTime(2024, 12, 31, 14, 20, 58, 405, DateTimeKind.Local).AddTicks(6682),
+                            SecurityStamp = "fd9392c3-64fd-4424-8a11-9684a0cee208",
                             TwoFactorEnabled = false,
                             UpdateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserIsBlocked = false,
@@ -3111,19 +3253,19 @@ namespace Ravil.Infrastructure.Data.Migrations
                     b.Property<int>("CityBaseId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreateDate")
+                    b.Property<DateTime?>("CreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsDeleted")
+                    b.Property<bool?>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("LastDeleteBicycleDate")
+                    b.Property<DateTime?>("LastDeleteBicycleDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastDeletePermanentDate")
+                    b.Property<DateTime?>("LastDeletePermanentDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastUpdateDate")
+                    b.Property<DateTime?>("LastUpdateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PhoneNumber")
@@ -3252,22 +3394,22 @@ namespace Ravil.Infrastructure.Data.Migrations
                     b.Property<int?>("BlogId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreateDate")
+                    b.Property<DateTime?>("CreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsDeleted")
+                    b.Property<bool?>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<string>("JobBranchId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("LastDeleteBicycleDate")
+                    b.Property<DateTime?>("LastDeleteBicycleDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastDeletePermanentDate")
+                    b.Property<DateTime?>("LastDeletePermanentDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastUpdateDate")
+                    b.Property<DateTime?>("LastUpdateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("UserBookMarkType")
@@ -3796,6 +3938,25 @@ namespace Ravil.Infrastructure.Data.Migrations
                     b.Navigation("FaqCategory");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Faq.FaqJobCategory", b =>
+                {
+                    b.HasOne("Domain.Entities.Faq.Faq", "Faq")
+                        .WithMany("FaqJobCategories")
+                        .HasForeignKey("FaqId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Category.Category", "Category")
+                        .WithMany("FaqJobCategories")
+                        .HasForeignKey("JobCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Faq");
+                });
+
             modelBuilder.Entity("Domain.Entities.Job.Job", b =>
                 {
                     b.HasOne("Domain.Entities.Brand.Brand", "Brand")
@@ -4317,6 +4478,8 @@ namespace Ravil.Infrastructure.Data.Migrations
 
                     b.Navigation("CityCategories");
 
+                    b.Navigation("FaqJobCategories");
+
                     b.Navigation("JobCategories");
                 });
 
@@ -4347,6 +4510,11 @@ namespace Ravil.Infrastructure.Data.Migrations
             modelBuilder.Entity("Domain.Entities.DayOfWeek.DayOfWeek", b =>
                 {
                     b.Navigation("JobTimeWorks");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Faq.Faq", b =>
+                {
+                    b.Navigation("FaqJobCategories");
                 });
 
             modelBuilder.Entity("Domain.Entities.Faq.FaqCategory", b =>

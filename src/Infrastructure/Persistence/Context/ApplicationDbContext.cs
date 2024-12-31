@@ -56,6 +56,7 @@
         #region ( Category )
         public DbSet<Category> Category { get; set; }
         public DbSet<CategoryService> CategoryService { get; set; }
+        public DbSet<Target> Targets { get; set; }
         #endregion
 
         #region ( City )
@@ -84,6 +85,7 @@
         #region ( Faq )
         public DbSet<Faq> Faqs { get; set; }
         public DbSet<FaqCategory> FaqCategory { get; set; }
+        public DbSet<FaqJobCategory> FaqJobCategories { get; set; }
         #endregion
 
         #region ( Feedback Slider )
@@ -99,6 +101,8 @@
         public DbSet<JobCategory> JobCategory { get; set; }
         public DbSet<JobSelectionSlider> JobSelectionSlider { get; set; }
         public DbSet<JobBranchShortLink> JobBranchShortLink { get; set; }
+        public DbSet<JobBranchRelatedJob> JobBranchRelatedJobs { get; set; }
+        public DbSet<JobBranchAds> JobBranchAds { get; set; }
         public DbSet<JobBranchGallery> JobBranchGallery { get; set; }
         //public DbSet<JobCategoryAttr> JobCategoryAttr { get; set; }
         public DbSet<JobTimeWork> JobTimeWork { get; set; }
@@ -213,7 +217,6 @@
                 .WithMany(a => a.JobBranchAttrs).OnDelete(DeleteBehavior.NoAction);
 
 
-            ///
             /// 
             modelBuilder
                 .Entity<JobCategoriesView>(

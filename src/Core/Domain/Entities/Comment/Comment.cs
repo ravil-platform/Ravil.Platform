@@ -15,7 +15,7 @@
 
         public string FullName { get; set; } = null!;
 
-        public string Avatar { get; set; } = null!;
+        public string? Avatar { get; set; } 
 
         public string UserIp { get; set; } = null!;
         #endregion

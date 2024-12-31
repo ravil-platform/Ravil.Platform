@@ -7,7 +7,7 @@ public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
         RuleFor(u => u.Firstname)
             .NotNull().WithMessage("test");
 
-        RuleFor(u => u.Phone)
+        RuleFor(u => u.PhoneNumber)
             .NotEmpty().WithMessage("not null");
     }
 }

@@ -44,6 +44,10 @@ public class Job : Entity
     public int AverageRate { get; set; }
 
     public bool IsGoogleData { get; set; } = false;
+
+
+    public JobBranchStatus? Status { get; set; } 
+    public string RejectedReason { get; set; }
     #endregion
 
     #region (Relations)

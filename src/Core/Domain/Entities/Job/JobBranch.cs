@@ -43,6 +43,10 @@ public class JobBranch : BaseMetaDataEntity
     public bool IsResizePicture { get; set; } = false;
 
     public JobTimeWorkType JobTimeWorkType { get; set; }
+
+
+    public JobBranchStatus? Status { get; set; }
+    public string? RejectedReason { get; set; }
     #endregion
 
     #region (Relations)

@@ -16,5 +16,7 @@ public class Faq : BaseEntity
     #region (Relations)
     public int CategoryId { get; set; }
     public virtual FaqCategory FaqCategory { get; set; }
+
+    public virtual ICollection<FaqJobCategory> FaqJobCategories { get; set; }
     #endregion
 }

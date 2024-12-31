@@ -1,4 +1,6 @@
-﻿namespace Domain.Entities.Category
+﻿using Domain.Entities.Faq;
+
+namespace Domain.Entities.Category
 {
     public class Category : BaseMetaDataEntity
     {
@@ -39,6 +41,7 @@
         public virtual ICollection<JobCategory> JobCategories { get; set; }
         public virtual ICollection<CityCategory> CityCategories { get; set; }
         public virtual ICollection<CategoryService> CategoryServices { get; set; }
+        public virtual ICollection<FaqJobCategory> FaqJobCategories { get; set; }
         #endregion
     }
 }

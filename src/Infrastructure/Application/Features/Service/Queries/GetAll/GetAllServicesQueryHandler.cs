@@ -12,7 +12,7 @@ public class GetAllServicesQueryHandler : IRequestHandler<GetAllServicesQuery, L
 
     public async Task<Result<List<ServiceViewModel>>> Handle(GetAllServicesQuery request, CancellationToken cancellationToken)
     {
-        var result = await UnitOfWork.ServiceRepository.GetAllAsync(s => !s.IsDeleted);
+        var result = await UnitOfWork.ServiceRepository.GetAllAsync(s => !(bool)s.IsDeleted);
 
         var serviceViewModels = Mapper.Map<List<ServiceViewModel>>(result);
 

@@ -9,6 +9,7 @@ public class CityBaseConfigurations : IEntityTypeConfiguration<CityBase>
         builder.HasKey(c => c.Id);
         builder.Property(c => c.Name).IsRequired().HasMaxLength(MaxLength.Name);
         builder.Property(c => c.CountyId).IsRequired();
+        builder.Property(c => c.StateBaseId).IsRequired(false);
 
 
         //relations
@@ -17,11 +18,11 @@ public class CityBaseConfigurations : IEntityTypeConfiguration<CityBase>
             .WithOne(c => c.CityBase)
             .HasForeignKey<Domain.Entities.City.City>(c => c.CityBaseId);
 
-        builder
-            .HasOne(c => c.StateBase)
-            .WithOne(s => s.CityBase)
-            .HasForeignKey<CityBase>(c => c.StateBaseId)
-            .IsRequired(false);
+        //builder
+        //    .HasOne(c => c.StateBase)
+        //    .WithOne(s => s.CityBase)
+        //    .HasForeignKey<CityBase>(c => c.StateId)
+        //    .IsRequired(false);
 
     }
 }

@@ -10,7 +10,7 @@
             builder.Property(b => b.BannerType).IsRequired();
             builder.Property(b => b.BannerPictureType).IsRequired();
             builder.Property(b => b.Title).IsRequired().HasMaxLength(MaxLength.Title);
-            builder.Property(b => b.Description).IsRequired().HasMaxLength(MaxLength.Description);
+            builder.Property(b => b.Description).IsRequired(false).HasMaxLength(MaxLength.Description);
             builder.Property(b => b.ExpireDate).IsRequired();
             builder.Property(b => b.ExpireDay).IsRequired(false);
             builder.Property(b => b.LargePicture).IsRequired(false).HasMaxLength(MaxLength.Picture);

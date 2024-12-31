@@ -19,4 +19,3 @@ public class FaqConfigurations : IEntityTypeConfiguration<Domain.Entities.Faq.Fa
             .IsRequired();
     }
 }
-

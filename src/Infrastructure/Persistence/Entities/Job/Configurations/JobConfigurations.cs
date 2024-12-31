@@ -7,7 +7,7 @@ public class JobConfigurations : IEntityTypeConfiguration<Domain.Entities.Job.Jo
         builder.ToTable("Job", DatabaseSchemas.Jobs);
 
         builder.HasKey(j => j.Id);
-        builder.Property(j => j.Route).IsRequired().HasMaxLength(MaxLength.Slug);
+        builder.Property(j => j.Route).IsRequired(false).HasMaxLength(MaxLength.Slug);
         builder.Property(j => j.Title).IsRequired().HasMaxLength(MaxLength.Title);
         builder.Property(j => j.SubTitle).IsRequired(false).HasMaxLength(MaxLength.Title);
         builder.Property(j => j.Summary).IsRequired(false).HasMaxLength(MaxLength.Summary);
@@ -26,6 +26,8 @@ public class JobConfigurations : IEntityTypeConfiguration<Domain.Entities.Job.Jo
         builder.Property(j => j.ViewCountTotal).IsRequired();
         builder.Property(j => j.AverageRate).IsRequired();
         builder.Property(j => j.IsGoogleData).IsRequired();
+        builder.Property(j => j.RejectedReason).IsRequired(false);
+        builder.Property(j => j.Status).IsRequired(false);
 
         //relations
         builder

@@ -26,6 +26,8 @@
             builder.Property(j => j.IsOffer).IsRequired();
             builder.Property(j => j.IsAdminCreator).IsRequired();
             builder.Property(j => j.IsResizePicture).IsRequired();
+            builder.Property(j => j.RejectedReason).IsRequired(false);
+            builder.Property(j => j.Status).IsRequired(false);
 
             //relations
             builder

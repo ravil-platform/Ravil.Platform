@@ -9,7 +9,8 @@
         #endregion
 
         #region (Relations)
-        public int StateBaseId { get; set; }
+        public int? StateBaseId { get; set; }
+        public int StateId { get; set; }
         public virtual StateBase StateBase { get; set; }
 
 

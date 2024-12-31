@@ -25,10 +25,11 @@
 
 
         /// <summary>
-        /// This action for test
+        /// Using this action for create a user and test the system if you want (test)
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
+        [AllowAnonymous]
         [HttpPost(Routes.Action)]
         public async Task<IActionResult> Create(CreateUserCommand command)
         {
@@ -39,7 +40,7 @@
 
 
         /// <summary>
-        /// This action used for login or register user and gives you a JWT token and refresh token
+        /// This action used for login or register user and gives you a JWT token and refresh token . (send sms code as null for register)
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>

@@ -8,7 +8,7 @@
 
         public string? NationalCode { get; set; }
 
-        public string? Phone { get; set; }
+        public string? PhoneNumber { get; set; }
 
         public GenderPerson Gender { get; set; }
     }
