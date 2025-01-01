@@ -11,6 +11,7 @@ namespace Api.Controllers.V1
         {
         }
 
+        #region ( Queries )
         /// <summary>
         /// Returns user job branches for given user id
         /// </summary>
@@ -25,8 +26,9 @@ namespace Api.Controllers.V1
 
             return FluentResult(result);
         }
+        #endregion
 
-
+        #region ( Commands )
         /// <summary>
         /// Add blog like with given blog id and user id
         /// </summary>
@@ -117,5 +119,6 @@ namespace Api.Controllers.V1
 
             return FluentResult(result);
         }
+        #endregion
     }
 }

@@ -7,6 +7,7 @@
         {
         }
 
+        #region ( Queries )
         /// <summary>
         /// Returns all short links
         /// </summary>
@@ -36,5 +37,6 @@
 
             return FluentResult(result);
         }
+        #endregion
     }
 }

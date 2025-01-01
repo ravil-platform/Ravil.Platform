@@ -10,6 +10,7 @@ namespace Api.Controllers.V1
 
         }
 
+        #region ( Commands )
         /// <summary>
         /// Creates an Action History
         /// </summary>
@@ -24,5 +25,7 @@ namespace Api.Controllers.V1
 
             return FluentResult(result);
         }
+        #endregion
+
     }
 }

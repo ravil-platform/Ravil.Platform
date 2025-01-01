@@ -1,7 +1,4 @@
-﻿using Application.Features.Job.Queries.GetJobBranchAds;
-using Application.Features.Job.Queries.GetRelatedJobBranches;
-
-namespace Api.Controllers.V1
+﻿namespace Api.Controllers.V1
 {
     [Route(Routes.Controller)]
     public class JobsController : GenericBaseController<JobsController>
@@ -11,21 +8,7 @@ namespace Api.Controllers.V1
 
         }
 
-        /// <summary>
-        /// Returns job branches with a given categoryId && cityId && take entities
-        /// </summary>
-        /// <param name="query"></param>
-        /// <returns></returns>
-        [HttpGet(Routes.Action)]
-        [ProducesResponseType(type: typeof(Result<JobBranchFilter>), statusCode: StatusCodes.Status200OK)]
-        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetRelatedJobBranches([FromQuery] GetRelatedJobBranchesQuery query)
-        {
-            var result = await Mediator.Send(query);
-
-            return FluentResult(result);
-        }
-
+        #region ( Queries )
         /// <summary>
         /// Returns all advertising job branches 
         /// </summary>
@@ -35,6 +18,21 @@ namespace Api.Controllers.V1
         [ProducesResponseType(type: typeof(Result<List<JobBranchViewModel>>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetAdvertisingJobs([FromQuery] GetAdvertisingJobsQuery query)
+        {
+            var result = await Mediator.Send(query);
+
+            return FluentResult(result);
+        }
+
+        /// <summary>
+        /// Returns job branches with a given categoryId and cityId and take entities
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        [HttpGet(Routes.Action)]
+        [ProducesResponseType(type: typeof(Result<JobBranchFilter>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetRelatedJobBranches([FromQuery] GetRelatedJobBranchesQuery query)
         {
             var result = await Mediator.Send(query);
 
@@ -238,11 +236,9 @@ namespace Api.Controllers.V1
 
             return FluentResult(result);
         }
+        #endregion
 
-
-
-
-
+        #region ( Commands )
         /// <summary>
         /// Creates a job
         /// </summary>
@@ -409,5 +405,6 @@ namespace Api.Controllers.V1
 
             return FluentResult(result);
         }
+        #endregion
     }
 }

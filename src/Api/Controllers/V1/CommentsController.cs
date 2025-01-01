@@ -7,6 +7,7 @@
         {
         }
 
+        #region ( Queries )
         /// <summary>
         /// Returns all comments by given filter
         /// </summary>
@@ -36,7 +37,9 @@
 
             return FluentResult(result);
         }
+        #endregion
 
+        #region ( Commands )
         /// <summary>
         /// Creates a comment
         /// </summary>
@@ -66,5 +69,6 @@
 
             return FluentResult(result);
         }
+        #endregion
     }
 }

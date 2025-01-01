@@ -7,6 +7,7 @@
         {
         }
 
+        #region ( Queries )
         /// <summary>
         /// Returns all tags
         /// </summary>
@@ -82,5 +83,6 @@
 
             return FluentResult(result);
         }
+        #endregion
     }
 }

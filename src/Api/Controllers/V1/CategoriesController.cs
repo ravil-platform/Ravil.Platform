@@ -10,6 +10,7 @@ namespace Api.Controllers.V1
         {
         }
 
+        #region ( Queries )
         /// <summary>
         /// Returns all categories
         /// </summary>
@@ -114,5 +115,6 @@ namespace Api.Controllers.V1
 
             return FluentResult(result);
         }
+        #endregion
     }
 }

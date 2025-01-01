@@ -7,6 +7,7 @@
         {
         }
 
+        #region ( Queries )
         /// <summary>
         /// Returns all cities
         /// </summary>
@@ -69,5 +70,6 @@
 
             return FluentResult(result);
         }
+        #endregion
     }
 }

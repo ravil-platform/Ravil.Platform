@@ -8,6 +8,7 @@
         {
         }
 
+        #region ( Queries )
         /// <summary>
         /// Returns all blogs by given filter
         /// </summary>
@@ -67,5 +68,6 @@
 
             return FluentResult(result);
         }
+        #endregion
     }
 }

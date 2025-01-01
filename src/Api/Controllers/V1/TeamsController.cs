@@ -7,6 +7,7 @@
         {
         }
 
+        #region ( Queries )  
         /// <summary>
         /// Returns all teams
         /// </summary>
@@ -21,5 +22,6 @@
 
             return FluentResult(result);
         }
+        #endregion
     }
 }

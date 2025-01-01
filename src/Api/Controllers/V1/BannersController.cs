@@ -1,6 +1,5 @@
 ﻿namespace Api.Controllers.V1
 {
-
     [Route(Routes.Controller)]
     public class BannersController : GenericBaseController<BannersController>
     {
@@ -8,6 +7,7 @@
         {
         }
 
+        #region ( Queries )
         /// <summary>
         /// Returns all banners
         /// </summary>
@@ -52,5 +52,6 @@
 
             return FluentResult(result);
         }
+        #endregion
     }
 }

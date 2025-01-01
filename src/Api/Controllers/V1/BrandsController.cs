@@ -10,6 +10,7 @@ namespace Api.Controllers.V1
         {
         }
 
+        #region ( Queries )
         /// <summary>
         /// Returns all brands
         /// </summary>
@@ -24,5 +25,6 @@ namespace Api.Controllers.V1
 
             return FluentResult(result);
         }
+        #endregion
     }
 }

@@ -8,6 +8,7 @@
         {
         }
 
+        #region ( Queries )
         /// <summary>
         /// Returns a user by unique id
         /// </summary>
@@ -22,8 +23,9 @@
 
             return FluentResult(result);
         }
+        #endregion
 
-
+        #region ( Commands )
         /// <summary>
         /// Using this action for create a user and test the system if you want (test)
         /// </summary>
@@ -101,5 +103,6 @@
 
             return FluentResult(result);
         }
+        #endregion
     }
 }

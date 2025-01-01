@@ -7,6 +7,7 @@
         {
         }
 
+        #region ( Queries )
         /// <summary>
         /// Returns all faqs
         /// </summary>
@@ -51,5 +52,6 @@
 
             return FluentResult(result);
         }
+        #endregion
     }
 }

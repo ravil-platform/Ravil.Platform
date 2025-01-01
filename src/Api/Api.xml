@@ -207,10 +207,16 @@
             <param name="query"></param>
             <returns></returns>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:Api.Controllers.V1.JobsController.GetRelatedJobBranches(Application.Features.Job.Queries.GetRelatedJobBranches.GetRelatedJobBranchesQuery)" -->
         <member name="M:Api.Controllers.V1.JobsController.GetAdvertisingJobs(Application.Features.Job.Queries.GetJobBranchAds.GetAdvertisingJobsQuery)">
             <summary>
             Returns all advertising job branches 
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Api.Controllers.V1.JobsController.GetRelatedJobBranches(Application.Features.Job.Queries.GetRelatedJobBranches.GetRelatedJobBranchesQuery)">
+            <summary>
+            Returns job branches with a given categoryId and cityId and take entities
             </summary>
             <param name="query"></param>
             <returns></returns>
