@@ -43,6 +43,7 @@
         #region ( Category )
         public ICategoryRepository CategoryRepository { get; }
         public ICategoryServiceRepository CategoryServiceRepository { get; }
+        public ITargetRepository TargetRepository { get; }
         #endregion
 
         #region ( City )
@@ -89,6 +90,7 @@
         public IJobServiceRepository JobServiceRepository { get; }
         public IJobTagRepository JobTagRepository { get; }
         public IJobTimeWorkRepository JobTimeWorkRepository { get; }
+        public IJobBranchAdsRepository JobBranchAdsRepository { get; }
         #endregion
 
         #region ( Location )

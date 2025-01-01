@@ -102,6 +102,20 @@
             <param name="query"></param>
             <returns></returns>
         </member>
+        <member name="M:Api.Controllers.V1.CategoriesController.GetMainCategories(Application.Features.Category.Queries.GetMainCategories.GetMainCategoriesQuery)">
+            <summary>
+            Returns all main categories 
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Api.Controllers.V1.CategoriesController.GetChildCategories(Application.Features.Category.Queries.GetChildCategories.GetChildCategoryQuery)">
+            <summary>
+            Returns all child categories 
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
         <member name="M:Api.Controllers.V1.CitiesController.GetAll(Application.Features.City.Queries.GetAll.GetAllCitiesQuery)">
             <summary>
             Returns all cities
@@ -189,6 +203,14 @@
         <member name="M:Api.Controllers.V1.FaqsController.GetAllFaqCategories(Application.Features.Faq.Queries.GetAllFaqCategories.GetAllFaqCategoriesQuery)">
             <summary>
             Returns all faq categories
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Api.Controllers.V1.JobsController.GetRelatedJobBranches(Application.Features.Job.Queries.GetRelatedJobBranches.GetRelatedJobBranchesQuery)" -->
+        <member name="M:Api.Controllers.V1.JobsController.GetAdvertisingJobs(Application.Features.Job.Queries.GetJobBranchAds.GetAdvertisingJobsQuery)">
+            <summary>
+            Returns all advertising job branches 
             </summary>
             <param name="query"></param>
             <returns></returns>

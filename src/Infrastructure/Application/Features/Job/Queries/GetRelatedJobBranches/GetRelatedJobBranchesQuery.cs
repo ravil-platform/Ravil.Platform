@@ -1,6 +1,6 @@
-﻿namespace Application.Features.Job.Queries.GetAllJobBranch
+﻿namespace Application.Features.Job.Queries.GetRelatedJobBranches
 {
-    public class GetAllJobBranchByFilterQuery : IRequest<JobBranchFilter>
+    public class GetRelatedJobBranchesQuery : IRequest<JobBranchFilter>
     {
         #region ( Paging Fields )
         public int? CurrentPage { get; set; } = 1;
@@ -19,5 +19,9 @@
 
         public int? Step { get; set; } = 5;
         #endregion
+
+        public int CategoryId { get; set; }
+        public int CityId { get; set; }
+        public int Take { get; set; }
     }
 }

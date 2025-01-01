@@ -2,5 +2,5 @@
 
 public interface IJobBranchAdsRepository : IRepository<JobBranchAds>
 {
-
+    Task<List<JobBranch>> GetAllJobAds();
 }

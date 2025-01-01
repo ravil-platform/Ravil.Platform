@@ -300,6 +300,20 @@
                 return _categoryServiceRepository;
             }
         }
+
+        public ITargetRepository? _targetRepository;
+        public ITargetRepository TargetRepository
+        {
+            get
+            {
+                if (_targetRepository == null)
+                {
+                    _targetRepository = new TargetRepository(DatabaseContext);
+                }
+
+                return _targetRepository;
+            }
+        }
         #endregion
 
         #region ( City )
@@ -634,6 +648,21 @@
                 }
 
                 return _jobTimeWorkRepository;
+            }
+        }
+
+
+        private IJobBranchAdsRepository? _jobBranchAdsRepository;
+        public IJobBranchAdsRepository JobBranchAdsRepository
+        {
+            get
+            {
+                if (_jobBranchAdsRepository == null)
+                {
+                    _jobBranchAdsRepository = new JobBranchAdsRepository(DatabaseContext);
+                }
+
+                return _jobBranchAdsRepository;
             }
         }
         #endregion

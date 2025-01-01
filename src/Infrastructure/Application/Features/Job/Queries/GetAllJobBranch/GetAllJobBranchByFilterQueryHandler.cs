@@ -2,6 +2,7 @@
 
 public class GetAllJobBranchByFilterQueryHandler : IRequestHandler<GetAllJobBranchByFilterQuery, JobBranchFilter>
 {
+    protected JobBranchFilter JobBranchFilter { get; set; }
     protected IMapper Mapper { get; }
     protected IUnitOfWork UnitOfWork { get; }
     public GetAllJobBranchByFilterQueryHandler(IMapper mapper, IUnitOfWork unitOfWork)
@@ -12,10 +13,12 @@ public class GetAllJobBranchByFilterQueryHandler : IRequestHandler<GetAllJobBran
 
     public async Task<Result<JobBranchFilter>> Handle(GetAllJobBranchByFilterQuery request, CancellationToken cancellationToken)
     {
+        JobBranchFilter = Mapper.Map<JobBranchFilter>(request);
+
         var jobBranchQuery = UnitOfWork.JobBranchRepository.TableNoTracking;
 
-        request.JobBranchFilter.Build(jobBranchQuery.Count()).SetEntities(jobBranchQuery, Mapper);
+        JobBranchFilter.Build(jobBranchQuery.Count()).SetEntities(jobBranchQuery, Mapper);
 
-        return await Task.FromResult(request.JobBranchFilter);
+        return await Task.FromResult(JobBranchFilter);
     }
 }
