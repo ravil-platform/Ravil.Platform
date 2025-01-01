@@ -2,6 +2,7 @@
 
 public class GetAllBlogsByFilterQueryHandler : IRequestHandler<GetAllBlogsByFilterQuery, BlogFilterViewModel>
 {
+    protected BlogFilterViewModel BlogFilterViewModel { get; set; }
     protected IUnitOfWork UnitOfWork { get; }
     protected IMapper Mapper { get; }
 
@@ -13,12 +14,14 @@ public class GetAllBlogsByFilterQueryHandler : IRequestHandler<GetAllBlogsByFilt
 
     public async Task<Result<BlogFilterViewModel>> Handle(GetAllBlogsByFilterQuery request, CancellationToken cancellationToken)
     {
-        var blogQuery = UnitOfWork.BlogRepository.TableNoTracking;
+        BlogFilterViewModel = Mapper.Map<BlogFilterViewModel>(request);
+
+        var query = UnitOfWork.BlogRepository.TableNoTracking;
 
         //TODO where....
 
-        request.BlogFilterViewModel.Build(blogQuery.Count()).SetEntities(blogQuery, Mapper);
+        BlogFilterViewModel.Build(query.Count()).SetEntities(query, Mapper);
 
-        return await Task.FromResult(request.BlogFilterViewModel);
+        return await Task.FromResult(BlogFilterViewModel);
     }
 }

@@ -1,4 +1,6 @@
-﻿using Application.Features.Job.Queries.GetAllJobBranch;
+﻿using Application.Features.Blog.Queries.GetAllByFilter;
+using Application.Features.Category.Queries.GetAllByFilter;
+using Application.Features.Job.Queries.GetAllJobBranch;
 using Application.Features.Job.Queries.GetRelatedJobBranches;
 using RNX.CustomResult;
 
@@ -135,6 +137,10 @@ namespace Application.Profiles
             #region ( Filters )
             CreateMap<JobBranchFilter, GetAllJobBranchByFilterQuery>().ReverseMap();
             CreateMap<JobBranchFilter, GetRelatedJobBranchesQuery>().ReverseMap();
+
+            CreateMap<BlogFilterViewModel, GetAllBlogsByFilterQuery>().ReverseMap();
+
+            CreateMap<CategoryFilterViewModel, GetAllCategoriesByFilterQuery>().ReverseMap();
             #endregion
 
             CreateMap(typeof(CustomResult<>), typeof(Result<>)).ReverseMap();

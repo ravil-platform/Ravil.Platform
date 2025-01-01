@@ -1,8 +1,8 @@
-﻿
-namespace Application.Features.Category.Queries.GetAllByFilter;
+﻿namespace Application.Features.Category.Queries.GetAllByFilter;
 
 public class GetAllCategoriesByFilterQueryHandler : IRequestHandler<GetAllCategoriesByFilterQuery, CategoryFilterViewModel>
 {
+    protected CategoryFilterViewModel CategoryFilterViewModel { get; set; }
     protected IUnitOfWork UnitOfWork { get; }
     protected IMapper Mapper { get; }
 
@@ -14,47 +14,49 @@ public class GetAllCategoriesByFilterQueryHandler : IRequestHandler<GetAllCatego
 
     public async Task<Result<CategoryFilterViewModel>> Handle(GetAllCategoriesByFilterQuery request, CancellationToken cancellationToken)
     {
-        var categoryQuery = UnitOfWork.CategoryRepository.TableNoTracking;
+        CategoryFilterViewModel = Mapper.Map<CategoryFilterViewModel>(request);
 
-        //where....
+        var query = UnitOfWork.CategoryRepository.TableNoTracking;
 
-        if (request.CategoryFilterViewModel.ParentId != null)
+        #region ( Filters )
+        if (CategoryFilterViewModel.ParentId != null)
         {
-            categoryQuery = categoryQuery.Where(c => c.ParentId == request.CategoryFilterViewModel.ParentId);
+            query = query.Where(c => c.ParentId == CategoryFilterViewModel.ParentId);
         }
 
-        if (request.CategoryFilterViewModel.Type != null)
+        if (CategoryFilterViewModel.Type != null)
         {
-            categoryQuery = categoryQuery.Where(c => c.Type == request.CategoryFilterViewModel.Type);
+            query = query.Where(c => c.Type == CategoryFilterViewModel.Type);
         }
 
-        if (!string.IsNullOrWhiteSpace(request.CategoryFilterViewModel.Name))
+        if (!string.IsNullOrWhiteSpace(CategoryFilterViewModel.Name))
         {
-            categoryQuery = categoryQuery.Where(c => c.Name == request.CategoryFilterViewModel.Name);
+            query = query.Where(c => c.Name == CategoryFilterViewModel.Name);
         }
 
-        if (request.CategoryFilterViewModel.NodeLevel != null)
+        if (CategoryFilterViewModel.NodeLevel != null)
         {
-            categoryQuery = categoryQuery.Where(c => c.NodeLevel == request.CategoryFilterViewModel.NodeLevel);
+            query = query.Where(c => c.NodeLevel == CategoryFilterViewModel.NodeLevel);
         }
 
-        if (!string.IsNullOrWhiteSpace(request.CategoryFilterViewModel.HeadingTitle))
+        if (!string.IsNullOrWhiteSpace(CategoryFilterViewModel.HeadingTitle))
         {
-            categoryQuery = categoryQuery.Where(c => c.HeadingTitle == request.CategoryFilterViewModel.HeadingTitle);
+            query = query.Where(c => c.HeadingTitle == CategoryFilterViewModel.HeadingTitle);
         }
 
-        if (request.CategoryFilterViewModel.IsActive != null)
+        if (CategoryFilterViewModel.IsActive != null)
         {
-            categoryQuery = categoryQuery.Where(c => c.IsActive == request.CategoryFilterViewModel.IsActive);
+            query = query.Where(c => c.IsActive == CategoryFilterViewModel.IsActive);
         }
 
-        if (request.CategoryFilterViewModel.IsLastNode != null)
+        if (CategoryFilterViewModel.IsLastNode != null)
         {
-            categoryQuery = categoryQuery.Where(c => c.IsLastNode == request.CategoryFilterViewModel.IsLastNode);
+            query = query.Where(c => c.IsLastNode == CategoryFilterViewModel.IsLastNode);
         }
+        #endregion
 
-        request.CategoryFilterViewModel.Build(categoryQuery.Count()).SetEntities(categoryQuery, Mapper);
+        CategoryFilterViewModel.Build(query.Count()).SetEntities(query, Mapper);
 
-        return await Task.FromResult(request.CategoryFilterViewModel);
+        return await Task.FromResult(CategoryFilterViewModel);
     }
 }

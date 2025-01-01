@@ -14,6 +14,7 @@ public class GetCommentsByFilterQueryHandler : IRequestHandler<GetCommentsByFilt
     {
         var query = UnitOfWork.CommentRepository.TableNoTracking;
 
+        #region ( Filters )
         if (request.IsConfirmed)
         {
             query = query.Where(c => c.IsConfirmed);
@@ -43,6 +44,7 @@ public class GetCommentsByFilterQueryHandler : IRequestHandler<GetCommentsByFilt
         {
             query = query.Take((int)request.Take);
         }
+        #endregion
 
         var result = await query.ToListAsync(cancellationToken);
 

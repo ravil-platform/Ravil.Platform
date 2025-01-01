@@ -1,5 +1,4 @@
-﻿
-namespace Application.Features.Comment.Queries.GetAll
+﻿namespace Application.Features.Comment.Queries.GetAll
 {
     public class GetCommentsByFilterQuery : IRequest<List<CommentViewModel>>
     {
