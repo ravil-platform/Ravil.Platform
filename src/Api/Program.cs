@@ -1,4 +1,5 @@
 using Common.Utilities.ModelState;
+using Constants.Security;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
@@ -25,9 +26,30 @@ services.AddPersistenceServices(configuration);
 
 services.AddSwaggerDocumentation();
 
+#region ( CORS Service )
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(CORS.DefaultName, policyBuilder =>
+    {
+        string[] productionOrigins = ["https://api.ravil.ir", "https://admin.ravil.ir", "https://dl.newtan.academy", "https://ravil.vercel.app"];
+        string[] developmentOrigins = ["https://localhost:7206", "https://localhost:7214", "http://127.0.0.1:3000", "http://localhost:3000"];
+        string[] allAllowedOrigins = developmentOrigins.Concat(productionOrigins).ToArray();
+
+        policyBuilder.SetIsOriginAllowedToAllowWildcardSubdomains()
+            .WithOrigins(allAllowedOrigins)
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    });
+});
+#endregion
+
+
+
+
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 {
     app.UseSwagger();
     app.UseSwaggerUI(options =>
@@ -45,8 +67,13 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCustomExceptionHandler();
-app.UseStaticFiles();
 app.UseHttpsRedirection();
+
+app.UseStaticFiles();
+app.UseRouting();
+
+app.UseCors(CORS.DefaultName);
 app.UseAuthorization();
+
 app.MapControllers();
 app.Run();

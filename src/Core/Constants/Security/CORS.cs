@@ -2,6 +2,6 @@
 {
     public static class CORS
     {
-        public static string DefaultName = "AvicenCORS";
+        public static string DefaultName = "RavilCORS";
     }
 }
