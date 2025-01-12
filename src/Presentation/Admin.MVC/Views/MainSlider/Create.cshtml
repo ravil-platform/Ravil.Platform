@@ -1,0 +1,254 @@
+﻿@using Constants.Files
+@using Domain.Entities.City
+@using Domain.Entities.Job
+@using Domain.Entities.State
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model ViewModels.AdminPanel.MainSlider.CreateMainSliderViewModel
+
+@{
+    ViewData["Title"] = "ثبت اسلایدر جدید";
+    ViewData["selected"] = "MainSliders_Create";
+    var stateBases = (List<StateBase>)ViewData["stateBases"]!;
+    var jobBranches = (List<JobBranch>)ViewData["jobBranches"]!;
+}
+
+<section>
+    <div class="card">
+        <div class="card-content">
+            <div class="card-body">
+                <ul class="nav nav-tabs mb-2">
+                    <li class="nav-item current">
+                        <a class="nav-link d-flex align-items-center active">
+                            <i class='bx bx-task'></i><span class="d-none d-sm-block">اسلایدر</span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active">
+                        <form method="post" enctype="multipart/form-data">
+                            <div class="card-title-details d-flex align-items-center mb-1 ml-1">
+                                <div>
+                                    <div class="avatar bg-rgba-primary p-25 mr-2 ml-0">
+                                        <img id="selected-picture" class="img-fluid" src="@Paths.DefaultsImagePath/PlaceHolder.svg" height="100" width="100">
+                                    </div>
+                                    <div class="mt-n25">
+                                        <h5>تصویر انتخاب شده</h5>
+                                        <p class="text-info">راهنمای سایز :W: 400px * H: 400px </p>
+                                    </div>
+                                </div>
+
+                                <div style="margin-right:34%">
+                                    <div class="avatar bg-rgba-primary p-25 mr-2 ml-0">
+                                        <img id="selected-banner" class="img-fluid" src="@Paths.DefaultsImagePath/PlaceHolder.svg" height="100" width="100">
+                                    </div>
+                                    <div class="mt-n25 mr-5">
+                                        <h5>تصویر موبایل انتخاب شده</h5>
+                                        <p class="text-info">راهنمای سایز : W: 400px * H: 400px </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6 col-md-6 mb-1">
+                                    <fieldset>
+                                        <div class="input-group">
+                                            <div class="custom-file">
+                                                <input asp-for="LargePictureFile" type="file" class="custom-file-input" accept=".jpg,.png,.jpeg,.gif,.webp">
+                                                <label class="custom-file-label">انتخاب تصویر بزرگ</label>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <div class="help-block">
+                                        <span asp-validation-for="LargePictureFile" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-6 col-md-6 mb-1">
+                                    <fieldset>
+                                        <div class="input-group">
+                                            <div class="custom-file">
+                                                <input asp-for="SmallPictureFile" type="file" class="custom-file-input" accept=".jpg,.png,.jpeg,.gif,.webp">
+                                                <label class="custom-file-label">انتخاب تصویر کوچک</label>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <div class="help-block">
+                                        <span asp-validation-for="SmallPictureFile" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6 col-lg-3">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <span class="text-danger">*</span>
+                                            <label asp-for="StateId"></label>
+                                            <select asp-for="StateId" class="select2 form-control">
+                                                @foreach (var item in stateBases)
+                                                {
+                                                    <option value="@item.Id">@item.Name</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6 col-lg-3">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <span class="text-danger">*</span>
+                                            <label asp-for="CityId"></label>
+                                            <select asp-for="CityId" class="select2 form-control">
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-12 col-sm-6 col-lg-3">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <span class="text-danger">*</span>
+                                            <label asp-for="Title"></label>
+                                            <input asp-for="Title" type="text" class="form-control text-left">
+                                            <div class="help-block">
+                                                <span asp-validation-for="Title" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6 col-lg-3">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <span class="text-danger">*</span>
+                                            <label asp-for="Sort"></label>
+                                            <input asp-for="Sort" type="number" class="form-control text-left">
+                                            <div class="help-block">
+                                                <span asp-validation-for="Sort" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-12 col-sm-6 col-lg-6">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <span class="text-danger">*</span>
+                                            <label asp-for="LinkPage"></label>
+                                            <input asp-for="LinkPage" type="text" class="form-control text-right" dir="ltr"> 
+                                            <div class="help-block">
+                                                <span asp-validation-for="LinkPage" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6 col-lg-6">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <span class="text-info">*</span>
+                                            <label asp-for="ExpireDay"></label>
+                                            <input asp-for="ExpireDay" type="text" class="form-control text-right" dir="ltr">
+                                            <div class="help-block">
+                                                <span asp-validation-for="ExpireDay" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6 col-lg-12">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="JobBranchId"></label>
+                                            <select asp-for="JobBranchId" class="select2 form-control">
+                                                <option value="null">انتخاب کنید!</option>
+                                                @if (jobBranches.Any() || jobBranches.Count > 1)
+                                                {
+                                                    @foreach (var item in jobBranches)
+                                                    {
+                                                        <option value="@item.Id">@item.Title</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                             
+                            </div>
+
+                            <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
+                                <button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">ذخیره</button>
+                                <button onclick="history.back()" type="reset" class="btn btn-light">انصراف</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+    <script>
+        $("#StateId").on('change', function (e) {
+            var GetId = $('#StateId').val();
+
+            $.ajax({
+                type: 'post',
+                url: '@Url.Action("GetCities", "Ajax")',
+                data: { stateBaseId: GetId },
+                success: function (result) {
+                    if (result.status == "success") {
+                        $('#CityId').empty();
+
+                        $('#CityId').append($("<option></option>")
+                            .val("0").html("انتخاب کنید"));
+
+                        console.log(result);
+
+                        $.each(result.cities, function (i) {
+                            $('#CityId').append($("<option></option>")
+                                .val(result.cities[i].id).html(result.cities[i].title));
+                        });
+
+                    }
+                }
+            });
+        });
+
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#selected-picture').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#LargePictureFile").change(function () {
+            readURL(this);
+        });
+
+
+        function readURL2(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#selected-banner').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#SmallPictureFile").change(function () {
+            readURL2(this);
+        });
+    </script>
+}

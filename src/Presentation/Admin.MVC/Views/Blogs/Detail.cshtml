@@ -1,0 +1,245 @@
+﻿@using Common.Utilities.Services.FTP.Models
+@using Constants.Files
+@using Domain.Entities.Tag
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.Extensions.Options
+@model Domain.Entities.Blog.Blog
+
+@inject IOptions<FTPConnectionOptions> FtpConnectionOptions
+
+@{
+    string UrlBase = FtpConnectionOptions.Value.UrlBase;
+    ViewData["Title"] = "جزئیات مقاله";
+    ViewData["selected"] = "Blogs_Index";
+
+    var tags = ViewData["tags"] as List<Tag>;
+    int number = 1;
+}
+
+<form method="post" id="SetActivationTrue" asp-controller="Blogs" asp-action="SetActivation" asp-route-id="@Model.Id" asp-route-active="true"></form>
+<form method="post" id="SetActivationFalse" asp-controller="Blogs" asp-action="SetActivation" asp-route-id="@Model.Id" asp-route-active="false"></form>
+
+<section>
+    <div class="row">
+        <div class="col-12 col-sm-6 col-lg-8 mb-2">
+            <div class="media">
+                <a class="mr-1">
+                    <img src="@UrlBase@Paths.Cms@Model.LargePicture" alt="PictureName" class="users-avatar-shadow" height="120" width="120">
+                </a>
+
+                <a class="mr-1">
+                    <img src="@UrlBase@Paths.Cms@Model.SmallPicture" alt="MobilePictureName" class="users-avatar-shadow" height="120" width="120">
+                </a>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-lg-4  px-0 d-flex justify-content-end align-items-center px-1 mb-0">
+            @if ((bool)Model.IsDeleted)
+            {
+                <a onclick="SetActivationFalse(this)" class="btn btn-sm btn-success mr-25 text-white">فعال<i class="bx bx-check-square"></i></a>
+            }
+            else
+            {
+                <a onclick="SetActivationTrue(this)" class="btn btn-sm btn-danger mr-25 text-white"> غیرفعال<i class="bx bx-block"></i></a>
+            }
+
+            <a asp-controller="Blogs" asp-action="Update" asp-route-blogId="@Model.Id" class="btn btn-sm btn-warning  mr-25">ویرایش <i class="bx bx-edit"></i></a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-content">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 col-md-12">
+                        <table class="table table-borderless line-height-1">
+                            <tbody>
+                                <tr>
+                                    <td>@(Resources.General.DisplayNames.Title):</td>
+                                    <td class="users-view-name">@Model.Title</td>
+                                </tr>
+
+                                <tr>
+                                    <td>@(Resources.General.DisplayNames.Slug):</td>
+                                    <td class="users-view-username">@Model.Route</td>
+                                </tr>
+
+                                <tr>
+                                    <td>@(Resources.General.DisplayNames.ReadingTime):</td>
+                                    <td class="users-view-username">@Model.ReadingTime</td>
+                                </tr>
+
+                                <tr>
+                                    <td>@(Resources.General.DisplayNames.View):</td>
+                                    <td class="users-view-username">@Model.ViewCount</td>
+                                </tr>
+
+                              @*   <tr>
+                                    <td>@(Resources.General.DisplayNames.Like):</td>
+                                    <td class="users-view-username">@Model.LikeCount</td>
+                                </tr>
+
+                                <tr>
+                                    <td>@(Resources.General.DisplayNames.Share):</td>
+                                    <td class="users-view-username">@Model.ShareCount</td>
+                                </tr> *@
+
+                                <tr>
+                                    <td>@(Resources.General.DisplayNames.CreateDate):</td>
+                                    <td>@Model.CreateDate.ToShamsiDate()</td>
+                                </tr>
+
+                                <tr>
+                                    <td>وضعیت نمایش در سایت:</td>
+                                    <td>
+                                        @if ((bool)Model.IsDeleted)
+                                        {
+                                            <span class="badge badge-light-danger users-view-status">حذف شده</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-light-success users-view-status">فعال</span>
+                                        }
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>@(Resources.General.DisplayNames.MetaTitle):</td>
+                                    <td class="users-view-username">
+                                        @if (Model.MetaTitle != null)
+                                        {
+                                            @Model.MetaTitle
+                                        }
+                                    </td>
+                                </tr>
+
+
+                                <tr>
+                                    <td>@(Resources.General.DisplayNames.MetaDescription):</td>
+                                    <td class="users-view-username">
+                                        @if (Model.MetaDesc != null)
+                                        {
+                                            @Model.MetaDesc
+                                        }
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>@(Resources.General.DisplayNames.CanonicalMetaUrl):</td>
+                                    <td class="users-view-username">
+                                        @if (Model.MetaCanonicalUrl != null)
+                                        {
+                                            @Model.MetaCanonicalUrl
+                                        }
+                                    </td>
+                                </tr>
+
+
+                                <tr>
+                                    <td>@(Resources.General.DisplayNames.CanonicalMeta):</td>
+                                    <td>
+                                        @if (Model.CanonicalMeta)
+                                        {
+                                            <span class="badge badge-light-success users-view-status">بله</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-light-danger users-view-status">خیر</span>
+                                        }
+                                    </td>
+                                </tr>
+
+
+                                <tr>
+                                    <td>@(Resources.General.DisplayNames.IndexMeta):</td>
+                                    <td>
+                                        @if (Model.IndexMeta)
+                                        {
+                                            <span class="badge badge-light-success users-view-status">بله</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-light-danger users-view-status">خیر</span>
+                                        }
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>@(Resources.General.DisplayNames.Tag):</td>
+                                    <td>
+                                        @if (tags != null)
+                                        {
+                                            @foreach (var tag in tags)
+                                            {
+                                                <span class="text-primary ml-1">@number.@tag.Name</span>
+
+                                                number++;
+                                            }
+                                        }
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>@(Resources.General.DisplayNames.Summary):</td>
+                                    <td class="users-view-username">@Html.Raw(Model.Summary)</td>
+                                </tr>
+
+
+                                <tr>
+                                    <td>@(Resources.General.DisplayNames.Content):</td>
+                                    <td class="users-view-username">@Html.Raw(Model.Content)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        function SetActivationFalse(event) {
+            Swal.fire({
+                title: 'آیااطمینان دارید؟',
+                text: 'غیرفعال کردن',
+                icon: "info",
+                showCancelButton: true,
+                cancelButtonText: 'خیر',
+                canceButtonClass: 'btn btn-danger',
+                showConfirButton: true,
+                confirmButtonText: 'بله',
+                confirmButtonClass: 'btn btn-success'
+            }).then((result) => {
+                if (result.value) {
+                    $("#SetActivationFalse").submit();
+                }
+            });
+
+            return false;
+        }
+
+        function SetActivationTrue(event) {
+            Swal.fire({
+                title: 'آیااطمینان دارید؟',
+                text: 'فعال کردن',
+                icon: "info",
+                showCancelButton: true,
+                cancelButtonText: 'خیر',
+                canceButtonClass: 'btn btn-danger',
+                showConfirButton: true,
+                confirmButtonText: 'بله',
+                confirmButtonClass: 'btn btn-success'
+            }).then((result) => {
+                if (result.value) {
+                    $("#SetActivationTrue").submit();
+                }
+            });
+
+            return false;
+        }
+
+
+    </script>
+}

@@ -1,0 +1,116 @@
+﻿@using Common.Utilities.Services.FTP.Models
+@using Enums
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.Extensions.Options
+@model ViewModels.AdminPanel.Cms.UpdateTagViewModel
+
+@inject IOptions<FTPConnectionOptions> FtpConnectionOptions
+
+@{
+    string UrlBase = FtpConnectionOptions.Value.UrlBase;
+}
+
+<form asp-controller="Blogs" asp-action="UpdateTag" method="post" enctype="multipart/form-data">
+    <div class="modal-body">
+        <input type="hidden" asp-for="Id" />
+        <div class="card-title-details d-flex align-items-center mb-1 ml-1">
+            <div class="avatar bg-rgba-primary p-25 mr-2 ml-0">
+                <img id="updateSelectImage" class="img-fluid" src="@UrlBase@Paths.CmsBlogTag@Model.CurrentIconPicture" height="120" width="120">
+            </div>
+            <div class="mt-n25">
+                <h5>@(Resources.General.DisplayNames.Icon) فعلی</h5>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="controls">
+                <fieldset>
+                    <div class="input-group">
+                        <div class="custom-file">
+                            <input id="updateFile" asp-for="IconPictureFile" type="file" class="custom-file-input" accept="@MimeTypes.Images">
+                            <label class="custom-file-label">انتخاب @(Resources.General.DisplayNames.Icon)</label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+
+         <div class="form-group">
+            <div class="controls">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" type="text" class="form-control text-left">
+                <div class="help-block">
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="controls">
+                <label asp-for="UniqueName"></label>
+                <input asp-for="UniqueName" type="text" class="form-control">
+                <div class="help-block">
+                    <span asp-validation-for="UniqueName" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="controls">
+                <label asp-for="IconHtmlCode"></label>
+                <input asp-for="IconHtmlCode" dir="ltr" class="form-control">
+                <div class="help-block">
+                    <span asp-validation-for="IconHtmlCode" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="controls">
+                <label asp-for="Type"></label>
+                <fieldset class="form-group">
+                    <select asp-for="Type" class="form-control">
+                        <option value="Blog">@(TagType.Blog.GetEnumDisplayName())</option>
+                        <option value="City">@(TagType.City.GetEnumDisplayName())</option>
+                        <option value="Account">@(TagType.Account.GetEnumDisplayName())</option>
+                        <option value="JobBranch">@(TagType.JobBranch.GetEnumDisplayName())</option>
+                    </select>
+                    <div class="help-block">
+                        <span asp-validation-for="Type" class="text-danger"></span>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label asp-for="Status"></label>
+            <select asp-for="Status" class="form-control">
+                @if (Model.Status)
+                {
+                    <option value="true" selected="selected">بله</option>
+                    <option value="false">خیر</option>
+                }
+                else
+                {
+                    <option value="true">بله</option>
+                    <option value="false" selected="selected">خیر</option>
+                }
+            </select>
+            <div class="help-block">
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+            <i class="bx bx-x d-block d-sm-none"></i>
+            <span class="d-none d-sm-block">بستن</span>
+        </button>
+        <button type="submit" class="btn btn-primary ml-1">
+            <i class="bx bx-check d-block d-sm-none"></i>
+            <span class="d-none d-sm-block">تایید</span>
+        </button>
+    </div>
+</form>

@@ -6,5 +6,6 @@
         public static readonly string Administrator = "Administrator";
         public static readonly string Doctor = "Doctor";
         public static readonly string User = "User";
+        public static readonly string Admin = "Admin";
     }
 }

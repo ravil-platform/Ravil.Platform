@@ -70,6 +70,7 @@
         #endregion
 
         #region ( Faq ) 
+        public IFaqJobCategoryRepository FaqJobCategoryRepository { get; }
         public IFaqCategoryRepository FaqCategoryRepository { get; }
         public IFaqRepository FaqRepository { get; }
         #endregion

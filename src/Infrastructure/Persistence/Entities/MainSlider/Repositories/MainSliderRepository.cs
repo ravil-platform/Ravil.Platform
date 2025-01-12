@@ -1,4 +1,6 @@
-﻿namespace Persistence.Entities.MainSlider.Repositories;
+﻿using ViewModels.AdminPanel.Filter;
+
+namespace Persistence.Entities.MainSlider.Repositories;
 
 public class MainSliderRepository : Repository<Domain.Entities.MainSlider.MainSlider>, IMainSliderRepository
 {
@@ -36,5 +38,46 @@ public class MainSliderRepository : Repository<Domain.Entities.MainSlider.MainSl
             .ToListAsync();
 
         return mainSliders;
+    }
+
+    public MainSliderFilterViewModel GetByFilterAdmin(MainSliderFilterViewModel filter)
+    {
+        var query =
+            ApplicationDbContext.MainSlider.OrderByDescending(b => b.Date).AsQueryable();
+
+        if (filter.FindAll)
+        {
+            #region (Find All)
+            filter.Build(query.Count()).SetEntities(query);
+
+            return filter;
+            #endregion
+        }
+
+        #region (Filter)
+        if (!string.IsNullOrWhiteSpace(filter.Title))
+        {
+            query = query.Where(a => a.Title.Contains(filter.Title));
+        }
+
+        if (!string.IsNullOrWhiteSpace(filter.LinkPage))
+        {
+            query = query.Where(a => a.LinkPage.Contains(filter.LinkPage.Trim()));
+        }
+
+        if (filter.CityId != null)
+        {
+            query = query.Where(a => a.CityId == filter.CityId);
+        }
+
+        if (filter.StateId != null)
+        {
+            query = query.Where(a => a.StateId == filter.StateId);
+        }
+        #endregion
+
+        filter.Build(query.Count()).SetEntities(query);
+
+        return filter;
     }
 }

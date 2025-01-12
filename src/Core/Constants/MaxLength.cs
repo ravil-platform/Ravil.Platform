@@ -17,6 +17,7 @@
         public const int NativeName = 50;
         public const int Phone = 11;
         public const int NationalCode = 10;
+        public const int PhoneNumber = 11;
         public const int PostalCode = 15;
 
         public const int Color = 7;

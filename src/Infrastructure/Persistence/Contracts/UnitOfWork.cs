@@ -438,6 +438,7 @@
                 return _dayOfWeekRepository;
             }
         }
+
         #endregion
 
         #region ( Faq )
@@ -466,6 +467,22 @@
                 }
 
                 return _faqRepository;
+            }
+        }
+
+
+        private IFaqJobCategoryRepository? _faqJobCategoryRepository;
+
+        public IFaqJobCategoryRepository FaqJobCategoryRepository
+        {
+            get
+            {
+                if (_faqJobCategoryRepository == null)
+                {
+                    _faqJobCategoryRepository = new FaqJobCategoryRepository(DatabaseContext);
+                }
+
+                return _faqJobCategoryRepository;
             }
         }
         #endregion

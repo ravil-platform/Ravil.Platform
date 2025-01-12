@@ -1,0 +1,86 @@
+﻿@using Domain.Entities.Category
+@{
+    ViewData["selected"] = "Categories_IndexCustomizeCategoryLinks";
+    ViewData["Title"] = "شخصی سازی لینک دسته بندی ها";
+    var categories = (List<Category>)ViewData["categories"];
+}
+
+<section>
+    <div class="card">
+        <div class="card-content">
+            <div class="card-body">
+                <ul class="nav nav-tabs mb-2">
+                    <li class="nav-item current">
+                        <a class="nav-link d-flex align-items-center active">
+                            <i class='bx bx-task'></i><span class="d-none d-sm-block">@ViewData["Title"]</span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active">
+                        <form method="post" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col-12 col-sm-6 col-lg-6">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label>دسته هایی که قصد دارید لینک بدهید</label>
+                                            <select id="originCategories" name="originCategories[]" class="select2 form-control" multiple onchange="validateDropdowns()">
+                                                @foreach (var category in categories.ToList())
+                                                {
+                                                    <option value="@category.Id">@category.Name</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6 col-lg-6">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label>فقط یک دسته بندی را انتخاب نمایید</label>
+                                            <select Id="categoryId" name="categoryId" class="select2 form-control" onchange="validateDropdowns()">
+                                                @foreach (var category in categories.ToList())
+                                                {
+                                                    <option value="@category.Id">@category.Name</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
+                                    <button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">ذخیره</button>
+                                    <button onclick="history.back()" type="reset" class="btn btn-light">انصراف</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts
+{
+    <script>
+        $('#originCategories, #categoryId').on('change', function () {
+            var selectedValues1 = $('#originCategories').val() || [];
+            var selectedValues2 = $('#categoryId').val() || [];
+
+            var hasCommonValue = selectedValues1.some(value => selectedValues2.includes(value));
+
+            if (hasCommonValue) {
+                Swal.fire({
+                    title: 'توجه',
+                    text: 'لطفا مبدا و مقصد را تکراری انتخاب نکنید!',
+                    icon: "info",
+                    showCancelButton: false,
+                    confirmButtonText: 'باشه',
+                });
+
+                $('#categoryId').val(null).trigger('change');
+            }
+        });
+    </script>
+}

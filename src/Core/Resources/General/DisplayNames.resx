@@ -1030,4 +1030,7 @@
   <data name="Route" xml:space="preserve">
     <value>مسیر یکتا</value>
   </data>
+  <data name="RouteDuplicate" xml:space="preserve">
+    <value>مسیر یکتا تکراری است!</value>
+  </data>
 </root>

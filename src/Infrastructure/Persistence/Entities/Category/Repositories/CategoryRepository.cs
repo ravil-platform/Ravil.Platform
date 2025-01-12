@@ -1,4 +1,6 @@
-﻿namespace Persistence.Entities.Category.Repositories;
+﻿using ViewModels.AdminPanel.Filter;
+
+namespace Persistence.Entities.Category.Repositories;
 
 public class CategoryRepository : Repository<Domain.Entities.Category.Category>, ICategoryRepository
 {
@@ -24,6 +26,17 @@ public class CategoryRepository : Repository<Domain.Entities.Category.Category>,
         return route;
     }
 
+    public async Task<bool> RouteExist(string route)
+    {
+        return await ApplicationDbContext.Category.AnyAsync(j => j.Route == route.ToSlug());
+    }
+
+    //use for Update
+    public async Task<bool> RouteExist(string route, int categoryId)
+    {
+        return await ApplicationDbContext.Category.AnyAsync(j => j.Route == route.ToSlug() && j.Id != categoryId);
+    }
+
     public async Task<List<Domain.Entities.Category.Category>> SetTargetRoutes(List<Domain.Entities.Category.Category> categories)
     {
         var targets = await ApplicationDbContext.Targets.ToListAsync();
@@ -41,6 +54,53 @@ public class CategoryRepository : Repository<Domain.Entities.Category.Category>,
         }
 
         return categories;
+    }
+
+    public CategoriesFilterViewModel GetByAdminFilter(CategoriesFilterViewModel filter)
+    {
+        var query =
+          ApplicationDbContext.Category
+              .OrderByDescending(b => b.CreateDate)
+              .AsQueryable();
+
+        if (filter.FindAll)
+        {
+            #region (Find All)
+            filter.Build(query.Count()).SetEntities(query);
+
+            return filter;
+            #endregion
+        }
+
+        #region (Filter)
+        if (!string.IsNullOrWhiteSpace(filter.Route))
+        {
+            query = query.Where(a => a.Route.Contains(filter.Route.ToSlug().Trim()));
+        }
+
+        if (!string.IsNullOrWhiteSpace(filter.Name))
+        {
+            query = query.Where(a => a.Name.Contains(filter.Name.Trim()));
+        }
+
+        if (!string.IsNullOrWhiteSpace(filter.PageContent))
+        {
+            query = query.Where(a => a.PageContent.Contains(filter.PageContent.Trim()));
+        }
+
+        //node
+        query = filter.NodeLevel != null ? query.Where(a => a.NodeLevel == filter.NodeLevel) : query.Where(a => a.NodeLevel == 1);
+
+        //parent
+        query = filter.ParentId != null ? query.Where(a => a.ParentId == filter.ParentId) : query.Where(a => a.ParentId == 0);
+
+        //is active
+        query = filter.IsActive != null ? query.Where(a => a.IsActive == filter.IsActive) : query.Where(a => a.IsActive == true);
+        #endregion
+
+        filter.Build(query.Count()).SetEntities(query);
+
+        return filter;
     }
 
     public async Task<List<Domain.Entities.Category.Category>> GetChildCategories(int nodeLevel, int parentId)

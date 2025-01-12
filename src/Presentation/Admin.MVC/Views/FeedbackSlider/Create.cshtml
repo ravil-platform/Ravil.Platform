@@ -1,0 +1,170 @@
+﻿@using Constants.Files
+@using Domain.Entities.Category
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model ViewModels.AdminPanel.FeedbackSlider.CreateFeedbackSliderViewModel
+
+@{
+    ViewData["Title"] = "ثبت دیدگاه جدید";
+    ViewData["selected"] = "FeedbackSliders_Create";
+    var categories = (List<Category>)ViewData["categories"]!;
+
+    //Todo : Image
+}
+
+@section CSS
+{
+    <style>
+        .ck-editor__editable_inline {
+            min-height: 400px;
+        }
+    </style>
+}
+
+<section>
+    <div class="card">
+        <div class="card-content">
+            <div class="card-body">
+                <ul class="nav nav-tabs mb-2">
+                    <li class="nav-item current">
+                        <a class="nav-link d-flex align-items-center active">
+                            <i class='bx bx-task'></i><span class="d-none d-sm-block">دیدگاه</span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active">
+                        <form method="post" enctype="multipart/form-data">
+                            <div class="card-title-details d-flex align-items-center mb-1 ml-1">
+                                <div>
+                                    <div class="avatar bg-rgba-primary p-25 mr-2 ml-0">
+                                        <img id="selected-picture" class="img-fluid" src="@Paths.DefaultsImagePath/PlaceHolder.svg" height="100" width="100">
+                                    </div>
+                                    <div class="mt-n25">
+                                        <h5>تصویر انتخاب شده</h5>
+                                        <p class="text-info">راهنمای سایز :W: 400px * H: 400px </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-md-12 mb-1">
+                                    <fieldset>
+                                        <div class="input-group">
+                                            <div class="custom-file">
+                                                <input asp-for="PictureFile" type="file" class="custom-file-input" accept=".jpg,.png,.jpeg,.gif,.webp">
+                                                <label class="custom-file-label">انتخاب تصویر بزرگ</label>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <div class="help-block">
+                                        <span asp-validation-for="PictureFile" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6 col-lg-3">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <span class="text-danger">*</span>
+                                            <label asp-for="CategoryId"></label>
+                                            <select asp-for="CategoryId" class="select2 form-control">
+                                                @if (categories.Any() || categories.Count > 1)
+                                                {
+                                                    @foreach (var item in categories)
+                                                    {
+                                                        <option value="@item.Id">@item.Name</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6 col-lg-3">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <span class="text-danger">*</span>
+                                            <label asp-for="UserName"></label>
+                                            <input asp-for="UserName" type="text" class="form-control text-left">
+                                            <div class="help-block">
+                                                <span asp-validation-for="UserName" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6 col-lg-3">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <span class="text-danger">*</span>
+                                            <label asp-for="UserRole"></label>
+                                            <input asp-for="UserRole" type="text" class="form-control text-left">
+                                            <div class="help-block">
+                                                <span asp-validation-for="UserRole" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6 col-lg-3">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <span class="text-danger">*</span>
+                                            <label asp-for="Sort"></label>
+                                            <input asp-for="Sort" type="number" class="form-control text-right">
+                                            <div id="price-convert" class="help-block">
+                                                <span asp-validation-for="Sort" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-12 col-lg-12">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <span class="text-danger">*</span>
+                                            <label asp-for="Description"></label>
+                                            <textarea asp-for="Description" rows="4" class="form-control text-left"></textarea>
+                                            <div class="help-block">
+                                                <span asp-validation-for="Description" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
+                                <button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">ذخیره</button>
+                                <button onclick="history.back()" type="reset" class="btn btn-light">انصراف</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script src="~/lib/ckeditor5/ckeditor.js"></script>
+    <script src="~/lib/ckeditor5/customckeditor.js"></script>
+
+    <script>
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#selected-picture').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#PictureFile").change(function () {
+            readURL(this);
+        });
+    </script>
+}

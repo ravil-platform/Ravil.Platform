@@ -241,6 +241,15 @@ namespace Resources.Messages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to مسیر یکتا تکراری است!.
+        /// </summary>
+        public static string RouteDuplicate {
+            get {
+                return ResourceManager.GetString("RouteDuplicate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to خطای ورود به سیستم! شماره تلفن همراه یا کلمه عبور را اشتباه وارد کرده باشید..
         /// </summary>
         public static string SignInError {

@@ -1,0 +1,56 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model CreateFaqCategoryViewModel
+@{
+    var faqCategories = (List<FaqCategory>)ViewData["faqCategories"]!;
+}
+<form asp-controller="Faqs" asp-action="CreateFaqCategories" method="post">
+    <div class="modal-body">
+        <div class="form-group">
+            <div class="controls">
+                <label asp-for="ParentId"></label>
+                <fieldset class="form-group">
+                    <select asp-for="ParentId" class="form-control select2">
+                        <option value="null">بدون والد</option>
+                        @foreach (var item in faqCategories)
+                        {
+                            <option value="@item.Id">@item.Title</option>
+                        }
+                    </select>
+                </fieldset>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="controls">
+                <label asp-for="Title"></label>
+                <input asp-for="Title" type="text" class="form-control text-left">
+                <div class="help-block">
+                    <span asp-validation-for="Sort" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="controls">
+                <label asp-for="Sort"></label>
+                <input asp-for="Sort" type="text" dir="ltr" class="form-control">
+                <div class="help-block">
+                    <span asp-validation-for="Sort" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+            <i class="bx bx-x d-block d-sm-none"></i>
+            <span class="d-none d-sm-block">بستن</span>
+        </button>
+        <button type="submit" class="btn btn-primary ml-1">
+            <i class="bx bx-check d-block d-sm-none"></i>
+            <span class="d-none d-sm-block">تایید</span>
+        </button>
+    </div>
+</form>
+
+
