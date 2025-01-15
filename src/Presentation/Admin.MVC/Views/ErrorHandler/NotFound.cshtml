@@ -1,0 +1,24 @@
+﻿﻿@{
+    ViewData["Title"] = "صفحه مورد نظر یافت نشد";
+
+    Layout = "_AuthLayout";
+}
+
+<div class="content-body">
+    <section class="row flexbox-container">
+        <div class="col-xl-6 col-md-7 col-9">
+            <div class="card bg-transparent shadow-none">
+                <div class="card-content">
+                    <div class="card-body text-center bg-transparent miscellaneous">
+                        <h1 class="error-title">صفحه یافت نشد :(</h1>
+                        <p class="pb-3">
+                            صفحه ای که به دنبال آن هستید موجود نیست
+                        </p>
+                        <img class="img-fluid" src="~/assets/images/logo/logo.png" alt="ravil logo" height="125" width="125">
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-primary round glow mt-3">بازگشت به خانه</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

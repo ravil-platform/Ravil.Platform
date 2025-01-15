@@ -209,11 +209,25 @@
 
         }
         #endregion
+
+        #region ( Image To ByteArray )
+        public static byte[] ToByteArray(this Image current)
+        {
+            using (var stream = new MemoryStream())
+            {
+                current.Save(stream, new JpegEncoder
+                {
+                    Quality = 100
+                });
+                return stream.ToArray();
+            }
+        }
+        #endregion
     }
 
     public enum TypeFile
     {
-        Image, Video, Audios, Document, Other
+        Image, Video, Audio, Document, DocumentAndImage, Other
     }
 
     public enum ExtensionTypeFile

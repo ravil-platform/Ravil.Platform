@@ -1,0 +1,84 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Domain.Entities.Tag
+@{
+    var blogName = ViewData["blog"]?.ToString();
+    var blogId = ViewData["blogId"]?.ToString();
+    var tags = ViewData["tags"] as List<Tag>;
+    var currentBlogTags = ViewData["currentBlogTags"] as List<Tag>;
+
+    ViewData["Title"] = $"ثبت تگ برای {blogName}";
+    ViewData["selected"] = "Blogs_Index";
+}
+
+
+<section>
+    <div class="card">
+        <div class="card-content">
+            <div class="card-body">
+                <ul class="nav nav-tabs mb-2">
+                    <li class="nav-item current">
+                        <a class="nav-link d-flex align-items-center active">
+                            <i class='bx bx-task'></i><span class="d-none d-sm-block">@ViewData["Title"]</span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active">
+                        <form method="post" enctype="multipart/form-data">
+                            <input name="blogId" value="@blogId" hidden="hidden" />
+                            <div class="row">
+                                <div class="col-12 col-sm-12 col-lg-12">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label> @(Resources.General.DisplayNames.Tag) </label>
+                                            <fieldset class="form-group">
+                                                <select name="tags" class="select2 form-control" multiple>
+                                                    @if (tags != null && tags.Count > 0)
+                                                    {
+                                                        @foreach (var item in tags)
+                                                        {
+                                                            @if (currentBlogTags != null && currentBlogTags.Count > 0)
+                                                            {
+                                                                @if (currentBlogTags.Any(b => b.Id == item.Id))
+                                                                {
+                                                                    <option value="@item.Id" selected="selected">@item.Name</option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="@item.Id">@item.Name</option>
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@item.Id">@item.Name</option>
+                                                            }
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="null">تگی ای یافت نشد!</option>
+                                                    }
+                                                </select>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
+                                    <button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">ذخیره</button>
+                                    <button onclick="history.back()" type="reset" class="btn btn-light">انصراف</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+}

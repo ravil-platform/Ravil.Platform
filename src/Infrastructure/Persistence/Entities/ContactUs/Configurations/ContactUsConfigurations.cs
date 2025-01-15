@@ -8,8 +8,8 @@
 
             builder.HasKey(c => c.Id);
             builder.Property(c => c.FullName).IsRequired().HasMaxLength(MaxLength.FullName);
-            builder.Property(c => c.Email).IsRequired().HasMaxLength(MaxLength.Email);
-            builder.Property(c => c.Subject).IsRequired().HasMaxLength(MaxLength.EmailSubject);
+            builder.Property(c => c.Email).IsRequired(false).HasMaxLength(MaxLength.Email);
+            builder.Property(c => c.Subject).IsRequired(false).HasMaxLength(MaxLength.EmailSubject);
             builder.Property(c => c.Message).IsRequired().HasMaxLength(MaxLength.EmailBody);
             builder.Property(c => c.PhoneNumber).IsRequired().HasMaxLength(MaxLength.Phone);
             builder.Property(c => c.UserId).IsRequired(false);

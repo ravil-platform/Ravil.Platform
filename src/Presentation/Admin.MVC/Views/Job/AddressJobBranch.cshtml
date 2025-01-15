@@ -1,0 +1,185 @@
+﻿@model ViewModels.AdminPanel.Job.AddressJobBranchViewModel
+@using Domain.Entities.City
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "ثبت آدرس";
+    ViewData["selected"] = "Jobs_Create";
+    var jobBranchId = (string)ViewData["jobBranchId"]!;
+    var cities = (List<CityBase>)ViewData["cities"]!;
+
+    string isUpdate = (string)ViewData["isUpdate"]!;
+}
+
+@section CSS
+{
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+}
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-content">
+                <div class="card-body">
+                    <div id="map" class="height-400"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12 col-12">
+    <div class="card">
+        <div class="card-content">
+            <div class="card-body">
+                <form class="form form-horizontal" id="locationForm" method="post">
+                    <div class="form-body">
+                        <input type="hidden" id="isUpdate" value="@isUpdate" />
+                        <input type="hidden" asp-for="StateId" value="5" />
+                        <input type="hidden" asp-for="AddressId" />
+                        <input type="hidden" asp-for="LocationId" />
+                        <input type="hidden" asp-for="Neighbourhood" />
+                        <input type="hidden" id="latitude" asp-for="Lat" />
+                        <input type="hidden" id="longitude" asp-for="Long" />
+                        <input type="hidden" id="jobBranchId" asp-for="JobBranchId" value="@jobBranchId" />
+                        <div class="row">
+                            <div class="col-6 form-group">
+                                <span class="text-danger">*</span>
+                                <label>شهر</label>
+                                <select id="cityName" asp-for="CityId" class="select2 form-control">
+                                    @foreach (var item in cities)
+                                    {
+                                        <option value="@item.Id">@item.Name</option>
+                                    }
+                                </select>
+                                <div class="help-block">
+                                    <span asp-validation-for="CityId" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-6 form-group">
+                                <label>کد پستی</label>
+                                <input type="text" id="postalCode" asp-for="PostalCode" class="form-control" placeholder="آدرس">
+                                <div class="help-block">
+                                    <span asp-validation-for="PostalCode" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-12 form-group">
+                                <span class="text-danger">*</span>
+                                <label>آدرس</label>
+                                <input type="text" id="address" asp-for="PostalAddress" class="form-control" placeholder="آدرس">
+                                <div class="help-block">
+                                    <span asp-validation-for="PostalAddress" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 d-flex justify-content-end">
+                                <button type="submit" id="submitBtn" class="btn btn-primary mr-1 mb-1">ثبت</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+
+    <script>
+        let map;
+        let marker;
+
+        if ($("#isUpdate").val() === "true") {
+            map = L.map('map').setView([@Model.Lat, @Model.Long], 18)
+
+            if (marker) {
+                map.removeLayer(marker);
+            }
+            marker = L.marker([@Model.Lat, @Model.Long]).addTo(map);
+        } else {
+            map = L.map('map').setView([35.855938, 50.961750], 12);
+        }
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+        }).addTo(map);
+
+
+        map.on('click', function (e) {
+            console.log(e)
+            if (marker) {
+                map.removeLayer(marker);
+            }
+            marker = L.marker(e.latlng).addTo(map);
+            document.getElementById('latitude').value = e.latlng.lat;
+            document.getElementById('longitude').value = e.latlng.lng;
+
+            const lat = e.latlng.lat;
+            const lon = e.latlng.lng;
+
+            setJobBranchAddress(lat, lon)
+        });
+
+        function setJobBranchAddress(latitude, longitude) {
+            var async = false;
+            var method = 'GET';
+            var neshanAPIKEY = 'service.ca1cnbM1Zl5tSL99kZVzHaktxmKHEK0w7Df82H75';
+            var urlReverseNeshan = `https://api.neshan.org/v2/reverse?lat=${latitude}&lng=${longitude}`;
+
+            var cityName; var stateName; var neighbourhood;
+            return new Promise(function (resolve, reject) {
+                $.ajax({
+                    type: method,
+                    headers: { 'Api-Key': neshanAPIKEY },
+                    url: urlReverseNeshan,
+                    dataType: 'json',
+                    async: async,
+                    success: function (response) {
+                        if (typeof response == 'object') {
+                            if (response != null && response.status.toLowerCase() === 'ok') {
+                                cityName = response.city;
+                                neighbourhood = response.neighbourhood;
+                                stateName = response.state.split(" ").length > 1 ? response.state.split(" ")[1] : response.state;
+                                var address = `${response.formatted_address}`;
+
+                                $('#locationForm #address').val(address);
+                                $('#locationForm #Neighbourhood').val(neighbourhood);
+
+                                const option = $('#cityName').find(`option:contains('${neighbourhood}')`);
+                                if (option.length) {
+                                    $('#cityName').val(option.val()).trigger('change');
+                                }
+                                else {
+                                    var option2 = $('#cityName').find(`option:contains('${cityName}')`);
+                                    $('#cityName').val(option2.val()).trigger('change');
+                                }
+
+                                resolve(response);
+                            }
+                        }
+                    },
+                    error: function (e) {
+                        console.error('error ajax request..:  ' + e.responseText);
+                    },
+                    complete: function (data) {
+                        Swal.fire({
+                            title: 'توجه',
+                            text: 'آدرس با موفقیت یافت شد حتما از صحت شهر انتخاب شده اطمینان حاصل فرمایید',
+                            icon: "warning",
+                            showCancelButton: false,
+                            showConfirmButton: true,
+                            confirmButtonText: 'تایید',
+                        });
+                    }
+                });
+            });
+        };
+
+    </script>
+}

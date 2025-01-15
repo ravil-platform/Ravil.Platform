@@ -1,8 +1,141 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "پنل مدیریت";
+    ViewData["selected"] = "Dashboard_Index";
+
+    int usersCount = (int)ViewData["usersCount"]!;
+    int todayUsersCount = (int)ViewData["todayUsersCount"]!;
+    int jobCount = (int)ViewData["jobCount"]!;
+    int jobWaitingCount = (int)ViewData["jobWaitingCount"]!;
+    int contactCount = (int)ViewData["contactCount"]!;
+    int feedbackCount = (int)ViewData["feedbackCount"]!;
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+
+<section id="dashboard-analytics">
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h4 class="card-title">آمار وب سایت</h4>
+                    <i class="bx bx-dots-vertical-rounded font-medium-3 cursor-pointer"></i>
+                </div>
+                <div class="card-content">
+                    <div class="card-body pb-1" style="position: relative;">
+                        <div class="d-flex justify-content-around align-items-center flex-wrap">
+                            <div class="user-analytics">
+                                <i class="bx bx-user mr-25 align-middle"></i>
+                                <span class="align-middle text-muted">تعداد کل کاربران</span>
+                                <div class="d-flex" style="position: relative;">
+                                    <div id="radial-success-chart" style="min-height: 91.4146px;"><div id="apexchartsoctvl5mn" class="apexcharts-canvas apexchartsoctvl5mn light" style="width: 40px; height: 91.4146px;"><svg id="SvgjsSvg2507" width="40" height="91.41463414634147" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" class="apexcharts-svg" xmlns:data="ApexChartsNS" transform="translate(0, 0)" style="background: transparent;"><g id="SvgjsG2509" class="apexcharts-inner apexcharts-graphical" transform="translate(-12.5, 0)"><defs id="SvgjsDefs2508"><clipPath id="gridRectMaskoctvl5mn"><rect id="SvgjsRect2510" width="67" height="7" x="-1" y="-1" rx="0" ry="0" fill="#ffffff" opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0"></rect></clipPath><clipPath id="gridRectMarkerMaskoctvl5mn"><rect id="SvgjsRect2511" width="67" height="7" x="-1" y="-1" rx="0" ry="0" fill="#ffffff" opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0"></rect></clipPath><linearGradient id="SvgjsLinearGradient2517" x1="0" y1="1" x2="1" y2="1"><stop id="SvgjsStop2518" stop-opacity="1" stop-color="rgba(242,242,242,1)" offset="0"></stop><stop id="SvgjsStop2519" stop-opacity="0.8" stop-color="rgba(57,218,138,0.8)" offset="0.7"></stop><stop id="SvgjsStop2520" stop-opacity="0.8" stop-color="rgba(57,218,138,0.8)" offset="1"></stop></linearGradient><linearGradient id="SvgjsLinearGradient2526" x1="0" y1="1" x2="1" y2="1"><stop id="SvgjsStop2527" stop-opacity="1" stop-color="rgba(57,218,138,1)" offset="0"></stop><stop id="SvgjsStop2528" stop-opacity="0.8" stop-color="rgba(57,218,138,0.8)" offset="0.7"></stop><stop id="SvgjsStop2529" stop-opacity="0.8" stop-color="rgba(57,218,138,0.8)" offset="1"></stop></linearGradient></defs><g id="SvgjsG2513" class="apexcharts-radialbar"><g id="SvgjsG2514"><g id="SvgjsG2515" class="apexcharts-tracks"><g id="SvgjsG2516" class="apexcharts-radialbar-track apexcharts-track" rel="1"><path id="apexcharts-radialbarTrack-0" d="M 32.5 17.789024390243902 A 14.710975609756098 14.710975609756098 0 1 1 32.497432450407324 17.78902461430487" fill="none" fill-opacity="1" stroke="rgba(242,242,242,0.85)" stroke-opacity="1" stroke-linecap="round" stroke-width="3.877634146341464" stroke-dasharray="0" class="apexcharts-radialbar-area" data:pathOrig="M 32.5 17.789024390243902 A 14.710975609756098 14.710975609756098 0 1 1 32.497432450407324 17.78902461430487"></path></g></g><g id="SvgjsG2522"><g id="SvgjsG2525" class="apexcharts-series apexcharts-radial-series" seriesName="seriesx1" rel="1" data:realIndex="0"><path id="SvgjsPath2530" d="M 32.5 17.789024390243902 A 14.710975609756098 14.710975609756098 0 0 1 46.49096921471761 37.04594146724999" fill="none" fill-opacity="0.85" stroke="url(#SvgjsLinearGradient2526)" stroke-opacity="1" stroke-linecap="round" stroke-width="3.9975609756097565" stroke-dasharray="0" class="apexcharts-radialbar-area apexcharts-radialbar-slice-0" data:angle="108" data:value="30" index="0" j="0" data:pathOrig="M 32.5 17.789024390243902 A 14.710975609756098 14.710975609756098 0 0 1 46.49096921471761 37.04594146724999"></path></g><circle id="SvgjsCircle2523" r="7.772158536585366" cx="32.5" cy="32.5" class="apexcharts-radialbar-hollow" fill="transparent"></circle><g id="SvgjsG2524" class="apexcharts-datalabels-group" transform="translate(0, 0)" style="opacity: 1;"></g></g></g></g><line id="SvgjsLine2531" x1="0" y1="0" x2="65" y2="0" stroke="#b6b6b6" stroke-dasharray="0" stroke-width="1" class="apexcharts-ycrosshairs"></line><line id="SvgjsLine2532" x1="0" y1="0" x2="65" y2="0" stroke-dasharray="0" stroke-width="0" class="apexcharts-ycrosshairs-hidden"></line></g></svg><div class="apexcharts-legend"></div></div></div>
+                                    <h3 class="mt-1 ml-50 primary-font">@usersCount</h3>
+                                    <div class="resize-triggers"><div class="expand-trigger"><div style="width: 84px; height: 92px;"></div></div><div class="contract-trigger"></div></div>
+                                </div>
+                            </div>
+                            <div class="sessions-analytics">
+                                <i class='bx bx-user-plus mr-25 align-middle'></i>
+                                <span class="align-middle text-muted">ثبت نام شده های امروز</span>
+                                <div class="d-flex" style="position: relative;">
+                                    <div id="radial-success-chart" style="min-height: 91.4146px;">
+                                        <div id="apexchartsoctvl5mn" class="apexcharts-canvas apexchartsoctvl5mn light" style="width: 40px; height: 91.4146px;">
+                                            <svg id="SvgjsSvg2507" width="40" height="91.41463414634147" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" class="apexcharts-svg" xmlns:data="ApexChartsNS" transform="translate(0, 0)" style="background: transparent;"><g id="SvgjsG2509" class="apexcharts-inner apexcharts-graphical" transform="translate(-12.5, 0)"><defs id="SvgjsDefs2508"><clipPath id="gridRectMaskoctvl5mn"><rect id="SvgjsRect2510" width="67" height="7" x="-1" y="-1" rx="0" ry="0" fill="#ffffff" opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0"></rect></clipPath><clipPath id="gridRectMarkerMaskoctvl5mn"><rect id="SvgjsRect2511" width="67" height="7" x="-1" y="-1" rx="0" ry="0" fill="#ffffff" opacity="1" stroke-width="0" stroke="none" stroke-dasharray="0"></rect></clipPath><linearGradient id="SvgjsLinearGradient2517" x1="0" y1="1" x2="1" y2="1"><stop id="SvgjsStop2518" stop-opacity="1" stop-color="rgba(242,242,242,1)" offset="0"></stop><stop id="SvgjsStop2519" stop-opacity="0.8" stop-color="rgba(57,218,138,0.8)" offset="0.7"></stop><stop id="SvgjsStop2520" stop-opacity="0.8" stop-color="rgba(57,218,138,0.8)" offset="1"></stop></linearGradient><linearGradient id="SvgjsLinearGradient2526" x1="0" y1="1" x2="1" y2="1"><stop id="SvgjsStop2527" stop-opacity="1" stop-color="rgba(57,218,138,1)" offset="0"></stop><stop id="SvgjsStop2528" stop-opacity="0.8" stop-color="rgba(57,218,138,0.8)" offset="0.7"></stop><stop id="SvgjsStop2529" stop-opacity="0.8" stop-color="rgba(57,218,138,0.8)" offset="1"></stop></linearGradient></defs><g id="SvgjsG2513" class="apexcharts-radialbar"><g id="SvgjsG2514"><g id="SvgjsG2515" class="apexcharts-tracks"><g id="SvgjsG2516" class="apexcharts-radialbar-track apexcharts-track" rel="1"><path id="apexcharts-radialbarTrack-0" d="M 32.5 17.789024390243902 A 14.710975609756098 14.710975609756098 0 1 1 32.497432450407324 17.78902461430487" fill="none" fill-opacity="1" stroke="rgba(242,242,242,0.85)" stroke-opacity="1" stroke-linecap="round" stroke-width="3.877634146341464" stroke-dasharray="0" class="apexcharts-radialbar-area" data:pathOrig="M 32.5 17.789024390243902 A 14.710975609756098 14.710975609756098 0 1 1 32.497432450407324 17.78902461430487"></path></g></g><g id="SvgjsG2522"><g id="SvgjsG2525" class="apexcharts-series apexcharts-radial-series" seriesName="seriesx1" rel="1" data:realIndex="0"><path id="SvgjsPath2530" d="M 32.5 17.789024390243902 A 14.710975609756098 14.710975609756098 0 0 1 46.49096921471761 37.04594146724999" fill="none" fill-opacity="0.85" stroke="url(#SvgjsLinearGradient2526)" stroke-opacity="1" stroke-linecap="round" stroke-width="3.9975609756097565" stroke-dasharray="0" class="apexcharts-radialbar-area apexcharts-radialbar-slice-0" data:angle="108" data:value="30" index="0" j="0" data:pathOrig="M 32.5 17.789024390243902 A 14.710975609756098 14.710975609756098 0 0 1 46.49096921471761 37.04594146724999"></path></g><circle id="SvgjsCircle2523" r="7.772158536585366" cx="32.5" cy="32.5" class="apexcharts-radialbar-hollow" fill="transparent"></circle><g id="SvgjsG2524" class="apexcharts-datalabels-group" transform="translate(0, 0)" style="opacity: 1;"></g></g></g></g><line id="SvgjsLine2531" x1="0" y1="0" x2="65" y2="0" stroke="#b6b6b6" stroke-dasharray="0" stroke-width="1" class="apexcharts-ycrosshairs"></line><line id="SvgjsLine2532" x1="0" y1="0" x2="65" y2="0" stroke-dasharray="0" stroke-width="0" class="apexcharts-ycrosshairs-hidden"></line></g></svg>
+                                            <div class="apexcharts-legend"></div>
+                                        </div>
+                                    </div>
+                                    <h3 class="mt-1 ml-50 primary-font">@todayUsersCount</h3>
+                                    <div class="resize-triggers">
+                                        <div class="expand-trigger">
+                                            <div style="width: 88px; height: 92px;"></div>
+                                        </div>
+                                        <div class="contract-trigger"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-xl-12 col-md-12 col-lg-12">
+            <div class="row">
+                <div class="col-12 col-md-6 col-lg-6">
+                    <div class="card">
+                        <div class="card-body d-flex align-items-center justify-content-between" style="position: relative;">
+                            <div class="d-flex align-items-center my-n50">
+                                <div class="avatar bg-rgba-primary m-0 p-25 mr-75 mr-xl-2">
+                                    <div class="avatar-content">
+                                        <i class='bx bx-home text-primary font-medium-2'></i>
+                                    </div>
+                                </div>
+                                <div class="total-amount mt-n50">
+                                    <h5 class="mb-0 primary-font">تعداد مشاغل فعلی</h5>
+                                    <small class="text-muted">@jobCount عدد</small>
+                                    <a asp-controller="Job" asp-action="IndexJob" target="_blank" class="text-info">مشاهده</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-6">
+                    <div class="card">
+                        <div class="card-body d-flex align-items-center justify-content-between" style="position: relative;">
+                            <div class="d-flex align-items-center my-n50">
+                                <div class="avatar bg-rgba-success m-0 p-25 mr-75 mr-xl-2">
+                                    <div class="avatar-content">
+                                        <i class="bx bxs-chat text-success font-medium-2"></i>
+                                    </div>
+                                </div>
+                                <div class="total-amount mt-n50">
+                                    <h5 class="mb-0 primary-font">شغل های بررسی نشده</h5>
+                                    <small class="text-muted">@jobWaitingCount عدد</small>
+                                    <a asp-controller="Job" asp-action="IndexJob" asp-route-status="WaitingToCheck" target="_blank" class="text-info">مشاهده</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-6">
+                    <div class="card">
+                        <div class="card-body d-flex align-items-center justify-content-between" style="position: relative;">
+                            <div class="d-flex align-items-center my-n50">
+                                <div class="avatar bg-rgba-primary m-0 p-25 mr-75 mr-xl-2">
+                                    <div class="avatar-content">
+                                        <i class="bx bx-user text-primary font-medium-2"></i>
+                                    </div>
+                                </div>
+                                <div class="total-amount mt-n50">
+                                    <h5 class="mb-0 primary-font">فرم تماس های ثبت شده ی خوانده نشده</h5>
+                                    <small class="text-muted">@contactCount عدد</small>
+                                    <a asp-controller="Contact" asp-action="Index" target="_blank" class="text-info">مشاهده</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-6">
+                    <div class="card">
+                        <div class="card-body d-flex align-items-center justify-content-between" style="position: relative;">
+                            <div class="d-flex align-items-center my-n50">
+                                <div class="avatar bg-rgba-warning m-0 p-25 mr-75 mr-xl-2">
+                                    <div class="avatar-content">
+                                        <i class='bx bxs-notepad text-warning font-medium-2'></i>
+                                    </div>
+                                </div>
+                                <div class="total-amount mt-n50">
+                                    <h5 class="mb-0 primary-font">دیدگاه های ثبت شده</h5>
+                                    <small class="text-muted">@feedbackCount عدد</small>
+                                    <a asp-controller="FeedbackSlider" asp-action="Index" target="_blank" class="text-info">مشاهده</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

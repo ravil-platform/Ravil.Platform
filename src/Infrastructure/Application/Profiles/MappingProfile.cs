@@ -2,7 +2,17 @@
 using Application.Features.Category.Queries.GetAllByFilter;
 using Application.Features.Job.Queries.GetAllJobBranch;
 using Application.Features.Job.Queries.GetRelatedJobBranches;
+using Domain.Entities.FeedbackSlider;
+using Domain.Entities.RedirectionUrl;
 using RNX.CustomResult;
+using ViewModels.AdminPanel.Banner;
+using ViewModels.AdminPanel.Category;
+using ViewModels.AdminPanel.Cms;
+using ViewModels.AdminPanel.Cms.Blog;
+using ViewModels.AdminPanel.Config;
+using ViewModels.AdminPanel.FeedbackSlider;
+using ViewModels.AdminPanel.MainSlider;
+using ViewModels.AdminPanel.RedirectionUrl;
 
 namespace Application.Profiles
 {
@@ -39,12 +49,21 @@ namespace Application.Profiles
             #region ( Blog )
             CreateMap<Blog, BlogViewModel>().ReverseMap();
             CreateMap<BlogCategory, BlogCategoryViewModel>().ReverseMap();
+
+            CreateMap<Blog, CreateBlogViewModel>().ReverseMap();
+            CreateMap<Blog, UpdateBlogViewModel>().ReverseMap();
+            CreateMap<BlogCategory, CreateBlogCategoryViewModel>().ReverseMap();
+            CreateMap<BlogCategory, UpdateBlogCategoryViewModel>().ReverseMap();
+
             #endregion
 
             #region ( Category )
             CreateMap<Category, CategoryViewModel>().ReverseMap();
             CreateMap<Category, MainCategories>().ReverseMap();
             CreateMap<CategoryService, CategoryServiceViewModel>().ReverseMap();
+
+            CreateMap<Category, CreateCategoryViewModel>().ReverseMap();
+            CreateMap<Category, UpdateCategoryViewModel>().ReverseMap();
             #endregion
 
             #region ( Job )
@@ -52,6 +71,12 @@ namespace Application.Profiles
             CreateMap<Job, CreateJobCommand>().ReverseMap();
             CreateMap<Job, CreateJobViewModel>().ReverseMap();
             CreateMap<Job, UpdateJobCommand>().ReverseMap();
+
+            CreateMap<Job, ViewModels.AdminPanel.Job.CreateJobViewModel>().ReverseMap();
+            CreateMap<Job, ViewModels.AdminPanel.Job.UpdateJobViewModel>().ReverseMap();
+            CreateMap<JobBranch, ViewModels.AdminPanel.Job.CreateJobBranchViewModel>().ReverseMap();
+            CreateMap<JobBranch, ViewModels.AdminPanel.Job.UpdateJobBranchViewModel>().ReverseMap();
+
 
             CreateMap<JobCategory, CreateJobCategoryCommand>().ReverseMap();
             CreateMap<JobCategory, UpdateJobCategoryCommand>().ReverseMap();
@@ -80,6 +105,8 @@ namespace Application.Profiles
 
             #region ( Slider )
             CreateMap<MainSlider, MainSliderViewModel>().ReverseMap();
+            CreateMap<MainSlider, CreateMainSliderViewModel>().ReverseMap();
+            CreateMap<MainSlider, UpdateMainSliderViewModel>().ReverseMap();
             #endregion
 
             #region ( Short Link )
@@ -89,6 +116,8 @@ namespace Application.Profiles
             #region ( Tag )
             CreateMap<Tag, TagViewModel>().ReverseMap();
             CreateMap<BlogTag, BlogTagViewModel>().ReverseMap();
+            CreateMap<Tag, CreateTagViewModel>().ReverseMap();
+            CreateMap<Tag, UpdateTagViewModel>().ReverseMap();
             CreateMap<JobTag, JobTagViewModel>().ReverseMap();
             #endregion
 
@@ -107,6 +136,8 @@ namespace Application.Profiles
 
             #region ( Banner )
             CreateMap<Banner, BannerViewModel>().ReverseMap();
+            CreateMap<Banner, CreateBannerViewModel>().ReverseMap();
+            CreateMap<Banner, UpdateBannerViewModel>().ReverseMap();
             #endregion
 
             #region ( Brand )
@@ -141,6 +172,20 @@ namespace Application.Profiles
             CreateMap<BlogFilterViewModel, GetAllBlogsByFilterQuery>().ReverseMap();
 
             CreateMap<CategoryFilterViewModel, GetAllCategoriesByFilterQuery>().ReverseMap();
+            #endregion
+
+            #region ( FeedbakSlider )
+            CreateMap<FeedbackSlider, CreateFeedbackSliderViewModel>().ReverseMap();
+            CreateMap<FeedbackSlider, UpdateFeedbackSliderViewModel>().ReverseMap();
+            #endregion
+
+            #region ( Redirection Url )
+            CreateMap<RedirectionUrl, CreateRedirectionUrlViewModel>().ReverseMap();
+            CreateMap<RedirectionUrl, UpdateRedirectionUrlViewModel>().ReverseMap();
+            #endregion
+
+            #region ( Config )
+            CreateMap<Config, AdminConfigViewModel>().ReverseMap();
             #endregion
 
             CreateMap(typeof(CustomResult<>), typeof(Result<>)).ReverseMap();

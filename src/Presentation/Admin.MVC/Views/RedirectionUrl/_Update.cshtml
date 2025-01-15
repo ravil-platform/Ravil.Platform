@@ -1,0 +1,55 @@
+﻿@using Enums
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model ViewModels.AdminPanel.RedirectionUrl.UpdateRedirectionUrlViewModel
+
+<form asp-controller="RedirectionUrl" asp-action="Update" method="post">
+    <input type="hidden" asp-for="Id" value="@Model.Id"/>
+    <div class="modal-body">
+        <div class="form-group">
+            <div class="controls">
+                <label asp-for="LatestUrl"></label>
+                <input asp-for="LatestUrl" type="text" class="form-control text-right" dir="ltr">
+                <div class="help-block">
+                    <span asp-validation-for="LatestUrl" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="controls">
+                <label asp-for="DestinationUrl"></label>
+                <input asp-for="DestinationUrl" type="text" class="form-control text-right" dir="ltr">
+                <div class="help-block">
+                    <span asp-validation-for="DestinationUrl" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="controls">
+                <label asp-for="RedirectionType"></label>
+                <select asp-for=RedirectionType class="form-control">
+                    <option value="MovedPermanently301">@RedirectionTypes.MovedPermanently301.GetEnumDisplayName()</option>
+                    <option value="Found302">@RedirectionTypes.Found302.GetEnumDisplayName()</option>
+                    <option value="TemporaryRedirect307">@RedirectionTypes.TemporaryRedirect307.GetEnumDisplayName()</option>
+                    <option value="Gone410">@RedirectionTypes.Gone410.GetEnumDisplayName()</option>
+                    <option value="UnavailableForLegalReasons451">@RedirectionTypes.UnavailableForLegalReasons451.GetEnumDisplayName()</option>
+                </select>
+                <div class="help-block">
+                    <span asp-validation-for="RedirectionType" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+            <i class="bx bx-x d-block d-sm-none"></i>
+            <span class="d-none d-sm-block">بستن</span>
+        </button>
+        <button type="submit" class="btn btn-primary ml-1">
+            <i class="bx bx-check d-block d-sm-none"></i>
+            <span class="d-none d-sm-block">تایید</span>
+        </button>
+    </div>
+</form>

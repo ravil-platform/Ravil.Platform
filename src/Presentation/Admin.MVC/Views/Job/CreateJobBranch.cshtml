@@ -1,0 +1,299 @@
+﻿@using Constants.Files
+@using Enums
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model ViewModels.AdminPanel.Job.CreateJobBranchViewModel
+
+@{
+    var jobTitle = (string)ViewData["jobTitle"]!;
+    ViewData["Title"] = $"ثبت شعبه جدید برای {jobTitle}";
+    ViewData["selected"] = "Jobs_Create";
+
+    //Todo : Image
+}
+
+@section CSS
+{
+    <style>
+        .ck-editor__editable_inline {
+            min-height: 400px;
+        }
+    </style>
+}
+
+<section>
+    <div class="card">
+        <div class="card-content">
+            <div class="card-body">
+                <ul class="nav nav-tabs mb-2">
+                    <li class="nav-item current">
+                        <a class="nav-link d-flex align-items-center active">
+                            <i class='bx bx-task'></i><span class="d-none d-sm-block">شغل</span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active">
+                        <form method="post" enctype="multipart/form-data">
+                            <input type="hidden" asp-for="JobId" />
+                            <input type="hidden" asp-for="UserId" />
+                            <div class="card-title-details d-flex align-items-center mb-1 ml-1">
+                                <div>
+                                    <div class="avatar bg-rgba-primary p-25 mr-2 ml-0">
+                                        <img id="selected-picture" class="img-fluid" src="@Paths.DefaultsImagePath/PlaceHolder.svg" height="100" width="100">
+                                    </div>
+                                    <div class="mt-n25">
+                                        <h5>تصویر انتخاب شده</h5>
+                                        <p class="text-info">راهنمای سایز :W: 400px * H: 400px </p>
+                                        <p class="text-warning">درصورتی که تصویر را وارد نکنید از تصویر شعبه اصلی استفاده میگردد</p>
+                                    </div>
+                                </div>
+
+                                <div style="margin-right:34%">
+                                    <div class="avatar bg-rgba-primary p-25 mr-2 ml-0">
+                                        <img id="selected-banner" class="img-fluid" src="@Paths.DefaultsImagePath/PlaceHolder.svg" height="100" width="100">
+                                    </div>
+                                    <div class="mt-n25 mr-5">
+                                        <h5>تصویر موبایل انتخاب شده</h5>
+                                        <p class="text-info">راهنمای سایز : W: 400px * H: 400px </p>
+                                        <p class="text-warning">درصورتی که تصویر را وارد نکنید از تصویر شعبه اصلی استفاده میگردد</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6 col-md-6 mb-1">
+                                    <fieldset>
+                                        <div class="input-group">
+                                            <div class="custom-file">
+                                                <input asp-for="LargePictureFile" type="file" class="custom-file-input" accept=".jpg,.png,.jpeg,.gif,.webp">
+                                                <label class="custom-file-label">انتخاب تصویر بزرگ</label>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <div class="help-block">
+                                        <span asp-validation-for="LargePictureFile" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-6 col-md-6 mb-1">
+                                    <fieldset>
+                                        <div class="input-group">
+                                            <div class="custom-file">
+                                                <input asp-for="SmallPictureFile" type="file" class="custom-file-input" accept=".jpg,.png,.jpeg,.gif,.webp">
+                                                <label class="custom-file-label">انتخاب تصویر کوچک</label>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <div class="help-block">
+                                        <span asp-validation-for="SmallPictureFile" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6 col-lg-3">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <span class="text-danger">*</span>
+                                            <label asp-for="Title"></label>
+                                            <input asp-for="Title" type="text" class="form-control text-left">
+                                            <div class="help-block">
+                                                <span asp-validation-for="Title" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6 col-lg-3">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <span class="text-danger">*</span>
+                                            <label asp-for="HeadingTitle"></label>
+                                            <input asp-for="HeadingTitle" type="text" class="form-control text-left">
+                                            <div class="help-block">
+                                                <span asp-validation-for="HeadingTitle" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-12 col-sm-6 col-lg-3">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <span class="text-danger">*</span>
+                                            <label asp-for="Route"></label>
+                                            <input asp-for="Route" id="route" value="@Model.Route" type="text" class="form-control text-right">
+                                            <div class="help-block" id="routeValidation">
+                                                <span asp-validation-for="Route" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-12 col-sm-6 col-lg-3">
+                                    <div class="form-group">
+                                        <span class="text-danger">*</span>
+                                        <label asp-for="JobTimeWorkType"></label>
+                                        <label>نوع شبکه</label>
+                                        <select asp-for="JobTimeWorkType" class="form-control">
+                                            <option value="@(JobTimeWorkType.WorkAllTime)">@JobTimeWorkType.WorkAllTime.GetEnumDisplayName()</option>
+                                            <option value="@(JobTimeWorkType.NotInformation)">@JobTimeWorkType.NotInformation.GetEnumDisplayName()</option>
+                                            <option value="@(JobTimeWorkType.WorkSomeTime)">@JobTimeWorkType.WorkSomeTime.GetEnumDisplayName()</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-12 col-lg-12">
+                                    <div class="form-group">
+                                        <span class="text-danger">*</span>
+                                        <label asp-for="Description"></label>
+                                        <textarea class="form-control" id="ckeditor5" asp-for="Description"></textarea>
+                                        <div class="help-block">
+                                            <span asp-validation-for="Description" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-12 col-lg-12">
+                                    <div class="form-group">
+                                        <span class="text-danger">*</span>
+                                        <label asp-for="BranchContent"></label>
+                                        <textarea class="form-control" id="ckeditor5-1" asp-for="BranchContent"></textarea>
+                                        <div class="help-block">
+                                            <span asp-validation-for="BranchContent" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-12 col-sm-6 col-lg-6">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="MetaTitle"></label>
+                                            <input asp-for="MetaTitle" type="text" class="form-control text-left">
+                                            <div class="help-block">
+                                                <span asp-validation-for="MetaTitle" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-12 col-sm-6 col-lg-6">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="MetaCanonicalUrl"></label>
+                                            <input asp-for="MetaCanonicalUrl" type="text" class="form-control text-left">
+                                            <div class="help-block">
+                                                <span asp-validation-for="MetaCanonicalUrl" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-12 col-lg-12">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="MetaDesc"></label>
+                                            <textarea asp-for="MetaDesc" rows="4" class="form-control text-left"></textarea>
+                                            <div class="help-block">
+                                                <span asp-validation-for="MetaDesc" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-12 col-lg-12">
+                                    <div class="form-group">
+                                        <div class="checkbox">
+                                            <input asp-for="IndexMeta" type="checkbox" class="checkbox-input">
+                                            <label asp-for="IndexMeta"></label>
+                                            <div class="help-block">
+                                                <span asp-validation-for="IndexMeta" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-12 col-sm-12 col-lg-12">
+                                    <div class="form-group">
+                                        <div class="checkbox">
+                                            <input asp-for="CanonicalMeta" type="checkbox" class="checkbox-input">
+                                            <label asp-for="CanonicalMeta"></label>
+                                            <div class="help-block">
+                                                <span asp-validation-for="CanonicalMeta" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @*   <div class="col-12 col-sm-6 col-lg-4">
+                                <div class="form-group">
+                                <div class="controls">
+                                <label asp-for="Tags"></label>
+                                <select asp-for="Tags" class="select2 form-control">
+                                <option value="null">بدون تگ!</option>
+                                @if (tags.Any() || tags.Count > 1)
+                                {
+                                @foreach (var item in tags)
+                                {
+                                <option value="@item.Id">@item.Name</option>
+                                }
+                                }
+                                </select>
+                                </div>
+                                </div>
+                                </div> *@
+
+                            </div>
+
+                            <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
+                                <button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">ذخیره</button>
+                                <button onclick="history.back()" type="reset" class="btn btn-light">انصراف</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script src="~/lib/ckeditor5/ckeditor.js"></script>
+    <script src="~/lib/ckeditor5/customckeditor.js"></script>
+
+    <script>
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#selected-picture').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#LargePictureFile").change(function () {
+            readURL(this);
+        });
+
+
+        function readURL2(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#selected-banner').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#SmallPictureFile").change(function () {
+            readURL2(this);
+        });
+    </script>
+}

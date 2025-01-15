@@ -7,7 +7,7 @@
         <ul class="nav navbar-nav flex-row">
             <li class="nav-item mr-auto">
                 <a class="navbar-brand" href="/">
-                    <div class="brand-logo"><img class="logo" src="~/assets/images/logo/logo.png"></div>
+                    <div class="brand-logo"><img class="logo" src="~/assets/images/logo/logo-light.png"></div>
                     <h2 class="brand-text mb-0">راویل</h2>
                 </a>
             </li>
@@ -16,194 +16,232 @@
     </div>
     <div class="shadow-bottom"></div>
     <div class="main-menu-content">
-        <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation" data-icon-style="lines">
+        <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="users" data-icon-style="lines">
+
+            <li class="@(selected == "Dashboard_Index"?"active" : "null") nav-item">
+                <a asp-controller="Home" asp-action="Index"><i class="menu-livicon" data-icon="desktop"></i><span class="menu-title" data-i18n="globe">داشبورد </span></a>
+            </li>
+
+            <li class=" navigation-header">
+                <span>کاربران</span>
+            </li>
+
             <li class="nav-item">
-                <a ><i class="menu-livicon" data-icon="desktop"></i><span class="menu-title" data-i18n="Dashboard">مدیریت کاربران</span></a>
+                <a><i class="menu-livicon" data-icon="users"></i><span class="menu-title" data-i18n="Dashboard">مدیریت کاربران</span></a>
                 <ul class="menu-content">
                     <li class="@(selected == "Users_Index" ? "active" : "null")">
                         <a asp-controller="Users" asp-action="Index"><i class="bx bx-left-arrow-alt"></i><span class="menu-item" data-i18n="eCommerce">مشاهده لیست</span></a>
                     </li>
                 </ul>
             </li>
-            
-            <li class=" navigation-header">
-                <span>مدیریت صفحات</span>
-            </li>
 
+            <li class=" navigation-header">
+                <span>دسته بندی و کسب و کار ها</span>
+            </li>
             <li class="nav-item">
-                <a><i class="menu-livicon" data-icon="notebook"></i><span class="menu-title" data-i18n="Invoice">سوالات متداول</span></a>
+                <a><i class="menu-livicon" data-icon="home"></i><span class="menu-title" data-i18n="Invoice">مدیریت کسب و کار</span></a>
                 <ul class="menu-content">
-                    <li>
-                        <a asp-controller="Faq" asp-action="Index"><i class="bx bx-left-arrow-alt"></i><span class="menu-item" >مشاهده لیست</span></a>
+                    <li class="@(selected == "Jobs_Index" ? "active" : "null")">
+                        <a asp-controller="Job" asp-action="IndexJob"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">مشاهده لیست</span></a>
                     </li>
-                    <li>
-                        <a asp-controller="Faq" asp-action="IndexFaqCategories"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">دسته بندی</span></a>
+                    <li class="@(selected == "Jobs_Create" ? "active" : "null")">
+                        <a asp-controller="Job" asp-action="CreateJob"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">افزودن شغل</span></a>
                     </li>
                 </ul>
             </li>
-            
-            <li class="disabled nav-item">
-                <a href="#"><i class="menu-livicon" data-icon="morph-preview"></i><span class="menu-title" data-i18n="Disabled Menu">گزینه غیرفعال</span></a>
+            <li class="nav-item">
+                <a><i class="menu-livicon" data-icon="more"></i><span class="menu-title" data-i18n="Invoice">مدیریت دسته بندی ها</span></a>
+                <ul class="menu-content">
+                    <li class="@(selected == "Categories_Index" ? "active" : "null")">
+                        <a asp-controller="Categories" asp-action="Index"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">مشاهده لیست</span></a>
+                    </li>
+                    <li class="@(selected == "Categories_Create" ? "active" : "null")">
+                        <a asp-controller="Categories" asp-action="Create"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">افزودن دسته</span></a>
+                    </li>
+
+                    <li class="@(selected == "Categories_IndexCustomizeCategoryLinks" ? "active" : "null")">
+                        <a asp-controller="Categories" asp-action="IndexCustomizeCategoryLink"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">لینک دهی دسته ها</span></a>
+                    </li>
+                </ul>
+            </li>
+
+
+            <li class="navigation-header">
+                <span>درخواست مشاوره و تماس با ما</span>
+            </li>
+
+            <li class="nav-item">
+                <a><i class='bx bx-show-alt'></i><span class="menu-title" data-i18n="Invoice">مشاهده</span></a>
+                <ul class="menu-content">
+                    <li class="@(selected == "Contacts_Index" ? "active" : "null")">
+                        <a asp-controller="Contact" asp-action="Index"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">تماس با ما</span></a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="navigation-header">
+                <span>صفحات</span>
+            </li>
+
+            <li class="nav-item">
+                <a><i class="menu-livicon" data-icon="notebook"></i><span class="menu-title" data-i18n="Invoice">مدیریت وبلاگ</span></a>
+                <ul class="menu-content">
+                    <li class="@(selected == "Blogs_Index" ? "active" : "null")">
+                        <a asp-controller="Blogs" asp-action="Index"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">مشاهده لیست</span></a>
+                    </li>
+
+                    <li class="@(selected == "Blogs_Create" ? "active" : "null")">
+                        <a asp-controller="Blogs" asp-action="Create"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">افزودن مقاله</span></a>
+                    </li>
+
+                    <li class="@(selected == "BlogCategories_Index" ? "active" : "null")">
+                        <a asp-controller="Blogs" asp-action="IndexBlogCategories"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">دسته بندی</span></a>
+                    </li>
+
+                    <li class="@(selected == "BlogCategories_Create" ? "active" : "null")">
+                        <a asp-controller="Blogs" asp-action="CreateBlogCategories"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">افزودن دسته</span></a>
+                    </li>
+
+                    <li class="@(selected == "Tags_Index" ? "active" : "null")">
+                        <a asp-controller="Blogs" asp-action="IndexTags"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">تگ ها</span></a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="nav-item">
+                <a><i class="menu-livicon" data-icon="question"></i><span class="menu-title" data-i18n="Invoice">سوالات متداول</span></a>
+                <ul class="menu-content">
+                    <li class="@(selected == "Faqs_Index" ? "active" : "null")">
+                        <a asp-controller="Faqs" asp-action="Index"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">مشاهده لیست</span></a>
+                    </li>
+                    <li class="@(selected == "FaqCategories_Index" ? "active" : "null")">
+                        <a asp-controller="Faqs" asp-action="IndexFaqCategories"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">دسته بندی</span></a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="nav-item">
+                <a><i class="menu-livicon" data-icon="user"></i><span class="menu-title" data-i18n="Invoice">مدیریت دیدگاه ها</span></a>
+                <ul class="menu-content">
+                    <li class="@(selected == "FeedbackSliders_Index" ? "active" : "null")">
+                        <a asp-controller="FeedbackSlider" asp-action="Index"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">مشاهده لیست</span></a>
+                    </li>
+                    <li class="@(selected == "FeedbackSliders_Create" ? "active" : "null")">
+                        <a asp-controller="FeedbackSlider" asp-action="Create"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">افزودن دیدگاه</span></a>
+                    </li>
+                </ul>
+            </li>
+
+
+
+            <li class="navigation-header">
+                <span>پلن ها و تبلیغات کسب و کار ها</span>
+            </li>
+
+            <li class="nav-item">
+                <a><i class="menu-livicon" data-icon="trophy"></i><span class="menu-title" data-i18n="Invoice">مدیریت تبلیغات</span></a>
+                <ul class="menu-content">
+                    <li class="@(selected == "Ads_IndexJobBranchAds" ? "active" : "null")">
+                        <a asp-controller="Ads" asp-action="IndexJobBranchAds"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">مشاهده لیست</span></a>
+                    </li>
+
+                    <li class="@(selected == "Ads_CreateJobBranchAds" ? "active" : "null")">
+                        <a asp-controller="Ads" asp-action="CreateJobBranchAds"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">افزودن تبلیغ جدید</span></a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="navigation-header">
+                <span>بهینه سازی موتور های جستجوگر</span>
+            </li>
+
+            <li class="nav-item">
+                <a><i class="menu-livicon" data-icon="rocket"></i><span class="menu-title" data-i18n="Invoice">مدیریت موارد seo</span></a>
+                <ul class="menu-content">
+                    <li class="@(selected == "RedirectionUrl_Index" ? "active" : "null")">
+                        <a asp-controller="RedirectionUrl" asp-action="Index"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">سیستم تغییر مسیر</span></a>
+                    </li>
+
+                    <li class="@(selected == "Categories_IndexCustomizeCategoryLinks" ? "active" : "null")">
+                        <a asp-controller="Categories" asp-action="IndexCustomizeCategoryLink"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">لینک دهی دسته ها</span></a>
+                    </li>
+                </ul>
+            </li>
+
+
+            <li class="navigation-header">
+                <span>اسلایدر و بنر ها</span>
+            </li>
+
+
+            <li class="nav-item">
+                <a><i class="menu-livicon" data-icon="image"></i><span class="menu-title" data-i18n="Invoice">مدیریت اسلایدر</span></a>
+                <ul class="menu-content">
+                    <li class="@(selected == "MainSliders_Index" ? "active" : "null")">
+                        <a asp-controller="MainSlider" asp-action="Index"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">مشاهده اسلایدر ها</span></a>
+                    </li>
+                    <li class="@(selected == "MainSliders_Create" ? "active" : "null")">
+                        <a asp-controller="MainSlider" asp-action="Create"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">افزودن اسلایدر</span></a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="nav-item">
+                <a><i class="menu-livicon" data-icon="image"></i><span class="menu-title" data-i18n="Invoice">بنر</span></a>
+                <ul class="menu-content">
+                    <li class="@(selected == "Banners_Index" ? "active" : "null")">
+                        <a asp-controller="Banner" asp-action="Index"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">مشاهده بنر ها</span></a>
+                    </li>
+                    <li class="@(selected == "Banners_Create" ? "active" : "null")">
+                        <a asp-controller="Banner" asp-action="Create"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">افزودن بنر</span></a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="navigation-header">
+                <span>تنظیمات و پیکربندی سایت</span>
+            </li>
+
+
+            <li class="nav-item  @(selected == "Configs_Index" ? "active" : "null")">
+                <a asp-controller="Config" asp-action="IndexConfig"><i class="menu-livicon" data-icon="gear"></i><span class="menu-title" data-i18n="Disabled Menu">اطلاعات پایه</span></a>
+            </li>
+
+            <li class="nav-item  @(selected == "Configs_IndexPageInformation" ? "active" : "null")">
+                <a asp-controller="Config" asp-action="IndexConfigPageInformation"><i class="menu-livicon" data-icon="gear"></i><span class="menu-title" data-i18n="Disabled Menu">اطلاعات صفحات</span></a>
+            </li>
+
+
+
+
+            <li class="navigation-header">
+                <span>بزودی ...</span>
+            </li>
+
+
+            <li class="nav-item disabled ">
+                <a href="#"><i class="menu-livicon" data-icon="clock"></i><span class="menu-title" data-i18n="Disabled Menu">پلنینگ و فروش اکانت</span></a>
+            </li>
+
+            <li class="nav-item disabled ">
+                <a href="#"><i class="menu-livicon" data-icon="clock"></i><span class="menu-title" data-i18n="Disabled Menu">سفارشات و تراکنش ها</span></a>
+            </li>
+
+            <li class="nav-item disabled ">
+                <a href="#"><i class="menu-livicon" data-icon="clock"></i><span class="menu-title" data-i18n="Disabled Menu">اعضای تیم</span></a>
+            </li>
+
+            <li class="nav-item disabled ">
+                <a href="#"><i class="menu-livicon" data-icon="clock"></i><span class="menu-title" data-i18n="Disabled Menu">مدیریت شهر و استان</span></a>
+            </li>
+
+            <li class="nav-item disabled ">
+                <a href="#"><i class="menu-livicon" data-icon="clock"></i><span class="menu-title" data-i18n="Disabled Menu">برند</span></a>
+            </li>
+
+            <li class="nav-item disabled ">
+                <a href="#"><i class="menu-livicon" data-icon="clock"></i><span class="menu-title" data-i18n="Disabled Menu">کد تخفیف</span></a>
             </li>
         </ul>
     </div>
 </div>
-
-
-@*  ﻿@{
-    var selected = ViewData["selected"]?.ToString() ?? "";
-}
-
-<div class="main-menu menu-fixed menu-dark menu-accordion menu-shadow" data-scroll-to-active="true">
-    <div class="navbar-header">
-        <ul class="nav navbar-nav flex-row">
-            <li class="nav-item mr-auto">
-                <a class="navbar-brand" href="#">
-                    <div class="brand-logo"><img class="logo" src="/admin/logo/nak-icon.jpg"></div>
-                    <h2 class="brand-text mb-0">پنل مدیریت</h2>
-                </a>
-            </li>
-            <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"><i class="bx bx-x d-block d-xl-none font-medium-4 primary toggle-icon"></i><i class="toggle-icon bx bx-disc font-medium-4 d-none d-xl-block collapse-toggle-icon primary" data-ticon="bx-disc"></i></a></li>
-        </ul>
-    </div>
-    <div class="shadow-bottom"></div>
-    <div class="main-menu-content">
-        <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation" data-icon-style="lines">
-            <li class="nav-item">
-                <a href="/"><i class='bx bx-world'></i><span class="menu-title" data-i18n="globe">مشاهده وب سایت </span></a>
-            </li>
-        </ul>
-
-        <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation" data-icon-style="lines">
-            <li class="nav-item">
-                <a href="/Admin/Index"><i class='bx bxs-dashboard'></i><span class="menu-title" data-i18n="globe">داشبورد </span></a>
-            </li>
-        </ul>
-
-        <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation" data-icon-style="">
-            <li class="nav-item">
-                <a href="javascript:void(0)"><i class="bx bx-user"></i><span class="menu-title" data-i18n="Dashboard">مدیریت کاربران</span></a>
-
-                <ul class="menu-content">
-                    <li class="@(selected == "Users_Index" ? "active" : null)">
-                        <a href="/Admin/Users"><i class="bx bxs-user-detail"></i><span class="menu-item" data-i18n="eCommerce">لیست کاربران</span></a>
-                    </li>
-
-                    <li class="@(selected == "Users_Add" ? "active" : null)">
-                        <a href="/Admin/Users/Add"><i class="bx bx-user-plus"></i><span class="menu-item" data-i18n="eCommerce">ثبت مشخصات کاربر</span></a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-
-        <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-            <li class="nav-item">
-                <a href="javascript:void(0)"><i class="bx bx-image-alt"></i><span class="menu-title">مدیریت بنر ها</span></a>
-                <ul class="menu-content">
-                    <li class="@(selected == "Banners_Index" ? "active" : "null")">
-                        <a href="/Admin/Banners"><i class="bx bxs-image"></i><span class="menu-item">لیست بنر ها</span></a>
-                    </li>
-
-                    <li class="@(selected == "Banners_Add" ? "active" : "null")">
-                        <a href="/Admin/Banners/Add"><i class="bx bxs-image-add"></i><span class="menu-item">ثبت مشخصات بنر</span></a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-
-        <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation" data-icon-style="">
-            <li class="nav-item">
-                <a href="javascript:void(0)"><i class="bx bx-photo-album"></i><span class="menu-title" data-i18n="Dashboard">مدیریت اسلایدر ها</span></a>
-                <ul class="menu-content">
-                    <li class="@(selected == "Sliders_Index" ? "active" : "null")">
-                        <a href="/Admin/Sliders"><i class="bx bxs-image"></i><span class="menu-item" data-i18n="eCommerce">لیست اسلایدر ها</span></a>
-                    </li>
-
-                    <li class="@(selected == "Sliders_Add" ? "active" : "null")">
-                        <a href="/Admin/Sliders/Add"><i class="bx bxs-image-add"></i><span class="menu-item" data-i18n="eCommerce">ثبت مشخصات اسلایدر</span></a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-
-        <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation" data-icon-style="">
-            <li class="nav-item">
-                <a href="javascript:void(0)">
-                    <i class="bx bx-list-ul"></i><span class="menu-title" data-i18n="Dashboard">مدیریت دسته بندی ها</span>
-                </a>
-
-                <ul class="menu-content">
-                    <li class="@(selected == "Categories_Index" ? "active" : null)">
-                        <a href="/Admin/Categories"><i class="bx bx-list-ul"></i><span class="menu-item" data-i18n="eCommerce">لیست دسته بندی ها </span></a>
-                    </li>
-
-                    <li class="@(selected == "Categories_Add" ? "active" : null)">
-                        <a href="/Admin/Categories/Add"><i class="bx bx-list-plus"></i><span class="menu-item" data-i18n="eCommerce">ثبت مشخصات دسته بندی</span></a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-
-        <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation" data-icon-style="">
-            <li class="nav-item">
-                <a href="javascript:void(0)"><i class="bx bxs-t-shirt"></i><span class="menu-title" data-i18n="Dashboard">مدیریت محصولات</span></a>
-
-                <ul class="menu-content">
-                    <li class="@(selected ==  "Products_Index" ? "active" : null)">
-                        <a href="/Admin/Products"><i class="bx bx-list-ul"></i><span class="menu-item" data-i18n="eCommerce">لیست محصولات</span></a>
-                    </li>
-
-                    <li class="@(selected == "Products_Add" ? "active" : null)">
-                        <a href="/Admin/Products/Add"><i class="bx bx-plus"></i><span class="menu-item" data-i18n="eCommerce">ثبت مشخصات محصول</span></a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-
-        <ul class="navigation navigation-main">
-            <li class="nav-item">
-                <a href="javascript:void(0)"><i class="bx bx-file"></i><span class="menu-title">مدیریت سفارشات</span></a>
-
-                <ul class="menu-content">
-                    <li class="@(selected == "Orders_Index" ? "active" : "null")">
-                        <a href="/Admin/Orders"><i class="bx bx-receipt"></i><span class="menu-item">لیست سفارشات</span></a>
-                    </li>
-
-                    <li class="@(selected == "Orders_Add" ? "active" : "null")">
-                        <a href="/Admin/Orders/Add"><i class="bx bx-plus"></i><span class="menu-item">افزودن سفارش</span></a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-
-        <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-            <li class="nav-item">
-                <a href="javascript:void(0)"><i class="bx bx-notepad"></i><span class="menu-title">مدیریت پست ها</span></a>
-                <ul class="menu-content">
-                    <li class="@(selected == "Posts_Index" ? "active" : "null")">
-                        <a href="/Admin/Posts"><i class="bx bx-news"></i><span class="menu-item">لیست پست ها</span></a>
-                    </li>
-
-                    <li class="@(selected == "Posts_Add" ? "active" : "null")">
-                        <a href="/Admin/Posts/Add"><i class="bx bx-pencil"></i><span class="menu-item">ثبت مشخصات پست</span></a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-
-        <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-            <li class="nav-item">
-                <a href="javascript:void(0)"><i class="bx bxs-discount"></i><span class="menu-title">مدیریت کد های تخفیف</span></a>
-                <ul class="menu-content">
-                    <li class="@(selected == "Discounts_Index" ? "active" : "null")">
-                        <a href="/Admin/Discounts"><i class="bx bxs-coupon"></i><span class="menu-item">لیست کد های تخفیف</span></a>
-                    </li>
-
-                    <li class="@(selected == "Discounts_Add" ? "active" : "null")">
-                        <a href="/Admin/Discounts/Add"><i class="bx bx-plus"></i><span class="menu-item">ثبت مشخصات کد تخفیف</span></a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </div>
-</div> *@

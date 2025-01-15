@@ -1,11 +1,17 @@
-﻿namespace Persistence.Entities.Category.Repositories
+﻿using ViewModels.AdminPanel.Filter;
+
+namespace Persistence.Entities.Category.Repositories
 {
     public interface ICategoryRepository : IRepository<Domain.Entities.Category.Category>
     {
         Task<List<Domain.Entities.Category.Category>> GetMainCategories();
         Task<List<Domain.Entities.Category.Category>> GetChildCategories(int nodeLevel, int parentId);
         Task<string> GetTargetRoute(int categoryId);
+        Task<bool> RouteExist(string route);
+        Task<bool> RouteExist(string route, int categoryId);
 
         Task<List<Domain.Entities.Category.Category>> SetTargetRoutes(List<Domain.Entities.Category.Category> categories);
+
+        CategoriesFilterViewModel GetByAdminFilter(CategoriesFilterViewModel filter);
     }
 }

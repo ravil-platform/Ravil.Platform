@@ -1,4 +1,6 @@
-﻿namespace Persistence.Entities.Job.Repositories.Implementations;
+﻿using ViewModels.AdminPanel.Filter;
+
+namespace Persistence.Entities.Job.Repositories.Implementations;
 
 public class JobBranchAdsRepository : Repository<JobBranchAds>, IJobBranchAdsRepository
 {
@@ -25,5 +27,30 @@ public class JobBranchAdsRepository : Repository<JobBranchAds>, IJobBranchAdsRep
         }
 
         return data;
+    }
+
+    public JobBranchAdsFilterViewModel GetByFilterAdmin(JobBranchAdsFilterViewModel filter)
+    {
+        var query = ApplicationDbContext.JobBranchAds.AsQueryable();
+
+        if (filter.FindAll)
+        {
+            #region (Find All)
+            filter.Build(query.Count()).SetEntities(query);
+
+            return filter;
+            #endregion
+        }
+
+        #region ( Filter )
+        if (!string.IsNullOrWhiteSpace(filter.JobBranchName))
+        {
+            query = query.Where(q => q.JobBranchName.Contains(filter.JobBranchName));
+        }
+        #endregion
+
+        filter.Build(query.Count()).SetEntities(query);
+
+        return filter;
     }
 }

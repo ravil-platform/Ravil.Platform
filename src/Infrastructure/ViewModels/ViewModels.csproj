@@ -13,4 +13,8 @@
     <ProjectReference Include="..\..\Frameworks\Common\Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="AdminPanel\RedirectionUrl\" />
+  </ItemGroup>
+
 </Project>

@@ -1,0 +1,580 @@
+﻿@using Constants.Files
+@using Domain.Entities.Brand
+@using Domain.Entities.Category
+@using Domain.Entities.Tag
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using ViewModels.AdminPanel.Job
+@using Enums
+@using Microsoft.Extensions.Options
+@using Newtonsoft.Json
+@using PhoneNumberTypes = Enums.PhoneNumberTypes
+@using Common.Utilities.Services.FTP.Models
+@model ViewModels.AdminPanel.Job.UpdateJobViewModel
+@inject IOptions<FTPConnectionOptions> FtpConnectionOptions
+
+@{
+    string UrlBase = FtpConnectionOptions.Value.UrlBase;
+    ViewData["Title"] = "ویرایش شغل";
+    ViewData["selected"] = "Jobs_Index";
+    var users = (List<UserPhoneNumberViewModel>)ViewData["usersPhoneNumbers"]!;
+    var brands = (List<Brand>)ViewData["brands"]!;
+    var categories = (List<Category>)ViewData["categories"]!;
+    var tags = (List<Tag>)ViewData["tags"]!;
+
+    var socialMedias = JsonConvert.DeserializeObject<List<SocialMediaInfosViewModel>>(Model.CurrentSocialMediaInfos);
+    var phoneNumberInfos = JsonConvert.DeserializeObject<List<PhoneNumberInfosViewModel>>(Model.CurrentPhoneNumberInfos);
+
+    //Todo : Image
+}
+
+@section CSS
+{
+    <style>
+        .ck-editor__editable_inline {
+            min-height: 400px;
+        }
+    </style>
+}
+
+<section>
+    <div class="card">
+        <div class="card-content">
+            <div class="card-body">
+                <ul class="nav nav-tabs mb-2">
+                    <li class="nav-item current">
+                        <a class="nav-link d-flex align-items-center active">
+                            <i class='bx bx-task'></i><span class="d-none d-sm-block">شغل</span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active">
+                        <form method="post" enctype="multipart/form-data">
+                            <input type="hidden" asp-for="Id" value="@Model.Id" />
+                            <div class="card-title-details d-flex align-items-center mb-1 ml-1">
+                                <div>
+                                    <div class="avatar bg-rgba-primary p-25 mr-2 ml-0">
+                                        <img id="selected-picture" class="img-fluid" src="@UrlBase@Paths.Job@Model.CurrentLargePicture" height="100" width="100">
+                                    </div>
+                                    <div class="mt-n25">
+                                        <h5>تصویر انتخاب شده</h5>
+                                        <p class="text-info">راهنمای سایز :W: 400px * H: 400px </p>
+                                    </div>
+                                </div>
+
+                                <div style="margin-right:34%">
+                                    <div class="avatar bg-rgba-primary p-25 mr-2 ml-0">
+                                        <img id="selected-banner" class="img-fluid" src="@UrlBase@Paths.Job@Model.CurrentSmallPictureFile" height="100" width="100">
+                                    </div>
+                                    <div class="mt-n25 mr-5">
+                                        <h5>تصویر موبایل انتخاب شده</h5>
+                                        <p class="text-info">راهنمای سایز : W: 400px * H: 400px </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6 col-md-6 mb-1">
+                                    <fieldset>
+                                        <div class="input-group">
+                                            <div class="custom-file">
+                                                <input asp-for="LargePictureFile" type="file" class="custom-file-input" accept=".jpg,.png,.jpeg,.gif,.webp">
+                                                <label class="custom-file-label">انتخاب تصویر بزرگ</label>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <div class="help-block">
+                                        <span asp-validation-for="LargePictureFile" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-6 col-md-6 mb-1">
+                                    <fieldset>
+                                        <div class="input-group">
+                                            <div class="custom-file">
+                                                <input asp-for="SmallPictureFile" type="file" class="custom-file-input" accept=".jpg,.png,.jpeg,.gif,.webp">
+                                                <label class="custom-file-label">انتخاب تصویر کوچک</label>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <div class="help-block">
+                                        <span asp-validation-for="SmallPictureFile" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6 col-lg-12">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <span class="text-danger">*</span>
+                                            <label asp-for="Categories"></label>
+                                            <select asp-for="Categories" class="select2 form-control" multiple>
+                                                @if (categories.Any() || categories.Count > 1)
+                                                {
+                                                    @foreach (var item in categories.Where(c => c.NodeLevel == 1 && c.ParentId == 0))
+                                                    {
+                                                        if (item.NodeLevel == 1)
+                                                        {
+                                                            <optgroup>
+                                                                <option value="@item.Id" disabled="disabled"> Ⅰ @item.Name</option>
+                                                                @foreach (var item2 in categories.Where(c => c.ParentId == item.Id && c.NodeLevel == 2))
+                                                                {
+                                                                    <optgroup>
+                                                                        @if (categories.Any(c => c.ParentId == item2.Id))
+                                                                        {
+                                                                            <option value="@item2.Id" class="text-muted" disabled="disabled"> Ⅱ @item2.Name</option>
+                                                                            @foreach (var item3 in categories.Where(c => c.ParentId == item2.Id && c.NodeLevel == 3))
+                                                                            {
+                                                                                <option value="@item3.Id"> Ⅲ @item3.Name</option>
+                                                                            }
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <option value="@item2.Id"> Ⅱ @item2.Name</option>
+                                                                        }
+                                                                    </optgroup>
+                                                                }
+                                                            </optgroup>
+                                                        }
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6 col-lg-3">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <span class="text-danger">*</span>
+                                            <label asp-for="Title"></label>
+                                            <input asp-for="Title" type="text" class="form-control text-left">
+                                            <div class="help-block">
+                                                <span asp-validation-for="Title" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6 col-lg-3">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <span class="text-danger">*</span>
+                                            <label asp-for="SubTitle"></label>
+                                            <input asp-for="SubTitle" type="text" class="form-control text-left">
+                                            <div class="help-block">
+                                                <span asp-validation-for="SubTitle" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-12 col-sm-6 col-lg-3">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <span class="text-danger">*</span>
+                                            <label asp-for="Route"></label>
+                                            <input asp-for="Route" id="route" type="text" class="form-control text-right">
+                                            <div class="help-block" id="routeValidation">
+                                                <span asp-validation-for="Route" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6 col-lg-3">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="WebSiteName"></label>
+                                            <input asp-for="WebSiteName" type="url" class="form-control text-right">
+                                            <div id="price-convert" class="help-block">
+                                                <span asp-validation-for="WebSiteName" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-12 col-lg-12">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <span class="text-danger">*</span>
+                                            <label asp-for="Summary"></label>
+                                            <textarea asp-for="Summary" rows="4" class="form-control text-left"></textarea>
+                                            <div class="help-block">
+                                                <span asp-validation-for="Summary" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-12 col-sm-12 col-lg-12">
+                                    <div class="form-group">
+                                        <span class="text-danger">*</span>
+                                        <label asp-for="Content"></label>
+                                        <textarea class="form-control" id="ckeditor5" asp-for="Content"></textarea>
+                                        <div class="help-block">
+                                            <span asp-validation-for="Content" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-12 col-lg-12">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="MetaTitle"></label>
+                                            <input asp-for="MetaTitle" type="text" class="form-control text-left">
+                                            <div class="help-block">
+                                                <span asp-validation-for="MetaTitle" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-12 col-lg-12">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="MetaDesc"></label>
+                                            <textarea class="form-control" asp-for="MetaDesc"></textarea>
+                                            <div class="help-block">
+                                                <span asp-validation-for="MetaDesc" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-12 col-lg-12">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="Status"></label>
+                                            <select asp-for="Status" class="form-control">
+                                                <option value="@(JobBranchStatus.Accepted)">@JobBranchStatus.Accepted.GetEnumDisplayName()</option>
+                                                <option value="@(JobBranchStatus.Rejected)">@JobBranchStatus.Rejected.GetEnumDisplayName()</option>
+                                                <option value="@(JobBranchStatus.WaitingToCheck)">@JobBranchStatus.WaitingToCheck.GetEnumDisplayName()</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-12 col-lg-12">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="RejectedReason"></label>
+                                            <textarea asp-for="RejectedReason" rows="4" class="form-control text-left"></textarea>
+                                            <div class="help-block">
+                                                <span asp-validation-for="RejectedReason" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-12 col-lg-12">
+                                    <div class="form-group">
+                                        <div class="checkbox">
+                                            <input asp-for="SendSms" type="checkbox" class="checkbox-input">
+                                            <label asp-for="SendSms"></label>
+                                            <div class="help-block">
+                                                <span asp-validation-for="SendSms" class="text-danger"></span>
+                                                <span class="text-warning">درصورتی که این گزینه فعال شود تایید یا عدم تایید برای کاربر پیامک میشود</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6 col-lg-4">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="JobBrandId"></label>
+                                            <select asp-for="JobBrandId" class="select2 form-control">
+                                                @if (brands.Any() || brands.Count > 1)
+                                                {
+                                                    @foreach (var item in brands)
+                                                    {
+                                                        <option value="@item.Id">@item.Title</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6 col-lg-4">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="Tags"></label>
+                                            <select asp-for="Tags" class="select2 form-control">
+                                                <option value="null">بدون تگ!</option>
+                                                @if (tags.Any() || tags.Count > 1)
+                                                {
+                                                    @foreach (var item in tags)
+                                                    {
+                                                        <option value="@item.Id">@item.Name</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6 col-lg-4">
+                                    <div class="form-group">
+                                        <div class="controls">
+
+                                            <label asp-for="UserOwnerId"></label>
+                                            <select asp-for="UserOwnerId" class="select2 form-control">
+                                                @if (users.Any() || users.Count > 1)
+                                                {
+                                                    @foreach (var item in users)
+                                                    {
+                                                        <option value="@item.Id">@item.PhoneNumber</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-6">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h4 class="card-title">اطلاعات شبکه های اجتماعی</h4>
+                                        </div>
+                                        <div class="card-content">
+                                            <div class="card-body">
+                                                <div id="socialMediaContainer">
+                                                    @for (int index = 0; index < socialMedias.Count; index++)
+                                                    {
+                                                        <div class="row justify-content-center social-media-form">
+                                                            <div class="col-md-6 col-sm-6 form-group">
+                                                                <label>نوع شبکه</label>
+                                                                <select name="SocialMediaInfosViewModel[@index].SocialMediaType" class="form-control">
+                                                                    <!option value="Telegram" @(socialMedias[index].SocialMediaType == SocialMediaTypes.Telegram ? "selected" : "")>تلگرام</!option>
+                                                                    <!option value="Instagram" @(socialMedias[index].SocialMediaType == SocialMediaTypes.Instagram ? "selected" : "")>اینستاگرام</!option>
+                                                                    <!option value="WhatsApp" @(socialMedias[index].SocialMediaType == SocialMediaTypes.WhatsApp ? "selected" : "")>واتساپ</!option>
+                                                                    <!option value="FaceBook" @(socialMedias[index].SocialMediaType == SocialMediaTypes.Instagram ? "selected" : "")>فیس بوک</!option>
+                                                                    <!option value="Aparat" @(socialMedias[index].SocialMediaType == SocialMediaTypes.Instagram ? "selected" : "")>آپارات</!option>
+                                                                    <!option value="LinkedIn" @(socialMedias[index].SocialMediaType == SocialMediaTypes.Instagram ? "selected" : "")>لینکدین</!option>
+                                                                    <!option value="Twitter" @(socialMedias[index].SocialMediaType == SocialMediaTypes.Instagram ? "selected" : "")>توییتر</!option>
+                                                                </select>
+                                                            </div>
+
+                                                            <div class="col-md-6 col-sm-6 form-group">
+                                                                <label>آدرس</label>
+                                                                <input name="SocialMediaInfosViewModel[@index].SocialMediaLink" value="@socialMedias[index].SocialMediaLink" class="form-control text-right">
+                                                            </div>
+
+                                                            <div class="col-md-2 col-sm-12 form-group d-flex align-items-center pt-2">
+                                                                <button class="btn btn-danger text-nowrap px-1 remove-social-media" type="button">
+                                                                    <i class="bx bx-x"></i>
+                                                                    حذف
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                </div>
+
+                                                <hr>
+
+                                                <div class="form-group">
+                                                    <div class="col p-0">
+                                                        <button class="btn btn-primary add-social-media" type="button">
+                                                            <i class="bx bx-plus"></i>
+                                                            افزودن
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-6">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h4 class="card-title">اطلاعات تماس</h4>
+                                        </div>
+                                        <div class="card-content">
+                                            <div class="card-body">
+                                                <div id="phoneNumberContainer">
+                                                    @for (int index = 0; index < phoneNumberInfos.Count; index++)
+                                                    {
+                                                        <div class="row justify-content-center phone-number-form">
+                                                            <div class="col-md-6 col-sm-6 form-group">
+                                                                <label>نوع شماره تماس</label>
+                                                                <select name="PhoneNumberInfosViewModel[@index].PhoneNumberType" class="form-control">
+                                                                    <!option value="PhoneNumberTel" @(phoneNumberInfos[index].PhoneNumberType == PhoneNumberTypes.PhoneNumberTel ? "selected" : "")>تلفن</!option>
+                                                                    <!option value="PhoneNumberMobile" @(phoneNumberInfos[index].PhoneNumberType == PhoneNumberTypes.PhoneNumberMobile ? "selected" : "")>موبایل</!option>
+                                                                    <!option value="FaxNumber" @(phoneNumberInfos[index].PhoneNumberType == PhoneNumberTypes.FaxNumber ? "selected" : "")>فکس</!option>
+                                                                </select>
+                                                            </div>
+
+                                                            <div class="col-md-6 col-sm-6 form-group">
+                                                                <label>شماره تماس</label>
+                                                                <input name="PhoneNumberInfosViewModel[@index].PhoneNumber" value="@(phoneNumberInfos[index].PhoneNumber)" class="form-control text-right" maxlength="11" type="number" placeholder="0910xxx8433">
+                                                            </div>
+
+                                                            <div class="col-md-2 col-sm-12 form-group d-flex align-items-end pt-2">
+                                                                <button class="btn btn-danger text-nowrap px-1 remove-phone-number" type="button">
+                                                                    <i class="bx bx-x"></i>
+                                                                    حذف
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                </div>
+
+                                                <hr>
+
+                                                <div class="form-group">
+                                                    <div class="col p-0">
+                                                        <button class="btn btn-primary add-phone-number" type="button">
+                                                            <i class="bx bx-plus"></i>
+                                                            افزودن
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-12 col-lg-12">
+                                    <div class="form-group">
+                                        <div class="checkbox">
+                                            <input asp-for="ShowPhoneTelInSite" type="checkbox" class="checkbox-input">
+                                            <label asp-for="ShowPhoneTelInSite"></label>
+                                            <div class="help-block">
+                                                <span asp-validation-for="ShowPhoneTelInSite" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-12 col-lg-12">
+                                    <div class="form-group">
+                                        <div class="checkbox">
+                                            <input asp-for="ShowFirstPhoneMobileInSite" type="checkbox" class="checkbox-input">
+                                            <label asp-for="ShowFirstPhoneMobileInSite"></label>
+                                            <div class="help-block">
+                                                <span asp-validation-for="ShowFirstPhoneMobileInSite" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
+                                <button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">ذخیره</button>
+                                <button onclick="history.back()" type="reset" class="btn btn-light">انصراف</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script src="~/lib/ckeditor5/ckeditor.js"></script>
+    <script src="~/lib/ckeditor5/customckeditor.js"></script>
+
+    <script>
+        function updateIndexes(containerSelector, itemClass, inputNamePattern) {
+            $(containerSelector).find(itemClass).each(function (index) {
+                $(this).find('input, select').each(function () {
+                    const name = $(this).attr('name');
+                    if (name) {
+                        const updatedName = name.replace(/\[\d+\]/, `[${index}]`);
+                        $(this).attr('name', updatedName);
+                    }
+                });
+            });
+        }
+
+        $(document).on('click', '.add-social-media', function () {
+            const newForm = $(".social-media-form:first").clone();
+            newForm.find('input, select').val('');
+            $("#socialMediaContainer").append(newForm);
+            updateIndexes("#socialMediaContainer", ".social-media-form", "SocialMediaInfosViewModel");
+        });
+
+        $(document).on('click', '.remove-social-media', function () {
+            $(this).closest('.social-media-form').remove();
+            updateIndexes("#socialMediaContainer", ".social-media-form", "SocialMediaInfosViewModel");
+        });
+
+        $(document).on('click', '.add-phone-number', function () {
+            const newForm = $(".phone-number-form:first").clone();
+            newForm.find('input, select').val('');
+            $("#phoneNumberContainer").append(newForm);
+            updateIndexes("#phoneNumberContainer", ".phone-number-form", "PhoneNumberInfosViewModel");
+        });
+
+        $(document).on('click', '.remove-phone-number', function () {
+            $(this).closest('.phone-number-form').remove();
+            updateIndexes("#phoneNumberContainer", ".phone-number-form", "PhoneNumberInfosViewModel");
+        });
+
+        $('#route').on('blur', function () {
+            const route = $(this).val();
+
+            if (route) {
+                $.ajax({
+                    url: '@Url.Action("SlugExist")',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(route),
+                    success: function (data) {
+                        if (data.exists) {
+                            $("#messageRouteExist").remove();
+                            $("#routeValidation").append(` <span id="messageRouteExist" class="text-danger">مسیر یکتا از قبل موجود است!</span>`);
+                        }
+                        else {
+                            $("#messageRouteExist").remove();
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.error('Error:', textStatus, errorThrown);
+                    }
+                });
+            } else {
+                $('#responseMessage').text('لطفاً مقداری وارد کنید.');
+            }
+        });
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#selected-picture').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#LargePictureFile").change(function () {
+            readURL(this);
+        });
+
+
+        function readURL2(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#selected-banner').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#SmallPictureFile").change(function () {
+            readURL2(this);
+        });
+    </script>
+}

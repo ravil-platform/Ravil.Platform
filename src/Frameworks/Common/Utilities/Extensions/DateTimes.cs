@@ -13,6 +13,16 @@
         }
         #endregion
 
+        #region ( To Shamsi Date )
+        public static string ToShamsiDate(this DateTime? value)
+        {
+            PersianCalendar persianCalendar = new PersianCalendar();
+
+            return persianCalendar.GetYear((DateTime)value) + "/" +
+                   persianCalendar.GetMonth((DateTime)value).ToString("00") + "/" +
+                   persianCalendar.GetDayOfMonth((DateTime)value).ToString("00");
+        }
+        #endregion
         #region ( To String Shamsi Date )
         public static string ToStringShamsiDate(this DateTime dt)
         {

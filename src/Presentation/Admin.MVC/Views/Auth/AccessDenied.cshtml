@@ -1,0 +1,23 @@
+﻿﻿@{
+    ViewData["Title"] = "دسترسی ندارید";
+    Layout = "_AuthLayout";
+}
+<div class="content-body">
+    <section class="row flexbox-container">
+        <div class="col-xl-7 col-md-8 col-12">
+            <div class="card bg-transparent shadow-none">
+                <div class="card-content">
+                    <div class="card-body text-center bg-transparent miscellaneous">
+                        <img class="img-fluid" src="~/assets/images/logo/logo.png" alt="ravil logo" height="400" width="400">
+                        <h1 class="my-2 error-title">شما مجاز به دسترسی نیستید!</h1>
+                        <p>
+                            شما مجوز لارم برای مشاهده این دایرکتوری یا صفحه را ندارید.
+                        </p>
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-primary round glow mt-2">بازگشت به خانه</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>

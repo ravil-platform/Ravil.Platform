@@ -1,0 +1,24 @@
+﻿@model Domain.Entities.ContactUs.ContactUs
+<div class="modal-header bg-info">
+    <h4 class="modal-title">محتویات</h4>
+    <button type="button" class="close" data-dismiss="modal" aria-label="بستن">
+        <i class="bx bx-x"></i>
+    </button>
+</div>
+<div class="modal-body line-height-2">
+    @Model.Message
+
+
+
+    تماس: @Model.PhoneNumber
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+        <i class="bx bx-x d-block d-sm-none"></i>
+        <span class="d-none d-sm-block">بستن</span>
+    </button>
+    <button type="button" class="btn btn-info ml-1" data-dismiss="modal">
+        <i class="bx bx-check d-block d-sm-none"></i>
+        <span class="d-none d-sm-block">قبول</span>
+    </button>
+</div>

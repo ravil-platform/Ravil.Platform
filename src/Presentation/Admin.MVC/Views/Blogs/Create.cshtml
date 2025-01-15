@@ -1,0 +1,306 @@
+﻿@using Domain.Entities.Blog
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model ViewModels.AdminPanel.Cms.Blog.CreateBlogViewModel
+@{
+    ViewData["Title"] = "ثبت مقاله جدید";
+    ViewData["selected"] = "Blogs_Create";
+
+    var categories = ViewData["categories"] as List<BlogCategory>;
+}
+@section CSS
+{
+    <style>
+        .ck-editor__editable_inline {
+            min-height: 400px;
+        }
+    </style>
+}
+
+<section>
+    <div class="card">
+        <div class="card-content">
+            <div class="card-body">
+                <ul class="nav nav-tabs mb-2">
+                    <li class="nav-item current">
+                        <a class="nav-link d-flex align-items-center active">
+                            <i class='bx bx-task'></i><span class="d-none d-sm-block">مقاله</span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active">
+                        <form method="post" enctype="multipart/form-data">
+
+                            <div class="card-title-details d-flex align-items-center mb-1 ml-1">
+                                <div>
+                                    <div class="avatar bg-rgba-primary p-25 mr-2 ml-0">
+                                        <img id="selected-picture" class="img-fluid" src="@Paths.DefaultsImageCmsPath/PlaceHolder.svg" height="100" width="100">
+                                    </div>
+                                    <div class="mt-n25">
+                                        <h5>تصویر (دسکتاپ) انتخاب شده</h5>
+                                        <p class="text-info">راهنمای سایز : width = 700 , height = 600 </p>
+                                    </div>
+                                </div>
+
+                                <div style="margin-right:34%">
+                                    <div class="avatar bg-rgba-primary p-25 mr-2 ml-0">
+                                        <img id="selected-mobile-picture" class="img-fluid" src="@Paths.DefaultsImageCmsPath/PlaceHolder.svg" height="100" width="100">
+                                    </div>
+                                    <div class="mt-n25 mr-5">
+                                        <h5>تصویر (موبایل) انتخاب شده</h5>
+                                        <p class="text-info">راهنمای سایز : width = 700 , height = 600 </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-6 col-md-6 mb-1">
+                                    <fieldset>
+                                        <div class="input-group">
+                                            <div class="custom-file">
+                                                <input asp-for="PictureFile" type="file" class="custom-file-input" accept="@MimeTypes.Images">
+                                                <label class="custom-file-label">انتخاب تصویر (دسکتاپ)</label>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <div class="help-block">
+                                        <span asp-validation-for="PictureFile" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-6 col-md-6 mb-1">
+                                    <fieldset>
+                                        <div class="input-group">
+                                            <div class="custom-file">
+                                                <input asp-for="MobilePictureFile" type="file" class="custom-file-input" accept="@MimeTypes.Images">
+                                                <label class="custom-file-label">انتخاب تصویر (موبایل)</label>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <div class="help-block">
+                                        <span asp-validation-for="MobilePictureFile" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-3 col-lg-6">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="Title"></label>
+                                            <input asp-for="Title" type="text" class="form-control text-left">
+                                            <div class="help-block">
+                                                <span asp-validation-for="Title" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-12 col-sm-3 col-lg-6">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="SubTitle"></label>
+                                            <input asp-for="SubTitle" type="text" class="form-control text-left">
+                                            <div class="help-block">
+                                                <span asp-validation-for="SubTitle" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-3 col-lg-4">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="Route"></label>
+                                            <input asp-for="Route" type="text" class="form-control text-right">
+                                            <div class="help-block">
+                                                <span asp-validation-for="Route" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-3 col-lg-4">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label> دسته بندی مقاله </label>
+                                            <fieldset class="form-group">
+                                                <select asp-for="BlogCategoryId" class="form-control">
+                                                    @if (categories != null && categories.Count > 0)
+                                                    {
+                                                        @foreach (var item in categories)
+                                                        {
+                                                            <option value="@item.Id">@item.Title</option>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="null">دسته ای یافت نشد!</option>
+                                                    }
+                                                </select>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-12 col-sm-3 col-lg-4">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="ReadingTime"></label>
+                                            <input asp-for="ReadingTime" class="form-control text-left" placeholder="مثلا : 6 دقیقه">
+                                            <div class="help-block">
+                                                <span asp-validation-for="ReadingTime" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-12 col-lg-12">
+                                    <div class="form-group">
+                                        <label asp-for="Summary"></label>
+                                        <textarea class="form-control" asp-for="Summary" rows="4"></textarea>
+                                        <div class="help-block">
+                                            <span asp-validation-for="Summary" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-12 col-lg-12">
+                                    <div class="form-group">
+                                        <label asp-for="Content"></label>
+                                        <textarea class="form-control" id="ckeditor5-1" asp-for="Content" rows="10"></textarea>
+                                        <div class="help-block">
+                                            <span asp-validation-for="Content" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-12 col-lg-12">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="MetaDesc"></label>
+                                            <textarea class="form-control" asp-for="MetaDesc" rows="3"></textarea>
+                                            <div class="help-block">
+                                                <span asp-validation-for="MetaDesc" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6 col-lg-6">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="MetaTitle"></label>
+                                            <input asp-for="MetaTitle" type="text" class="form-control text-left">
+                                            <div class="help-block">
+                                                <span asp-validation-for="MetaTitle" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-12 col-sm-6 col-lg-6">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="MetaCanonicalUrl"></label>
+                                            <input asp-for="MetaCanonicalUrl" type="text" class="form-control text-right">
+                                            <div class="help-block">
+                                                <span asp-validation-for="MetaCanonicalUrl" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-12 col-lg-12">
+                                    <div class="form-group">
+                                        <div class="checkbox">
+                                            <input asp-for="IndexMeta" type="checkbox" class="checkbox-input">
+                                            <label asp-for="IndexMeta"></label>
+                                            <div class="help-block">
+                                                <span asp-validation-for="IndexMeta" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-12 col-lg-12">
+                                    <div class="form-group">
+                                        <div class="checkbox">
+                                            <input asp-for="CanonicalMeta" type="checkbox" class="checkbox-input">
+                                            <label asp-for="CanonicalMeta"></label>
+                                            <div class="help-block">
+                                                <span asp-validation-for="CanonicalMeta" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                          @*       <div class="col-12 col-sm-12 col-lg-12">
+                                    <div class="form-group">
+                                        <div class="checkbox">
+                                            <input asp-for="FollowMeta" type="checkbox" class="checkbox-input">
+                                            <label asp-for="FollowMeta"></label>
+                                            <div class="help-block">
+                                                <span asp-validation-for="FollowMeta" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> *@
+
+                                <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
+                                    <button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">ذخیره</button>
+                                    <button onclick="history.back()" type="reset" class="btn btn-light">انصراف</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script src="~/lib/ckeditor5/ckeditor.js"></script>
+    <a href="~/lib/ckeditor5/ckeditor.js.map">~/lib/ckeditor5/ckeditor.js.map</a>
+    <script src="~/lib/ckeditor5/customckeditor.js"></script>
+    <script>
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#selected-picture').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#PictureFile").change(function () {
+            readURL(this);
+        });
+
+
+
+
+        function readURL2(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#selected-mobile-picture').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#MobilePictureFile").change(function () {
+            readURL2(this);
+        });
+    </script>
+}

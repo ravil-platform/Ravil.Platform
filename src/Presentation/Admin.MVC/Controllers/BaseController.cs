@@ -1,8 +1,11 @@
 ﻿using Common.Utilities.SweetAlert;
+using Constants.Security;
+using Microsoft.AspNetCore.Authorization;
 using Newtonsoft.Json;
 
 namespace Admin.MVC.Controllers;
 
+[Authorize(Roles = nameof(Roles.Admin))]
 public class BaseController : Controller
 {
     #region ( Sweet Alert )

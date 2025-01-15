@@ -1,0 +1,131 @@
+﻿@using Common.Utilities.Extensions
+@using Common.Utilities.Services.FTP.Models
+@using Constants.Files
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.Extensions.Options
+@model Domain.Entities.Blog.BlogCategory
+
+@inject IOptions<FTPConnectionOptions> FtpConnectionOptions
+
+@{
+    string UrlBase = FtpConnectionOptions.Value.UrlBase;
+    ViewData["Title"] = "جزئیات دسته";
+    ViewData["selected"] = "Blogs_Index";
+}
+
+<form method="post" id="SetActivationTrue" asp-controller="Blogs" asp-action="SetActivationBlogCategories" asp-route-id="@Model.Id" asp-route-active="true"></form>
+<form method="post" id="SetActivationFalse" asp-controller="Blogs" asp-action="SetActivationBlogCategories" asp-route-id="@Model.Id" asp-route-active="false"></form>
+
+<section>
+    <div class="row">
+        @*  <div class="col-12 col-sm-6 col-lg-8 mb-2">
+        <div class="media">
+        <a class="mr-1">
+        <img src="@UrlBase@Paths.CmsBlogCategory@Model." alt="users view avatar" class="users-avatar-shadow" height="120" width="120">
+        </a>
+        </div>
+        </div> *@
+
+        <div class="col-12 col-sm-6 col-lg-4  px-0 d-flex justify-content-end align-items-center px-1 mb-0">
+            @if (!(bool)Model.IsDeleted)
+            {
+                <a onclick="SetActivationTrue(this)" class="btn btn-sm btn-success mr-25 text-white">فعال<i class="bx bx-check-square"></i></a>
+            }
+            else
+            {
+                <a onclick="SetActivationFalse(this)" class="btn btn-sm btn-danger mr-25 text-white"> غیرفعال<i class="bx bx-block"></i></a>
+            }
+
+            <a asp-controller="Blogs" asp-action="UpdateBlogCategories" asp-route-blogCategoryId="@Model.Id" class="btn btn-sm btn-warning  mr-25">ویرایش <i class="bx bx-edit"></i></a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-content">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 col-md-12">
+                        <table class="table table-borderless line-height-1">
+                            <tbody>
+                                <tr>
+                                    <td>@(Resources.General.DisplayNames.Title):</td>
+                                    <td class="users-view-name">@Model.Title</td>
+                                </tr>
+
+                                @*         <tr>
+                                <td>@(Resources.General.DisplayNames.Slug):</td>
+                                <td class="users-view-username">@Model.</td>
+                                </tr>
+                                *@
+                                <tr>
+                                    <td>@(Resources.General.DisplayNames.Sort):</td>
+                                    <td class="users-view-username">@Model.Sort</td>
+                                </tr>
+
+                                <tr>
+                                    <td>وضعیت نمایش در سایت:</td>
+                                    <td>
+                                        @if (!(bool)Model.IsDeleted)
+                                        {
+                                            <span class="badge badge-light-danger users-view-status">غیرفعال</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-light-success users-view-status">فعال</span>
+                                        }
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        function SetActivationFalse(event) {
+            Swal.fire({
+                title: 'آیااطمینان دارید؟',
+                text: 'حذف منطقی کردن',
+                icon: "info",
+                showCancelButton: true,
+                cancelButtonText: 'خیر',
+                canceButtonClass: 'btn btn-danger',
+                showConfirButton: true,
+                confirmButtonText: 'بله',
+                confirmButtonClass: 'btn btn-success'
+            }).then((result) => {
+                if (result.value) {
+                    $("#SetActivationFalse").submit();
+                }
+            });
+
+            return false;
+        }
+
+        function SetActivationTrue(event) {
+            Swal.fire({
+                title: 'آیااطمینان دارید؟',
+                text: 'فعال کردن',
+                icon: "info",
+                showCancelButton: true,
+                cancelButtonText: 'خیر',
+                canceButtonClass: 'btn btn-danger',
+                showConfirButton: true,
+                confirmButtonText: 'بله',
+                confirmButtonClass: 'btn btn-success'
+            }).then((result) => {
+                if (result.value) {
+                    $("#SetActivationTrue").submit();
+                }
+            });
+
+            return false;
+        }
+
+
+    </script>
+}

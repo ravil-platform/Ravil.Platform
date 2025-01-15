@@ -1,0 +1,362 @@
+﻿@using Domain.Entities.State
+@using Domain.Entities.City
+@model ViewModels.AdminPanel.Config.AdminConfigViewModel
+@{
+    ViewData["Title"] = "تنظیمات";
+    ViewData["selected"] = "Configs_Index";
+    var states = (List<StateBase>)ViewData["states"]!;
+    var cities = (List<CityBase>)ViewData["cities"]!;
+}
+@section CSS
+{
+    <style>
+        .ck-editor__editable_inline {
+            min-height: 400px;
+        }
+    </style>
+}
+<section>
+    <div class="card bg-transparent shadow-none border">
+        <div class="card-content">
+            <div class="card-body">
+                <ul class="nav nav-pills">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="home-tab" data-toggle="pill" href="#LocalBussiness" aria-expanded="true">اطلاعات پایه</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="social-tab" data-toggle="pill" href="#socialnetwork" aria-expanded="false">
+                            شبکه های اجتماعی
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="mail-tab" data-toggle="pill" href="#mailserver" aria-expanded="false">ایمیل</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="cdn-tab" data-toggle="pill" href="#cdn" aria-expanded="false">CDN</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="zarinpal-tab" data-toggle="pill" href="#zarinpalserver" aria-expanded="false">زرین پال</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="sms-tab" data-toggle="pill" href="#sms-statistics" aria-expanded="false">پنل پیامکی</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="LocalBussiness" aria-labelledby="home-tab" aria-expanded="true">
+                        <form asp-controller="Config" asp-action="IndexConfig" method="post">
+                            <div class="row">
+                                <div class="col-12 col-sm-6 col-lg-3">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="Domain">دامنه</label>
+                                            <input asp-for="Domain" type="text" class="form-control text-right">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6 col-lg-3">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="SiteName">نام سایت</label>
+                                            <input asp-for="SiteName" type="text" class="form-control text-left">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6 col-lg-3">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="SiteAlternateName">نام لاتین سایت</label>
+                                            <input asp-for="SiteAlternateName" type="text" class="form-control text-right">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6 col-lg-3">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="Tel">تلفن</label>
+                                            <input asp-for="Tel" type="text" class="form-control text-right">
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-12 col-sm-6 col-lg-3">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="Mobile">شماره همراه</label>
+                                            <input asp-for="Mobile" type="text" class="form-control text-right">
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-12 col-sm-6 col-lg-3">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="Email">آدرس الکترونیکی</label>
+                                            <input asp-for="Email" type="text" class="form-control text-right">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6 col-lg-3">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="Address">آدرس</label>
+                                            <input asp-for="Address" type="text" class="form-control text-left">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-3 col-lg-3">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="OrderNotificationPhoneNumber">شماره همراه نوتیفیکشن های سفارشات</label>
+                                            <input asp-for="OrderNotificationPhoneNumber" type="text" class="form-control text-right">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-12 col-lg-12">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="MapUrl">آدرس نقشه</label>
+                                            <input asp-for="MapUrl" type="text" class="form-control text-right" dir="ltr">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-12 col-lg-12">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="ActiveBaseCityId">شهر پیشفرض</label>
+                                            <select asp-for="ActiveBaseCityId" class="select2 form-control">
+                                                @foreach (var item in cities)
+                                                {
+                                                    <option value="@item.Id"> @item.Name</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1 mb-3">
+                                    <button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">ذخیره اطلاعات پایه</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane" id="socialnetwork" role="tabpanel" aria-labelledby="social-tab" aria-expanded="false">
+                        <form asp-controller="Config" asp-action="IndexConfig" method="post">
+
+                            <div class="row">
+                                <div class="col-12 col-sm-4 col-lg-4">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="Instagram">اینستاگرام</label>
+                                            <input asp-for="Instagram" type="text" class="form-control text-right">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-4 col-lg-4">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="Telegram">تلگرام</label>
+                                            <input asp-for="Telegram" type="text" class="form-control text-right">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-4 col-lg-4">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="Facebook">فیس بوک</label>
+                                            <input asp-for="Facebook" type="text" class="form-control text-right">
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-12 col-sm-4 col-lg-4">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="Twitter">توییتر</label>
+                                            <input asp-for="Twitter" type="text" class="form-control text-right">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-4 col-lg-4">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="Google">گوگل</label>
+                                            <input asp-for="Google" type="text" class="form-control text-right">
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-12 col-sm-4 col-lg-4">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="Whatsapp">واتساپ</label>
+                                            <input asp-for="Whatsapp" type="text" class="form-control text-right">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1 mb-3">
+                                    <button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">ذخیره شبکه های اجتماعی</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane" id="mailserver" role="tabpanel" aria-labelledby="mail-tab" aria-expanded="false">
+                        <form asp-controller="Config" asp-action="IndexConfig" method="post">
+                            <div class="row">
+                                <div class="col-12 col-sm-6 col-lg-6">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="MailSmtpDomain">smtp دامنه</label>
+                                            <input asp-for="MailSmtpDomain" type="text" class="form-control text-right">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6 col-lg-6">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="MailUserName">نام کاربری ایمیل</label>
+                                            <input asp-for="MailUserName" type="text" class="form-control text-right">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6 col-lg-6">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="MailPassword">کلمه عبور ایمیل</label>
+                                            <input asp-for="MailPassword" type="text" class="form-control text-right">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6 col-lg-6">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="MailDisplayName">نام ایمیل</label>
+                                            <input asp-for="MailDisplayName" type="text" class="form-control text-right">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1 mb-3">
+                                    <button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">ذخیره سرور ایمیل</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane" id="cdn" role="tabpanel" aria-labelledby="cdn-tab" aria-expanded="false">
+                        <form asp-controller="Config" asp-action="IndexConfig" method="post">
+                            <div class="row">
+                                <div class="col-12 col-sm-12 col-lg-12">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="ContentDeliveryNetwork">شبکه تحویل محتوا(cdn)</label>
+                                            <input asp-for="ContentDeliveryNetwork" type="text" class="form-control text-right">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1 mb-3">
+                                    <button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">ذخیره</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane" id="zarinpalserver" role="tabpanel" aria-labelledby="zarinpal-tab" aria-expanded="false">
+                        <form asp-controller="Config" asp-action="IndexConfig" method="post">
+                            <div class="row">
+                                <div class="col-12 col-sm-6 col-lg-6">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="ZarinpalUrl">آدرس زرین پال</label>
+                                            <input asp-for="ZarinpalUrl" type="text" class="form-control text-right">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6 col-lg-6">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="ZarinpalMerchant">مرچنت زرین پال</label>
+                                            <input asp-for="ZarinpalMerchant" type="text" class="form-control text-right">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-12 col-lg-12">
+                                    <div class="form-group">
+                                        <div class="checkbox">
+                                            <input asp-for="ZarinpalMode" type="checkbox" class="checkbox-input">
+                                            <label asp-for="ZarinpalMode">فعال بودن زرین پال؟</label>
+                                            <div class="help-block">
+                                                <span asp-validation-for="ZarinpalMode" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1 mb-3">
+                                    <button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">ذخیره اطلاعات زرین پال</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane" id="sms-statistics" role="tabpanel" aria-labelledby="sms-tab" aria-expanded="false">
+                        <form asp-controller="Config" asp-action="IndexConfig" method="post">
+                            <div class="row">
+                                <div class="col-12 col-sm-6 col-lg-6">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="SmsCenter">مرکز پیامک</label>
+                                            <input asp-for="SmsCenter" type="text" class="form-control text-right">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6 col-lg-6">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="SmsUser">نام کاربری</label>
+                                            <input asp-for="SmsUser" type="text" class="form-control text-right">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6 col-lg-6">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="SmsPass">کلمه عبور</label>
+                                            <input asp-for="SmsPass" type="text" class="form-control text-right">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1 mb-3">
+                                    <button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">ذخیره اطلاعات</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script src="~/lib/ckeditor5/ckeditor.js"></script>
+    <script src="~/lib/ckeditor5/customckeditor.js"></script>
+}

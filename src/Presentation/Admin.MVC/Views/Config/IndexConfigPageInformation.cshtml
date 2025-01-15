@@ -1,0 +1,511 @@
+﻿@using Constants.Files
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model ViewModels.AdminPanel.Config.AdminConfigViewModel
+@{
+    ViewData["Title"] = "تنظیمات";
+    ViewData["selected"] = "Configs_IndexPageInformation";
+}
+@section CSS
+{
+    <style>
+        .ck-editor__editable_inline {
+            min-height: 400px;
+        }
+    </style>
+}
+
+<section>
+    <div class="card bg-transparent shadow-none border">
+        <div class="card-content">
+            <div class="card-body">
+                <ul class="nav nav-pills">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="home-tab" data-toggle="pill" href="#homepage" aria-expanded="true">خانه</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="blog-tab" data-toggle="pill" href="#blogpage" aria-expanded="true">وبلاگ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="about-tab" data-toggle="pill" href="#aboutpage" aria-expanded="true">درباره ما</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="contact-tab" data-toggle="pill" href="#contactpage" aria-expanded="true">تماس با ما</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="faqs-tab" data-toggle="pill" href="#faqs" aria-expanded="true">سوالات متداول</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="pattern-tab" data-toggle="pill" href="#pattern" aria-expanded="true">الگو ها</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="other-tab" data-toggle="pill" href="#other" aria-expanded="true">سایر</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="homepage" aria-labelledby="home-tab" aria-expanded="true">
+                        <form asp-controller="Config" asp-action="IndexConfigPageInformation" method="post" enctype="multipart/form-data">
+                            @*  <div class="card-title-details d-flex align-items-center mb-1 ml-1">
+                            <div>
+                            <div class="avatar bg-rgba-primary p-25 mr-2 ml-0">
+                            @if (Model.HomePictureFile == null)
+                            {
+                            <img id="selected-home-picture" class="img-fluid" src="@Paths.DefaultsImageCmsPath/PlaceHolder.svg" height="100" width="100">
+                            }
+                            else
+                            {
+                            <img id="selected-home-picture" class="img-fluid" src="@Paths.HomePageImage@Model.HomePictureFile" height="100" width="100">
+                            }
+                            </div>
+                            <div class="mt-n25">
+                            <h5>تصویر (دسکتاپ) انتخاب شده</h5>
+                            <p class="text-info">راهنمای سایز : width = 700 , height = 600 </p>
+                            </div>
+                            </div>
+
+                            <div style="margin-right:34%">
+                            <div class="avatar bg-rgba-primary p-25 mr-2 ml-0">
+                            @if (Model.HomePictureFile == null)
+                            {
+                            <img id="selected-home-mobile-picture" class="img-fluid" src="@Paths.DefaultsImageCmsPath/PlaceHolder.svg" height="100" width="100">
+                            }
+                            else
+                            {
+                            <img id="selected-home-mobile-picture" class="img-fluid" src="@Paths.HomePageImage@Model.HomeMobilePictureFile" height="100" width="100">
+                            }
+                            </div>
+                            <div class="mt-n25 mr-5">
+                            <h5>تصویر (موبایل) انتخاب شده</h5>
+                            <p class="text-info">راهنمای سایز : width = 700 , height = 600 </p>
+                            </div>
+                            </div>
+                            </div> *@
+                            <div class="row">
+                                @*    <div class="col-6 col-md-6 mb-1">
+                                <fieldset>
+                                <div class="input-group">
+                                <div class="custom-file">
+                                <input asp-for="HomePictureFile" type="file" class="custom-file-input" accept="@MimeTypes.Images">
+                                <label class="custom-file-label">انتخاب تصویر (دسکتاپ)</label>
+                                </div>
+                                </div>
+                                </fieldset>
+                                </div>
+
+                                <div class="col-6 col-md-6 mb-1">
+                                <fieldset>
+                                <div class="input-group">
+                                <div class="custom-file">
+                                <input asp-for="HomeMobilePictureFile" type="file" class="custom-file-input" accept="@MimeTypes.Images">
+                                <label class="custom-file-label">انتخاب تصویر (موبایل)</label>
+                                </div>
+                                </div>
+                                </fieldset>
+                                </div> *@
+
+                                <div class="col-12 col-sm-6 col-lg-6">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="HomeTitle">@(Resources.General.DisplayNames.Title)</label>
+                                            <input asp-for="HomeTitle" type="text" class="form-control text-left">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6 col-lg-6">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="HomeMetaDesc">@(Resources.General.DisplayNames.MetaDescription)</label>
+                                            <input asp-for="HomeMetaDesc" type="text" class="form-control text-left">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-12 col-lg-12">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="HomeSummery">@(Resources.General.DisplayNames.Summary)</label>
+                                            <textarea class="form-control" asp-for="HomeSummery" rows="4"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-12 col-lg-12">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="HomeDescription">@(Resources.General.DisplayNames.Description)</label>
+                                            <textarea class="form-control" id="ckeditor5" asp-for="HomeDescription"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1 mb-3">
+                                    <button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">ذخیره اطلاعات پایه</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane" id="blogpage" role="tabpanel" aria-labelledby="blog-tab" aria-expanded="false">
+                        <form asp-controller="Config" asp-action="IndexConfigPageInformation" method="post">
+                            <div class="row">
+                                <div class="col-12 col-sm-12 col-lg-12">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="BlogTitle">@(Resources.General.DisplayNames.Title)</label>
+                                            <input asp-for="BlogTitle" type="text" class="form-control text-left">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-12 col-lg-12">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="BlogMetaDesc">@(Resources.General.DisplayNames.MetaDescription)</label>
+                                            <textarea class="form-control" asp-for="BlogMetaDesc" rows="4"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1 mb-3">
+                                    <button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">ذخیره</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane" id="aboutpage" role="tabpanel" aria-labelledby="about-tab" aria-expanded="false">
+                        <form asp-controller="Config" asp-action="IndexConfigPageInformation" method="post" enctype="multipart/form-data">
+                            <div class="row">
+                                @*         <div class="col-6 col-md-6 mb-1">
+                                <fieldset>
+                                <div class="input-group">
+                                <div class="custom-file">
+                                <input asp-for="AboutUsPictureFile" type="file" class="custom-file-input" accept="@MimeTypes.Images">
+                                <label class="custom-file-label">انتخاب تصویر (دسکتاپ)</label>
+                                </div>
+                                </div>
+                                </fieldset>
+                                </div> *@
+
+                                @*  <div class="col-6 col-md-6 mb-1">
+                                <fieldset>
+                                <div class="input-group">
+                                <div class="custom-file">
+                                <input asp-for="AboutUsMobilePictureFile" type="file" class="custom-file-input" accept="@MimeTypes.Images">
+                                <label class="custom-file-label">انتخاب تصویر (موبایل)</label>
+                                </div>
+                                </div>
+                                </fieldset>
+                                </div> *@
+
+                                @*
+                                <div class="col-6 col-md-6 mb-1">
+                                <fieldset>
+                                <div class="input-group">
+                                <div class="custom-file">
+                                <input asp-for="AboutUsMissionBoxPictureFile" type="file" class="custom-file-input" accept="@MimeTypes.Images">
+                                <label class="custom-file-label">تصویر باکس ماموریت ها (دستکتاپ)</label>
+                                </div>
+                                </div>
+                                </fieldset>
+                                </div>
+
+                                <div class="col-6 col-md-6 mb-1">
+                                <fieldset>
+                                <div class="input-group">
+                                <div class="custom-file">
+                                <input asp-for="AboutUsMissionBoxMobilePictureFile" type="file" class="custom-file-input" accept="@MimeTypes.Images">
+                                <label class="custom-file-label">تصویر باکس ماموریت ها (موبایل)</label>
+                                </div>
+                                </div>
+                                </fieldset>
+                                </div> *@
+
+                                @*  <div class="col-12 col-md-12 mb-1">
+                                <fieldset>
+                                <div class="input-group">
+                                <div class="custom-file">
+                                <input asp-for="AboutUsVideoFile" type="file" class="custom-file-input" accept="@MimeTypes.Images">
+                                <label class="custom-file-label">ویدیو</label>
+                                </div>
+                                </div>
+                                </fieldset>
+                                </div>
+                                *@
+                                <div class="col-12 col-sm-12 col-lg-12">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="AboutUsTitle">عنوان</label>
+                                            <input asp-for="AboutUsTitle" type="text" class="form-control text-left">
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-12 col-sm-12 col-lg-12">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="AboutUsMetaDesc">@(Resources.General.DisplayNames.MetaDescription)</label>
+                                            <textarea class="form-control" rows="4" asp-for="AboutUsMetaDesc"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-12 col-lg-12">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="AboutUsContent">@(Resources.General.DisplayNames.Content)</label>
+                                            <textarea class="form-control" id="ckeditor5-1" asp-for="AboutUsContent"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1 mb-3">
+                                    <button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">ذخیره</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane" id="contactpage" role="tabpanel" aria-labelledby="contact-tab" aria-expanded="false">
+                        <form asp-controller="Config" asp-action="IndexConfigPageInformation" method="post">
+                            <div class="row">
+                                <div class="col-12 col-sm-6 col-lg-6">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="ContactTitle">عنوان صفحه تماس با ما</label>
+                                            <input asp-for="ContactTitle" type="text" class="form-control text-left">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-12 col-lg-12">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="ContactMetaDesc">@(Resources.General.DisplayNames.MetaDescription)</label>
+                                            <textarea class="form-control" asp-for="ContactMetaDesc" rows="4"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-12 col-lg-12">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="ContactContent">محتوا</label>
+                                            <textarea class="form-control" id="ckeditor5-10" asp-for="ContactContent" rows="4"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1 mb-3">
+                                    <button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">ذخیره</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane" id="faqs" role="tabpanel" aria-labelledby="faqs-tab" aria-expanded="false">
+                        <form asp-controller="Config" asp-action="IndexConfigPageInformation" method="post">
+                            <div class="row">
+                                <div class="col-12 col-sm-12 col-lg-12">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="FaqTitle">عنوان</label>
+                                            <input asp-for="FaqTitle" type="text" class="form-control text-left">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-12 col-lg-12">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="FaqMetaDesc">@(Resources.General.DisplayNames.MetaDescription)</label>
+                                            <input asp-for="FaqMetaDesc" type="text" class="form-control text-left">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-12 col-lg-12">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="FaqContent">محتوا</label>
+                                            <textarea class="form-control" asp-for="FaqContent" rows="4"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1 mb-3">
+                                    <button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">ذخیره</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane" id="other" role="tabpanel" aria-labelledby="other-tab" aria-expanded="false">
+                        <form asp-controller="Config" asp-action="IndexConfigPageInformation" method="post">
+                            <div class="row">
+                                <div class="col-12 col-sm-12 col-lg-12">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="FooterText">توضیحات باکس فوتر سایت</label>
+                                            <textarea class="form-control" id="ckeditor5-9" asp-for="FooterText" rows="4"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1 mb-3">
+                                    <button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">ذخیره</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane" id="pattern" role="tabpanel" aria-labelledby="pattern-tab" aria-expanded="false">
+                        <form asp-controller="Config" asp-action="IndexConfigPageInformation" method="post">
+                            <div class="row">
+                                <div class="col-12 col-sm-12 col-lg-12">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <span class="h1 text-bold mb-5">ساختار و الگوی عناوین، توضیحات متا:</span>
+                                            <span class="d-block">برای درج شهر دسته بندی، باید از نشانه %city% استفاده کنید.</span>
+                                            <span class="d-block">برای درج زمان و تاریخ، باید از نشانه %date% استفاده کنید.</span>
+                                            <span class="d-block">برای درج اسم شخصی، باید از نشانه %personalname% استفاده کنید.</span>
+                                            <span class="d-block">برای درج کسب و کار دسته بندی، باید از نشانه %business% استفاده کنید.</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-12 col-lg-12">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="CategoriesMetaTitlePattern"></label>
+                                            <input asp-for="CategoriesMetaTitlePattern" type="text" class="form-control text-left">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-12 col-lg-6">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="CategoriesBrandNameMetaDescriptionPattern"></label>
+                                            <input asp-for="CategoriesBrandNameMetaDescriptionPattern" type="text" class="form-control text-left">
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-12 col-sm-12 col-lg-6">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="CategoriesPersonalBrandMetaDescriptionPattern"></label>
+                                            <input asp-for="CategoriesPersonalBrandMetaDescriptionPattern" type="text" class="form-control text-left">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-12 col-lg-6">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="JobsPersonalBrandMetaTitlePattern"></label>
+                                            <input asp-for="JobsPersonalBrandMetaTitlePattern" type="text" class="form-control text-left">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-12 col-lg-6">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="JobsPersonalBrandMetaDescriptionPattern"></label>
+                                            <input asp-for="JobsPersonalBrandMetaDescriptionPattern" type="text" class="form-control text-left">
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-12 col-sm-12 col-lg-6">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="JobsBrandNameMetaTitlePattern"></label>
+                                            <input asp-for="JobsBrandNameMetaTitlePattern" type="text" class="form-control text-left">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-12 col-lg-6">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="JobsBrandNameMetaDescriptionPattern"></label>
+                                            <input asp-for="JobsBrandNameMetaDescriptionPattern" type="text" class="form-control text-left">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6 col-lg-6">
+                                    <div class="form-group">
+                                        <div class="checkbox">
+                                            <input asp-for="NoIndexSeoPages" type="checkbox" class="checkbox-input">
+                                            <label asp-for="NoIndexSeoPages"></label>
+                                            <div class="help-block">
+                                                <span asp-validation-for="NoIndexSeoPages" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6 col-lg-6">
+                                    <div class="form-group">
+                                        <div class="checkbox">
+                                            <input asp-for="RedirectSeoPages" type="checkbox" class="checkbox-input">
+                                            <label asp-for="RedirectSeoPages"></label>
+                                            <div class="help-block">
+                                                <span asp-validation-for="RedirectSeoPages" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1 mb-3">
+                                    <button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">ذخیره</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script src="~/lib/ckeditor5/ckeditor.js"></script>
+    <script src="~/lib/ckeditor5/customckeditor.js"></script>
+    <script>
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#selected-home-picture').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#HomePictureFile").change(function () {
+            readURL(this);
+        });
+
+
+
+
+        function readURL2(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#selected-home-mobile-picture').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#HomeMobilePictureFile").change(function () {
+            readURL2(this);
+        });
+    </script>
+}
