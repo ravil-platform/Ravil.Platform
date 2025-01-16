@@ -3,9 +3,11 @@
     public static class Paths
     {
         public const string DefaultAvatarPath = "DefaultAvatar.jpg";
+        public const string DefaultJobPath = "default.jpg";
         public const string DefaultIconPath = "DefaultIcon.jpg";
         public const string DefaultsImagePath = "/content/defaults/images/cms/";
         public static string DefaultsImageCmsPath = $"/content/defaults/images/cms/";
+        public static string DefaultsImageJobPath = $"/content/defaults/images/job/{DefaultJobPath}";
 
         #region ( User )
         public static string User = "img/user";

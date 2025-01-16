@@ -73,8 +73,7 @@ public class JobRepository : Repository<Domain.Entities.Job.Job>, IJobRepository
     public JobFilterViewModel GetByAdminFilter(JobFilterViewModel filter)
     {
         var query =
-           ApplicationDbContext.Job
-               // .Where(b => b.Status == JobBranchStatus.Accepted)
+           ApplicationDbContext.Job.Include(j => j.JobBranches)
                .OrderByDescending(b => b.CreateDate)
                .AsQueryable();
 
@@ -117,19 +116,19 @@ public class JobRepository : Repository<Domain.Entities.Job.Job>, IJobRepository
         {
             query = query.Where(a => a.Status == filter.Status);
         }
-        else
-        {
-            query = query.Where(a => a.Status == JobBranchStatus.Accepted);
-        }
+        //else
+        //{
+        //    query = query.Where(a => a.Status == JobBranchStatus.Accepted);
+        //}
 
         if (filter.IsDeleted != null)
         {
             query = query.Where(a => a.IsDeleted == filter.IsDeleted);
         }
-        else
-        {
-            query = query.Where(a => a.IsDeleted == false);
-        }
+        //else
+        //{
+        //    query = query.Where(a => a.IsDeleted == false);
+        //}
 
         if (filter.IsGoogleData != null)
         {

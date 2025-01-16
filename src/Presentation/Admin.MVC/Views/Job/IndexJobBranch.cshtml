@@ -49,7 +49,15 @@
                                 <tr>
                                     <td>@counter</td>
                                     <td class="text-bold-700">
-                                        <img class="rounded-circle mr-1" src="@UrlBase@Paths.JobBranch@data.LargePicture" height="100" width="100">
+                                        
+                                        @if (data.SmallPicture != null)
+                                        {
+                                            <img class="rounded-circle mr-1" src="@UrlBase@Paths.JobBranch@data.Id/@data.SmallPicture" height="100" width="100">
+                                        }
+                                        else
+                                        {
+                                            <img class="rounded-circle mr-1" src="@UrlBase@Paths.DefaultsImageJobPath" height="100" width="100">
+                                        }
                                     </td>
                                     <td>@data.Title</td>
                                     <td>@data.HeadingTitle</td>

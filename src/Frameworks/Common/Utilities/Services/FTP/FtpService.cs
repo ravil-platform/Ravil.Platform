@@ -268,6 +268,30 @@ public class FtpService : object, IFtpService
             throw new FileLoadException();
         }
     }
+
+    public async Task<bool> DeleteFileToFtpServer(string originSavePath, string deleteFileName)
+    {
+        try
+        {
+            #region  ( Delete Old File )
+            if (!string.IsNullOrEmpty(deleteFileName))
+            {
+                var fullPath = originSavePath + deleteFileName;
+
+                if (FtpClient.FileExists(fullPath)) FtpClient.DeleteFile(fullPath);
+                return true;
+            }
+            #endregion
+
+        }
+        catch
+        {
+            return false;
+        }
+
+        return false;
+    }
+
     #endregion
 
     #region ( Download File From FtpServer )

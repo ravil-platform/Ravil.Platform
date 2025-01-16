@@ -165,7 +165,28 @@
                                     <tr>
                                         <td>@counter</td>
                                         <td class="text-bold-700">
-                                            <img class="rounded-circle mr-1" src="@UrlBase@Paths.Job@data.LargePicture" height="100" width="100">
+                                            @if (!string.IsNullOrEmpty(data.SmallPicture))
+                                            {
+                                                <img class="rounded-circle mr-1" src="@UrlBase@Paths.Job@data.SmallPicture" height="100" width="100">
+                                            }
+                                            else
+                                            {
+                                                @if (data.JobBranches.Any())
+                                                {
+                                                    @if (data.JobBranches.ToArray()[0].SmallPicture != null)
+                                                    {
+                                                        <img class="rounded-circle mr-1" src="@UrlBase@Paths.JobBranch@data.JobBranches.ToArray()[0].Id/@data.JobBranches.ToArray()[0].SmallPicture" height="100" width="100">
+                                                    }
+                                                    else
+                                                    {
+                                                        <img class="rounded-circle mr-1" src="@UrlBase@Paths.DefaultsImageJobPath" height="100" width="100">
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <img class="rounded-circle mr-1" src="@UrlBase@Paths.DefaultsImageJobPath" height="100" width="100">
+                                                }
+                                            }
                                         </td>
                                         <td>@data.Title</td>
                                         <td>@data.SubTitle</td>

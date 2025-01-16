@@ -5,6 +5,7 @@ using Domain.Entities.Job;
 using Domain.Entities.Location;
 using Enums;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System.Text.Json;
 using ViewModels.AdminPanel.Filter;
 using ViewModels.AdminPanel.Job;
@@ -450,15 +451,30 @@ namespace Admin.MVC.Controllers
         {
             try
             {
+                await UnitOfWork.JobRepository.BeginTransactionAsync();
                 #region ( Entities )
                 //Todo : Remove photos
                 var job = await UnitOfWork.JobRepository.Table.Where(j => j.Id == id).SingleOrDefaultAsync();
+
+                if (job == null)
+                {
+                    ErrorAlert("شغل یافت نشد!");
+
+                    return RedirectToAction("IndexJob");
+                }
+
                 var jobBranches = await UnitOfWork.JobBranchRepository.Table.Where(j => j.JobId == id).ToListAsync();
 
                 foreach (var branch in jobBranches)
                 {
                     var banners = await UnitOfWork.BannerRepository.GetAllAsync(b => b.JobBranchId == branch.Id);
                     UnitOfWork.BannerRepository.RemoveRange(banners);
+
+                    foreach (var banner in banners)
+                    {
+                        await FtpService.DeleteFileToFtpServer(Paths.Banner, banner.LargePicture);
+                        await FtpService.DeleteFileToFtpServer(Paths.Banner, banner.SmallPicture);
+                    }
 
                     // Save Start
                     await UnitOfWork.SaveAsync();
@@ -509,8 +525,31 @@ namespace Admin.MVC.Controllers
                 var jobTags = await UnitOfWork.JobTagRepository.Table.Where(j => j.JobId == job.Id).ToListAsync();
                 UnitOfWork.JobTagRepository.RemoveRange(jobTags);
 
-                var jobBranch = await UnitOfWork.JobBranchRepository.Table.Where(j => j.JobId == job.Id).ToListAsync();
-                UnitOfWork.JobBranchRepository.RemoveRange(jobBranch);
+                //var jobBranches = await UnitOfWork.JobBranchRepository.Table.Where(j => j.JobId == job.Id).ToListAsync();
+
+
+
+                foreach (var jobBranch in jobBranches)
+                {
+                    var addresses = await UnitOfWork.AddressRepository.GetAllAsync(a => a.JobBranchId == jobBranch.Id);
+                    UnitOfWork.AddressRepository.RemoveRange(addresses);
+
+                    // Save Start
+                    await UnitOfWork.SaveAsync();
+                    // Save Finish
+
+                    if (jobBranch.LargePicture != null)
+                    {
+                        await FtpService.DeleteFileToFtpServer($"{Paths.JobBranch}/{jobBranch.Id}", jobBranch.LargePicture);
+                    }
+
+                    if (jobBranch.SmallPicture != null)
+                    {
+                        await FtpService.DeleteFileToFtpServer($"{Paths.JobBranch}/{jobBranch.Id}", jobBranch.SmallPicture);
+                    }
+                }
+
+                UnitOfWork.JobBranchRepository.RemoveRange(jobBranches);
 
                 var jobCategories = await UnitOfWork.JobCategoryRepository.Table.Where(j => j.JobId == job.Id).ToListAsync();
                 UnitOfWork.JobCategoryRepository.RemoveRange(jobCategories);
@@ -519,12 +558,23 @@ namespace Admin.MVC.Controllers
                 await UnitOfWork.SaveAsync();
                 // Save Finish
 
+                if (!string.IsNullOrEmpty(job.LargePicture))
+                {
+                    await FtpService.DeleteFileToFtpServer(Paths.Job, job.LargePicture);
+                }
+
+                if (!string.IsNullOrEmpty(job.SmallPicture))
+                {
+                    await FtpService.DeleteFileToFtpServer(Paths.Job, job.SmallPicture);
+                }
+
                 await UnitOfWork.JobRepository.DeleteAsync(job);
 
                 // Save Start
                 await UnitOfWork.SaveAsync();
                 // Save Finish
                 #endregion
+                await UnitOfWork.JobRepository.CommitTransactionAsync();
 
                 SuccessAlert();
             }
@@ -533,7 +583,7 @@ namespace Admin.MVC.Controllers
                 ErrorAlert(e.Message);
             }
 
-            return RedirectToAction("IndexJob");
+            return RedirectToAction("IndexJob", new {IsDeleted = true});
         }
 
 

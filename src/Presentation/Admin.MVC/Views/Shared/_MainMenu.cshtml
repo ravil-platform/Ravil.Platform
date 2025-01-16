@@ -44,6 +44,12 @@
                     <li class="@(selected == "Jobs_Index" ? "active" : "null")">
                         <a asp-controller="Job" asp-action="IndexJob"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">مشاهده لیست</span></a>
                     </li>
+                    <li>
+                        <a asp-controller="Job" asp-action="IndexJob" asp-route-status="WaitingToCheck"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">مشاغل در انتظار بررسی</span></a>
+                    </li>
+                    <li>
+                        <a asp-controller="Job" asp-action="IndexJob" asp-route-status="Rejected"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">مشاغل رد شده</span></a>
+                    </li>
                     <li class="@(selected == "Jobs_Create" ? "active" : "null")">
                         <a asp-controller="Job" asp-action="CreateJob"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">افزودن شغل</span></a>
                     </li>
@@ -215,7 +221,7 @@
 
 
             <li class="navigation-header">
-                <span>بزودی ...</span>
+                <span>غیرفعال ...</span>
             </li>
 
 
