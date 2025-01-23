@@ -2,8 +2,12 @@
 {
     public class AddressViewModel
     {
+        public double Lat { get; set; }
+        public double Long { get; set; }
+
         public int StateId { get; set; }
         public int CityId { get; set; }
+        public string CityName { get; set; } = null!;
 
         public string PostalAddress { get; set; } = null!;
 

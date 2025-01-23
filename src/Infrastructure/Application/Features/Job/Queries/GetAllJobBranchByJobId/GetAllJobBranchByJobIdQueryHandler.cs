@@ -12,7 +12,10 @@ public class GetAllJobBranchByJobIdQueryHandler : IRequestHandler<GetAllJobBranc
 
     public async Task<Result<List<JobBranchViewModel>>> Handle(GetAllJobBranchByJobIdQuery request, CancellationToken cancellationToken)
     {
-        var result = await UnitOfWork.JobBranchRepository.GetAllAsync(j => j.JobId == request.JobId);
+        var result = await UnitOfWork.JobBranchRepository.TableNoTracking
+            .Include(a => a.Job).Include(a => a.JobBranchGalleries)
+            .Include(a => a.Address).ThenInclude(a => a.Location)
+            .Where(j => j.JobId == request.JobId).ToListAsync(cancellationToken: cancellationToken);
 
         var jobBranchViewModel = Mapper.Map<List<JobBranchViewModel>>(result);
 

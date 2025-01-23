@@ -1,12 +1,16 @@
 ﻿using Application.Features.User.Commands.RemoveToken;
+using Application.Features.User.Queries.CheckIsBlogLiked;
 
 namespace Api.Controllers.V1
 {
-
+    /// <inheritdoc />
+    [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status403Forbidden)]
     [Route(Routes.Controller)]
     [Authorize]
     public class UserProfileController : GenericBaseController<UserProfileController>
     {
+        /// <inheritdoc />
         public UserProfileController(IMediator mediator, Logging.Base.ILogger<UserProfileController> logger) : base(mediator, logger)
         {
         }
@@ -21,6 +25,21 @@ namespace Api.Controllers.V1
         [ProducesResponseType(type: typeof(Result<List<UserJobBranchesViewModel>>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetUserJobBranches([FromQuery] GetUserJobBranchesQuery query)
+        {
+            var result = await Mediator.Send(query);
+
+            return FluentResult(result);
+        }
+
+        /// <summary>
+        /// Returns Check user blog like for given user id
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        [HttpGet(Routes.Action)]
+        [ProducesResponseType(type: typeof(Result<List<UserBlogLikeViewModel>>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> CheckIsBlogLiked([FromQuery] CheckIsBlogLikedQuery query)
         {
             var result = await Mediator.Send(query);
 

@@ -1,4 +1,6 @@
-﻿namespace Application.Contracts.Identity
+﻿using Resources.Messages;
+
+namespace Application.Contracts.Identity
 {
     public class JwtService : IJwtService
     {
@@ -38,6 +40,48 @@
             var securityToken = tokenHandler.CreateJwtSecurityToken(descriptor);
 
             return new AccessToken(securityToken);
+        }
+
+        public JwtSecurityToken? DecodeToken(string token)
+        {
+            var encryptionKey = Encoding.UTF8.GetBytes(SiteSetting.JwtSettings.EncryptKey);
+            var secretKey = Encoding.UTF8.GetBytes(SiteSetting.JwtSettings.SecretKey);
+
+            var validationParameters = new TokenValidationParameters
+            {
+                ClockSkew = TimeSpan.Zero, // default: 5 min
+                RequireSignedTokens = true,
+
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(secretKey),
+
+                RequireExpirationTime = true,
+                ValidateLifetime = true,
+
+                ValidateAudience = true, //default : false
+                ValidAudience = SiteSetting.JwtSettings.Audience,
+
+                ValidateIssuer = true, //default : false
+                ValidIssuer = SiteSetting.JwtSettings.Issuer,
+
+                TokenDecryptionKey = new SymmetricSecurityKey(encryptionKey),
+            };
+
+            try
+            {
+                var tokenHandler = new JwtSecurityTokenHandler();
+
+                var principal = tokenHandler.ValidateToken(token, validationParameters, out var validatedToken);
+                var jwtToken = validatedToken as JwtSecurityToken;
+
+                return jwtToken;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(Resources.Messages.Validations.JwtDecodeTokenIsInvalid, ex.Message);
+            }
+
+            return null;
         }
 
         private async Task<IEnumerable<Claim>> _getClaimsAsync(ApplicationUser user)

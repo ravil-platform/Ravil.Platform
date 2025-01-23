@@ -151,6 +151,15 @@ namespace Resources.Messages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Token is invalid: {0}.
+        /// </summary>
+        public static string JwtDecodeTokenIsInvalid {
+            get {
+                return ResourceManager.GetString("JwtDecodeTokenIsInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to خطایی رخ داد!.
         /// </summary>
         public static string LogicException {

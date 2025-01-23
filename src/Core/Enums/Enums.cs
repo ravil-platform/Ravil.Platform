@@ -4,6 +4,21 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Enums
 {
+    public enum FaqType
+    {
+        [Display(ResourceType = typeof(DisplayNames), Name = nameof(DisplayNames.Home))]
+        Home = 0,
+        [Display(ResourceType = typeof(DisplayNames), Name = nameof(DisplayNames.Blog))]
+        Blog = 1,
+        [Display(ResourceType = typeof(DisplayNames), Name = nameof(DisplayNames.Faqs))]
+        Faq = 2,
+        [Display(ResourceType = typeof(DisplayNames), Name = nameof(DisplayNames.JobBranch))]
+        Job = 3,
+        [Display(ResourceType = typeof(DisplayNames), Name = nameof(DisplayNames.Category))]
+        Category = 4,
+        Nothing = 50,
+    }
+
     public enum CategoryBusinessType
     {
         [Display(Name = nameof(PersonalBrand))]

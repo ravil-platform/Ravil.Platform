@@ -14,7 +14,10 @@ public class GetJobBranchByIdQueryHandler : IRequestHandler<GetJobBranchByIdQuer
 
     public async Task<Result<JobBranchViewModel>> Handle(GetJobBranchByIdQuery request, CancellationToken cancellationToken)
     {
-        var result = await UnitOfWork.JobBranchRepository.GetByIdAsync(request.Id);
+        var result = await UnitOfWork.JobBranchRepository.TableNoTracking
+            .Include(a => a.Address).ThenInclude(a => a.Location).Include(a => a.JobBranchGalleries)
+            .Include(a => a.Job).ThenInclude(a => a.JobCategories).ThenInclude(a => a.Category)
+            .SingleOrDefaultAsync(current => current.Id.Equals(request.Id), cancellationToken: cancellationToken);
 
         if (result is null)
         {

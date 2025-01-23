@@ -18,7 +18,9 @@ public class JobBranchAdsRepository : Repository<JobBranchAds>, IJobBranchAdsRep
 
         foreach (var jobBranchId in jobBranchIds)
         {
-            var jobBranch = await ApplicationDbContext.JobBranch.Where(j => j.Id == jobBranchId).SingleOrDefaultAsync();
+            var jobBranch = await ApplicationDbContext.JobBranch.AsNoTracking()
+                .Include(current => current.Job)
+                .Where(j => j.Id == jobBranchId).SingleOrDefaultAsync();
 
             if (jobBranch != null)
             {

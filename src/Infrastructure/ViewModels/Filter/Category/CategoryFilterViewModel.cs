@@ -2,6 +2,8 @@
 {
     public class CategoryFilterViewModel : Paging<Domain.Entities.Category.Category, CategoryViewModel>
     {
+        public int? Id { get; set; }
+
         public int? ParentId { get; set; }
 
         public CategoryBusinessType? Type { get; set; }

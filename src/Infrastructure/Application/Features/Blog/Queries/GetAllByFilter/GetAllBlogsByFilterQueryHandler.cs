@@ -16,7 +16,8 @@ public class GetAllBlogsByFilterQueryHandler : IRequestHandler<GetAllBlogsByFilt
     {
         BlogFilterViewModel = Mapper.Map<BlogFilterViewModel>(request);
 
-        var query = UnitOfWork.BlogRepository.TableNoTracking;
+        var query = UnitOfWork.BlogRepository.TableNoTracking
+            .Include(a => a.BlogUserLikes).AsQueryable();
 
         //TODO where....
 

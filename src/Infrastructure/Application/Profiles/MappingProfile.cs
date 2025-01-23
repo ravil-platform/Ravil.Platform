@@ -1,4 +1,5 @@
-﻿using Application.Features.Blog.Queries.GetAllByFilter;
+﻿using System.Text.Json;
+using Application.Features.Blog.Queries.GetAllByFilter;
 using Application.Features.Category.Queries.GetAllByFilter;
 using Application.Features.Job.Queries.GetAllJobBranch;
 using Application.Features.Job.Queries.GetRelatedJobBranches;
@@ -13,6 +14,7 @@ using ViewModels.AdminPanel.Config;
 using ViewModels.AdminPanel.FeedbackSlider;
 using ViewModels.AdminPanel.MainSlider;
 using ViewModels.AdminPanel.RedirectionUrl;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Application.Profiles
 {
@@ -47,7 +49,14 @@ namespace Application.Profiles
             #endregion
 
             #region ( Blog )
-            CreateMap<Blog, BlogViewModel>().ReverseMap();
+            CreateMap<Blog, BlogViewModel>()
+                .ForMember(src => src.LikeCount, expression =>
+                {
+                    expression.PreCondition(a => a.BlogUserLikes.Any());
+                    expression.MapFrom(a => a.BlogUserLikes.Count);
+                })
+                .ReverseMap();
+
             CreateMap<BlogCategory, BlogCategoryViewModel>().ReverseMap();
 
             CreateMap<Blog, CreateBlogViewModel>().ReverseMap();
@@ -58,6 +67,20 @@ namespace Application.Profiles
             #endregion
 
             #region ( Category )
+            CreateMap<JobCategory, CategoryViewModel>()
+                .ForMember(src => src.Id, expression => expression.MapFrom(a => a.Category.Id))
+                .ForMember(src => src.Sort, expression => expression.MapFrom(a => a.Category.Sort))
+                .ForMember(src => src.Name, expression => expression.MapFrom(a => a.Category.Name))
+                .ForMember(src => src.Route, expression => expression.MapFrom(a => a.Category.Route))
+                .ForMember(src => src.ParentId, expression => expression.MapFrom(a => a.Category.ParentId))
+                .ForMember(src => src.NodeLevel, expression => expression.MapFrom(a => a.Category.NodeLevel))
+                .ForMember(src => src.IsLastNode, expression => expression.MapFrom(a => a.Category.IsLastNode))
+                .ForMember(src => src.IsActive, expression => expression.MapFrom(a => a.Category.IsActive))
+                .ForMember(src => src.Picture, expression => expression.MapFrom(a => a.Category.Picture))
+                .ForMember(src => src.IconPicture, expression => expression.MapFrom(a => a.Category.IconPicture))
+                .ReverseMap();
+
+
             CreateMap<Category, CategoryViewModel>().ReverseMap();
             CreateMap<Category, MainCategories>().ReverseMap();
             CreateMap<CategoryService, CategoryServiceViewModel>().ReverseMap();
@@ -67,7 +90,56 @@ namespace Application.Profiles
             #endregion
 
             #region ( Job )
-            CreateMap<Job, JobViewModel>().ReverseMap();
+            CreateMap<Job, JobInfoViewModel>()
+                /*.ForMember(src => src.WebSiteNames, expression =>
+                {
+                    expression.PreCondition(a => !string.IsNullOrWhiteSpace(a.WebSiteName));
+                    expression.MapFrom(a => !string.IsNullOrWhiteSpace(a.WebSiteName) ? a.WebSiteName.Split(new[] { ',', '|' }, StringSplitOptions.RemoveEmptyEntries).ToList() : null);
+                })
+                .ForMember(src => src.Emails, expression =>
+                {
+                    expression.PreCondition(a => !string.IsNullOrWhiteSpace(a.Email));
+                    expression.MapFrom(a => !string.IsNullOrWhiteSpace(a.Email) ? a.Email.Split(new[] { ',', '|' }, StringSplitOptions.RemoveEmptyEntries).ToList() : null);
+                })*/
+                .ForMember(src => src.PhoneNumberInfos, expression =>
+                {
+                    expression.PreCondition(a => !string.IsNullOrWhiteSpace(a.PhoneNumberInfos));
+                    expression.PreCondition(a =>
+                    {
+                        var phoneNumberInfos =
+                            JsonSerializer.Deserialize<List<PhoneNumberInfosViewModel>>(a.PhoneNumberInfos);
+
+                        return phoneNumberInfos != null && phoneNumberInfos.All(current => !string.IsNullOrWhiteSpace(current.PhoneNumber));
+                    });
+                    expression.MapFrom(a => !string.IsNullOrWhiteSpace(a.PhoneNumberInfos) ? JsonConvert.DeserializeObject<List<PhoneNumberInfosViewModel>>(a.PhoneNumberInfos) : null);
+                })
+                .ForMember(src => src.SocialMediaInfos, expression =>
+                {
+                    expression.PreCondition(a => !string.IsNullOrWhiteSpace(a.SocialMediaInfos));
+                    expression.PreCondition(a =>
+                    {
+                        var socialMediaInfos =
+                            JsonSerializer.Deserialize<List<SocialMediaInfosViewModel>>(a.SocialMediaInfos);
+                        
+                        return socialMediaInfos != null && socialMediaInfos.All(current => !string.IsNullOrWhiteSpace(current.SocialMediaLink));
+                    });
+                    expression.MapFrom(a => !string.IsNullOrWhiteSpace(a.SocialMediaInfos) ? JsonConvert.DeserializeObject<List<SocialMediaInfosViewModel>>(a.SocialMediaInfos) : null);
+                })
+                .ReverseMap();
+
+            CreateMap<Job, JobViewModel>()
+                /*.ForMember(src => src.WebSiteName, expression =>
+                {
+                    expression.PreCondition(a => !string.IsNullOrWhiteSpace(a.WebSiteName));
+                    expression.MapFrom(a => !string.IsNullOrWhiteSpace(a.WebSiteName) ? a.WebSiteName.Split(new[] { ',', '|' }, StringSplitOptions.RemoveEmptyEntries).ToList() : null);
+                })
+                .ForMember(src => src.Email, expression =>
+                {
+                    expression.PreCondition(a => !string.IsNullOrWhiteSpace(a.Email));
+                    expression.MapFrom(a => !string.IsNullOrWhiteSpace(a.Email) ? a.Email.Split(new[] { ',', '|' }, StringSplitOptions.RemoveEmptyEntries).ToList() : null);
+                })*/
+                .ReverseMap();
+
             CreateMap<Job, CreateJobCommand>().ReverseMap();
             CreateMap<Job, CreateJobViewModel>().ReverseMap();
             CreateMap<Job, UpdateJobCommand>().ReverseMap();
@@ -82,7 +154,30 @@ namespace Application.Profiles
             CreateMap<JobCategory, UpdateJobCategoryCommand>().ReverseMap();
 
             CreateMap<JobBranch, UpdateJobBranchLocationCommand>().ReverseMap();
-            CreateMap<JobBranch, JobBranchViewModel>().ReverseMap();
+            CreateMap<JobBranch, JobBranchViewModel>()
+                .ForMember(src => src.JobInfo, expression =>
+                {
+                    expression.MapFrom(a => a.Job);
+                })
+                .ForMember(src => src.Address, expression =>
+                {
+                    expression.MapFrom(a => a.Address);
+                })
+                .ForMember(src => src.Galleries, expression =>
+                {
+                    expression.MapFrom(a => a.JobBranchGalleries);
+                })
+                .ForMember(src => src.TimeWorks, expression =>
+                {
+                    expression.MapFrom(a => a.JobTimeWorks);
+                })
+                .ForMember(src => src.Categories, expression =>
+                {
+                    expression.PreCondition(a => a.Job is { JobCategories: not null } && a.Job.JobCategories.Any(a => a.Category != null));
+                    expression.MapFrom(a => a.Job.JobCategories);
+                })
+                .ReverseMap();
+
             CreateMap<JobBranch, CreateJobBranchViewModel>().ReverseMap();
             CreateMap<JobBranch, CreateJobBranchCommand>().ReverseMap();
             CreateMap<JobBranch, UpdateJobBranchViewModel>().ReverseMap();
@@ -162,7 +257,23 @@ namespace Application.Profiles
 
             #region ( Location & Address )
             CreateMap<Location, LocationViewModel>().ReverseMap();
-            CreateMap<Address, AddressViewModel>().ReverseMap();
+            CreateMap<Address, AddressViewModel>()
+                .ForMember(src => src.CityName, expression =>
+                {
+                    expression.PreCondition(a => a.City != null);
+                    expression.MapFrom(a => a.City.Name);
+                })
+                .ForMember(src => src.Lat, expression =>
+                {
+                    expression.PreCondition(a => a.Location != null);
+                    expression.MapFrom(a => a.Location.Lat);
+                })
+                .ForMember(src => src.Long, expression =>
+                {
+                    expression.PreCondition(a => a.Location != null);
+                    expression.MapFrom(a => a.Location.Long);
+                })
+                .ReverseMap();
             #endregion
 
             #region ( Filters )

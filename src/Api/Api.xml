@@ -46,6 +46,13 @@
             <param name="query"></param>
             <returns></returns>
         </member>
+        <member name="M:Api.Controllers.V1.BlogsController.GetById(Application.Features.Blog.Queries.GetById.GetBlogByIdQuery)">
+            <summary>
+            Returns a blog by given Id
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
         <member name="M:Api.Controllers.V1.BlogsController.GetBlogCategories(Application.Features.Blog.Queries.GetBlogCategories.GetBlogCategoriesQuery)">
             <summary>
             Returns all blog categories 
@@ -494,9 +501,22 @@
             <param name="query"></param>
             <returns></returns>
         </member>
+        <member name="T:Api.Controllers.V1.UserProfileController">
+            <inheritdoc />
+        </member>
+        <member name="M:Api.Controllers.V1.UserProfileController.#ctor(MediatR.IMediator,Logging.Base.ILogger{Api.Controllers.V1.UserProfileController})">
+            <inheritdoc />
+        </member>
         <member name="M:Api.Controllers.V1.UserProfileController.GetUserJobBranches(Application.Features.User.Queries.GetUserJobBranches.GetUserJobBranchesQuery)">
             <summary>
             Returns user job branches for given user id
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Api.Controllers.V1.UserProfileController.CheckIsBlogLiked(Application.Features.User.Queries.CheckIsBlogLiked.CheckIsBlogLikedQuery)">
+            <summary>
+            Returns Check user blog like for given user id
             </summary>
             <param name="query"></param>
             <returns></returns>

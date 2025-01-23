@@ -17,16 +17,16 @@ namespace Application.Contracts.Identity
             var signInManager = context.HttpContext.RequestServices.GetRequiredService<SignInManager<ApplicationUser>>();
             var userManager = context.HttpContext.RequestServices.GetRequiredService<UserManager<ApplicationUser>>();
 
-            var claimsIdentity = context.Principal.Identity as ClaimsIdentity;
-            if (claimsIdentity.Claims?.Any() != true)
+            var claimsIdentity = context.Principal?.Identity as ClaimsIdentity;
+            if (claimsIdentity?.Claims.Any() != true)
                 context.Fail("This token has no claims.");
 
-            var securityStamp = claimsIdentity.FindFirstValue(new ClaimsIdentityOptions().SecurityStampClaimType);
+            var securityStamp = claimsIdentity!.FindFirstValue(new ClaimsIdentityOptions().SecurityStampClaimType);
             if (!securityStamp.HasValue())
                 context.Fail("This token has no security stamp");
 
             //Find user and token from database and perform your custom validation
-            var userId = claimsIdentity.GetUserId<string>();
+            var userId = claimsIdentity!.GetUserId<string>();
             var user = await userManager.FindByIdAsync(userId);
 
             var validatedUser = await signInManager.ValidateSecurityStampAsync(context.Principal);
@@ -41,6 +41,9 @@ namespace Application.Contracts.Identity
 
             if (user.UserIsBlocked)
                 context.Fail("User is blocked.");
+
+            if (userManager.SupportsUserLockout && user.LockoutEnabled)
+                context.Fail("User is locked out.");
 
             var jwtToken = context.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
 

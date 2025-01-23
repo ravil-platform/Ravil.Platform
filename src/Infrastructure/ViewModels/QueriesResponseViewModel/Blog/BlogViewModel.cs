@@ -2,6 +2,8 @@
 {
     public class BlogViewModel
     {
+        public int Id { get; set; }
+
         public string Route { get; set; } = null!;
 
         public string Title { get; set; } = null!;
@@ -21,8 +23,10 @@
         public string SmallPicture { get; set; } = null!;
 
         public bool IsResizePicture { get; set; }
-
+        
         public int ViewCount { get; set; } = 0;
+
+        public int LikeCount { get; set; } = 0;
 
         public string AuthorName { get; set; } = null!;
 

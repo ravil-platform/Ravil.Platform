@@ -13,7 +13,17 @@ public class GetAllFaqsQueryHandler : IRequestHandler<GetAllFaqsQuery, List<FaqV
 
     public async Task<Result<List<FaqViewModel>>> Handle(GetAllFaqsQuery request, CancellationToken cancellationToken)
     {
-        var result = await UnitOfWork.FaqRepository.GetAllAsync();
+        ICollection<Domain.Entities.Faq.Faq?> result;
+
+        if (request.Take.HasValue)
+        {
+            result = (await UnitOfWork.FaqRepository.TableNoTracking.Take(request.Take.Value)
+                .ToListAsync(cancellationToken: cancellationToken))!;
+        }
+        else
+        {
+            result = await UnitOfWork.FaqRepository.GetAllAsync();
+        }
 
         var faqsViewModel = Mapper.Map<List<FaqViewModel>>(result);
 

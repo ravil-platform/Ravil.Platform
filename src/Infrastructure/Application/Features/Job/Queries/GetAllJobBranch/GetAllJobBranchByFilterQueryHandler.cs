@@ -15,7 +15,9 @@ public class GetAllJobBranchByFilterQueryHandler : IRequestHandler<GetAllJobBran
     {
         JobBranchFilter = Mapper.Map<JobBranchFilter>(request);
 
-        var jobBranchQuery = UnitOfWork.JobBranchRepository.TableNoTracking;
+        var jobBranchQuery = UnitOfWork.JobBranchRepository.TableNoTracking
+            .Include(a => a.Job).Include(a => a.JobBranchGalleries)
+            .Include(a => a.Address).ThenInclude(a => a.Location);
 
         JobBranchFilter.Build(jobBranchQuery.Count()).SetEntities(jobBranchQuery, Mapper);
 

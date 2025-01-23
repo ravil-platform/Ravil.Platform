@@ -20,6 +20,12 @@
         public bool IsResizePicture { get; set; } = false;
         public JobTimeWorkType JobTimeWorkType { get; set; }
         public string? UserId { get; set; }
-        public string? AddressId { get; set; } 
+        public string? AddressId { get; set; }
+        
+        public JobInfoViewModel JobInfo { get; set; }
+        public AddressViewModel Address { get; set; }
+        public List<CategoryViewModel> Categories { get; set; }
+        public List<JobTimeWorkViewModel> TimeWorks { get; set; }
+        public List<JobBranchGalleryViewModel> Galleries { get; set; }
     }
 }

@@ -2,10 +2,10 @@
 {
     public class ConfigViewModel 
     {
-        #region (Fields)
+        #region ( Fields )
         public int? Id { get; set; }
 
-        #region LocalBussiness
+        #region ( LocalBussiness )
         public DateTime FoundingDate { get; set; }
 
         public string? CurrenciesAccepted { get; set; }
@@ -41,30 +41,7 @@
 
         public string? Whatsapp { get; set; }
 
-
-        #region Sms Services
-        public string? ConfirmationPatternCode { get; set; }
-
-        public string? ResetPasswordPatternCode { get; set; }
-
-        public string? SmsCenter { get; set; }
-
-        public string? SmsUser { get; set; }
-
-        public string? SmsPass { get; set; }
-        #endregion
-
-        public string? MailSmtpDomain { get; set; }
-
-        public string? MailUserName { get; set; }
-
-        public string? MailPassword { get; set; }
-
-        public string? MailDisplayName { get; set; }
-
         public string? Domain { get; set; }
-
-        public string? ContentDeliveryNetwork { get; set; }
 
         public string? SupportBoxTitle { get; set; }
 
@@ -134,16 +111,6 @@
 
         public string? ShippingTimeRange { get; set; }
 
-        public string? ZarinpalUrl { get; set; }
-
-        public bool ZarinpalMode { get; set; }
-
-        public string? ZarinpalMerchant { get; set; }
-
-        public bool IsMultipleCreate { get; set; } = false;
-
-        public SendNotificationStateMode SendNotificationState { get; set; }
-
         public string? FaqTitle { get; set; }
 
         public string? FaqMetaDesc { get; set; }
@@ -165,7 +132,7 @@
         public string? HomeMainExtFileName { get; set; }
 
 
-        #region SeoProperties
+        #region ( SeoProperties )
         public bool NoIndexSeoPages { get; set; }
 
         public bool RedirectSeoPages { get; set; }
@@ -191,7 +158,6 @@
         #endregion
         #endregion
 
-        public ExternalLoginState ExternalLoginState { get; set; } = ExternalLoginState.WithOutViewPage;
         #endregion
     }
 }

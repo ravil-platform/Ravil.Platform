@@ -1,4 +1,6 @@
-﻿namespace Api.Controllers.V1
+﻿using Application.Features.Blog.Queries.GetById;
+
+namespace Api.Controllers.V1
 {
     [Route(Routes.Controller)]
     public class BlogsController : GenericBaseController<BlogsController>
@@ -33,6 +35,21 @@
         [ProducesResponseType(type: typeof(Result<BlogViewModel>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetByRoute([FromQuery] GetBlogByRouteQuery query)
+        {
+            var result = await Mediator.Send(query);
+
+            return FluentResult(result);
+        }
+
+        /// <summary>
+        /// Returns a blog by given Id
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        [HttpGet(Routes.Action)]
+        [ProducesResponseType(type: typeof(Result<BlogViewModel>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetById([FromQuery] GetBlogByIdQuery query)
         {
             var result = await Mediator.Send(query);
 

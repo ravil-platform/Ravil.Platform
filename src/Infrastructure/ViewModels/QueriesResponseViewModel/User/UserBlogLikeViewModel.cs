@@ -4,9 +4,10 @@
     {
         public int Id { get; set; }
 
-        public DateTime LikeTimeDate { get; set; } = DateTime.Now;
-
         public string UserId { get; set; }
         public int BlogId { get; set; }
+
+        public bool IsLiked { get; set; }
+        public int LikeCount { get; set; }
     }
 }

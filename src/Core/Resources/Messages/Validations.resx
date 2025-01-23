@@ -216,4 +216,7 @@
   <data name="RangeInvalidFluent" xml:space="preserve">
     <value>{PropertyName} باید بین {MaxLength} تا {MinLength} باشد</value>
   </data>
+  <data name="JwtDecodeTokenIsInvalid" xml:space="preserve">
+	  <value>Token is invalid: {0}</value>
+  </data>
 </root>
