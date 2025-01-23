@@ -106,6 +106,15 @@ namespace Resources.Messages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to شما به این منبع دسترسی ندارید.
+        /// </summary>
+        public static string ForbiddenAccessException {
+            get {
+                return ResourceManager.GetString("ForbiddenAccessException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to مقدار فیلد {0} باید بزرگ‌تر از {1} باشد!.
         /// </summary>
         public static string GreaterThan_FieldValue {
@@ -156,6 +165,15 @@ namespace Resources.Messages {
         public static string JwtDecodeTokenIsInvalid {
             get {
                 return ResourceManager.GetString("JwtDecodeTokenIsInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string LockedOutException {
+            get {
+                return ResourceManager.GetString("LockedOutException", resourceCulture);
             }
         }
         

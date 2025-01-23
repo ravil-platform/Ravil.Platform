@@ -1,12 +1,13 @@
 ﻿using Application.Services.SMS;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System;
 
 namespace Application
 {
     public static class RegisterApplicationServices
     {
-
-        public static void AddApplicationServices(this IServiceCollection services, IConfiguration configuration, JwtSettings jwtSettings = null)
+        
+        public static void AddApplicationServices(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment environment, JwtSettings jwtSettings = null)
         {
             services.AddHttpContextAccessor();
             services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
@@ -17,6 +18,15 @@ namespace Application
             });
 
             services.AddAutoMapper(typeof(MappingProfile));
+
+            if (environment.IsProduction())
+            {
+                NLog.LogManager.Configuration.Variables["rootDir"] = AppDomain.CurrentDomain.BaseDirectory;
+            }
+            else
+            {
+                NLog.LogManager.Configuration.Variables["rootDir"] = @"C:\Temp\NewtanLogs\";
+            }
             services.AddTransient(serviceType: typeof(Logging.Base.ILogger<>), implementationType: typeof(NLogAdapter<>));
 
             var siteSettingConfiguration = configuration.GetSection(nameof(SiteSettings));

@@ -4,6 +4,7 @@ using Constants.Security;
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 var configuration = builder.Configuration;
+var environment = builder.Environment;
 
 var _siteSetting = configuration.GetSection(nameof(SiteSettings)).Get<SiteSettings>();
 
@@ -21,7 +22,7 @@ services.AddControllers().ConfigureApiBehaviorOptions(option =>
     });
 });
 services.AddEndpointsApiExplorer();
-services.AddApplicationServices(configuration, _siteSetting.JwtSettings);
+services.AddApplicationServices(configuration, environment, _siteSetting.JwtSettings);
 services.AddPersistenceServices(configuration);
 
 services.AddSwaggerDocumentation();

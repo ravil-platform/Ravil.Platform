@@ -7,12 +7,14 @@ using Logging.Adapters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Persistence.Context;
+using System;
 using System.Reflection;
 
 #region ( Services )
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 var configuration = builder.Configuration;
+var environment = builder.Environment;
 
 services.Configure<FTPConnectionOptions>(configuration.GetSection(nameof(FTPConnectionOptions)));
 var siteSetting = configuration.GetSection(nameof(SiteSettings)).Get<SiteSettings>();

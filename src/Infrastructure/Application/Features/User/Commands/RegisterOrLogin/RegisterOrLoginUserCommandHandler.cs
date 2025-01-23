@@ -52,7 +52,11 @@ public class RegisterOrLoginUserCommandHandler : IRequestHandler<RegisterOrLogin
         {
             if (currentUser.UserIsBlocked || currentUser.LockoutEnabled || currentUser.IsDeleted)
             {
-                throw new BadRequestException("حساب کاربری شما مسدود است");
+                if (await UserManager.IsLockedOutAsync(currentUser))
+                {
+                    var resultLockedOutUser = await UserManager.SetLockoutEnabledAsync(currentUser, false);
+                    if (!resultLockedOutUser.Succeeded) throw new LockedOutException("حساب کاربری شما مسدود است");
+                }
             }
         }
 

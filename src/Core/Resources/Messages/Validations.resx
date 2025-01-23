@@ -133,7 +133,7 @@
     <value>مقدار فیلد {0} باید بزرگ‌تر از {1} باشد!</value>
   </data>
   <data name="GreaterThan_TwoFields" xml:space="preserve">
-    <value>مقدار فیلد {0} باید بزرگ‌تر از مقدار فیلد {1} باشد!</value>
+	  <value>مقدار فیلد {0} باید بزرگ‌تر از مقدار فیلد {1} باشد!</value>
   </data>
   <data name="GreaterThanOrEqualTo_FieldValue" xml:space="preserve">
     <value>مقدار فیلد {0} باید بزرگ‌تر یا مساوی {1} باشد!</value>
@@ -218,5 +218,11 @@
   </data>
   <data name="JwtDecodeTokenIsInvalid" xml:space="preserve">
 	  <value>Token is invalid: {0}</value>
+  </data>
+  <data name="ForbiddenAccessException" xml:space="preserve">
+	  <value>شما به این منبع دسترسی ندارید</value>
+  </data>
+  <data name="LockedOutException" xml:space="preserve">
+	  <value>حساب کاربری شما به دلیل تلاش‌های ناموفق قفل شده است. لطفا با پشتیبانی تماس بگیرید.</value>
   </data>
 </root>
