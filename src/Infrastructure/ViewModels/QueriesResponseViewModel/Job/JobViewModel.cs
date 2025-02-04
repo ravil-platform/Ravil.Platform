@@ -22,9 +22,9 @@
         public string WebSiteName { get; set; }
 
         #region Contact Informations
-        public List<PhoneNumberInfosViewModel> PhoneNumberInfos { get; set; } //Json Format (PhoneNumberInfosVm)
+        public List<PhoneNumberInfosViewModel>? PhoneNumberInfos { get; set; } //Json Format (PhoneNumberInfosVm)
 
-        public List<SocialMediaInfosViewModel> SocialMediaInfos { get; set; } //Json Format (SocialMediaInfosVm)
+        public List<SocialMediaInfosViewModel>? SocialMediaInfos { get; set; } //Json Format (SocialMediaInfosVm)
 
         #region Additional Info
         public bool? ShowPhoneTelInSite { get; set; }
@@ -42,23 +42,23 @@
     {
         public PhoneNumberInfosViewModel()
         {
-            PhoneNumberType = PhoneNumberTypes.PhoneNumberTel;
+            //PhoneNumberType = PhoneNumberTypes.PhoneNumberTel;
         }
-
+        
         public string PhoneNumber { get; set; }
 
-        public PhoneNumberTypes PhoneNumberType { get; set; }
+        public PhoneNumberTypes? PhoneNumberType { get; set; }
     }
 
     public class SocialMediaInfosViewModel
     {
         public SocialMediaInfosViewModel()
         {
-            SocialMediaType = SocialMediaTypes.Telegram;
+            //SocialMediaType = SocialMediaTypes.Telegram;
         }
 
         public string SocialMediaLink { get; set; }
 
-        public SocialMediaTypes SocialMediaType { get; set; }
+        public SocialMediaTypes? SocialMediaType { get; set; }
     }
 }

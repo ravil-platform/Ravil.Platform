@@ -1,10 +1,10 @@
 ﻿namespace Application.Features.Job.Queries.GetJobBranchAds;
 
-public class GetAdvertisingJobsQueryQueryHandler : IRequestHandler<GetAdvertisingJobsQuery, List<JobBranchViewModel>>
+public class GetAdvertisingJobsQueryHandler : IRequestHandler<GetAdvertisingJobsQuery, List<JobBranchViewModel>>
 {
     protected IMapper Mapper { get; }
     protected IUnitOfWork UnitOfWork { get; }
-    public GetAdvertisingJobsQueryQueryHandler(IMapper mapper, IUnitOfWork unitOfWork)
+    public GetAdvertisingJobsQueryHandler(IMapper mapper, IUnitOfWork unitOfWork)
     {
         Mapper = mapper;
         UnitOfWork = unitOfWork;

@@ -17,7 +17,21 @@ public class GetAllJobBranchByFilterQueryHandler : IRequestHandler<GetAllJobBran
 
         var jobBranchQuery = UnitOfWork.JobBranchRepository.TableNoTracking
             .Include(a => a.Job).Include(a => a.JobBranchGalleries)
-            .Include(a => a.Address).ThenInclude(a => a.Location);
+            .Include(a => a.Address).ThenInclude(a => a.Location)
+            .Where(a => a.IsDeleted != null && !a.IsDeleted.Value)
+            .Where(a => a.Job.Status == JobBranchStatus.Accepted)
+            .AsQueryable();
+
+        if (JobBranchFilter.CategoryId.HasValue)
+        {
+            var jobsId = await UnitOfWork.JobCategoryRepository.TableNoTracking
+                .Where(j => j.CategoryId == request.CategoryId)
+                .Select(a => a.JobId)
+                .ToListAsync(cancellationToken: cancellationToken);
+
+            if (jobsId.Any())
+                jobBranchQuery = jobBranchQuery.Where(a => jobsId.Contains(a.JobId)).AsQueryable();
+        }
 
         JobBranchFilter.Build(jobBranchQuery.Count()).SetEntities(jobBranchQuery, Mapper);
 

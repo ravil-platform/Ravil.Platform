@@ -12,7 +12,8 @@ public class GetBlogByIdQueryHandler : IRequestHandler<GetBlogByIdQuery, BlogVie
 
     public async Task<Result<BlogViewModel>> Handle(GetBlogByIdQuery request, CancellationToken cancellationToken)
     {
-        var blog = await UnitOfWork.BlogRepository.GetByPredicate(b => b.Id == request.Id, includes: nameof(UserBlogLike));
+        var blog = await UnitOfWork.BlogRepository.TableNoTracking.Include(a => a.BlogUserLikes)
+            .SingleOrDefaultAsync(b => b.Id == request.Id, cancellationToken: cancellationToken);
 
         if (blog is null)
         {

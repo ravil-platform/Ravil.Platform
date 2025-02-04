@@ -13,7 +13,8 @@ public class GetBlogByRouteQueryHandler : IRequestHandler<GetBlogByRouteQuery, B
 
     public async Task<Result<BlogViewModel>> Handle(GetBlogByRouteQuery request, CancellationToken cancellationToken)
     {
-        var blog = await UnitOfWork.BlogRepository.GetByPredicate(b => b.Route == request.Route, includes: nameof(UserBlogLike));
+        var blog = await UnitOfWork.BlogRepository.TableNoTracking.Include(a => a.BlogUserLikes)
+            .SingleOrDefaultAsync(b => b.Route == request.Route, cancellationToken: cancellationToken);
 
         if (blog is null)
         {

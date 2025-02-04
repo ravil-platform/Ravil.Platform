@@ -69,6 +69,7 @@ namespace Application.Profiles
             #region ( Category )
             CreateMap<JobCategory, CategoryViewModel>()
                 .ForMember(src => src.Id, expression => expression.MapFrom(a => a.Category.Id))
+                .ForMember(src => src.Type, expression => expression.MapFrom(a => a.Category.Type))
                 .ForMember(src => src.Sort, expression => expression.MapFrom(a => a.Category.Sort))
                 .ForMember(src => src.Name, expression => expression.MapFrom(a => a.Category.Name))
                 .ForMember(src => src.Route, expression => expression.MapFrom(a => a.Category.Route))
@@ -78,6 +79,7 @@ namespace Application.Profiles
                 .ForMember(src => src.IsActive, expression => expression.MapFrom(a => a.Category.IsActive))
                 .ForMember(src => src.Picture, expression => expression.MapFrom(a => a.Category.Picture))
                 .ForMember(src => src.IconPicture, expression => expression.MapFrom(a => a.Category.IconPicture))
+                .ForMember(src => src.PageContent, expression => expression.MapFrom(a => a.Category.PageContent))
                 .ReverseMap();
 
 
@@ -106,6 +108,8 @@ namespace Application.Profiles
                     expression.PreCondition(a => !string.IsNullOrWhiteSpace(a.PhoneNumberInfos));
                     expression.PreCondition(a =>
                     {
+                        if (string.IsNullOrWhiteSpace(a.PhoneNumberInfos)) return false;
+
                         var phoneNumberInfos =
                             JsonSerializer.Deserialize<List<PhoneNumberInfosViewModel>>(a.PhoneNumberInfos);
 
@@ -118,10 +122,13 @@ namespace Application.Profiles
                     expression.PreCondition(a => !string.IsNullOrWhiteSpace(a.SocialMediaInfos));
                     expression.PreCondition(a =>
                     {
+                        if (string.IsNullOrWhiteSpace(a.SocialMediaInfos)) return false;
+
                         var socialMediaInfos =
                             JsonSerializer.Deserialize<List<SocialMediaInfosViewModel>>(a.SocialMediaInfos);
-                        
+
                         return socialMediaInfos != null && socialMediaInfos.All(current => !string.IsNullOrWhiteSpace(current.SocialMediaLink));
+
                     });
                     expression.MapFrom(a => !string.IsNullOrWhiteSpace(a.SocialMediaInfos) ? JsonConvert.DeserializeObject<List<SocialMediaInfosViewModel>>(a.SocialMediaInfos) : null);
                 })
@@ -138,6 +145,37 @@ namespace Application.Profiles
                     expression.PreCondition(a => !string.IsNullOrWhiteSpace(a.Email));
                     expression.MapFrom(a => !string.IsNullOrWhiteSpace(a.Email) ? a.Email.Split(new[] { ',', '|' }, StringSplitOptions.RemoveEmptyEntries).ToList() : null);
                 })*/
+                /*.ForMember(src => src.PhoneNumberInfos, expression => expression.Ignore())
+                .ForMember(src => src.SocialMediaInfos, expression => expression.Ignore())*/
+                .ForMember(src => src.PhoneNumberInfos, expression =>
+                {
+                    expression.PreCondition(a => !string.IsNullOrWhiteSpace(a.PhoneNumberInfos));
+                    expression.PreCondition(a =>
+                    {
+                        if (string.IsNullOrWhiteSpace(a.PhoneNumberInfos)) return false;
+
+                        var phoneNumberInfos =
+                            JsonSerializer.Deserialize<List<PhoneNumberInfosViewModel>>(a.PhoneNumberInfos);
+
+                        return phoneNumberInfos != null && phoneNumberInfos.All(current => !string.IsNullOrWhiteSpace(current.PhoneNumber));
+                    });
+                    expression.MapFrom(a => !string.IsNullOrWhiteSpace(a.PhoneNumberInfos) ? JsonConvert.DeserializeObject<List<PhoneNumberInfosViewModel>>(a.PhoneNumberInfos) : null);
+                })
+                .ForMember(src => src.SocialMediaInfos, expression =>
+                {
+                    expression.PreCondition(a => !string.IsNullOrWhiteSpace(a.SocialMediaInfos));
+                    expression.PreCondition(a =>
+                    {
+                        if (string.IsNullOrWhiteSpace(a.SocialMediaInfos)) return false;
+
+                        var socialMediaInfos =
+                            JsonSerializer.Deserialize<List<SocialMediaInfosViewModel>>(a.SocialMediaInfos);
+
+                        return socialMediaInfos != null && socialMediaInfos.All(current => !string.IsNullOrWhiteSpace(current.SocialMediaLink));
+
+                    });
+                    expression.MapFrom(a => !string.IsNullOrWhiteSpace(a.SocialMediaInfos) ? JsonConvert.DeserializeObject<List<SocialMediaInfosViewModel>>(a.SocialMediaInfos) : null);
+                })
                 .ReverseMap();
 
             CreateMap<Job, CreateJobCommand>().ReverseMap();
@@ -192,6 +230,9 @@ namespace Application.Profiles
 
             CreateMap<JobBranchShortLink, JobBranchShortLinkViewModel>().ReverseMap();
             CreateMap<JobBranchGalleryViewModel, JobBranchGallery>().ReverseMap();
+
+            CreateMap<UserBookMark, UserJobBookMarkViewModel>().ReverseMap();
+            CreateMap<UserBlogLike, UserBlogLikeViewModel>().ReverseMap();
             #endregion
 
             #region ( Service )

@@ -1,6 +1,6 @@
 ﻿namespace Application.Features.Job.Queries.GetJobSelectionSlider
 {
-    public class GetJobSelectionSliderQuery : IRequest<List<JobSelectionSliderViewModel>>
+    public class GetJobSelectionSliderQuery : IRequest<List<JobBranchViewModel>>
     {
         public JobSliderType? JobSliderType { get; set; }
 

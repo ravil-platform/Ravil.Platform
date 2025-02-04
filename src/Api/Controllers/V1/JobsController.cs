@@ -1,4 +1,6 @@
-﻿namespace Api.Controllers.V1
+﻿using Application.Features.Job.Queries.GetJobBranchByRoute;
+
+namespace Api.Controllers.V1
 {
     [Route(Routes.Controller)]
     public class JobsController : GenericBaseController<JobsController>
@@ -86,6 +88,21 @@
         }
 
         /// <summary>
+        /// Returns job branch by unique route
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        [HttpGet(Routes.Action)]
+        [ProducesResponseType(type: typeof(Result<JobBranchViewModel>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetJobBranchByRoute([FromQuery] GetJobBranchByRouteQuery query)
+        {
+            var result = await Mediator.Send(query);
+
+            return FluentResult(result);
+        }
+
+        /// <summary>
         /// Returns all job services 
         /// </summary>
         /// <param name="query"></param>
@@ -136,7 +153,7 @@
         /// <param name="query"></param>
         /// <returns></returns>
         [HttpGet(Routes.Action)]
-        [ProducesResponseType(type: typeof(Result<List<JobViewModel>>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result<List<JobBranchViewModel>>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetRelatedJobs([FromQuery] GetRelatedJobsQuery query)
         {
@@ -166,7 +183,7 @@
         /// <param name="query"></param>
         /// <returns></returns>
         [HttpGet(Routes.Action)]
-        [ProducesResponseType(type: typeof(Result<List<JobViewModel>>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result<List<JobBranchViewModel>>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetJobsByCategoryId([FromQuery] GetAllJobsByCategoryIdQuery query)
         {
@@ -181,7 +198,7 @@
         /// <param name="query"></param>
         /// <returns></returns>
         [HttpGet(Routes.Action)]
-        [ProducesResponseType(type: typeof(Result<List<JobSelectionSliderViewModel>>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result<List<JobBranchViewModel>>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetJobSelectionSliderByFilter([FromQuery] GetJobSelectionSliderQuery query)
         {

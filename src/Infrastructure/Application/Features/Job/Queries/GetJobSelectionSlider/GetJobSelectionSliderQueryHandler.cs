@@ -1,6 +1,6 @@
 ﻿namespace Application.Features.Job.Queries.GetJobSelectionSlider;
 
-public class GetJobSelectionSliderQueryHandler : IRequestHandler<GetJobSelectionSliderQuery, List<JobSelectionSliderViewModel>>
+public class GetJobSelectionSliderQueryHandler : IRequestHandler<GetJobSelectionSliderQuery, List<JobBranchViewModel>>
 {
     protected IMapper Mapper { get; }
     protected IUnitOfWork UnitOfWork { get; }
@@ -10,15 +10,14 @@ public class GetJobSelectionSliderQueryHandler : IRequestHandler<GetJobSelection
         UnitOfWork = unitOfWork;
     }
 
-    public async Task<Result<List<JobSelectionSliderViewModel>>> Handle(GetJobSelectionSliderQuery request, CancellationToken cancellationToken)
+    public async Task<Result<List<JobBranchViewModel>>> Handle(GetJobSelectionSliderQuery request, CancellationToken cancellationToken)
     {
-        var fluentResult = new Result<List<JobSelectionSliderViewModel>>();
+        var fluentResult = new Result<List<JobBranchViewModel>>();
 
         ICollection<JobSelectionSlider> result = new List<JobSelectionSlider>();
 
         if (request.JobSliderType != null && request.JobId == null && request.JobBranchId == null)
         {
-
             if (request.Take == null)
             {
                 result = await UnitOfWork.JobSelectionSliderRepository
@@ -31,8 +30,16 @@ public class GetJobSelectionSliderQueryHandler : IRequestHandler<GetJobSelection
             }
 
             var selectionSliderViewModel = Mapper.Map<List<JobSelectionSliderViewModel>>(result);
+            
+            var jobBranchListResult = await UnitOfWork.JobBranchRepository.TableNoTracking
+                .Include(a => a.Job).Include(a => a.JobBranchGalleries)
+                .Include(a => a.Address).ThenInclude(a => a.Location)
+                .Take(selectionSliderViewModel.Count)
+                .ToListAsync(cancellationToken: cancellationToken);
 
-            fluentResult.WithValue(selectionSliderViewModel);
+            var jobBranchViewModel = Mapper.Map<List<JobBranchViewModel>>(jobBranchListResult);
+
+            fluentResult.WithValue(jobBranchViewModel);
         }
         else if (request.JobSliderType == null && request.JobId != null && request.JobBranchId == null)
         {
@@ -47,7 +54,14 @@ public class GetJobSelectionSliderQueryHandler : IRequestHandler<GetJobSelection
 
             var selectionSliderViewModel = Mapper.Map<List<JobSelectionSliderViewModel>>(result);
 
-            fluentResult.WithValue(selectionSliderViewModel);
+            var jobBranchListResult = await UnitOfWork.JobBranchRepository.TableNoTracking
+                .Include(a => a.Job).Include(a => a.JobBranchGalleries)
+                .Include(a => a.Address).ThenInclude(a => a.Location)
+                .Take(selectionSliderViewModel.Count).ToListAsync(cancellationToken: cancellationToken);
+
+            var jobBranchViewModel = Mapper.Map<List<JobBranchViewModel>>(jobBranchListResult);
+
+            fluentResult.WithValue(jobBranchViewModel);
         }
         else if (request.JobSliderType == null && request.JobId == null && request.JobBranchId != null)
         {
@@ -62,7 +76,14 @@ public class GetJobSelectionSliderQueryHandler : IRequestHandler<GetJobSelection
 
             var selectionSliderViewModel = Mapper.Map<List<JobSelectionSliderViewModel>>(result);
 
-            fluentResult.WithValue(selectionSliderViewModel);
+            var jobBranchListResult = await UnitOfWork.JobBranchRepository.TableNoTracking
+                .Include(a => a.Job).Include(a => a.JobBranchGalleries)
+                .Include(a => a.Address).ThenInclude(a => a.Location)
+                .Take(selectionSliderViewModel.Count).ToListAsync(cancellationToken: cancellationToken);
+
+            var jobBranchViewModel = Mapper.Map<List<JobBranchViewModel>>(jobBranchListResult);
+
+            fluentResult.WithValue(jobBranchViewModel);
         }
 
         return fluentResult;

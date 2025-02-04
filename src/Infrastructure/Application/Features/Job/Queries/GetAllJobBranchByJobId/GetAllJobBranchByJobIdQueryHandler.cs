@@ -15,7 +15,10 @@ public class GetAllJobBranchByJobIdQueryHandler : IRequestHandler<GetAllJobBranc
         var result = await UnitOfWork.JobBranchRepository.TableNoTracking
             .Include(a => a.Job).Include(a => a.JobBranchGalleries)
             .Include(a => a.Address).ThenInclude(a => a.Location)
-            .Where(j => j.JobId == request.JobId).ToListAsync(cancellationToken: cancellationToken);
+            .Where(a => a.IsDeleted != null && !a.IsDeleted.Value)
+            .Where(a => a.Job.Status == JobBranchStatus.Accepted)
+            .Where(j => j.JobId == request.JobId)
+            .ToListAsync(cancellationToken: cancellationToken);
 
         var jobBranchViewModel = Mapper.Map<List<JobBranchViewModel>>(result);
 

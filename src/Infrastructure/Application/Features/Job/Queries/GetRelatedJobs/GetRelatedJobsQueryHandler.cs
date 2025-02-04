@@ -1,6 +1,6 @@
 ﻿namespace Application.Features.Job.Queries.GetRelatedJobs;
 
-public class GetRelatedJobsQueryHandler : IRequestHandler<GetRelatedJobsQuery, List<JobViewModel>>
+public class GetRelatedJobsQueryHandler : IRequestHandler<GetRelatedJobsQuery, List<JobBranchViewModel>>
 {
     protected IMapper Mapper { get; }
     protected IUnitOfWork UnitOfWork { get; }
@@ -11,12 +11,12 @@ public class GetRelatedJobsQueryHandler : IRequestHandler<GetRelatedJobsQuery, L
         UnitOfWork = unitOfWork;
     }
 
-    public async Task<Result<List<JobViewModel>>> Handle(GetRelatedJobsQuery request, CancellationToken cancellationToken)
+    public async Task<Result<List<JobBranchViewModel>>> Handle(GetRelatedJobsQuery request, CancellationToken cancellationToken)
     {
-        var jobs = await UnitOfWork.JobRepository.GetRelatedJobs(request.JobId, request.Take);
+        var jobBranches = await UnitOfWork.JobBranchRepository.GetRelatedJobBranches(request.JobId, request.Take);
+        
+        var result = Mapper.Map<List<JobBranchViewModel>>(jobBranches);
 
-        var jobViewModel = Mapper.Map<List<JobViewModel>>(jobs);
-
-        return jobViewModel;
+        return result;
     }
 }

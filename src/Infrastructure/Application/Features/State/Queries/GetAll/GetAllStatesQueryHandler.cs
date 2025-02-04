@@ -12,7 +12,7 @@ public class GetAllStatesQueryHandler : IRequestHandler<GetAllStatesQuery, List<
 
     public async Task<Result<List<StateViewModel>>> Handle(GetAllStatesQuery request, CancellationToken cancellationToken)
     {
-        var result = await UnitOfWork.StateRepository.GetAllAsync();
+        var result = await UnitOfWork.StateBaseRepository.GetAllAsync();
 
         var statesViewModel = Mapper.Map<List<StateViewModel>>(result);
 

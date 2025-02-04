@@ -1,5 +1,7 @@
 ﻿using Application.Features.User.Commands.RemoveToken;
 using Application.Features.User.Queries.CheckIsBlogLiked;
+using Application.Features.User.Queries.CheckIsJobBookMarked;
+using Application.Features.User.Queries.GetJobBookMarks;
 
 namespace Api.Controllers.V1
 {
@@ -40,6 +42,36 @@ namespace Api.Controllers.V1
         [ProducesResponseType(type: typeof(Result<List<UserBlogLikeViewModel>>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CheckIsBlogLiked([FromQuery] CheckIsBlogLikedQuery query)
+        {
+            var result = await Mediator.Send(query);
+
+            return FluentResult(result);
+        }
+
+        /// <summary>
+        /// Returns Check user job bookmark for given user id
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        [HttpGet(Routes.Action)]
+        [ProducesResponseType(type: typeof(Result<List<UserJobBookMarkViewModel>>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> CheckIsJobBookMarked([FromQuery] CheckIsJobBookMarkedQuery query)
+        {
+            var result = await Mediator.Send(query);
+
+            return FluentResult(result);
+        }
+
+        /// <summary>
+        /// Returns Get All user job bookmarks for given user id
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        [HttpGet(Routes.Action)]
+        [ProducesResponseType(type: typeof(Result<List<JobBranchViewModel>>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetJobBookMarks([FromQuery] GetJobBookMarksQuery query)
         {
             var result = await Mediator.Send(query);
 

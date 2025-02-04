@@ -249,6 +249,13 @@
             <param name="query"></param>
             <returns></returns>
         </member>
+        <member name="M:Api.Controllers.V1.JobsController.GetJobBranchByRoute(Application.Features.Job.Queries.GetJobBranchByRoute.GetJobBranchByRouteQuery)">
+            <summary>
+            Returns job branch by unique route
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
         <member name="M:Api.Controllers.V1.JobsController.GetJobServices(Application.Features.Job.Queries.GetAllJobService.GetAllJobServiceQuery)">
             <summary>
             Returns all job services 
@@ -517,6 +524,20 @@
         <member name="M:Api.Controllers.V1.UserProfileController.CheckIsBlogLiked(Application.Features.User.Queries.CheckIsBlogLiked.CheckIsBlogLikedQuery)">
             <summary>
             Returns Check user blog like for given user id
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Api.Controllers.V1.UserProfileController.CheckIsJobBookMarked(Application.Features.User.Queries.CheckIsJobBookMarked.CheckIsJobBookMarkedQuery)">
+            <summary>
+            Returns Check user job bookmark for given user id
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Api.Controllers.V1.UserProfileController.GetJobBookMarks(Application.Features.User.Queries.GetJobBookMarks.GetJobBookMarksQuery)">
+            <summary>
+            Returns Get All user job bookmarks for given user id
             </summary>
             <param name="query"></param>
             <returns></returns>

@@ -29,13 +29,13 @@ namespace Enums
     public enum JobSliderType
     {
         [Display(ResourceType = typeof(DisplayNames), Name = nameof(DisplayNames.LatestJobs))]
-        LatestJobs,
+        LatestJobs = 0,
 
         [Display(ResourceType = typeof(DisplayNames), Name = nameof(DisplayNames.TopScoreJobs))]
-        TopScoreJobs,
+        TopScoreJobs = 1,
 
         [Display(ResourceType = typeof(DisplayNames), Name = nameof(DisplayNames.MomentJobs))]
-        MomentJobs
+        MomentJobs = 2,
     }
 
     public enum RedirectionTypes
@@ -60,45 +60,45 @@ namespace Enums
     {
         [Display(ResourceType = typeof(DisplayNames), Name = nameof(DisplayNames.Telegram))]
         [Description("مثال : t.me/your-telegram-id")]
-        Telegram,
+        Telegram = 0,
 
         [Display(ResourceType = typeof(DisplayNames), Name = nameof(DisplayNames.Instagram))]
         [Description("مثال : instagram.com/your-page-id")]
-        Instagram,
+        Instagram = 1,
 
         [Display(ResourceType = typeof(DisplayNames), Name = nameof(DisplayNames.Facebook))]
         [Description("مثال : facebook.com/your-page-id")]
-        FaceBook,
+        FaceBook = 2,
 
         [Display(ResourceType = typeof(DisplayNames), Name = nameof(DisplayNames.Whatsapp))]
         [Description("مثال : wa.me/+989123456789")]
-        WhatsApp,
+        WhatsApp = 3,
 
         [Display(ResourceType = typeof(DisplayNames), Name = nameof(DisplayNames.LinkedIn))]
         [Description("مثال : linkedin.com/company/your-page-id")]
-        LinkedIn,
+        LinkedIn = 4,
 
         [Display(ResourceType = typeof(DisplayNames), Name = nameof(DisplayNames.Aparat))]
         [Description("مثال : aparat.com/v/mOJy85488")]
-        Aparat,
+        Aparat = 5,
 
         [Display(ResourceType = typeof(DisplayNames), Name = nameof(DisplayNames.Twitter))]
         [Description("مثال : twitter.com/your-page-id")]
-        Twitter
+        Twitter = 6
     }
     public enum PhoneNumberTypes
     {
         [Display(ResourceType = typeof(DisplayNames), Name = nameof(DisplayNames.PhoneNumberTel))]
         [Description("مثال : 88846090")]
-        PhoneNumberTel,
+        PhoneNumberTel = 0,
 
         [Display(ResourceType = typeof(DisplayNames), Name = nameof(DisplayNames.CellPhoneNumber))]
         [Description("مثال : 09121234567")]
-        PhoneNumberMobile,
+        PhoneNumberMobile = 1,
 
         [Display(ResourceType = typeof(DisplayNames), Name = nameof(DisplayNames.FaxNumber))]
         [Description("مثال : 88846090")]
-        FaxNumber
+        FaxNumber = 2,
     }
     public enum SendNotificationStateMode
     {
@@ -332,9 +332,9 @@ namespace Enums
     public enum UserBookMarkType
     {
         [Display(Name = "وبلاگ", GroupName = "نوع")]
-        Blog,
+        Blog = 0,
         [Display(Name = "کسب وکار", GroupName = "نوع")]
-        JobBranch
+        JobBranch= 1,
     }
 
     public enum JobBranchStatus

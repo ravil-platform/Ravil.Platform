@@ -12,15 +12,21 @@ public class JobBranchAdsRepository : Repository<JobBranchAds>, IJobBranchAdsRep
 
     public async Task<List<JobBranch>> GetAllJobAds()
     {
-        var jobBranchIds = await ApplicationDbContext.JobBranchAds.Select(j => j.JobBranchId).ToListAsync();
+        var jobBranchIds = await ApplicationDbContext.JobBranchAds.Select(j => j.JobBranchId).Distinct().ToListAsync();
 
         var data = new List<JobBranch>();
 
         foreach (var jobBranchId in jobBranchIds)
         {
             var jobBranch = await ApplicationDbContext.JobBranch.AsNoTracking()
-                .Include(current => current.Job)
-                .Where(j => j.Id == jobBranchId).SingleOrDefaultAsync();
+                .Include(current => current.JobTimeWorks)
+                .Include(current => current.JobBranchGalleries)
+                .Include(current => current.Address).ThenInclude(current => current.Location)
+                .Include(current => current.Job).ThenInclude(current => current.JobCategories).ThenInclude(current => current.Category)
+                .Where(j => j.Id == jobBranchId)
+                .Where(a => a.IsDeleted != null && !a.IsDeleted.Value)
+                .Where(a => a.Job.Status == JobBranchStatus.Accepted)
+                .SingleOrDefaultAsync();
 
             if (jobBranch != null)
             {

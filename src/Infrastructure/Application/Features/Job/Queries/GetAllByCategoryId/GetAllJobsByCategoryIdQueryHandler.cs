@@ -1,6 +1,6 @@
 ﻿namespace Application.Features.Job.Queries.GetAllByCategoryId;
 
-public class GetAllJobsByCategoryIdQueryHandler : IRequestHandler<GetAllJobsByCategoryIdQuery, List<JobViewModel>>
+public class GetAllJobsByCategoryIdQueryHandler : IRequestHandler<GetAllJobsByCategoryIdQuery, List<JobBranchViewModel>>
 {
     protected IMapper Mapper { get; }
     protected IUnitOfWork UnitOfWork { get; }
@@ -11,12 +11,12 @@ public class GetAllJobsByCategoryIdQueryHandler : IRequestHandler<GetAllJobsByCa
         UnitOfWork = unitOfWork;
     }
 
-    public async Task<Result<List<JobViewModel>>> Handle(GetAllJobsByCategoryIdQuery request, CancellationToken cancellationToken)
+    public async Task<Result<List<JobBranchViewModel>>> Handle(GetAllJobsByCategoryIdQuery request, CancellationToken cancellationToken)
     {
-        var jobs = await UnitOfWork.JobRepository.GetJobsByCategoryId(request.CategoryId, request.Take);
+        var jobBranches = await UnitOfWork.JobBranchRepository.GetJobBranchesByCategoryId(request.CategoryId, request.Take);
+        
+        var jobBranchesViewModel = Mapper.Map<List<JobBranchViewModel>>(jobBranches);
 
-        var jobViewModel = Mapper.Map<List<JobViewModel>>(jobs);
-
-        return jobViewModel;
+        return jobBranchesViewModel;
     }
 }
