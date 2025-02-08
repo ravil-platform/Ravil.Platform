@@ -13,24 +13,30 @@ public class JobBranchRepository : Repository<JobBranch>, IJobBranchRepository
         var jobIds = await ApplicationDbContext.JobCategory.AsNoTracking()
             .Where(a => a.CategoryId.Equals(categoryId))
             .Select(a => a.JobId).Distinct().ToListAsync();
+       
+        var jobBranchList = ApplicationDbContext.JobBranch.AsNoTracking()
+            .Where(a => a.IsDeleted != null && !a.IsDeleted.Value)
+            .Where(a => a.Job.Status == JobBranchStatus.Accepted);
 
         var relatedCities = await ApplicationDbContext.JobBranchRelatedJobs.AsNoTracking()
             .Where(j => j.CurrentCityId == cityId)
             .OrderBy(j => j.Sort)
             .ToListAsync();
-       
-        var jobBranch = ApplicationDbContext.JobBranch.AsQueryable()
-            .Where(a => a.IsDeleted != null && !a.IsDeleted.Value)
-            .Where(a => a.Job.Status == JobBranchStatus.Accepted);
 
         if (relatedCities.Any())
         {
             foreach (var relatedCity in relatedCities)
             {
-                var jobBranchQueryable = ApplicationDbContext.Address.Include(c => c.JobBranch)
-                    .Where(a => a.CityId == relatedCity.DisplayedCityId).Select(a => a.JobBranch);
+                var jobBranchQueryable = ApplicationDbContext.Address.Include(a => a.Location)
+                    .Include(c => c.JobBranch)
+                    .Include(a => a.JobBranch.Job)
+                    .Include(a => a.JobBranch.JobBranchGalleries)
+                    .Where(a => a.JobBranch.IsDeleted != null && !a.JobBranch.IsDeleted.Value)
+                    .Where(a => a.JobBranch.Job.Status == JobBranchStatus.Accepted)
+                    .Where(a => a.CityId == relatedCity.DisplayedCityId || a.CityId == relatedCity.CurrentCityId).Select(a => a.JobBranch);
 
-                jobBranch = jobBranchQueryable.Where(j => jobIds.Contains(j.JobId)).Take(take);
+                jobBranchList = take > 0 ? jobBranchQueryable.Where(j => jobIds.Contains(j.JobId)).Take(take) 
+                    : jobBranchQueryable.Where(j => jobIds.Contains(j.JobId));
 
                 //jobBranch = jobBranch
                 //    .Include(s => s.Job)
@@ -40,8 +46,15 @@ public class JobBranchRepository : Repository<JobBranch>, IJobBranchRepository
                 //    .Where(j => j.Address.CityId == relatedCity.DisplayedCityId && jobIds.Contains(j.JobId)).Take(take);
             }
         }
+        else
+        {
+            jobBranchList = jobBranchList.Include(a => a.Job)
+                .Include(a => a.JobBranchGalleries)
+                .Include(a => a.Address).ThenInclude(a => a.Location)
+                .Where(j => jobIds.Contains(j.JobId));
+        }
 
-        return jobBranch;
+        return jobBranchList;
     }
 
     public async Task<List<JobBranch>> GetJobBranchesByCategoryId(int categoryId, int take = 10)
