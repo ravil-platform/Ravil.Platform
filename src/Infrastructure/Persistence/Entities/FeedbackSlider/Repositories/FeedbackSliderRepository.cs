@@ -46,4 +46,22 @@ public class FeedbackSliderRepository : Repository<Domain.Entities.FeedbackSlide
 
         return filter;
     }
+
+    public async Task<List<Domain.Entities.FeedbackSlider.FeedbackSlider>> GetAllByFilter(int take, int? categoryId = null)
+    {
+        var model = new List<Domain.Entities.FeedbackSlider.FeedbackSlider>();
+
+        if (categoryId == null)
+        {
+            model = await ApplicationDbContext.FeedbackSlider.OrderBy(f => f.Sort)
+                .AsNoTracking().Take(take).ToListAsync();
+        }
+        else
+        {
+            model = await ApplicationDbContext.FeedbackSlider.OrderBy(f => f.Sort)
+                .Where(f => f.CategoryId == categoryId).AsNoTracking().Take(take).ToListAsync();
+        }
+
+        return model;
+    }
 }

@@ -134,7 +134,7 @@ public class RegisterOrLoginUserCommandHandler : IRequestHandler<RegisterOrLogin
                 user.OneTimeUseCodeEnd = DateTime.Now.AddMinutes(2);
 
                 await UserManager.UpdateSecurityStampAsync(user);
-                
+
                 var updateResult = await UserManager.UpdateAsync(user);
 
                 if (!updateResult.Succeeded)
@@ -240,6 +240,7 @@ public class RegisterOrLoginUserCommandHandler : IRequestHandler<RegisterOrLogin
 
                     result.WithValue(new RegisterOrLoginUserResponseViewModel
                     {
+                        Id = Guid.Parse(currentUser.Id),
                         PhoneNumber = currentUser.PhoneNumber,
                         Jwt = new JsonResult(token)
                     });

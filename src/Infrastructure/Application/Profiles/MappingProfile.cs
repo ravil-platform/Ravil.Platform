@@ -182,6 +182,8 @@ namespace Application.Profiles
             CreateMap<Job, CreateJobViewModel>().ReverseMap();
             CreateMap<Job, UpdateJobCommand>().ReverseMap();
 
+            CreateMap<Job, JobSearchResultViewModel>().ReverseMap();
+
             CreateMap<Job, ViewModels.AdminPanel.Job.CreateJobViewModel>().ReverseMap();
             CreateMap<Job, ViewModels.AdminPanel.Job.UpdateJobViewModel>().ReverseMap();
             CreateMap<JobBranch, ViewModels.AdminPanel.Job.CreateJobBranchViewModel>().ReverseMap();
@@ -329,6 +331,7 @@ namespace Application.Profiles
             #region ( FeedbakSlider )
             CreateMap<FeedbackSlider, CreateFeedbackSliderViewModel>().ReverseMap();
             CreateMap<FeedbackSlider, UpdateFeedbackSliderViewModel>().ReverseMap();
+            CreateMap<FeedbackSlider, FeedbackSliderViewModel>().ReverseMap();
             #endregion
 
             #region ( Redirection Url )

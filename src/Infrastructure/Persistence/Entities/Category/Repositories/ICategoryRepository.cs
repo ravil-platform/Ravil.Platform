@@ -6,9 +6,12 @@ namespace Persistence.Entities.Category.Repositories
     {
         Task<List<Domain.Entities.Category.Category>> GetMainCategories();
         Task<List<Domain.Entities.Category.Category>> GetChildCategories(int nodeLevel, int parentId);
+
         Task<string> GetTargetRoute(int categoryId);
         Task<bool> RouteExist(string route);
         Task<bool> RouteExist(string route, int categoryId);
+
+
 
         Task<List<Domain.Entities.Category.Category>> SetTargetRoutes(List<Domain.Entities.Category.Category> categories);
 

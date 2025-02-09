@@ -214,6 +214,13 @@
             <param name="query"></param>
             <returns></returns>
         </member>
+        <member name="M:Api.Controllers.V1.FeedbackSlidersController.GetAllByFilter(Application.Features.FeedbackSlider.Queries.GetAllByFilter.GetAllFeedbackSliderByFilterQuery)">
+            <summary>
+            Returns feed back sliders by given filter
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
         <member name="M:Api.Controllers.V1.JobsController.GetAdvertisingJobs(Application.Features.Job.Queries.GetJobBranchAds.GetAdvertisingJobsQuery)">
             <summary>
             Returns all advertising job branches 
@@ -406,6 +413,13 @@
         <member name="M:Api.Controllers.V1.MainSlidersController.GetAllByFilter(Application.Features.MainSlider.Queries.GetAllByFilter.GetAllMainSlidersByFilterQuery)">
             <summary>
             Returns all main sliders 
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Api.Controllers.V1.SearchController.SearchByCategoryAndJob(Application.Features.Search.Queries.SearchByCategoryAndJobQuery)">
+            <summary>
+            Returns search result
             </summary>
             <param name="query"></param>
             <returns></returns>
