@@ -82,7 +82,18 @@ namespace Application.Profiles
                 .ForMember(src => src.PageContent, expression => expression.MapFrom(a => a.Category.PageContent))
                 .ReverseMap();
 
+            CreateMap<JobCategory, CategorySearchViewModel>()
+                .ForMember(src => src.Id, expression => expression.MapFrom(a => a.Category.Id))
+                .ForMember(src => src.Type, expression => expression.MapFrom(a => a.Category.Type))
+                .ForMember(src => src.Name, expression => expression.MapFrom(a => a.Category.Name))
+                .ForMember(src => src.Route, expression => expression.MapFrom(a => a.Category.Route))
+                .ForMember(src => src.ParentId, expression => expression.MapFrom(a => a.Category.ParentId))
+                .ForMember(src => src.NodeLevel, expression => expression.MapFrom(a => a.Category.NodeLevel))
+                .ForMember(src => src.IsLastNode, expression => expression.MapFrom(a => a.Category.IsLastNode))
+                .ReverseMap();
 
+
+            CreateMap<Category, CategoryViewModel>().ReverseMap();
             CreateMap<Category, CategoryViewModel>().ReverseMap();
             CreateMap<Category, MainCategories>().ReverseMap();
             CreateMap<CategoryService, CategoryServiceViewModel>().ReverseMap();
@@ -181,8 +192,14 @@ namespace Application.Profiles
             CreateMap<Job, CreateJobCommand>().ReverseMap();
             CreateMap<Job, CreateJobViewModel>().ReverseMap();
             CreateMap<Job, UpdateJobCommand>().ReverseMap();
-
-            CreateMap<Job, JobSearchResultViewModel>().ReverseMap();
+            
+            CreateMap<Job, JobSearchResultViewModel>()
+                .ForMember(src => src.Categories, expression =>
+                {
+                    expression.PreCondition(job => job is { JobCategories: not null } && job.JobCategories.Any(a => a.Category != null));
+                    expression.MapFrom(job => job.JobCategories);
+                })
+                .ReverseMap();
 
             CreateMap<Job, ViewModels.AdminPanel.Job.CreateJobViewModel>().ReverseMap();
             CreateMap<Job, ViewModels.AdminPanel.Job.UpdateJobViewModel>().ReverseMap();

@@ -53,8 +53,7 @@ public class JobRepository : Repository<Domain.Entities.Job.Job>, IJobRepository
     public async Task<List<Domain.Entities.Job.Job>> SearchJob(string? title = null, string? city = null)
     {
         var jobs = new List<Domain.Entities.Job.Job>();
-        var query = ApplicationDbContext.Job.AsQueryable();
-
+        
         try
         {
 
@@ -62,9 +61,9 @@ public class JobRepository : Repository<Domain.Entities.Job.Job>, IJobRepository
             {
                 jobs = await ApplicationDbContext.Job.AsNoTracking()
                     .Where(j => EF.Functions.Like(j.SubTitle, $"%{title}%")
-                                || EF.Functions.Like(j.Summary, $"%{title}%")
-                                || EF.Functions.Like(j.Title, $"%{title}%")
-                                && j.Status == JobBranchStatus.Accepted)
+                        || EF.Functions.Like(j.Summary, $"%{title}%")
+                        || EF.Functions.Like(j.Title, $"%{title}%")
+                        && j.Status == JobBranchStatus.Accepted)
                     .Select(j => new Domain.Entities.Job.Job
                     {
                         Route = j.Route.ToSlug(),
@@ -75,35 +74,49 @@ public class JobRepository : Repository<Domain.Entities.Job.Job>, IJobRepository
             }
             else
             {
-                query = ApplicationDbContext.Address
+                var query = ApplicationDbContext.Address
                     .Include(a => a.City).Include(a => a.State)
                     .Include(a => a.JobBranch)
                     .ThenInclude(j => j.Job)
+                    .ThenInclude(a => a.JobCategories)
+                    .ThenInclude(a => a.Category)
                     .Where(a =>
                         EF.Functions.Like(a.City.Name, $"%{city}%")
                         || EF.Functions.Like(a.State.Name, $"%{city}%")
                         || EF.Functions.Like(a.Neighbourhood, $"%{city}%")
                         || EF.Functions.Like(a.OtherAddress, $"%{city}%")
                         || EF.Functions.Like(a.PostalAddress, $"%{city}%"))
+                    .AsQueryable();
+
+                if (title != null)
+                {
+                    jobs = await query.Where(j => (EF.Functions.Like(j.JobBranch.Job.Title, $"%{title}%")
+                        || EF.Functions.Like(j.JobBranch.Job.SubTitle, $"%{title}%")
+                        || EF.Functions.Like(j.JobBranch.Job.Summary, $"%{title}%")
+                        || (j.JobBranch.Job.JobCategories.Any() && EF.Functions.Like(j.JobBranch.Job.JobCategories.First().Category.Name, $"%{title}%"))
+                        || (j.JobBranch.Job.JobCategories.Any() && EF.Functions.Like(j.JobBranch.Job.JobCategories.First().Category.HeadingTitle, $"%{title}%"))
+                        || (j.JobBranch.Job.JobCategories.Any() && EF.Functions.Like(j.JobBranch.Job.JobCategories.First().Category.PageContent, $"%{title}%"))) 
+                        && j.JobBranch.Job.Status == JobBranchStatus.Accepted && j.JobBranch.Job.IsDeleted == false)
                     .Select(a => new Domain.Entities.Job.Job
                     {
                         Route = a.JobBranch.Job.Route,
                         Title = a.JobBranch.Job.Title,
                         SubTitle = a.JobBranch.Job.SubTitle,
-                        Status = a.JobBranch.Job.Status
-                    }).AsQueryable();
-
-                jobs = await query.Take(20).ToListAsync();
-
-                if (title != null)
+                        Status = a.JobBranch.Job.Status,
+                        JobCategories = a.JobBranch.Job.JobCategories,
+                    })
+                    .Take(20).ToListAsync();
+                }
+                else
                 {
-                    if (jobs.Any())
+                    jobs = await query.Select(a => new Domain.Entities.Job.Job
                     {
-                        jobs = jobs.Where(j => j.Title.Contains(title)
-                                               && j.Status != null
-                                               && j.Status == JobBranchStatus.Accepted)
-                            .Take(20).ToList();
-                    }
+                        Route = a.JobBranch.Job.Route,
+                        Title = a.JobBranch.Job.Title,
+                        SubTitle = a.JobBranch.Job.SubTitle,
+                        Status = a.JobBranch.Job.Status,
+                        JobCategories = a.JobBranch.Job.JobCategories,
+                    }).Take(20).ToListAsync();
                 }
             }
         }
