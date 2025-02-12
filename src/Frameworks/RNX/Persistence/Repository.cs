@@ -181,6 +181,11 @@ namespace RNX.Persistence
             await DatabaseContext.Database.CommitTransactionAsync();
         }
 
+        public virtual async Task RollBackTransactionAsync()
+        {
+            await DatabaseContext.Database.RollbackTransactionAsync();
+        }
+
         public virtual async Task<ICollection<T?>> GetAllAsync()
         {
             var result = await DbSet.AsNoTracking().ToListAsync();

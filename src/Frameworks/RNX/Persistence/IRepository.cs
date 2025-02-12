@@ -14,5 +14,6 @@
 
         Task BeginTransactionAsync();
         Task CommitTransactionAsync();
+        Task RollBackTransactionAsync();
     }
 }

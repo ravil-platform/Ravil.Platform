@@ -1,0 +1,70 @@
+﻿@model ViewModels.AdminPanel.Job.InsertJobsFromGoogle
+@using Domain.Entities.Category
+@using Domain.Entities.City
+@{
+	ViewData["Title"] = "افزودن مشاغل از طریق فایل";
+	ViewData["selected"] = "Jobs_Create";
+	var categories = (List<Category>)ViewData["categories"]!;
+	var cities = (List<CityBase>)ViewData["cities"]!;
+}
+
+<div class="col-md-12 col-12">
+	<div class="card">
+		<div class="card-content">
+			<div class="card-body">
+				<form class="form form-horizontal" id="locationForm" method="post" enctype="multipart/form-data">
+					<div class="form-body">
+						<div class="row">
+							<div class="col-6 form-group">
+								<span class="text-danger">*</span>
+								<label>شهر</label>
+								<select asp-for="CityId" class="select2 form-control">
+									@foreach (var item in cities)
+									{
+										<option value="@item.Id">@item.Name</option>
+									}
+								</select>
+								<div class="help-block">
+									<span asp-validation-for="CityId" class="text-danger"></span>
+								</div>
+							</div>
+
+							<div class="col-6 form-group">
+								<span class="text-danger">*</span>
+								<label>دسته بندی</label>
+								<select asp-for="CategoryId" class="select2 form-control">
+									@foreach (var item in categories)
+									{
+										<option value="@item.Id">@item.Name</option>
+									}
+								</select>
+								<div class="help-block">
+									<span asp-validation-for="CategoryId" class="text-danger"></span>
+								</div>
+							</div>
+
+							<div class="col-12 col-md-12 mb-1">
+								<fieldset>
+									<div class="input-group">
+										<div class="custom-file">
+											<input asp-for="File" type="file" class="custom-file-input" accept=".json">
+											<label class="custom-file-label" asp-for="File"></label>
+										</div>
+									</div>
+								</fieldset>
+								<div class="help-block">
+									<span asp-validation-for="File" class="text-danger"></span>
+								</div>
+							</div>
+
+							<div class="col-sm-12 d-flex justify-content-end">
+								<button type="submit" class="btn btn-primary mr-1 mb-1">ثبت</button>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
