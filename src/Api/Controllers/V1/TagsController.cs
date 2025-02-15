@@ -1,4 +1,7 @@
-﻿namespace Api.Controllers.V1
+﻿using Application.Features.Category.Queries.GetRelatedRegion;
+using Application.Features.Tag.Queries.GetTagsByCategoryId;
+
+namespace Api.Controllers.V1
 {
     [Route(Routes.Controller)]
     public class TagsController : GenericBaseController<TagsController>
@@ -78,6 +81,23 @@
         [ProducesResponseType(type: typeof(Result<List<JobBranchTagViewModel>>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetJobBranchTagsByJobBranchId([FromQuery] GetJobBranchTagsByIdQuery query)
+        {
+            var result = await Mediator.Send(query);
+
+            return FluentResult(result);
+        }
+
+
+
+        /// <summary>
+        /// Returns all tags for specific category by given categoryId
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        [HttpGet(Routes.Action)]
+        [ProducesResponseType(type: typeof(Result<List<TagViewModel>>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetTagsByCategoryId([FromQuery] GetTagsByCategoryIdQuery query)
         {
             var result = await Mediator.Send(query);
 

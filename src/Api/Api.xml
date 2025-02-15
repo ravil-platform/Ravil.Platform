@@ -522,6 +522,13 @@
             <param name="query"></param>
             <returns></returns>
         </member>
+        <member name="M:Api.Controllers.V1.TagsController.GetTagsByCategoryId(Application.Features.Tag.Queries.GetTagsByCategoryId.GetTagsByCategoryIdQuery)">
+            <summary>
+            Returns all tags for specific category by given categoryId
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
         <member name="M:Api.Controllers.V1.TeamsController.GetAll(Application.Features.Team.Queries.GetAll.GetAllTeamsQuery)">
             <summary>
             Returns all teams
