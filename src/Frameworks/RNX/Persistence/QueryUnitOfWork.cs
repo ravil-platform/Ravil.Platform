@@ -11,7 +11,7 @@
         protected Options Options { get; set; }
 
         private T _databaseContext;
-  
+
         protected T DatabaseContext
         {
             get
@@ -76,13 +76,13 @@
                 return _databaseContext;
             }
         }
-     
+
 
         /// <summary>
         /// To detect redundant calls
         /// </summary>
         public bool IsDisposed { get; protected set; }
-      
+
         /// <summary>
         /// Public implementation of Dispose pattern callable by consumers.
         /// </summary>

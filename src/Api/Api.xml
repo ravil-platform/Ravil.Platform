@@ -123,6 +123,13 @@
             <param name="query"></param>
             <returns></returns>
         </member>
+        <member name="M:Api.Controllers.V1.CategoriesController.GetRelatedRegions(Application.Features.Category.Queries.GetRelatedRegion.GetRelatedRegionQuery)">
+            <summary>
+            Returns all related regions by given current cityId
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
         <member name="M:Api.Controllers.V1.CitiesController.GetAll(Application.Features.City.Queries.GetAll.GetAllCitiesQuery)">
             <summary>
             Returns all cities

@@ -1,6 +1,6 @@
-﻿using Resources.General;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using Resources.General;
 
 namespace Enums
 {
@@ -334,7 +334,7 @@ namespace Enums
         [Display(Name = "وبلاگ", GroupName = "نوع")]
         Blog = 0,
         [Display(Name = "کسب وکار", GroupName = "نوع")]
-        JobBranch= 1,
+        JobBranch = 1,
     }
 
     public enum JobBranchStatus

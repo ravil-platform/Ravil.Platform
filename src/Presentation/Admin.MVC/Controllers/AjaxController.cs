@@ -87,5 +87,19 @@ namespace Admin.MVC.Controllers
                 });
         }
         #endregion
+
+        #region ( Get Page Content )
+        [HttpPost]
+        public async Task<IActionResult> GetPageContent(int categoryId)
+        {
+            var category = await UnitOfWork.CategoryRepository.GetByPredicate(c => c.Id == categoryId);
+
+            return Json(new
+            {
+                status = "success",
+                contentPage = category.PageContent
+            });
+        }
+        #endregion
     }
 }

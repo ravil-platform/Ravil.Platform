@@ -1,5 +1,7 @@
 ﻿using Application.Features.Category.Queries.GetChildCategories;
 using Application.Features.Category.Queries.GetMainCategories;
+using Application.Features.Category.Queries.GetRelatedRegion;
+using Domain.Entities.Category;
 
 namespace Api.Controllers.V1
 {
@@ -110,6 +112,22 @@ namespace Api.Controllers.V1
         [ProducesResponseType(type: typeof(Result<List<CategoryViewModel>>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetChildCategories([FromQuery] GetChildCategoryQuery query)
+        {
+            var result = await Mediator.Send(query);
+
+            return FluentResult(result);
+        }
+
+
+        /// <summary>
+        /// Returns all related regions by given current cityId
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        [HttpGet(Routes.Action)]
+        [ProducesResponseType(type: typeof(Result<List<RelatedCategorySeo>>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetRelatedRegions([FromQuery] GetRelatedRegionQuery query)
         {
             var result = await Mediator.Send(query);
 

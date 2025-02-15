@@ -1,4 +1,6 @@
 ﻿using ViewModels.AdminPanel.Filter;
+using ViewModels.Filter.Category;
+using ViewModels.QueriesResponseViewModel.Category;
 
 namespace Persistence.Entities.Category.Repositories;
 
@@ -54,6 +56,58 @@ public class CategoryRepository : Repository<Domain.Entities.Category.Category>,
         }
 
         return categories;
+    }
+
+    public async Task<List<CategoryViewModel>> SetTargetRoutes(List<CategoryViewModel> categories)
+    {
+        var targets = await ApplicationDbContext.Targets.ToListAsync();
+
+        foreach (var category in categories)
+        {
+            if (targets.Any(t => t.OriginCategoryId == category.Id))
+            {
+                var destinationCategoryId = targets.Where(t => t.OriginCategoryId == category.Id).Select(t => t.DestinationCategoryId).Single();
+
+                var route = await GetTargetRoute(destinationCategoryId);
+
+                category.Route = route;
+            }
+        }
+
+        return categories;
+    }
+
+    public async Task<List<Domain.Entities.Category.Category>> ReplaceCategoryContent(List<Domain.Entities.Category.Category> categories, int cityId)
+    {
+        var categoriesCityContents = await ApplicationDbContext.CategoriesCityContents.ToListAsync();
+
+        foreach (var category in categories)
+        {
+            if (categoriesCityContents.Any(t => t.CategoryId == category.Id && t.CityId == cityId))
+            {
+                var content = categoriesCityContents
+                    .Where(t => t.CategoryId == category.Id && t.CityId == cityId)
+                    .Select(t => t.Content)
+                    .Single();
+
+                category.PageContent = content;
+            }
+        }
+
+        return categories;
+    }
+
+    public async Task<string?> ReplaceCategoryContent(Domain.Entities.Category.Category category, int cityId)
+    {
+        var categoriesCityContents = await ApplicationDbContext.CategoriesCityContents
+            .Where(c => c.CategoryId == category.Id && c.CityId == cityId).FirstOrDefaultAsync();
+
+        if (categoriesCityContents != null)
+        {
+            return categoriesCityContents.Content;
+        }
+
+        return category.PageContent;
     }
 
     public CategoriesFilterViewModel GetByAdminFilter(CategoriesFilterViewModel filter)

@@ -57,6 +57,11 @@ public class GetAllCategoriesByFilterQueryHandler : IRequestHandler<GetAllCatego
 
         CategoryFilterViewModel.Build(query.Count()).SetEntities(query, Mapper);
 
+        if (request.NodeLevel != null && request.NodeLevel == 3)
+        {
+            CategoryFilterViewModel.DtoEntities = await UnitOfWork.CategoryRepository.SetTargetRoutes(CategoryFilterViewModel.DtoEntities);
+        }
+
         return await Task.FromResult(CategoryFilterViewModel);
     }
 }

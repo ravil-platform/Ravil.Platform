@@ -268,7 +268,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("UpdateDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2025, 1, 14, 23, 43, 46, 143, DateTimeKind.Local).AddTicks(1574));
+                        .HasDefaultValue(new DateTime(2025, 2, 15, 18, 24, 47, 714, DateTimeKind.Local).AddTicks(1005));
 
                     b.HasKey("Id");
 
@@ -820,6 +820,37 @@ namespace Persistence.Migrations
                     b.ToTable("Brand", "dbo");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Category.CategoriesCityContent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CityId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CityName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CategoriesCityContent", "dbo");
+                });
+
             modelBuilder.Entity("Domain.Entities.Category.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -956,6 +987,40 @@ namespace Persistence.Migrations
                     b.HasIndex("ServiceId");
 
                     b.ToTable("CategoryService", "dbo");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Category.RelatedCategorySeo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CurrentCityId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CurrentCityName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DisplayedCityName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Link")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Sort")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RelatedCategorySeo", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.Category.Target", b =>
@@ -3189,7 +3254,7 @@ namespace Persistence.Migrations
                             Id = "05446344-f9cc-4566-bd2c-36791b4e28ed",
                             AccessFailedCount = 0,
                             BlockedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "3c8b891d-7334-4964-8199-da4a24bf037c",
+                            ConcurrencyStamp = "e9c8cce7-e0b6-4e45-976a-9d1bef45fcb3",
                             Email = "admin@localhost.com",
                             EmailConfirmed = true,
                             ExpireTimeSpanBlock = 0,
@@ -3201,10 +3266,10 @@ namespace Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "ADMIN@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEAQ5Ps89fN/SSvUiAhWSBsvkd3+Hz/QKcpuoMoE8+chedkfQy8lpTokelbkHHisfbQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEDmunCIjgNNMX1rkiJ90CTXlX9PQmQS0WKlrSWdZJZqkZqqYNs6j++NgVsNIo8Cfrg==",
                             PhoneNumberConfirmed = false,
-                            RegisterDate = new DateTime(2025, 1, 14, 23, 43, 46, 180, DateTimeKind.Local).AddTicks(1692),
-                            SecurityStamp = "59340304-8409-4e71-b6d5-cd5b0307c64e",
+                            RegisterDate = new DateTime(2025, 2, 15, 18, 24, 47, 726, DateTimeKind.Local).AddTicks(9857),
+                            SecurityStamp = "30b30c59-fba3-4e70-861c-ff380368fa00",
                             TwoFactorEnabled = false,
                             UpdateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserIsBlocked = false,
@@ -3216,7 +3281,7 @@ namespace Persistence.Migrations
                             Id = "2ec9f480-7288-4d0f-a1cd-53cc89968b45",
                             AccessFailedCount = 0,
                             BlockedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "bfea00a5-1c35-4ad3-9704-9db17fbc9e22",
+                            ConcurrencyStamp = "f7292aca-36af-4347-9e3b-fef2a3a17a88",
                             Email = "user@localhost.com",
                             EmailConfirmed = true,
                             ExpireTimeSpanBlock = 0,
@@ -3228,10 +3293,10 @@ namespace Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "USER@LOCALHOST.COM",
                             NormalizedUserName = "USER@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEOI7TzR1cz7J07xGc2yZWmWSN9bmyrmEPmo5t4YbRLcJei5CUO++X6GRhiuzut0r9g==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOA3/PnwbBMfLo+G7vYvQ12jDT2NETKYZZIl3PKd1KkG/YnCcolNtIGeAjQc19+jVg==",
                             PhoneNumberConfirmed = false,
-                            RegisterDate = new DateTime(2025, 1, 14, 23, 43, 46, 271, DateTimeKind.Local).AddTicks(3861),
-                            SecurityStamp = "1acd56b5-9247-47ed-9f00-7abb93ca60b5",
+                            RegisterDate = new DateTime(2025, 2, 15, 18, 24, 47, 770, DateTimeKind.Local).AddTicks(8110),
+                            SecurityStamp = "64b7c8a7-b1ea-4a22-9d1a-1aa2e17c0ba9",
                             TwoFactorEnabled = false,
                             UpdateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserIsBlocked = false,

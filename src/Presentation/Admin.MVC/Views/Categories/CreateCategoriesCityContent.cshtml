@@ -1,0 +1,138 @@
+﻿@using Domain.Entities.Category
+@using Domain.Entities.City
+@{
+	ViewData["selected"] = "Categories_IndexCustomizeCategoryCityContent";
+	ViewData["Title"] = "داینامیک سازی محتوا";
+	var categories = (List<Category>)ViewData["categories"]!;
+	var cities = (List<City>)ViewData["cities"]!;
+}
+
+@section CSS
+{
+	<style>
+		.ck-editor__editable_inline {
+			min-height: 400px;
+		}
+	</style>
+}
+
+<section>
+	<div class="card">
+		<div class="card-content">
+			<div class="card-body">
+				<ul class="nav nav-tabs mb-2">
+					<li class="nav-item current">
+						<a class="nav-link d-flex align-items-center active">
+							<i class='bx bx-task'></i><span class="d-none d-sm-block">@ViewData["Title"]</span>
+						</a>
+					</li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane active">
+						<form method="post" enctype="multipart/form-data">
+							<div class="row">
+								<div class="col-12 col-sm-6 col-lg-6">
+									<div class="form-group">
+										<div class="controls">
+											<label>یک شهر را انتخاب نمایید</label>
+											<select id="cityId" name="cityId" class="select2 form-control">
+												<option value="">انتخاب نشده</option>
+												@foreach (var city in cities.ToList())
+												{
+													<option value="@city.CityBaseId">@city.Subtitle</option>
+												}
+											</select>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-12 col-sm-6 col-lg-6">
+									<div class="form-group">
+										<div class="controls">
+											<label>یک دسته را انتخاب نمایید</label>
+											<select id="categoryId" name="categoryId" class="select2 form-control" disabled>
+												<option value="">انتخاب نشده</option>
+												@foreach (var category in categories.Where(a => a.IsActive).ToList())
+												{
+													<option value="@category.Id">@category.Name</option>
+												}
+											</select>
+										</div>
+									</div>
+								</div>
+
+
+								<div class="col-12 col-sm-12 col-lg-12">
+									<div class="form-group">
+										<span class="text-danger">*</span>
+										<label>محتوا</label>
+										<textarea class="form-control" id="ckeditor5" name="content"></textarea>
+										<div class="text-warning d-block invalid-feedback">
+											<i class="bx bx-radio-circle"></i>
+											متن مورد نظر را بطور دلخواه بنویسید
+										</div>
+										<div class="text-warning d-block invalid-feedback">
+											<i class="bx bx-radio-circle"></i>
+											برای درج شهر دسته بندی در متن، باید از نشانه %city% استفاده کنید.
+										</div>
+									</div>
+								</div>
+
+								<div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
+									<button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">ذخیره</button>
+									<button onclick="history.back()" type="reset" class="btn btn-light">انصراف</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</section>
+@section Scripts
+{
+	<script src="~/lib/ckeditor5/ckeditor.js"></script>
+	<script src="~/lib/ckeditor5/customckeditor.js"></script>
+	<script>
+			$('#cityId').change(function () {
+				selectedCity = $(this).val();
+				if (selectedCity) {
+					$('#categoryId').prop('disabled', false);
+				} else {
+					$('#categoryId').prop('disabled', true);
+					selectedCategory = null;
+				}
+			});
+
+
+			
+	    $('#categoryId').change(function () {
+		selectedCategory = $(this).val();
+
+		if (selectedCity && selectedCategory) {
+			$.ajax({
+				type: "POST",
+				url: '@Url.Action("GetPageContent", "Ajax")',
+				data: { categoryId: selectedCategory },
+				dataType: "json",
+				success: function (response) {
+					if (response.status === "success") {
+						if (window.editor) {
+							editor.setData(response.contentPage);
+						} else {
+							console.error("CKEditor 5 بارگذاری نشده است.");
+						}
+					} else {
+						console.error("مشکلی در دریافت داده‌ها وجود دارد.");
+					}
+				},
+				error: function () {
+					console.error("درخواست AJAX به سرور انجام نشد.");
+				}
+			});
+		}
+		});
+	</script>
+}

@@ -61,5 +61,9 @@
         #region ( Ckeditor Content )
         public static string CkeditorContent = "/img/ckeditor/content/";
         #endregion
+
+        #region ( City )
+        public static string City = "/img/city-img/";
+        #endregion
     }
 }

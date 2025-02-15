@@ -1,0 +1,38 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model ViewModels.AdminPanel.StateBase.CreateStateBaseViewModel
+
+
+<form asp-controller="State" asp-action="Create" method="post">
+    <div class="modal-body">
+        <div class="form-group">
+            <div class="controls">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" type="text" class="form-control text-left">
+                <div class="help-block">
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="controls">
+                <label asp-for="Multiplier"></label>
+                <input asp-for="Multiplier" dir="ltr" class="form-control">
+                <div class="help-block">
+                    <span asp-validation-for="Multiplier" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+            <i class="bx bx-x d-block d-sm-none"></i>
+            <span class="d-none d-sm-block">بستن</span>
+        </button>
+        <button type="submit" class="btn btn-primary ml-1">
+            <i class="bx bx-check d-block d-sm-none"></i>
+            <span class="d-none d-sm-block">تایید</span>
+        </button>
+    </div>
+</form>

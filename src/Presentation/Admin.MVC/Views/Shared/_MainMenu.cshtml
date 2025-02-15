@@ -71,6 +71,14 @@
 					<li class="@(selected == "Categories_IndexCustomizeCategoryLinks" ? "active" : "null")">
 						<a asp-controller="Categories" asp-action="IndexCustomizeCategoryLink"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">لینک دهی دسته ها</span></a>
 					</li>
+
+					<li class="@(selected == "Categories_IndexCustomizeCategoryCityContent" ? "active" : "null")">
+						<a asp-controller="Categories" asp-action="IndexCustomizeCategoriesCityContent"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">داینامیک سازی محتوای دسته</span></a>
+					</li>
+
+					<li class="@(selected == "Categories_IndexRelatedCategorySeo" ? "active" : "null")">
+						<a asp-controller="Categories" asp-action="IndexRelatedCategorySeo"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">مرتبط سازی Seo</span></a>
+					</li>
 				</ul>
 			</li>
 
@@ -142,8 +150,6 @@
 				</ul>
 			</li>
 
-
-
 			<li class="navigation-header">
 				<span>پلن ها و تبلیغات کسب و کار ها</span>
 			</li>
@@ -160,24 +166,6 @@
 					</li>
 				</ul>
 			</li>
-
-			<li class="navigation-header">
-				<span>بهینه سازی موتور های جستجوگر</span>
-			</li>
-
-			<li class="nav-item">
-				<a><i class="menu-livicon" data-icon="rocket"></i><span class="menu-title" data-i18n="Invoice">مدیریت موارد seo</span></a>
-				<ul class="menu-content">
-					<li class="@(selected == "RedirectionUrl_Index" ? "active" : "null")">
-						<a asp-controller="RedirectionUrl" asp-action="Index"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">سیستم تغییر مسیر</span></a>
-					</li>
-
-					<li class="@(selected == "Categories_IndexCustomizeCategoryLinks" ? "active" : "null")">
-						<a asp-controller="Categories" asp-action="IndexCustomizeCategoryLink"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">لینک دهی دسته ها</span></a>
-					</li>
-				</ul>
-			</li>
-
 
 			<li class="navigation-header">
 				<span>اسلایدر و بنر ها</span>
@@ -208,30 +196,44 @@
 				</ul>
 			</li>
 
-
 			<li class=" navigation-header">
 				<span>مدیریت شهر و استان ها</span>
 			</li>
+
 			<li class="nav-item">
 				<a href="#"><i class="menu-livicon" data-icon="location"></i><span class="menu-title">مدیریت شهر و استان</span></a>
 				<ul class="menu-content">
 					<li class="@(selected == "StateBases_Index" ? "active" : "null")">
-						<a asp-controller="Banner" asp-action="Index"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">استان ها</span></a>
+						<a asp-controller="State" asp-action="Index"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">استان ها</span></a>
 					</li>
-					<li class="@(selected == "CityBases_Create" ? "active" : "null")">
-						<a asp-controller="Banner" asp-action="Create"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">شهر ها</span></a>
+					<li class="@(selected == "CityBases_Index" ? "active" : "null")">
+						<a asp-controller="CityBase" asp-action="Index"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">شهر ها</span></a>
 					</li>
 					<li class="@(selected == "Cities_Create" ? "active" : "null")">
-						<a asp-controller="Banner" asp-action="Create"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">شهر های راویل</span></a>
+						<a asp-controller="CityBase" asp-action="IndexCity"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">شهر های راویل</span></a>
+					</li>
+					<li class="@(selected == "Cities_IndexRelatedCities" ? "active" : "null")">
+						<a asp-controller="CityBase" asp-action="IndexRelatedCities"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">مرتبط سازی شهر ها</span></a>
 					</li>
 				</ul>
 			</li>
 
+			<li class="navigation-header">
+				<span>سفارشات</span>
+			</li>
+
+			<li class="nav-item">
+				<a href="#"><i class="menu-livicon" data-icon="gift"></i><span class="menu-title" data-i18n="Disabled Menu">کد تخفیف</span></a>
+				<ul class="menu-content">
+					<li class="@(selected == "Discounts_Index" ? "active" : "null")">
+						<a asp-controller="Discounts" asp-action="Index"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">لیست کد های تخفیف</span></a>
+					</li>
+				</ul>
+			</li>
 
 			<li class="navigation-header">
 				<span>تنظیمات و پیکربندی سایت</span>
 			</li>
-
 
 			<li class="nav-item  @(selected == "Configs_Index" ? "active" : "null")">
 				<a asp-controller="Config" asp-action="IndexConfig"><i class="menu-livicon" data-icon="gear"></i><span class="menu-title" data-i18n="Disabled Menu">اطلاعات پایه</span></a>
@@ -241,13 +243,34 @@
 				<a asp-controller="Config" asp-action="IndexConfigPageInformation"><i class="menu-livicon" data-icon="gear"></i><span class="menu-title" data-i18n="Disabled Menu">اطلاعات صفحات</span></a>
 			</li>
 
+			<li class="navigation-header">
+				<span>دسترسی سریع موارد SEO</span>
+			</li>
 
+			<li class="nav-item">
+				<a><i class="menu-livicon" data-icon="rocket"></i><span class="menu-title" data-i18n="Invoice">مدیریت موارد seo</span></a>
+				<ul class="menu-content">
+					<li class="@(selected == "RedirectionUrl_Index" ? "active" : "null")">
+						<a asp-controller="RedirectionUrl" asp-action="Index"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">سیستم تغییر مسیر</span></a>
+					</li>
 
+					<li class="@(selected == "Categories_IndexCustomizeCategoryLinks" ? "active" : "null")">
+						<a asp-controller="Categories" asp-action="IndexCustomizeCategoryLink"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">لینک دهی دسته ها</span></a>
+					</li>
+
+					<li class="@(selected == "Cities_IndexRelatedCities" ? "active" : "null")">
+						<a asp-controller="CityBase" asp-action="IndexRelatedCities"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">مرتبط سازی شهر ها</span></a>
+					</li>
+
+					<li class="@(selected == "Categories_IndexCustomizeCategoryCityContent" ? "active" : "null")">
+						<a asp-controller="Categories" asp-action="IndexCustomizeCategoriesCityContent"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">داینامیک سازی محتوای دسته</span></a>
+					</li>
+				</ul>
+			</li>
 
 			<li class="navigation-header">
 				<span>غیرفعال ...</span>
 			</li>
-
 
 			<li class="nav-item disabled ">
 				<a href="#"><i class="menu-livicon" data-icon="clock"></i><span class="menu-title" data-i18n="Disabled Menu">پلنینگ و فروش اکانت</span></a>
@@ -261,13 +284,8 @@
 				<a href="#"><i class="menu-livicon" data-icon="clock"></i><span class="menu-title" data-i18n="Disabled Menu">اعضای تیم</span></a>
 			</li>
 
-
 			<li class="nav-item disabled ">
 				<a href="#"><i class="menu-livicon" data-icon="clock"></i><span class="menu-title" data-i18n="Disabled Menu">برند</span></a>
-			</li>
-
-			<li class="nav-item disabled ">
-				<a href="#"><i class="menu-livicon" data-icon="clock"></i><span class="menu-title" data-i18n="Disabled Menu">کد تخفیف</span></a>
 			</li>
 		</ul>
 	</div>

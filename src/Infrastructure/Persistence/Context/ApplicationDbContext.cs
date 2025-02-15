@@ -57,6 +57,8 @@
         public DbSet<Category> Category { get; set; }
         public DbSet<CategoryService> CategoryService { get; set; }
         public DbSet<Target> Targets { get; set; }
+        public DbSet<CategoriesCityContent> CategoriesCityContents { get; set; }
+        public DbSet<RelatedCategorySeo> RelatedCategorySeo { get; set; }
         #endregion
 
         #region ( City )
