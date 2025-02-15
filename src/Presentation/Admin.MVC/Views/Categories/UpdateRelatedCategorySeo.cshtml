@@ -1,0 +1,97 @@
+﻿@using Domain.Entities.Category
+@using Domain.Entities.City
+@model RelatedCategorySeo
+@{
+	ViewData["selected"] = "Categories_IndexCustomizeCategoryCityContent";
+	ViewData["Title"] = "مرتبط سازی دسته بندی";
+}
+
+<section>
+	<div class="card">
+		<div class="card-content">
+			<div class="card-body">
+				<ul class="nav nav-tabs mb-2">
+					<li class="nav-item current">
+						<a class="nav-link d-flex align-items-center active">
+							<i class='bx bx-task'></i><span class="d-none d-sm-block">@ViewData["Title"]</span>
+						</a>
+					</li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane active">
+						<form method="post" enctype="multipart/form-data">
+							<div class="row">
+								<div class="col-12 col-sm-6 col-lg-6">
+									<div class="form-group">
+										<div class="controls">
+											<label>یک شهر را انتخاب نمایید</label>
+											<select id="currentCityId" name="currentCityId" class="select2 form-control" disabled="disabled">
+												<option value="@Model.CurrentCityId">@Model.CurrentCityName</option>
+											</select>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-12 col-sm-6 col-lg-6">
+									<div class="form-group">
+										<div class="controls">
+											<label>منطقه</label>
+											<input asp-for="DisplayedCityName" class="form-control" />
+										</div>
+									</div>
+								</div>
+
+								<div class="col-12 col-sm-6 col-lg-6">
+									<label asp-for="Sort">در صورتی که چند انتخاب کرده اید به ترتیب از هر عددی وارد کنید مرتب میشوند*</label>
+									<input asp-for="Sort" value="1" class="form-control text-left" />
+									<span asp-validation-for="Sort" class="text-danger"></span>
+								</div>
+
+								<div class="col-12 col-sm-12 col-lg-12">
+									<div class="form-group">
+										<div class="checkbox">
+											<input asp-for="Link" type="checkbox" value="true" class="checkbox-input">
+											<label asp-for="Link"></label>
+											<div class="help-block">
+												<span asp-validation-for="Link" class="text-danger"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+
+
+								<div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
+									<button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">ذخیره</button>
+									<button onclick="history.back()" type="reset" class="btn btn-light">انصراف</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</section>
+
+@section Scripts {
+	<script>
+
+		const selectedItems = [];
+
+			$('#displayedCityIds').select2({
+			tags: true,
+			tokenSeparators: [','],
+			placeholder: "وارد کردن مناطق...",
+			allowClear: true,
+			width: '100%'
+		});
+
+
+		$('#createJobBranchRelatedJob').on('submit', function (event) {
+
+			$("#hiddenDisplayedCityIds").val(selectedItems.join(','));
+		});
+
+	</script>
+}

@@ -272,7 +272,7 @@
         #endregion
 
         #region ( Category )
-        public ICategoryRepository? _categoryRepository;
+        private ICategoryRepository? _categoryRepository;
         public ICategoryRepository CategoryRepository
         {
             get
@@ -287,7 +287,7 @@
         }
 
 
-        public ICategoryServiceRepository? _categoryServiceRepository;
+        private ICategoryServiceRepository? _categoryServiceRepository;
         public ICategoryServiceRepository CategoryServiceRepository
         {
             get
@@ -301,7 +301,23 @@
             }
         }
 
-        public ITargetRepository? _targetRepository;
+
+        private ICategoriesCityContentRepository? _categoriesCityContentRepository;
+        public ICategoriesCityContentRepository CategoriesCityContentRepository
+        {
+            get
+            {
+                if (_categoriesCityContentRepository == null)
+                {
+                    _categoriesCityContentRepository = new CategoriesCityContentRepository(DatabaseContext);
+                }
+
+                return _categoriesCityContentRepository;
+            }
+        }
+
+
+        private ITargetRepository? _targetRepository;
         public ITargetRepository TargetRepository
         {
             get
@@ -312,6 +328,21 @@
                 }
 
                 return _targetRepository;
+            }
+        }
+
+
+        private IRelatedCategorySeoRepository? _relatedCategorySeoRepository;
+        public IRelatedCategorySeoRepository RelatedCategorySeoRepository
+        {
+            get
+            {
+                if (_relatedCategorySeoRepository == null)
+                {
+                    _relatedCategorySeoRepository = new RelatedCategorySeoRepository(DatabaseContext);
+                }
+
+                return _relatedCategorySeoRepository;
             }
         }
         #endregion
@@ -530,6 +561,20 @@
                 }
 
                 return _jobBranchRepository;
+            }
+        }
+
+        private IJobBranchRelatedJobRepository? _jobBranchRelatedJobRepository;
+        public IJobBranchRelatedJobRepository JobBranchRelatedJobRepository
+        {
+            get
+            {
+                if (_jobBranchRelatedJobRepository == null)
+                {
+                    _jobBranchRelatedJobRepository = new JobBranchRelatedJobRepository(DatabaseContext);
+                }
+
+                return _jobBranchRelatedJobRepository;
             }
         }
 

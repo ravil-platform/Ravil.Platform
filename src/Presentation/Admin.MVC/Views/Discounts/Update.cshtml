@@ -1,0 +1,180 @@
+﻿@model ViewModels.Discounts.UpdateDiscountViewModel
+@using Enums
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "ویرایش کد تخفیف";
+
+    string ExpireDate = ViewData["ExpireDate"]?.ToString() ?? "";
+}
+<section>
+    <div class="card">
+        <div class="card-content">
+            <div class="card-body">
+                <ul class="nav nav-tabs mb-2">
+                    <li class="nav-item current">
+                        <a class="nav-link d-flex align-items-center active">
+                            <i class="bx bxs-discount"></i><span class="d-none d-sm-block">کد تخفیف</span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active">
+                        <input type="hidden" asp-for="Id" />
+                        <form asp-controller="Discounts" asp-action="Update" method="post">
+                            <div class="row">
+                                <div class="col-12 col-sm-3 col-lg-3">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="Title"></label>
+                                            <input asp-for="Title" type="text" class="form-control text-left">
+                                            <div class="help-block">
+                                                <span asp-validation-for="Title" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-3 col-lg-3">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="Code"></label>
+                                            <input asp-for="Code" type="text" class="form-control">
+                                            <div class="help-block">
+                                                <span asp-validation-for="Code" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-3 col-lg-3">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="Amount">مبلغ تخفیف</label>
+                                            <input asp-for="Amount" dir="ltr" class="form-control">
+                                            <div class="help-block">
+                                                <span asp-validation-for="Amount" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-3 col-lg-3">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="CartMinimum">حداقل مبلغ سبد خرید</label>
+                                            <input asp-for="CartMinimum" dir="ltr" class="form-control">
+                                            <div class="help-block">
+                                                <span asp-validation-for="CartMinimum" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-3 col-lg-3">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="CartMaximum">حداکثر مبلغ سبد خرید</label>
+                                            <input asp-for="CartMaximum" dir="ltr" class="form-control">
+                                            <div class="help-block">
+                                                <span asp-validation-for="CartMaximum" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-3 col-lg-3">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="UseCountLimit">تعداد قابل استفاده</label>
+                                            <input asp-for="UseCountLimit" dir="ltr" class="form-control">
+                                            <div class="help-block">
+                                                <span asp-validation-for="UseCountLimit" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-3 col-lg-3">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="Type"></label>
+                                            <fieldset class="form-group">
+                                                <select asp-for="Type" class="form-control">
+                                                    <option value="Amount">@PromoCodeType.Amount.GetEnumDisplayName()</option>
+                                                    <option value="Percent">@PromoCodeType.Percent.GetEnumDisplayName()</option>
+                                                </select>
+                                                <div class="help-block">
+                                                    <span asp-validation-for="Type" class="text-danger"></span>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-3 col-lg-3">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="ExpireDate">تاریخ انقضا</label>
+                                            <input asp-for="ExpireDate" type="text" value="@ExpireDate" class="form-control text-right" data-jdp>
+                                            <div class="help-block">
+                                                <span asp-validation-for="ExpireDate" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <input type="hidden" asp-for="ExpireDateString" />
+
+                                <div class="col-12 col-sm-12 col-lg-12">
+                                    <div class="form-group">
+                                        <div class="checkbox">
+                                            <input asp-for="IsUseLimit" type="checkbox" class="checkbox-input">
+                                            <label asp-for="IsUseLimit">محدودیت تعداد قابل استفاده</label>
+                                            <div class="help-block">
+                                                <span asp-validation-for="IsUseLimit" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-12 col-lg-12">
+                                    <div class="form-group">
+                                        <div class="checkbox">
+                                            <input asp-for="IsActive" type="checkbox" class="checkbox-input">
+                                            <label asp-for="IsActive"></label>
+                                            <div class="help-block">
+                                                <span asp-validation-for="IsActive" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
+                                <button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">ذخیره</button>
+                                <button onclick="history.back()" type="reset" class="btn btn-light">انصراف</button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@section Scripts
+{
+    <script>
+        $("#form").submit(function () {
+            var ExpireDateValue = $("#ExpireDate").val();
+            $("#ExpireDateString").val(ExpireDateValue);
+        });
+
+        jalaliDatepicker.startWatch();
+    </script>
+}

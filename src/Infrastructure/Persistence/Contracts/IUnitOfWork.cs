@@ -43,7 +43,9 @@
         #region ( Category )
         public ICategoryRepository CategoryRepository { get; }
         public ICategoryServiceRepository CategoryServiceRepository { get; }
+        public ICategoriesCityContentRepository CategoriesCityContentRepository { get; }
         public ITargetRepository TargetRepository { get; }
+        public IRelatedCategorySeoRepository RelatedCategorySeoRepository { get; }
         #endregion
 
         #region ( City )
@@ -82,6 +84,7 @@
         #region ( Job )
         public IJobBranchAttrRepository JobBranchAttrRepository { get; }
         public IJobBranchRepository JobBranchRepository { get; }
+        public IJobBranchRelatedJobRepository JobBranchRelatedJobRepository { get; }
         public IJobBranchGalleryRepository JobBranchGalleryRepository { get; }
         public IJobBranchShortLinkRepository JobBranchShortLinkRepository { get; }
         public IJobBranchTagRepository JobBranchTagRepository { get; }

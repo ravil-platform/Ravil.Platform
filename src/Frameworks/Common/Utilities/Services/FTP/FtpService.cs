@@ -1,5 +1,4 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
 using Common.Utilities.Extensions;
 using Common.Utilities.Services.FTP.Models;
 using FluentFTP;
@@ -216,7 +215,7 @@ public class FtpService : object, IFtpService
                 }
             }
             #endregion
-     
+
             #region ( Set FileName )
             string fileExtension = Path.GetExtension(file.FileName);
             string randomChar = Strings.RandomString();
@@ -232,7 +231,7 @@ public class FtpService : object, IFtpService
                 fileName = fileName.Replace(fileExtension, ".webp");
 
             #endregion
-            
+
             #region  ( Create Current File )
             var originPath = segmentSeperatorSingle + rootDirectory + originSavePath + fileName;
             var response = FtpClient.UploadStream(file.OpenReadStream(), originPath, FtpRemoteExists.Overwrite, true);

@@ -1,0 +1,128 @@
+﻿@model Domain.Entities.Job.JobBranchRelatedJob
+@using Domain.Entities.City
+@{
+	ViewData["selected"] = "Cities_IndexRelatedCities";
+	ViewData["Title"] = "مرتبط سازی شهر ها";
+
+	var cities = (List<City>)ViewData["cities"]!;
+}
+
+<section>
+	<div class="card">
+		<div class="card-content">
+			<div class="card-body">
+				<ul class="nav nav-tabs mb-2">
+					<li class="nav-item current">
+						<a class="nav-link d-flex align-items-center active">
+							<i class='bx bx-task'></i><span class="d-none d-sm-block">@ViewData["Title"]</span>
+						</a>
+					</li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane active">
+						<form method="post">
+							<div class="row">
+								<div class="col-6 col-sm-6 col-lg-6">
+									<div class="form-group">
+										<div class="controls">
+											<label>فقط یک شهر را انتخاب نمایید</label>
+											<select id="currentCityId" name="currentCityId" class="form-control" onchange="validateDropdowns()">
+												@foreach (var city in cities)
+												{
+													<option value="@city.Id">@city.Subtitle</option>
+												}
+											</select>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-6 col-sm-6 col-lg-6">
+									<div class="form-group">
+										<div class="controls">
+											<label>محتوای کدام شهر ها نمایش داده شوند؟</label>
+											<input id="hiddenDisplayedCityIds" name="hiddenDisplayedCityIds[]" hidden="hidden" type="text">
+											<select id="displayedCityIds" name="displayedCityIds[]" class="cities-displayed select2 form-control" multiple onchange="validateDropdowns()">
+												@foreach (var city in cities)
+												{
+													<option value="@city.Id">@city.Subtitle</option>
+												}
+											</select>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-12 col-sm-12 col-lg-12">
+									<div class="form-group">
+										<div class="controls">
+											<label asp-for="Sort">در صورتی که چند انتخاب کرده اید به ترتیب از هر عددی وارد کنید مرتب میشوند*</label>
+											<input asp-for="Sort" value="1" class="form-control" />
+											<span asp-validation-for="Sort" class="text-danger"></span>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
+									<button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">ذخیره</button>
+									<button onclick="history.back()" type="reset" class="btn btn-light">انصراف</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</section>
+@section Scripts
+{
+	<script>
+		$('#originCategories, #categoryId').on('change', function () {
+			var selectedValues1 = $('#originCategories').val() || [];
+			var selectedValues2 = $('#categoryId').val() || [];
+
+			var hasCommonValue = selectedValues1.some(value => selectedValues2.includes(value));
+
+			if (hasCommonValue) {
+				Swal.fire({
+					title: 'توجه',
+					text: 'لطفا مبدا و مقصد را تکراری انتخاب نکنید!',
+					icon: "info",
+					showCancelButton: false,
+					confirmButtonText: 'باشه',
+				});
+
+				$('#categoryId').val(null).trigger('change');
+			}
+		});
+
+
+		$('#displayedCityIds, #currentCityId').on('change', function () {
+			var selectedValues1 = $('#displayedCityIds').val() || [];
+			var selectedValues2 = $('#currentCityId').val() || [];
+
+			var hasCommonValue = selectedValues1.some(value => selectedValues2.includes(value));
+
+			if (hasCommonValue) {
+				Swal.fire({
+					title: 'توجه',
+					text: 'لطفا شهر را تکراری انتخاب نکنید!',
+					icon: "info",
+					showCancelButton: false,
+					confirmButtonText: 'باشه',
+				});
+
+				$('#currentCityId').val(null).trigger('change');
+			}
+		});
+
+
+		$('#displayedCityIds').on('change', function () {
+			   var selectedValues = $(this).val();
+
+			   var joinedValues = selectedValues.join(',');
+
+			   $('#hiddenDisplayedCityIds').val(joinedValues);
+		});
+	</script>
+}

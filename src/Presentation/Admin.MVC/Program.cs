@@ -1,4 +1,5 @@
 using Application.Profiles;
+using Application.Services.NehsanApi;
 using Application.Services.SMS;
 using Common.Options;
 using Common.Utilities.Services.FTP;
@@ -35,6 +36,7 @@ var siteSettingConfiguration = configuration.GetSection(nameof(SiteSettings));
 services.Configure<IOptions<SiteSettings>>(siteSettingConfiguration);
 
 services.AddIdentityService();
+services.AddHttpClient<NeshanApiService>();
 services.AddTransient<ISmsSender, SmsSender>();
 services.AddHttpClient();
 #endregion

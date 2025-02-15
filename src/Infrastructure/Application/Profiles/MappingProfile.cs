@@ -4,16 +4,19 @@ using Application.Features.Category.Queries.GetAllByFilter;
 using Application.Features.Job.Queries.GetAllJobBranch;
 using Application.Features.Job.Queries.GetRelatedJobBranches;
 using Domain.Entities.FeedbackSlider;
+using Domain.Entities.Order;
 using Domain.Entities.RedirectionUrl;
 using RNX.CustomResult;
 using ViewModels.AdminPanel.Banner;
 using ViewModels.AdminPanel.Category;
+using ViewModels.AdminPanel.City;
 using ViewModels.AdminPanel.Cms;
 using ViewModels.AdminPanel.Cms.Blog;
 using ViewModels.AdminPanel.Config;
 using ViewModels.AdminPanel.FeedbackSlider;
 using ViewModels.AdminPanel.MainSlider;
 using ViewModels.AdminPanel.RedirectionUrl;
+using ViewModels.Discounts;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Application.Profiles
@@ -311,6 +314,11 @@ namespace Application.Profiles
             CreateMap<Config, ConfigViewModel>().ReverseMap();
             #endregion
 
+            #region ( City )
+            CreateMap<City, CreateCityViewModel>().ReverseMap();
+            CreateMap<City, UpdateCityViewModel>().ReverseMap();
+            #endregion
+
             #region ( Day Of Week )
             CreateMap<Domain.Entities.DayOfWeek.DayOfWeek, DayOfWeekViewModel>().ReverseMap();
             #endregion
@@ -358,6 +366,11 @@ namespace Application.Profiles
 
             #region ( Config )
             CreateMap<Config, AdminConfigViewModel>().ReverseMap();
+            #endregion
+
+            #region ( Discount )
+            CreateMap<PromotionCode, CreateDiscountViewModel>().ReverseMap();
+            CreateMap<PromotionCode, UpdateDiscountViewModel>().ReverseMap();
             #endregion
 
             CreateMap(typeof(CustomResult<>), typeof(Result<>)).ReverseMap();

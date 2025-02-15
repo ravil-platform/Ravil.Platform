@@ -1,6 +1,7 @@
 ﻿using Common.Utilities.Services.FTP;
 using Domain.Entities.Category;
 using Microsoft.EntityFrameworkCore;
+using NLog.Filters;
 using ViewModels.AdminPanel.Category;
 using ViewModels.AdminPanel.Filter;
 
@@ -398,6 +399,296 @@ namespace Admin.MVC.Controllers
             return RedirectToAction("IndexCustomizeCategoryLink");
         }
         #endregion
+        #endregion
+
+        #region ( Customize Content Cities By Category )
+        #region ( Index )
+        [HttpGet]
+        public async Task<IActionResult> IndexCustomizeCategoriesCityContent(CategoriesCityContentsFilterViewModel filter)
+        {
+            var categories = await UnitOfWork.CategoryRepository
+                .GetAllAsync(a => a.ParentId != 0 && a.NodeLevel == 3);
+            ViewData["categories"] = categories;
+
+
+            var cities = await UnitOfWork.CityRepository.GetAllAsync(c => c.Status);
+            ViewData["cities"] = cities;
+
+            return View(UnitOfWork.CategoriesCityContentRepository.GetByFilterAdmin(filter));
+        }
+        #endregion
+
+        #region ( Create )
+        [HttpGet]
+        public async Task<IActionResult> CreateCategoriesCityContent()
+        {
+            var categories = await UnitOfWork.CategoryRepository
+                .GetAllAsync(a => a.ParentId != 0 && a.NodeLevel == 3);
+            ViewData["categories"] = categories;
+
+
+            var cities = await UnitOfWork.CityRepository.GetAllAsync(c => c.Status);
+            ViewData["cities"] = cities;
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateCategoriesCityContent(int categoryId, int cityId, string content)
+        {
+            if (categoryId == null || cityId == null || content == null)
+            {
+                ErrorAlert("مقادیر نباید خالی باشند.");
+
+                return RedirectToAction("IndexCustomizeCategoriesCityContent");
+            }
+
+            try
+            {
+                var currentCategory = await UnitOfWork.CategoryRepository.GetByPredicate(c => c.Id == categoryId);
+                var currentCity = await UnitOfWork.CityRepository.GetByPredicate(c => c.CityBaseId == cityId);
+
+                var categoriesCityContents = await UnitOfWork.CategoriesCityContentRepository.GetAllAsync();
+
+                #region ( Remove All Current Categories CityContentsExist if Exist )
+                var categoriesCityContentsExist = categoriesCityContents.Where(t => t.CategoryId == categoryId && t.CityId == cityId)
+                    .ToList();
+
+                if (categoriesCityContentsExist.Any())
+                {
+                    ErrorAlert("برای این شهر در این دسته بندی قبلا اطلاعات ثبت کردید!");
+
+                    return RedirectToAction("IndexCustomizeCategoriesCityContent");
+                }
+                #endregion
+
+                var newCategoriesCityContent = new CategoriesCityContent()
+                {
+                    CategoryId = categoryId,
+                    CategoryName = currentCategory.Name,
+
+                    CityId = currentCity.CityBaseId,
+                    CityName = currentCity.Subtitle,
+
+                    Content = content,
+                };
+
+                await UnitOfWork.CategoriesCityContentRepository.InsertAsync(newCategoriesCityContent);
+                await UnitOfWork.SaveAsync();
+
+                SuccessAlert();
+            }
+            catch (Exception e)
+            {
+                ErrorAlert(e.Message);
+            }
+
+            return RedirectToAction("IndexCustomizeCategoriesCityContent");
+        }
+        #endregion
+
+        #region ( Update )
+        [HttpGet]
+        public async Task<IActionResult> UpdateCategoriesCityContent(int id)
+        {
+            var categories = await UnitOfWork.CategoryRepository
+                .GetAllAsync(a => a.ParentId != 0 && a.NodeLevel == 3);
+            ViewData["categories"] = categories;
+
+            var cities = await UnitOfWork.CityRepository.GetAllAsync(c => c.Status);
+            ViewData["cities"] = cities;
+
+            var model = await UnitOfWork.CategoriesCityContentRepository.GetByPredicate(c => c.Id == id);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateCategoriesCityContent(CategoriesCityContent categoriesCityContent)
+        {
+            try
+            {
+                var currentModel =
+                    await UnitOfWork.CategoriesCityContentRepository.GetByPredicate(c => c.Id == categoriesCityContent.Id);
+
+                currentModel.Content = categoriesCityContent.Content;
+
+                await UnitOfWork.CategoriesCityContentRepository.UpdateAsync(currentModel);
+                await UnitOfWork.SaveAsync();
+
+                SuccessAlert();
+            }
+            catch (Exception e)
+            {
+                ErrorAlert(e.Message);
+            }
+
+            return RedirectToAction("IndexCustomizeCategoriesCityContent");
+        }
+        #endregion
+
+        #region ( Delete )
+        [HttpGet]
+        public async Task<IActionResult> DeleteCustomizeCategoriesCityContent(int id)
+        {
+            var categoriesCityContents = await UnitOfWork.CategoriesCityContentRepository.GetByPredicate(t => t.Id == id);
+
+            if (categoriesCityContents != null)
+            {
+                await UnitOfWork.CategoriesCityContentRepository.DeleteAsync(categoriesCityContents);
+            }
+
+            try
+            {
+                await UnitOfWork.SaveAsync();
+
+
+                SuccessAlert();
+            }
+            catch
+            {
+                ErrorAlert();
+            }
+
+            return RedirectToAction("IndexCustomizeCategoriesCityContent");
+        }
+        #endregion
+        #endregion
+
+        #region ( Related Category )
+        [HttpGet]
+        public async Task<IActionResult> IndexRelatedCategorySeo(RelatedCategorySeoFilterViewModel filter)
+        {
+            var cities = await UnitOfWork.CityRepository.GetAllAsync(c => c.Status);
+            ViewData["cities"] = cities;
+
+            return View(UnitOfWork.RelatedCategorySeoRepository.GetByFilterAdmin(filter));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> CreateRelatedCategorySeo()
+        {
+            var cities = await UnitOfWork.CityRepository.GetAllAsync(c => c.Status);
+            ViewData["cities"] = cities;
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateRelatedCategorySeo(int currentCityId, string[] displayedCityNames, RelatedCategorySeo relatedCategorySeo)
+        {
+            string[] displayedCityNamesArray = displayedCityNames;
+
+            if (currentCityId == null || displayedCityNamesArray.Length == 0)
+            {
+                ErrorAlert("مقادیر نباید خالی باشند.");
+
+                return RedirectToAction("IndexRelatedCategorySeo");
+            }
+
+            try
+            {
+                var currentCity = await UnitOfWork.CityRepository.GetByPredicate(c => c.CityBaseId == currentCityId);
+                if (currentCity == null)
+                {
+                    ErrorAlert("شهر یافت نشد");
+
+                    return RedirectToAction("IndexRelatedCategorySeo");
+                }
+
+                int sort = relatedCategorySeo.Sort;
+
+                foreach (var displayedCityName in displayedCityNamesArray)
+                {
+                    var newRelatedCategorySeo = new RelatedCategorySeo()
+                    {
+                        Title = displayedCityName,
+                        CurrentCityId = currentCity.CityBaseId,
+                        CurrentCityName = currentCity.Subtitle,
+
+                        DisplayedCityName = displayedCityName,
+                        Link = relatedCategorySeo.Link,
+                        Sort = sort,
+                    };
+
+                    await UnitOfWork.RelatedCategorySeoRepository.InsertAsync(newRelatedCategorySeo);
+
+                    sort++;
+                }
+
+                await UnitOfWork.SaveAsync();
+
+                SuccessAlert();
+            }
+            catch (Exception e)
+            {
+                ErrorAlert(e.Message);
+            }
+
+            return RedirectToAction("IndexRelatedCategorySeo");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> UpdateRelatedCategorySeo(int id)
+        {
+            var model = await UnitOfWork.RelatedCategorySeoRepository.GetByPredicate(r => r.Id == id);
+
+            if (model == null)
+            {
+                ErrorAlert("چیزی یافت نشد!");
+
+                return RedirectToAction("IndexRelatedCategorySeo");
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateRelatedCategorySeo(RelatedCategorySeo relatedCategorySeo)
+        {
+            var model = await UnitOfWork.RelatedCategorySeoRepository.GetByPredicate(r => r.Id == relatedCategorySeo.Id);
+            if (model == null)
+            {
+                ErrorAlert("چیزی یافت نشد!");
+
+                return RedirectToAction("IndexRelatedCategorySeo");
+            }
+
+            model.Sort = relatedCategorySeo.Sort;
+            model.Link = relatedCategorySeo.Link;
+            model.DisplayedCityName = relatedCategorySeo.DisplayedCityName;
+
+            await UnitOfWork.RelatedCategorySeoRepository.UpdateAsync(model);
+            await UnitOfWork.SaveAsync();
+
+            SuccessAlert();
+
+            return RedirectToAction("IndexRelatedCategorySeo");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DeleteRelatedCategorySeo(int id)
+        {
+            var relatedCategorySeo = await UnitOfWork.RelatedCategorySeoRepository.GetByPredicate(t => t.Id == id);
+
+            if (relatedCategorySeo != null)
+            {
+               await  UnitOfWork.RelatedCategorySeoRepository.DeleteAsync(relatedCategorySeo);
+            }
+
+            try
+            {
+                await UnitOfWork.SaveAsync();
+
+                SuccessAlert();
+            }
+            catch
+            {
+                ErrorAlert();
+            }
+
+            return RedirectToAction("IndexRelatedCategorySeo");
+        }
         #endregion
     }
 }

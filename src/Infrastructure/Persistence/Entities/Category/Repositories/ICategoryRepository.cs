@@ -1,4 +1,6 @@
 ﻿using ViewModels.AdminPanel.Filter;
+using ViewModels.Filter.Category;
+using ViewModels.QueriesResponseViewModel.Category;
 
 namespace Persistence.Entities.Category.Repositories
 {
@@ -14,6 +16,11 @@ namespace Persistence.Entities.Category.Repositories
 
 
         Task<List<Domain.Entities.Category.Category>> SetTargetRoutes(List<Domain.Entities.Category.Category> categories);
+        Task<List<CategoryViewModel>> SetTargetRoutes(List<CategoryViewModel> categories);
+
+        Task<List<Domain.Entities.Category.Category>> ReplaceCategoryContent(List<Domain.Entities.Category.Category> categories, int cityId);
+        Task<string?> ReplaceCategoryContent(Domain.Entities.Category.Category category, int cityId);
+
 
         CategoriesFilterViewModel GetByAdminFilter(CategoriesFilterViewModel filter);
     }

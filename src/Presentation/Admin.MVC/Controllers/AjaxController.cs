@@ -57,5 +57,49 @@ namespace Admin.MVC.Controllers
             });
         }
         #endregion
+
+        #region ( GetCityState )
+        [HttpPost]
+        public async Task<IActionResult> GetCityState(string city, string state, string neighbourhood)
+        {
+            if (string.IsNullOrWhiteSpace(city))
+                return BadRequest();
+
+            state = string.IsNullOrWhiteSpace(state) ? "البرز" : state;
+            var stateBase = await UnitOfWork.StateBaseRepository.TableNoTracking.FirstOrDefaultAsync(a => a.Name.Contains(state));
+
+            if (!string.IsNullOrWhiteSpace(neighbourhood))
+            {
+                neighbourhood = neighbourhood.Trim();
+                var checkNeighbourhoodExist =
+                    await UnitOfWork.CityBaseRepository.TableNoTracking.AnyAsync(a => a.Name.Equals(neighbourhood));
+                if (checkNeighbourhoodExist)
+                {
+                    city = neighbourhood;
+                }
+            }
+
+            var cityDetail = await UnitOfWork.CityBaseRepository.TableNoTracking.FirstOrDefaultAsync(a => a.Name.Equals(city) && a.StateId.Equals(stateBase.Id));
+
+            return Json(new
+                {
+                    city = cityDetail.Id, state = cityDetail.StateId
+                });
+        }
+        #endregion
+
+        #region ( Get Page Content )
+        [HttpPost]
+        public async Task<IActionResult> GetPageContent(int categoryId)
+        {
+            var category = await UnitOfWork.CategoryRepository.GetByPredicate(c => c.Id == categoryId);
+
+            return Json(new
+            {
+                status = "success",
+                contentPage = category.PageContent
+            });
+        }
+        #endregion
     }
 }

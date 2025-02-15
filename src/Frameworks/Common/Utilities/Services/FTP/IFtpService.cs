@@ -1,10 +1,4 @@
-﻿using System.IO;
-using System.Security.Authentication;
-using AngleSharp.Io;
-using Azure;
-using Common.Utilities.Extensions;
-using Constants.Files;
-using Microsoft.AspNetCore.Http;
+﻿using Common.Utilities.Extensions;
 
 namespace Common.Utilities.Services.FTP
 {

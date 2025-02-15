@@ -8,8 +8,8 @@
         public const int HashJwtToken = 800;
         public const int HashRefreshToken = 800;
         public const int Device = 350;
-        
-        
+
+
         public const int Ip = 15;
         public const int Title = 350;
         public const int Name = 350;
