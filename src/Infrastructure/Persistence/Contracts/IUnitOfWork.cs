@@ -46,6 +46,7 @@
         public ICategoriesCityContentRepository CategoriesCityContentRepository { get; }
         public ITargetRepository TargetRepository { get; }
         public IRelatedCategorySeoRepository RelatedCategorySeoRepository { get; }
+        public ICategoryTagRepository CategoryTagRepository { get; }
         #endregion
 
         #region ( City )

@@ -21,6 +21,7 @@
         #region (Relations)
         public virtual ICollection<JobTag> JobTags { get; set; }
         public virtual ICollection<BlogTag> BlogTags { get; set; }
+        public virtual ICollection<CategoryTag> CategoryTags { get; set; }
         public virtual ICollection<JobBranchTag> JobBranchTags { get; set; }
         #endregion
     }

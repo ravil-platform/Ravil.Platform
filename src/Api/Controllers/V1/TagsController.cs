@@ -1,5 +1,4 @@
-﻿using Application.Features.Category.Queries.GetRelatedRegion;
-using Application.Features.Tag.Queries.GetTagsByCategoryId;
+﻿using Application.Features.Tag.Queries.GetTagsByCategoryId;
 
 namespace Api.Controllers.V1
 {

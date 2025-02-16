@@ -2,7 +2,10 @@
 {
     public class GetAllJobBranchByFilterQuery : IRequest<JobBranchFilter>
     {
-        public int? CategoryId { get; set; }
+        public int CityId { get; set; }
+
+        public int CategoryId { get; set; }
+        
 
         #region ( Paging Fields )
         public int? CurrentPage { get; set; } = 1;

@@ -42,6 +42,7 @@ namespace Domain.Entities.Category
         public virtual ICollection<CityCategory> CityCategories { get; set; }
         public virtual ICollection<CategoryService> CategoryServices { get; set; }
         public virtual ICollection<FaqJobCategory> FaqJobCategories { get; set; }
+        public virtual ICollection<CategoryTag> CategoryTags { get; set; }
         #endregion
     }
 }

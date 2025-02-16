@@ -1,7 +1,7 @@
 ﻿@using Enums
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @model ViewModels.AdminPanel.Cms.CreateTagViewModel
-<form asp-controller="Blogs" asp-action="CreateTag" method="post" enctype="multipart/form-data">
+<form asp-controller="Tag" asp-action="Create" method="post" enctype="multipart/form-data">
     <div class="modal-body">
         <div class="card-title-details d-flex align-items-center mb-1 ml-1">
             <div class="avatar bg-rgba-primary p-25 mr-2 ml-0">
@@ -68,6 +68,7 @@
                         <option value="City">@(TagType.City.GetEnumDisplayName())</option>
                         <option value="Account">@(TagType.Account.GetEnumDisplayName())</option>
                         <option value="JobBranch">@(TagType.JobBranch.GetEnumDisplayName())</option>
+                        <option value="Category">@(TagType.Category.GetEnumDisplayName())</option>
                     </select>
                     <div class="help-block">
                         <span asp-validation-for="Type" class="text-danger"></span>
@@ -78,7 +79,7 @@
 
         <div class="form-group">
             <div class="checkbox">
-                <input asp-for="Status" type="checkbox" class="checkbox-input">
+                <input asp-for="Status" type="checkbox" value="true" class="checkbox-input">
                 <label asp-for="Status"></label>
                 <div class="help-block">
                     <span asp-validation-for="Status" class="text-danger"></span>

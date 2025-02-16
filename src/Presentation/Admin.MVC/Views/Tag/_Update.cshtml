@@ -10,12 +10,12 @@
     string UrlBase = FtpConnectionOptions.Value.UrlBase;
 }
 
-<form asp-controller="Blogs" asp-action="UpdateTag" method="post" enctype="multipart/form-data">
+<form asp-controller="Tag" asp-action="Update" method="post" enctype="multipart/form-data">
     <div class="modal-body">
         <input type="hidden" asp-for="Id" />
         <div class="card-title-details d-flex align-items-center mb-1 ml-1">
             <div class="avatar bg-rgba-primary p-25 mr-2 ml-0">
-                <img id="updateSelectImage" class="img-fluid" src="@UrlBase@Paths.CmsBlogTag@Model.CurrentIconPicture" height="120" width="120">
+                <img id="updateSelectImage" class="img-fluid" src="@UrlBase@Paths.Tag@Model.CurrentIconPicture" height="120" width="120">
             </div>
             <div class="mt-n25">
                 <h5>@(Resources.General.DisplayNames.Icon) فعلی</h5>
@@ -74,6 +74,7 @@
                         <option value="City">@(TagType.City.GetEnumDisplayName())</option>
                         <option value="Account">@(TagType.Account.GetEnumDisplayName())</option>
                         <option value="JobBranch">@(TagType.JobBranch.GetEnumDisplayName())</option>
+                        <option value="Category">@(TagType.Category.GetEnumDisplayName())</option>
                     </select>
                     <div class="help-block">
                         <span asp-validation-for="Type" class="text-danger"></span>
