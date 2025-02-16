@@ -46,6 +46,11 @@
         public static string CmsBlogTag = "/img/cms/tag";
         #endregion
 
+        #region ( Tag )
+        public static string Tag = "/img/tag";
+        public static string CategoryTag = "/img/tag/category";
+        #endregion
+
         #region ( Feedback Slider )
         public static string FeedbackSlider = "/img/slider/";
         #endregion

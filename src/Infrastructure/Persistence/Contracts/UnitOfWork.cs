@@ -1,4 +1,6 @@
-﻿namespace Persistence.Contracts
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace Persistence.Contracts
 {
     public class UnitOfWork : UnitOfWork<ApplicationDbContext>, IUnitOfWork
     {
@@ -345,6 +347,11 @@
                 return _relatedCategorySeoRepository;
             }
         }
+
+
+        private ICategoryTagRepository _categoryTagRepository;
+        public ICategoryTagRepository CategoryTagRepository => _categoryTagRepository ??= new CategoryTagRepository(DatabaseContext);
+
         #endregion
 
         #region ( City )

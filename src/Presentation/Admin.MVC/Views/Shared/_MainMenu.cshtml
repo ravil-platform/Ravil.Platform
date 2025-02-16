@@ -38,6 +38,8 @@
 			<li class=" navigation-header">
 				<span>دسته بندی و کسب و کار ها</span>
 			</li>
+
+
 			<li class="nav-item">
 				<a><i class="menu-livicon" data-icon="home"></i><span class="menu-title" data-i18n="Invoice">مدیریت کسب و کار</span></a>
 				<ul class="menu-content">
@@ -58,6 +60,7 @@
 					</li>
 				</ul>
 			</li>
+
 			<li class="nav-item">
 				<a><i class="menu-livicon" data-icon="more"></i><span class="menu-title" data-i18n="Invoice">مدیریت دسته بندی ها</span></a>
 				<ul class="menu-content">
@@ -78,6 +81,24 @@
 
 					<li class="@(selected == "Categories_IndexRelatedCategorySeo" ? "active" : "null")">
 						<a asp-controller="Categories" asp-action="IndexRelatedCategorySeo"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">مرتبط سازی Seo</span></a>
+					</li>
+
+					<li class="@(selected == "Categories_IndexCategoryTag" ? "active" : "null")">
+						<a asp-controller="Categories" asp-action="IndexCategoryTag"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">برچسب خدمات</span></a>
+					</li>
+				</ul>
+			</li>
+
+
+			<li class=" navigation-header">
+				<span>تگ ها</span>
+			</li>
+
+			<li class="nav-item">
+				<a><i class="menu-livicon" data-icon="tag"></i><span class="menu-title" data-i18n="Invoice">مدیریت تگ</span></a>
+				<ul class="menu-content">
+					<li class="@(selected == "Tags_Index" ? "active" : "null")">
+						<a asp-controller="Tag" asp-action="Index"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">مشاهده لیست</span></a>
 					</li>
 				</ul>
 			</li>
@@ -118,10 +139,6 @@
 
 					<li class="@(selected == "BlogCategories_Create" ? "active" : "null")">
 						<a asp-controller="Blogs" asp-action="CreateBlogCategories"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">افزودن دسته</span></a>
-					</li>
-
-					<li class="@(selected == "Tags_Index" ? "active" : "null")">
-						<a asp-controller="Blogs" asp-action="IndexTags"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">تگ ها</span></a>
 					</li>
 				</ul>
 			</li>

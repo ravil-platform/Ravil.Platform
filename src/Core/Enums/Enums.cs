@@ -216,7 +216,10 @@ namespace Enums
         Blog,
 
         [Display(ResourceType = typeof(DisplayNames), Name = nameof(DisplayNames.CityPage))]
-        City
+        City,
+
+        [Display(ResourceType = typeof(DisplayNames), Name = nameof(DisplayNames.CategoryPage))]
+        Category
     }
 
     public enum OrderStatus

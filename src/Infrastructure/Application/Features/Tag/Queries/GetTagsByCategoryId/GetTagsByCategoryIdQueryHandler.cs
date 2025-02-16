@@ -12,7 +12,9 @@ public class GetTagsByCategoryIdQueryHandler : IRequestHandler<GetTagsByCategory
 
     public async Task<Result<List<TagViewModel>>> Handle(GetTagsByCategoryIdQuery request, CancellationToken cancellationToken)
     {
-        var result = await UnitOfWork.TagRepository.GetAllAsync();
+        //todo : create method in repository to get tags by category id
+
+        var result = await UnitOfWork.CategoryTagRepository.TableNoTracking.Where(t => t.CategoryId == request.CategoryId).Select(t => t.Tag).ToListAsync(cancellationToken);
 
         var tagsViewModel = Mapper.Map<List<TagViewModel>>(result);
 

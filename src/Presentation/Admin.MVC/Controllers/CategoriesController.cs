@@ -1,9 +1,13 @@
 ﻿using Common.Utilities.Services.FTP;
 using Domain.Entities.Category;
+using Domain.Entities.Tag;
+using Enums;
 using Microsoft.EntityFrameworkCore;
 using NLog.Filters;
 using ViewModels.AdminPanel.Category;
+using ViewModels.AdminPanel.Cms;
 using ViewModels.AdminPanel.Filter;
+using ViewModels.AdminPanel.Filter.Blog;
 
 namespace Admin.MVC.Controllers
 {
@@ -673,7 +677,7 @@ namespace Admin.MVC.Controllers
 
             if (relatedCategorySeo != null)
             {
-               await  UnitOfWork.RelatedCategorySeoRepository.DeleteAsync(relatedCategorySeo);
+                await UnitOfWork.RelatedCategorySeoRepository.DeleteAsync(relatedCategorySeo);
             }
 
             try
@@ -689,6 +693,184 @@ namespace Admin.MVC.Controllers
 
             return RedirectToAction("IndexRelatedCategorySeo");
         }
+        #endregion
+
+        #region ( Category Tag )
+        #region ( Index )
+        [HttpGet]
+        public async Task<IActionResult> IndexCategoryTag(TagsFilterViewModel filter)
+        {
+            filter.TagType = TagType.Category;
+
+            var model = UnitOfWork.TagRepository.GetByFilter(filter);
+
+            ViewData["categories"] = await UnitOfWork.CategoryRepository.GetAllAsync(c => c.IsActive && c.NodeLevel == 3);
+
+            return View(model);
+        }
+        #endregion
+
+        #region ( Create )
+        [HttpPost]
+        public async Task<IActionResult> CreateCategoryTag(CreateTagViewModel createTagViewModel, int categoryId)
+        {
+            if (!ModelState.IsValid)
+            {
+                #region ( Client Error )
+                ErrorAlert(Errors.ModelStateIsNotValidForm);
+
+                return RedirectToAction("IndexCategoryTag");
+                #endregion
+            }
+
+            var tag = Mapper.Map<Tag>(createTagViewModel);
+
+            var iconName = await FtpService.UploadFileToFtpServer(createTagViewModel.IconPictureFile, TypeFile.Image, Paths.Tag, createTagViewModel.IconPictureFile.FileName);
+
+            tag.IconPicture = iconName;
+            tag.Type = TagType.Category;
+
+            await UnitOfWork.TagRepository.InsertAsync(tag);
+
+            try
+            {
+                await UnitOfWork.SaveAsync();
+
+                var categoryTag = new CategoryTag()
+                {
+                    TagId = tag.Id,
+                    CategoryId = categoryId
+                };
+
+                await UnitOfWork.CategoryTagRepository.InsertAsync(categoryTag);
+                await UnitOfWork.SaveAsync();
+
+                SuccessAlert();
+            }
+            catch (Exception e)
+            {
+                ErrorAlert(e.Message);
+            }
+
+            return RedirectToAction("IndexCategoryTag");
+        }
+        #endregion
+
+        #region ( Update )
+        [HttpGet]
+        public async Task<IActionResult> UpdateCategoryTag(int tagId)
+        {
+            var currentTags = await UnitOfWork.TagRepository.GetByIdAsync(tagId);
+
+            if (currentTags == null)
+            {
+                ErrorAlert("تگ یافت نشد!");
+
+                return RedirectToAction("Index");
+            }
+
+            var model = Mapper.Map<UpdateTagViewModel>(currentTags);
+            model.CurrentIconPicture = currentTags.IconPicture;
+
+            ViewData["categories"] = await UnitOfWork.CategoryRepository.GetAllAsync(c => c.IsActive && c.NodeLevel == 3);
+            ViewData["currentCategoryId"] = await UnitOfWork.CategoryTagRepository.TableNoTracking.Where(t => t.TagId == tagId).Select(t => t.CategoryId).FirstOrDefaultAsync();
+
+            return PartialView("_UpdateCategoryTag", model);
+        }
+
+        //todo: check and fix remove bug
+        [HttpPost]
+        public async Task<IActionResult> UpdateCategoryTag(UpdateTagViewModel updateTagViewModel, int currentCategoryId , int categoryId)
+        {
+            if (!ModelState.IsValid)
+            {
+                ErrorAlert(Errors.ModelStateIsNotValidForm);
+
+                return RedirectToAction("IndexCategoryTag");
+            }
+
+            var tag = await UnitOfWork.TagRepository.GetByIdAsync(updateTagViewModel.Id);
+
+            tag = Mapper.Map(updateTagViewModel, tag);
+
+            #region ( Picture )
+            if (updateTagViewModel.IconPictureFile != null)
+            {
+                var deletedFile = "";
+
+                if (tag.IconPicture != null)
+                {
+                    deletedFile = tag.IconPicture;
+                }
+
+                var iconName = await FtpService.UploadFileToFtpServer(updateTagViewModel.IconPictureFile, TypeFile.Image, Paths.Tag, updateTagViewModel.IconPictureFile.FileName, 777, null, null, null, deletedFile);
+
+                tag.IconPicture = iconName;
+            }
+            #endregion
+
+            tag.Type = TagType.Category;
+
+            await UnitOfWork.TagRepository.UpdateAsync(tag!);
+
+            try
+            {
+                await UnitOfWork.SaveAsync();
+
+                #region ( Find And Delete Current Tag )
+                var categoryTag = await UnitOfWork.CategoryTagRepository.GetByPredicate(t => t.TagId == updateTagViewModel.Id && t.CategoryId == currentCategoryId);
+
+                if (categoryTag != null)
+                {
+                    await UnitOfWork.CategoryTagRepository.DeleteAsync(categoryTag);
+                }
+                #endregion
+
+                #region ( Insert New Tag )
+                var newCategoryTag = new CategoryTag()
+                {
+                    TagId = tag.Id,
+                    CategoryId = categoryId
+                };
+
+                await UnitOfWork.CategoryTagRepository.InsertAsync(newCategoryTag);
+                await UnitOfWork.SaveAsync();
+                #endregion
+
+                SuccessAlert();
+            }
+            catch (Exception e)
+            {
+                ErrorAlert(e.Message);
+            }
+
+            return RedirectToAction("IndexCategoryTag");
+        }
+        #endregion
+
+        #region ( Set Activation )
+        [HttpGet]
+        public async Task<IActionResult> SetActivationCategoryTag(int id, bool active)
+        {
+            var tag = await UnitOfWork.TagRepository.GetByIdAsync(id);
+
+            tag.Status = active;
+
+            try
+            {
+                await UnitOfWork.TagRepository.UpdateAsync(tag);
+                await UnitOfWork.SaveAsync();
+
+                SuccessAlert();
+            }
+            catch (Exception ex)
+            {
+                ErrorAlert(ex.Message);
+            }
+
+            return RedirectToAction("Index");
+        }
+        #endregion
         #endregion
     }
 }
