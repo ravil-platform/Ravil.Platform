@@ -1,4 +1,6 @@
-﻿using Application.Services.SMS;
+﻿using Application.Services.NehsanApi;
+using Application.Services.SMS;
+using Common.Utilities.Services.FTP;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System;
 
@@ -40,7 +42,9 @@ namespace Application
 
             services.AddTransient<JwtCustomValidation>();
             services.AddTransient<IJwtService, JwtService>();
+            services.AddSingleton<IFtpService, FtpService>();
             services.AddTransient<ISmsSender, SmsSender>();
+            services.AddHttpClient<NeshanApiService>();
 
             services.AddHttpClient();
 

@@ -40,7 +40,10 @@ public class GetAllMainSlidersByFilterQueryHandler : IRequestHandler<GetAllMainS
         }
         else
         {
-            var result = await UnitOfWork.MainSliderRepository.GetAllAsync();
+            var result = await UnitOfWork.MainSliderRepository.TableNoTracking
+                .Include(a => a.JobBranch).ThenInclude(a => a.Job)
+                .Include(a => a.JobBranch.Address)
+                .Take(request.Take).ToListAsync(cancellationToken);
 
             var mainSliderViewModels = Mapper.Map<List<MainSliderViewModel>>(result);
 

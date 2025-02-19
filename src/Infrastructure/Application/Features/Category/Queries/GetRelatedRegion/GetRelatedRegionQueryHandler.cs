@@ -15,7 +15,7 @@ public class GetRelatedRegionQueryHandler : IRequestHandler<GetRelatedRegionQuer
         var relatedCategoryCities = 
             await UnitOfWork.RelatedCategorySeoRepository.TableNoTracking
                 .Where(r => r.CurrentCityId == request.CurrentCityId)
-                .ToListAsync();
+                .ToListAsync(cancellationToken);
 
         return relatedCategoryCities;
     }

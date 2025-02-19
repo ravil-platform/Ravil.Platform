@@ -16,5 +16,7 @@
 
         public byte Sort { get; set; }
         public DateTime Date { get; set; } = DateTime.Now;
+        
+        public JobBranchViewModel JobBranch { get; set; }
     }
 }

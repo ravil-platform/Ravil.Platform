@@ -158,6 +158,13 @@
             <param name="query"></param>
             <returns></returns>
         </member>
+        <member name="M:Api.Controllers.V1.CitiesController.GetCityBaseByLocation(Application.Features.City.Queries.GetCityBaseByLocation.GetCityBaseByLocationQuery)">
+            <summary>
+            Return CityBase Data From Location Data (Latitude, Longitude)
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
         <member name="M:Api.Controllers.V1.CommentsController.GetAllCommentsByFilter(Application.Features.Comment.Queries.GetAll.GetCommentsByFilterQuery)">
             <summary>
             Returns all comments by given filter

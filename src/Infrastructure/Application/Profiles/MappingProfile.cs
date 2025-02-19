@@ -262,7 +262,12 @@ namespace Application.Profiles
             #endregion
 
             #region ( Slider )
-            CreateMap<MainSlider, MainSliderViewModel>().ReverseMap();
+            CreateMap<MainSlider, MainSliderViewModel>()
+                .ForMember(src => src.JobBranch, expression =>
+                {
+                    expression.MapFrom(a => a.JobBranch);
+                })
+                .ReverseMap();
             CreateMap<MainSlider, CreateMainSliderViewModel>().ReverseMap();
             CreateMap<MainSlider, UpdateMainSliderViewModel>().ReverseMap();
             #endregion
@@ -283,6 +288,11 @@ namespace Application.Profiles
             CreateMap<City, CityViewModel>().ReverseMap();
             CreateMap<CityCategoryViewModel, CityCategory>().ReverseMap();
             CreateMap<CityBaseViewModel, CityBase>().ReverseMap();
+
+            CreateMap<CityBase, CityInfoViewModel>()
+                .ForMember(src => src.CityBaseId, expression => expression.MapFrom(a => a.Id))
+                .ForMember(src => src.Subtitle, expression => expression.MapFrom(a => a.City.Subtitle))
+                .ReverseMap();
 
             CreateMap<State, StateViewModel>().ReverseMap();
             CreateMap<StateBase, StateBaseViewModel>().ReverseMap();

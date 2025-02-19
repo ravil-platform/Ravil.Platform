@@ -1144,8 +1144,8 @@ namespace Admin.MVC.Controllers
                     #endregion
 
                     #region ( Implement Location (Address) )
-                    LocationDataViewModel locationDataViewModel = await NeshanApiService.GetReverseGeocodeAsync(item.Latitude, item.Longitude);
-
+                    LocationDataViewModel? locationDataViewModel = await NeshanApiService.GetReverseGeocodeAsync(item.Latitude, item.Longitude);
+                    
                     #region ( Insert Location )
                     var location = new Location
                     {

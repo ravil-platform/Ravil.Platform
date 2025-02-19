@@ -35,7 +35,7 @@ namespace Application.Services.NehsanApi
                         AllowTrailingCommas = true // پشتیبانی از کاماهای اضافی در JSON
                     };
 
-                    LocationDataViewModel locationDataViewModel = System.Text.Json.JsonSerializer.Deserialize<LocationDataViewModel>(jsonResponse, options);
+                    LocationDataViewModel? locationDataViewModel = System.Text.Json.JsonSerializer.Deserialize<LocationDataViewModel>(jsonResponse, options);
 
                     return locationDataViewModel;
                 }
@@ -51,19 +51,21 @@ namespace Application.Services.NehsanApi
         }
 
         #region ( GetCityState )
-        [HttpPost]
+        
         public async Task<CityBase?> GetCityState(string city, string state, string neighbourhood, IUnitOfWork unitOfWork)
         {
             if (!string.IsNullOrWhiteSpace(city))
             {
                 state = string.IsNullOrWhiteSpace(state) ? "البرز" : state;
-                var stateBase = await unitOfWork.StateBaseRepository.TableNoTracking.FirstOrDefaultAsync(a => a.Name.Contains(state));
+                string stateName = state.Contains("استان") ? state.Replace("استان", "").Trim() : state;
+
+                var stateBase = await unitOfWork.StateBaseRepository.TableNoTracking.Where(a => EF.Functions.Like(a.Name, $"%{state}%") 
+                    || EF.Functions.Like(a.Name, $"%{stateName}%")).FirstOrDefaultAsync();
 
                 if (!string.IsNullOrWhiteSpace(neighbourhood))
                 {
                     neighbourhood = neighbourhood.Trim();
-                    var checkNeighbourhoodExist =
-                        await unitOfWork.CityBaseRepository.TableNoTracking.AnyAsync(a => a.Name.Equals(neighbourhood));
+                    var checkNeighbourhoodExist = await unitOfWork.CityBaseRepository.TableNoTracking.AnyAsync(a => a.Name.Equals(neighbourhood));
                     if (checkNeighbourhoodExist)
                     {
                         city = neighbourhood;
@@ -72,12 +74,15 @@ namespace Application.Services.NehsanApi
 
                 if (stateBase != null)
                 {
-                    var cityBase = await unitOfWork.CityBaseRepository.TableNoTracking.FirstOrDefaultAsync(a => a.Name.Equals(city) && a.StateId.Equals(stateBase.Id));
+                    var cityBase = await unitOfWork.CityBaseRepository.TableNoTracking.Include(a => a.City)
+                        .FirstOrDefaultAsync(a => a.Name.Equals(city) && a.StateId.Equals(stateBase.Id));
+
                     return cityBase;
                 }
             }
             return null;
         }
+
         #endregion
     }
 }

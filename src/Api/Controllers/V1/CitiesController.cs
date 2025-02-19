@@ -1,4 +1,6 @@
-﻿namespace Api.Controllers.V1
+﻿using Application.Features.City.Queries.GetCityBaseByLocation;
+
+namespace Api.Controllers.V1
 {
     [Route(Routes.Controller)]
     public class CitiesController : GenericBaseController<CitiesController>
@@ -65,6 +67,22 @@
         [ProducesResponseType(type: typeof(Result<List<CityCategoryViewModel>>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetAllCityCategory([FromQuery] GetAllCityCategoryQuery query)
+        {
+            var result = await Mediator.Send(query);
+
+            return FluentResult(result);
+        }
+
+
+        /// <summary>
+        /// Return CityBase Data From Location Data (Latitude, Longitude)
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        [HttpGet(Routes.Action)]
+        [ProducesResponseType(type: typeof(Result<CityInfoViewModel>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetCityBaseByLocation([FromQuery] GetCityBaseByLocationQuery query)
         {
             var result = await Mediator.Send(query);
 
