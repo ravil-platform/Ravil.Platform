@@ -39,7 +39,7 @@ namespace Api.Controllers.V1
         /// <param name="query"></param>
         /// <returns></returns>
         [HttpGet(Routes.Action)]
-        [ProducesResponseType(type: typeof(Result<List<UserBlogLikeViewModel>>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result<UserBlogLikeViewModel>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CheckIsBlogLiked([FromQuery] CheckIsBlogLikedQuery query)
         {
@@ -54,7 +54,7 @@ namespace Api.Controllers.V1
         /// <param name="query"></param>
         /// <returns></returns>
         [HttpGet(Routes.Action)]
-        [ProducesResponseType(type: typeof(Result<List<UserJobBookMarkViewModel>>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result<UserJobBookMarkViewModel>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CheckIsJobBookMarked([FromQuery] CheckIsJobBookMarkedQuery query)
         {
@@ -148,7 +148,7 @@ namespace Api.Controllers.V1
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
-        [HttpPut(Routes.Action)]
+        [HttpPost(Routes.Action)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateUserInfo(UpdateUserInfoCommand command)

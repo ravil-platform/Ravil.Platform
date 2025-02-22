@@ -1,4 +1,7 @@
-﻿namespace Application.Features.User.Queries.CheckIsJobBookMarked;
+﻿using Domain.Entities.Blog;
+using Domain.Entities.User;
+
+namespace Application.Features.User.Queries.CheckIsJobBookMarked;
 
 public class CheckIsJobBookMarkedQueryHandler : IRequestHandler<CheckIsJobBookMarkedQuery, UserJobBookMarkViewModel>
 {
@@ -20,16 +23,38 @@ public class CheckIsJobBookMarkedQueryHandler : IRequestHandler<CheckIsJobBookMa
         
         if (jobBranch is null or { JobUserBookMarks: null })
         {
-            Result.Fail(Resources.Messages.Validations.NotFound);
+            var result = new UserJobBookMarkViewModel();
+            result.BookCount = 0;
+            result.IsBooked = false;
+
+            return result;
+        }
+        if (jobBranch is { JobUserBookMarks: null })
+        {
+            var result = new UserJobBookMarkViewModel();
+            result.BookCount = 0;
+            result.IsBooked = false;
+
+            return result;
         }
 
-        var userJobBookMark = jobBranch!.JobUserBookMarks!.SingleOrDefault(a => a.UserId.Equals(request.UserId));
-        var isBooked = userJobBookMark is not null;
+        var userJobBookMark = jobBranch.JobUserBookMarks!.SingleOrDefault(a => a.UserId.Equals(request.UserId));
+        
+        if (userJobBookMark is not null)
+        {
+            var result = Mapper.Map<UserJobBookMarkViewModel>(userJobBookMark);
+            result.BookCount = jobBranch.JobUserBookMarks?.Count ?? 0;
+            result.IsBooked = true;
 
-        var result = Mapper.Map<UserJobBookMarkViewModel>(userJobBookMark);
-        result.BookCount = jobBranch.JobUserBookMarks?.Count ?? 0;
-        result.IsBooked = isBooked;
+            return result;
+        }
+        else
+        {
+            var result = new UserJobBookMarkViewModel();
+            result.BookCount = 0;
+            result.IsBooked = false;
 
-        return result;
+            return result;
+        }
     }
 }

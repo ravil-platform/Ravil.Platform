@@ -19,16 +19,38 @@ public class CheckIsBlogLikedQueryHandler : IRequestHandler<CheckIsBlogLikedQuer
 
         if (blog is null)
         {
-            throw new NotFoundException();
+            var result = new UserBlogLikeViewModel();
+            result.LikeCount = 0;
+            result.IsLiked = false;
+
+            return result;
+        }
+        if (blog is { BlogUserLikes: null })
+        {
+            var result = new UserBlogLikeViewModel();
+            result.LikeCount = 0;
+            result.IsLiked = false;
+
+            return result;
         }
 
         var userBlogLike = blog.BlogUserLikes.SingleOrDefault(a => a.UserId.Equals(request.UserId));
-        var isLiked = userBlogLike is not null;
 
-        var result = Mapper.Map<UserBlogLikeViewModel>(userBlogLike);
-        result.LikeCount = blog.BlogUserLikes.Count;
-        result.IsLiked = isLiked;
+        if (userBlogLike is not null)
+        {
+            var result = Mapper.Map<UserBlogLikeViewModel>(userBlogLike);
+            result.LikeCount = blog.BlogUserLikes.Count;
+            result.IsLiked = true;
 
-        return result;
+            return result;
+        }
+        else
+        {
+            var result = new UserBlogLikeViewModel();
+            result.LikeCount = 0;
+            result.IsLiked = false;
+
+            return result;
+        }
     }
 }
