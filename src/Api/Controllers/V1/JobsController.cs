@@ -306,7 +306,7 @@ namespace Api.Controllers.V1
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
-        //[Authorize]
+        [Authorize]
         [HttpPost(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<JobBranchViewModel>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]

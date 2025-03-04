@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using System.Net.Http;
-
-namespace Application.Features.Job.Commands.CreateFreeJobBranch;
+﻿namespace Application.Features.Job.Commands.CreateFreeJobBranch;
 
 public class CreateFreeJobBranchCommandHandler(IMapper mapper, IUnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor, UserManager<ApplicationUser> userManager)
     : IRequestHandler<CreateFreeJobBranchCommand, JobBranchViewModel>
@@ -46,7 +43,7 @@ public class CreateFreeJobBranchCommandHandler(IMapper mapper, IUnitOfWork unitO
             #endregion
 
             #region ( Job Categories )
-            if (request.Categories?.Length > 0)
+            if (request.Categories.Length > 0)
             {
                 foreach (var item in request.Categories)
                 {

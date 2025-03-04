@@ -7,7 +7,7 @@
 
         public int[]? Tags { get; set; }
         public int[]? Services { get; set; }
-        public int[]? Categories { get; set; }
+        public int[] Categories { get; set; }
 
         /// <summary>
         /// طول جغرافیایی

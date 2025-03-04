@@ -16,19 +16,21 @@ public class GetAllJobBranchByFilterQueryHandler : IRequestHandler<GetAllJobBran
 
     public async Task<Result<JobBranchFilter>> Handle(GetAllJobBranchByFilterQuery request, CancellationToken cancellationToken)
     {
+        request.Step ??= 24;
         JobBranchFilter = Mapper.Map<JobBranchFilter>(request);
 
         var jobsId = await UnitOfWork.JobCategoryRepository.TableNoTracking
             .Where(j => j.CategoryId == request.CategoryId)
             .Select(a => a.JobId)
             .ToListAsync(cancellationToken: cancellationToken);
-
+        
+        var baseJobsId = jobsId.Distinct();
         var jobBranchQuery = UnitOfWork.JobBranchRepository.TableNoTracking
             .Include(a => a.Job).Include(a => a.JobBranchGalleries)
             .Include(a => a.Address).ThenInclude(a => a.Location)
             .Where(a => a.IsDeleted != null && !a.IsDeleted.Value)
             .Where(a => a.Job.Status == JobBranchStatus.Accepted)
-            .Where(a => jobsId.Contains(a.JobId) && a.Address.CityId.Equals(request.CityId))
+            .Where(a => baseJobsId.Contains(a.JobId) && a.Address.CityId.Equals(request.CityId))
             .AsQueryable();
 
         JobBranchFilter.Build(jobBranchQuery.Count()).SetEntities(jobBranchQuery, Mapper);
@@ -52,7 +54,7 @@ public class GetAllJobBranchByFilterQueryHandler : IRequestHandler<GetAllJobBran
                         .Include(a => a.JobBranch.JobBranchGalleries)
                         .Where(a => a.JobBranch.IsDeleted != null && !a.JobBranch.IsDeleted.Value)
                         .Where(a => a.JobBranch.Job.Status == JobBranchStatus.Accepted)
-                        .Where(j => jobsId.Contains(j.JobBranch.JobId))
+                        .Where(j => jobsId.Distinct().Contains(j.JobBranch.JobId))
                         .Where(a => a.CityId == relatedCity.DisplayedCityId || a.CityId == relatedCity.CurrentCityId).Select(a => a.JobBranch)
                         .Take(take)
                         .ProjectTo<JobBranchViewModel>(Mapper.ConfigurationProvider)
@@ -78,12 +80,14 @@ public class GetAllJobBranchByFilterQueryHandler : IRequestHandler<GetAllJobBran
 
                 if (relatedCategoryJobsId.Any())
                 {
+                    jobsId = jobsId.Concat(relatedCategoryJobsId).Distinct().ToList();
+
                     var jobBranchRelatedCategories = await UnitOfWork.JobBranchRepository.TableNoTracking
                         .Include(a => a.Job).Include(a => a.JobBranchGalleries)
                         .Include(a => a.Address).ThenInclude(a => a.Location)
                         .Where(a => a.IsDeleted != null && !a.IsDeleted.Value)
                         .Where(a => a.Job.Status == JobBranchStatus.Accepted)
-                        .Where(a => jobsId.Contains(a.JobId))
+                        .Where(a => jobsId.Distinct().Contains(a.JobId))
                         .Take(take).ProjectTo<JobBranchViewModel>(Mapper.ConfigurationProvider)
                         .ToListAsync(cancellationToken);
 

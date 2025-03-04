@@ -92,6 +92,11 @@
             #endregion
 
 
+            RuleFor(r => r.Categories)
+                .Cascade(CascadeMode.Stop)
+                .NotNull()
+                .WithMessage(Resources.Messages.Validations.RequiredFluent);
+
             RuleFor(r => r.Lat)
                 .Cascade(CascadeMode.Stop)
                 .NotNull()
