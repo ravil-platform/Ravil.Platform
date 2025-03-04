@@ -20,7 +20,7 @@ public class GetCategoryByRouteQueryHandler : IRequestHandler<GetCategoryByRoute
             throw new NotFoundException();
         }
 
-        category.PageContent = await UnitOfWork.CategoryRepository.ReplaceCategoryContent(category, request.CityId);
+        category.PageContent = (await UnitOfWork.CategoryRepository.ReplaceCategoryContent(category, request.CityId))!;
 
         var categoryViewModel = Mapper.Map<CategoryViewModel>(category);
 

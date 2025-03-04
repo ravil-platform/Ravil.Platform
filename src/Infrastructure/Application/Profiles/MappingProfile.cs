@@ -290,6 +290,7 @@ namespace Application.Profiles
             CreateMap<CityBaseViewModel, CityBase>().ReverseMap();
 
             CreateMap<CityBase, CityInfoViewModel>()
+                .ForMember(src => src.StateBaseId, expression => expression.MapFrom(a => a.StateId))
                 .ForMember(src => src.CityBaseId, expression => expression.MapFrom(a => a.Id))
                 .ForMember(src => src.Subtitle, expression => expression.MapFrom(a => a.City.Subtitle))
                 .ReverseMap();

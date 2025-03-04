@@ -2,10 +2,10 @@
 
 public class CreateJobBranchViewModel
 {
-    public string? Route { get; set; } = null!;
+    public string? Route { get; set; }
     public string? Title { get; set; } = null!;
     public string? HeadingTitle { get; set; }
-    public string Description { get; set; } = null!;
+    public string? Description { get; set; }
     public string? BranchContent { get; set; }
     public IFormFile? BranchVideo { get; set; }
     public IFormFile? LargePictureFile { get; set; }

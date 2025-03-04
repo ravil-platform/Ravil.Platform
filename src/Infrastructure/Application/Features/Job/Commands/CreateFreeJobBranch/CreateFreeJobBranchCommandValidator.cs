@@ -5,7 +5,7 @@
         public CreateFreeJobBranchCommandValidator()
         {
             #region ( Job )
-            RuleFor(r => r.Job.Route)
+            /*RuleFor(r => r.Job.Route)
                 .NotNull()
                 .WithName(Resources.General.DisplayNames.Route)
                 .WithMessage(Resources.Messages.Validations.RequiredFluent)
@@ -13,10 +13,11 @@
                 .WithName(Resources.General.DisplayNames.Route)
                 .WithMessage(Resources.Messages.Validations.RequiredFluent)
                 .Matches(RegularExpression.AlphanumericWithSpace)
-                .WithMessage(Resources.Messages.Validations.OnlyTypeEnglish);
+                .WithMessage(Resources.Messages.Validations.OnlyTypeEnglish);*/
 
 
             RuleFor(r => r.Job.Title)
+                .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .WithName(Resources.General.DisplayNames.Title)
                 .WithMessage(Resources.Messages.Validations.RequiredFluent)
@@ -25,7 +26,7 @@
                 .WithMessage(Resources.Messages.Validations.RequiredFluent);
 
 
-            RuleFor(r => r.Job.SubTitle)
+            /*RuleFor(r => r.Job.SubTitle)
                 .NotNull()
                 .WithName(Resources.General.DisplayNames.SubTitle)
                 .WithMessage(Resources.Messages.Validations.RequiredFluent)
@@ -53,11 +54,11 @@
                 .WithMessage(Resources.Messages.Validations.RequiredFluent)
                 .MaximumLength(MaxLength.Content)
                 .WithName(Resources.General.DisplayNames.Content)
-                .WithMessage(Resources.Messages.Validations.MaxLengthFluent);
+                .WithMessage(Resources.Messages.Validations.MaxLengthFluent);*/
             #endregion
 
             #region ( Job Branch )
-            RuleFor(r => r.JobBranch.Route)
+            /*RuleFor(r => r.JobBranch.Route)
                 .NotNull()
                 .WithName(Resources.General.DisplayNames.Route)
                 .WithMessage(Resources.Messages.Validations.RequiredFluent)
@@ -65,10 +66,11 @@
                 .WithName(Resources.General.DisplayNames.Route)
                 .WithMessage(Resources.Messages.Validations.RequiredFluent)
                 .Matches(RegularExpression.AlphanumericWithSpace)
-                .WithMessage(Resources.Messages.Validations.OnlyTypeEnglish);
+                .WithMessage(Resources.Messages.Validations.OnlyTypeEnglish);*/
 
 
             RuleFor(r => r.JobBranch.Title)
+                .Cascade(CascadeMode.Stop)
                 .NotNull()
                 .WithName(Resources.General.DisplayNames.Title)
                 .WithMessage(Resources.Messages.Validations.RequiredFluent)
@@ -77,7 +79,7 @@
                 .WithMessage(Resources.Messages.Validations.RequiredFluent);
 
 
-            RuleFor(r => r.JobBranch.BranchContent)
+            /*RuleFor(r => r.JobBranch.BranchContent)
                 .NotNull()
                 .WithName(Resources.General.DisplayNames.Content)
                 .WithMessage(Resources.Messages.Validations.RequiredFluent)
@@ -86,8 +88,25 @@
                 .WithMessage(Resources.Messages.Validations.RequiredFluent)
                 .MaximumLength(MaxLength.Content)
                 .WithName(Resources.General.DisplayNames.Content)
-                .WithMessage(Resources.Messages.Validations.MaxLengthFluent);
+                .WithMessage(Resources.Messages.Validations.MaxLengthFluent);*/
             #endregion
+
+
+            RuleFor(r => r.Lat)
+                .Cascade(CascadeMode.Stop)
+                .NotNull()
+                .WithMessage(Resources.Messages.Validations.RequiredFluent);
+
+            RuleFor(r => r.Long)
+                .Cascade(CascadeMode.Stop)
+                .NotNull()
+                .WithMessage(Resources.Messages.Validations.RequiredFluent);
+
+            RuleFor(r => r.FullAddress)
+                .Cascade(CascadeMode.Stop)
+                .NotEmpty()
+                .WithName(Resources.General.DisplayNames.Address)
+                .WithMessage(Resources.Messages.Validations.RequiredFluent);
 
             RuleFor(r=> r.PostalCode)
                 .Matches(RegularExpression.PostalCode)
