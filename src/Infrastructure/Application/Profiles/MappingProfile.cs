@@ -285,7 +285,10 @@ namespace Application.Profiles
             #endregion
 
             #region ( City & City Base & State )
-            CreateMap<City, CityViewModel>().ReverseMap();
+            CreateMap<City, CityViewModel>()
+                .ForMember(src => src.Route, expression => expression.MapFrom(a => a.CityBase.Name))
+                .ReverseMap();
+
             CreateMap<CityCategoryViewModel, CityCategory>().ReverseMap();
             CreateMap<CityBaseViewModel, CityBase>().ReverseMap();
 
