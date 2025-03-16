@@ -23,12 +23,12 @@ public class UpdateUserInfoCommandValidator : AbstractValidator<UpdateUserInfoCo
             .Matches(RegularExpression.NationalCode)
             .WithMessage(Resources.Messages.Validations.NationalCodeIsInvalid);
 
-        RuleFor(r => r.Email)
+        /*RuleFor(r => r.Email)
             .Matches(RegularExpression.EmailAddress)
-            .WithMessage(Resources.Messages.Validations.EmailAddressInvalid);
+            .WithMessage(Resources.Messages.Validations.EmailAddressInvalid);*/
 
-        RuleFor(r => r.Phone)
+        /*RuleFor(r => r.Phone)
             .Matches(RegularExpression.PhoneNumber)
-            .WithMessage(Resources.Messages.Validations.PhoneNumberIsInvalid);
+            .WithMessage(Resources.Messages.Validations.PhoneNumberIsInvalid);*/
     }
 }

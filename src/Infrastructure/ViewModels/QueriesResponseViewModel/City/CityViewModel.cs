@@ -5,6 +5,8 @@
         public int Id { get; set; }
         public string Subtitle { get; set; } 
 
+        public string Name { get; set; }
+        
         public string Route { get; set; } 
 
         public string Picture { get; set; } 

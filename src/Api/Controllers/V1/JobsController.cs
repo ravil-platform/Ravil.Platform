@@ -2,9 +2,11 @@
 
 namespace Api.Controllers.V1
 {
+    /// <inheritdoc />
     [Route(Routes.Controller)]
     public class JobsController : GenericBaseController<JobsController>
     {
+        /// <inheritdoc />
         public JobsController(IMediator mediator, Logging.Base.ILogger<JobsController> logger) : base(mediator, logger)
         {
 

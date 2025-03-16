@@ -238,6 +238,38 @@ namespace Application.Profiles
                 })
                 .ReverseMap();
 
+            CreateMap<JobBranch, UserJobBranchesViewModel>()
+                .ForMember(src => src.CommentCount, expression =>
+                {
+                    expression.MapFrom(a => a.Comments!.Count);
+                })
+                .ForMember(src => src.BookMarkCount, expression =>
+                {
+                    expression.MapFrom(a => a.JobUserBookMarks!.Count(j => j.UserBookMarkType == UserBookMarkType.JobBranch));
+                })
+                .ForMember(src => src.JobInfo, expression =>
+                {
+                    expression.MapFrom(a => a.Job);
+                })
+                .ForMember(src => src.Address, expression =>
+                {
+                    expression.MapFrom(a => a.Address);
+                })
+                .ForMember(src => src.Galleries, expression =>
+                {
+                    expression.MapFrom(a => a.JobBranchGalleries);
+                })
+                .ForMember(src => src.TimeWorks, expression =>
+                {
+                    expression.MapFrom(a => a.JobTimeWorks);
+                })
+                .ForMember(src => src.Categories, expression =>
+                {
+                    expression.PreCondition(a => a.Job is { JobCategories: not null } && a.Job.JobCategories.Any(a => a.Category != null));
+                    expression.MapFrom(a => a.Job.JobCategories);
+                })
+                .ReverseMap();
+
             CreateMap<JobBranch, CreateJobBranchViewModel>().ReverseMap();
             CreateMap<JobBranch, CreateJobBranchCommand>().ReverseMap();
             CreateMap<JobBranch, UpdateJobBranchViewModel>().ReverseMap();
@@ -286,7 +318,10 @@ namespace Application.Profiles
 
             #region ( City & City Base & State )
             CreateMap<City, CityViewModel>()
-                .ForMember(src => src.Route, expression => expression.MapFrom(a => a.CityBase.Name))
+                .ForMember(src => src.Name, expression => expression.MapFrom(a => a.CityBase.Name))
+                .ForMember(src => src.Route, expression => expression.MapFrom(a => 
+                    !a.CityBase.Name.Contains("کرج") ? $"{a.CityBase.Name}-کرج".Trim().Replace(' ', '-') :
+                    !a.CityBase.Name.Contains("-") ? a.CityBase.Name.Trim().Replace(' ', '-') : a.CityBase.Name))
                 .ReverseMap();
 
             CreateMap<CityCategoryViewModel, CityCategory>().ReverseMap();
@@ -340,6 +375,13 @@ namespace Application.Profiles
             #region ( Location & Address )
             CreateMap<Location, LocationViewModel>().ReverseMap();
             CreateMap<Address, AddressViewModel>()
+                .ForMember(src => src.CityRoute, expression =>
+                {
+                    expression.PreCondition(a => a.City != null);
+                    expression.MapFrom(a =>
+                        !a.City.Name.Contains("کرج") ? $"{a.City.Name}-کرج".Trim().Replace(' ', '-') :
+                        !a.City.Name.Contains("-") ? a.City.Name.Trim().Replace(' ', '-') : a.City.Name);
+                })
                 .ForMember(src => src.CityName, expression =>
                 {
                     expression.PreCondition(a => a.City != null);

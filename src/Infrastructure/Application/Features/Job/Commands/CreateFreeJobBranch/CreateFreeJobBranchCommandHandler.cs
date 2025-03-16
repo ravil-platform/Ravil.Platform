@@ -36,7 +36,8 @@ public class CreateFreeJobBranchCommandHandler(IMapper mapper, IUnitOfWork unitO
 
             job.SmallPicture = string.Empty;
             job.LargePicture = string.Empty;
-            job.Content = request.FullAddress;
+            job.Status = JobBranchStatus.WaitingToCheck;
+            job.Content = request.Job.Content ?? request.FullAddress;
 
             await UnitOfWork.JobRepository.InsertAsync(job);
             await UnitOfWork.SaveAsync();
@@ -69,8 +70,8 @@ public class CreateFreeJobBranchCommandHandler(IMapper mapper, IUnitOfWork unitO
             var jobBranch = Mapper.Map<JobBranch>(request.JobBranch);
 
             jobBranch.JobId = job.Id;
-            jobBranch.Description = request.FullAddress;
-            jobBranch.JobTimeWorkType = JobTimeWorkType.WorkAllTime;
+            jobBranch.Description = request.JobBranch.Description ?? request.FullAddress;
+            jobBranch.JobTimeWorkType = request.JobBranch.JobTimeWorkType ?? JobTimeWorkType.WorkAllTime;
 
             await UnitOfWork.JobBranchRepository.InsertAsync(jobBranch);
             await UnitOfWork.SaveAsync();
@@ -147,7 +148,7 @@ public class CreateFreeJobBranchCommandHandler(IMapper mapper, IUnitOfWork unitO
             {
                 foreach (var image in request.JobBranch.Gallery)
                 {
-                    var fileName = image.SaveFileAndReturnName(Paths.JobBranchGallery + jobBranch.Id, TypeFile.Image);
+                    var fileName = image.SaveFileAndReturnName(Paths.JobBranchGalleryServer + jobBranch.Id, TypeFile.Image);
 
                     await UnitOfWork.JobBranchGalleryRepository
                         .InsertAsync(new JobBranchGallery() { ImageName = fileName, JobBranchId = jobBranch.Id });
@@ -160,21 +161,21 @@ public class CreateFreeJobBranchCommandHandler(IMapper mapper, IUnitOfWork unitO
             #region ( Job Branch Images )
             if (request.JobBranch.LargePictureFile is not null)
             {
-                var largePictureName = request.JobBranch.LargePictureFile.SaveFileAndReturnName(Paths.JobBranch + jobBranch.Id, TypeFile.Image);
+                var largePictureName = request.JobBranch.LargePictureFile.SaveFileAndReturnName(Paths.JobBranchImageServer + jobBranch.Id, TypeFile.Image);
 
                 jobBranch.LargePicture = largePictureName;
             }
 
             if (request.JobBranch.SmallPictureFile is not null)
             {
-                var smallPictureName = request.JobBranch.SmallPictureFile.SaveFileAndReturnName(Paths.JobBranch + jobBranch.Id, TypeFile.Image);
+                var smallPictureName = request.JobBranch.SmallPictureFile.SaveFileAndReturnName(Paths.JobBranchImageServer + jobBranch.Id, TypeFile.Image);
 
                 jobBranch.SmallPicture = smallPictureName;
             }
 
             if (request.JobBranch.BranchVideo is not null)
             {
-                var branchVideoName = request.JobBranch.BranchVideo.SaveFileAndReturnName(Paths.JobBranchVideo + jobBranch.Id, TypeFile.Video);
+                var branchVideoName = request.JobBranch.BranchVideo.SaveFileAndReturnName(Paths.JobBranchVideoServer + jobBranch.Id, TypeFile.Video);
 
                 jobBranch.BranchVideo = branchVideoName;
             }
