@@ -8,8 +8,8 @@ using Logging.Adapters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Persistence.Context;
-using System;
 using System.Reflection;
+using Application.Middlewares;
 
 #region ( Services )
 var builder = WebApplication.CreateBuilder(args);
@@ -90,6 +90,7 @@ else
     app.UseHsts();
 }
 
+app.UseCustomExceptionMvcHandler();
 app.UseStatusCodePagesWithReExecute("/ErrorHandler/{0}");
 
 app.UseHttpsRedirection();
