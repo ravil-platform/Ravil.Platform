@@ -371,7 +371,8 @@ namespace Api.Controllers.V1
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
-        [HttpPut(Routes.Action)]
+        //[HttpPut(Routes.Action)]
+        [HttpPost(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<UpdateJobBranchViewModel>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateJobBranch([FromForm] UpdateJobBranchCommand command)
@@ -386,7 +387,8 @@ namespace Api.Controllers.V1
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
-        [HttpPut(Routes.Action)]
+        //[HttpPut(Routes.Action)]
+        [HttpPost(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<UpdateJobBranchLocationViewModel>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateJobBranchLocation([FromForm] UpdateJobBranchLocationCommand command)
@@ -401,7 +403,8 @@ namespace Api.Controllers.V1
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
-        [HttpPut(Routes.Action)]
+        //[HttpPut(Routes.Action)]
+        [HttpPost(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<JobViewModel>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateJob(UpdateJobCommand command)
@@ -416,7 +419,8 @@ namespace Api.Controllers.V1
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
-        [HttpPut(Routes.Action)]
+        //[HttpPut(Routes.Action)]
+        [HttpPost(Routes.Action)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateJobCategory(UpdateJobCategoryCommand command)

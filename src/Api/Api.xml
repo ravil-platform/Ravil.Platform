@@ -625,6 +625,12 @@
             <param name="command"></param>
             <returns></returns>
         </member>
+        <member name="T:Api.Controllers.V1.UsersController">
+            <inheritdoc />
+        </member>
+        <member name="M:Api.Controllers.V1.UsersController.#ctor(MediatR.IMediator,Logging.Base.ILogger{Api.Controllers.V1.UsersController})">
+            <inheritdoc />
+        </member>
         <member name="M:Api.Controllers.V1.UsersController.GetById(Application.Features.User.Queries.GetById.GetUserByIdQuery)">
             <summary>
             Returns a user by unique id
