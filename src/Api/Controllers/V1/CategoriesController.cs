@@ -19,7 +19,7 @@ namespace Api.Controllers.V1
         /// <param name="query"></param>
         /// <returns></returns>
         [HttpGet(Routes.Action)]
-        [ProducesResponseType(type: typeof(Result<List<CategoryViewModel>>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result<List<CategoryListViewModel>>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetAll([FromQuery] GetAllCategoriesQuery query)
         {

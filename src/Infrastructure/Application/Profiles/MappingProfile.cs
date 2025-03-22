@@ -70,12 +70,27 @@ namespace Application.Profiles
             #endregion
 
             #region ( Category )
+            CreateMap<JobCategory, CategoryListViewModel>()
+                .ForMember(src => src.Id, expression => expression.MapFrom(a => a.Category.Id))
+                .ForMember(src => src.Type, expression => expression.MapFrom(a => a.Category.Type))
+                .ForMember(src => src.Sort, expression => expression.MapFrom(a => a.Category.Sort))
+                .ForMember(src => src.Name, expression => expression.MapFrom(a => a.Category.Name))
+                .ForMember(src => src.Route, expression => expression.MapFrom(a => !a.Category.Route.Contains("-") ? a.Category.Route.Trim().Replace(' ', '-') : a.Category.Route))
+                .ForMember(src => src.ParentId, expression => expression.MapFrom(a => a.Category.ParentId))
+                .ForMember(src => src.NodeLevel, expression => expression.MapFrom(a => a.Category.NodeLevel))
+                .ForMember(src => src.IsLastNode, expression => expression.MapFrom(a => a.Category.IsLastNode))
+                .ForMember(src => src.IsActive, expression => expression.MapFrom(a => a.Category.IsActive))
+                .ForMember(src => src.Picture, expression => expression.MapFrom(a => a.Category.Picture))
+                .ForMember(src => src.IconPicture, expression => expression.MapFrom(a => a.Category.IconPicture))
+                //.ForMember(src => src.PageContent, expression => expression.MapFrom(a => a.Category.PageContent))
+                .ReverseMap();
+
             CreateMap<JobCategory, CategoryViewModel>()
                 .ForMember(src => src.Id, expression => expression.MapFrom(a => a.Category.Id))
                 .ForMember(src => src.Type, expression => expression.MapFrom(a => a.Category.Type))
                 .ForMember(src => src.Sort, expression => expression.MapFrom(a => a.Category.Sort))
                 .ForMember(src => src.Name, expression => expression.MapFrom(a => a.Category.Name))
-                .ForMember(src => src.Route, expression => expression.MapFrom(a => a.Category.Route))
+                .ForMember(src => src.Route, expression => expression.MapFrom(a => !a.Category.Route.Contains("-") ? a.Category.Route.Trim().Replace(' ', '-') : a.Category.Route))
                 .ForMember(src => src.ParentId, expression => expression.MapFrom(a => a.Category.ParentId))
                 .ForMember(src => src.NodeLevel, expression => expression.MapFrom(a => a.Category.NodeLevel))
                 .ForMember(src => src.IsLastNode, expression => expression.MapFrom(a => a.Category.IsLastNode))
@@ -89,17 +104,28 @@ namespace Application.Profiles
                 .ForMember(src => src.Id, expression => expression.MapFrom(a => a.Category.Id))
                 .ForMember(src => src.Type, expression => expression.MapFrom(a => a.Category.Type))
                 .ForMember(src => src.Name, expression => expression.MapFrom(a => a.Category.Name))
-                .ForMember(src => src.Route, expression => expression.MapFrom(a => a.Category.Route))
+                .ForMember(src => src.Route, expression => expression.MapFrom(a => !a.Category.Route.Contains("-") ? a.Category.Route.Trim().Replace(' ', '-') : a.Category.Route))
                 .ForMember(src => src.ParentId, expression => expression.MapFrom(a => a.Category.ParentId))
                 .ForMember(src => src.NodeLevel, expression => expression.MapFrom(a => a.Category.NodeLevel))
                 .ForMember(src => src.IsLastNode, expression => expression.MapFrom(a => a.Category.IsLastNode))
                 .ReverseMap();
 
 
-            CreateMap<Category, CategoryViewModel>().ReverseMap();
-            CreateMap<Category, CategoryViewModel>().ReverseMap();
-            CreateMap<Category, MainCategories>().ReverseMap();
             CreateMap<CategoryService, CategoryServiceViewModel>().ReverseMap();
+            CreateMap<Category, CategoryListViewModel>()
+                .ForMember(src => src.Route, expression => expression.MapFrom(a =>
+                    !a.Route.Contains("-") ? a.Route.Trim().Replace(' ', '-') : a.Route))
+                .ReverseMap();
+
+            CreateMap<Category, CategoryViewModel>()
+                .ForMember(src => src.Route, expression => expression.MapFrom(a =>
+                    !a.Route.Contains("-") ? a.Route.Trim().Replace(' ', '-') : a.Route))
+                .ReverseMap();
+            
+            CreateMap<Category, MainCategories>()
+                .ForMember(src => src.Route, expression => expression.MapFrom(a =>
+                    !a.Route.Contains("-") ? a.Route.Trim().Replace(' ', '-') : a.Route))
+                .ReverseMap();
 
             CreateMap<Category, CreateCategoryViewModel>().ReverseMap();
             CreateMap<Category, UpdateCategoryViewModel>().ReverseMap();

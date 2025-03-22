@@ -13,7 +13,7 @@ public class GetCategoryByRouteQueryHandler : IRequestHandler<GetCategoryByRoute
 
     public async Task<Result<CategoryViewModel>> Handle(GetCategoryByRouteQuery request, CancellationToken cancellationToken)
     {
-        var category = await UnitOfWork.CategoryRepository.GetByPredicate(c => c.Route == request.Route.ToSlug() || c.Route == request.Route);
+        var category = await UnitOfWork.CategoryRepository.GetByPredicate(c => c.Route == request.Route.SlugToText() ||  c.Route == request.Route.ToSlug() || c.Route == request.Route);
 
         if (category is null)
         {
