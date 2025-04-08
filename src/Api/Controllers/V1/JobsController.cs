@@ -1,4 +1,5 @@
-﻿using Application.Features.Job.Queries.GetJobBranchByRoute;
+﻿using Application.Features.Job.Queries.GetAll;
+using Application.Features.Job.Queries.GetJobBranchByRoute;
 
 namespace Api.Controllers.V1
 {
@@ -13,6 +14,21 @@ namespace Api.Controllers.V1
         }
 
         #region ( Queries )
+        /// <summary>
+        /// Returns all job branches 
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        [HttpGet(Routes.Action)]
+        [ProducesResponseType(type: typeof(Result<List<JobBranchViewModel>>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetAll([FromQuery] GetAllJobsQuery query)
+        {
+            var result = await Mediator.Send(query);
+
+            return FluentResult(result);
+        }
+
         /// <summary>
         /// Returns all advertising job branches 
         /// </summary>

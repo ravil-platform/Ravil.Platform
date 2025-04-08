@@ -102,7 +102,7 @@ public class ExceptionMvcHandlerMiddleware
                 _ => System.Net.HttpStatusCode.InternalServerError
             };
 
-            if (Env.IsDevelopment())
+            if (Env.IsDevelopment() || Env.IsProduction())
             {
                 var dic = new Dictionary<string, string>
                 {
@@ -131,7 +131,7 @@ public class ExceptionMvcHandlerMiddleware
             }
             else
             {
-                message = exception.Message;
+                message = exception.InnerException?.Message ?? exception.Message;
             }
 
             context.Response.StatusCode = (int)code;

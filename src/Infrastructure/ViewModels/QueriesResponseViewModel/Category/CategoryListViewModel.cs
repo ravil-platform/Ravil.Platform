@@ -26,5 +26,15 @@
         public string IconPicture { get; set; } = null!;
 
         public int Sort { get; set; }
+
+        #region ( Meta SEO Props )
+
+        public string? MetaTitle { get; set; }
+        public string? MetaDesc { get; set; }
+        public bool IndexMeta { get; set; }
+        public bool CanonicalMeta { get; set; }
+        public string? MetaCanonicalUrl { get; set; }
+
+        #endregion
     }
 }

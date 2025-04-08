@@ -32,6 +32,13 @@
             <param name="query"></param>
             <returns></returns>
         </member>
+        <member name="M:Api.Controllers.V1.BlogsController.GetAll(Application.Features.Blog.Queries.GetAll.GetAllBlogsQuery)">
+            <summary>
+            Returns all blogs (using for seo)
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
         <member name="M:Api.Controllers.V1.BlogsController.GetAllByFilter(Application.Features.Blog.Queries.GetAllByFilter.GetAllBlogsByFilterQuery)">
             <summary>
             Returns all blogs by given filter
@@ -240,6 +247,13 @@
         </member>
         <member name="M:Api.Controllers.V1.JobsController.#ctor(MediatR.IMediator,Logging.Base.ILogger{Api.Controllers.V1.JobsController})">
             <inheritdoc />
+        </member>
+        <member name="M:Api.Controllers.V1.JobsController.GetAll(Application.Features.Job.Queries.GetAll.GetAllJobsQuery)">
+            <summary>
+            Returns all job branches 
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
         </member>
         <member name="M:Api.Controllers.V1.JobsController.GetAdvertisingJobs(Application.Features.Job.Queries.GetJobBranchAds.GetAdvertisingJobsQuery)">
             <summary>

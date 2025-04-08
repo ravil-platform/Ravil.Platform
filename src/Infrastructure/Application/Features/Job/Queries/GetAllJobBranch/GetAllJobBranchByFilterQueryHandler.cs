@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using AutoMapper.QueryableExtensions;
+﻿using AutoMapper.QueryableExtensions;
 
 namespace Application.Features.Job.Queries.GetAllJobBranch;
 
