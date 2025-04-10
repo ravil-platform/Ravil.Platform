@@ -1,9 +1,9 @@
-﻿@model ViewModels.AdminPanel.Job.InsertJobsFromGoogle
+﻿@model ViewModels.AdminPanel.Job.InsertJobsExcelFromGoogle
 @using Domain.Entities.Category
 @using Domain.Entities.City
 @{
 	ViewData["Title"] = "افزودن مشاغل از طریق فایل";
-	ViewData["selected"] = "Jobs_InsertJobsJsonFromGoogle";
+	ViewData["selected"] = "Jobs_InsertJobsExcelFromGoogle";
 	var categories = (List<Category>)ViewData["categories"]!;
 	var cities = (List<CityBase>)ViewData["cities"]!;
 }
@@ -47,7 +47,7 @@
 								<fieldset>
 									<div class="input-group">
 										<div class="custom-file">
-											<input asp-for="File" type="file" class="custom-file-input" accept=".json">
+											<input asp-for="File" type="file" class="custom-file-input" accept=".xlsx">
 											<label class="custom-file-label" asp-for="File"></label>
 										</div>
 									</div>

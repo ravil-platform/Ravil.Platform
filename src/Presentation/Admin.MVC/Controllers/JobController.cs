@@ -289,8 +289,16 @@ namespace Admin.MVC.Controllers
             #endregion
             #endregion
 
-            job.SocialMediaInfos = JsonSerializer.Serialize(updateJobViewModel.SocialMediaInfosViewModel);
-            job.PhoneNumberInfos = JsonSerializer.Serialize(updateJobViewModel.PhoneNumberInfosViewModel);
+            if (updateJobViewModel.SocialMediaInfosViewModel != null)
+            {
+                job.SocialMediaInfos = JsonSerializer.Serialize(updateJobViewModel.SocialMediaInfosViewModel);
+            }
+
+            if (updateJobViewModel.PhoneNumberInfosViewModel != null)
+            {
+                job.PhoneNumberInfos = JsonSerializer.Serialize(updateJobViewModel.PhoneNumberInfosViewModel);
+            }
+
             job.AdminId = updateJobViewModel.UserOwnerId ?? "";
 
             job.Route = job.Route.ToSlug();
@@ -1145,7 +1153,7 @@ namespace Admin.MVC.Controllers
 
                     #region ( Implement Location (Address) )
                     LocationDataViewModel? locationDataViewModel = await NeshanApiService.GetReverseGeocodeAsync(item.Latitude, item.Longitude);
-                    
+
                     #region ( Insert Location )
                     var location = new Location
                     {
@@ -1224,6 +1232,298 @@ namespace Admin.MVC.Controllers
 
             return RedirectToAction("IndexJob");
         }
+        #endregion
+
+        #region ( Insert From Google Bot Excel File )
+
+        [HttpGet]
+        public async Task<IActionResult> InsertJobsExcelFromGoogle()
+        {
+            #region ( Fill View Model )
+            ViewData["categories"] =
+                await UnitOfWork.CategoryRepository.GetAllAsync(a => a.IsActive && a.NodeLevel == 3 && !a.ParentId.Equals(0));
+
+            ViewData["cities"] =
+                await UnitOfWork.CityBaseRepository.GetAllAsync();
+            #endregion
+
+            return View();
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> InsertJobsExcelFromGoogle(InsertJobsExcelFromGoogle insertJobsExcelFromGoogle)
+        {
+            if (!ModelState.IsValid)
+            {
+                #region ( Client Error )
+                var errors = ModelState.Values.SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage)
+                    .ToList();
+
+                ErrorAlert($"{Errors.ModelStateIsNotValidForm} - ارور : {errors[0]}");
+
+                #region ( Fill View Model )
+                ViewData["categories"] =
+                    await UnitOfWork.CategoryRepository.GetAllAsync(a => a.IsActive && a.NodeLevel == 3 && !a.ParentId.Equals(0));
+
+                ViewData["cities"] =
+                    await UnitOfWork.CityBaseRepository.GetAllAsync();
+                #endregion
+
+                return View(insertJobsExcelFromGoogle);
+                #endregion
+            }
+
+            #region ( Check Type File )  
+            if (!insertJobsExcelFromGoogle.File.ContentType.Equals("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
+            {
+                #region ( Fill View Model )
+                ViewData["categories"] =
+                    await UnitOfWork.CategoryRepository.GetAllAsync(a => a.IsActive && a.NodeLevel == 3 && !a.ParentId.Equals(0));
+
+                ViewData["cities"] =
+                    await UnitOfWork.CityBaseRepository.GetAllAsync();
+                #endregion
+
+                return View(insertJobsExcelFromGoogle);
+            }
+            #endregion
+
+            var json = insertJobsExcelFromGoogle.File.ConvertExcelToJson();
+
+            var jobs = JsonSerializer.Deserialize<List<JobsGoogleExcelViewModel>>(json);
+
+            var itemCount = 0;
+            var itemAddressFailedCount = " ";
+            var itemDuplicatedCount = 0;
+
+
+            foreach (var item in jobs)
+            {
+                await UnitOfWork.JobRepository.BeginTransactionAsync();
+
+                try
+                {
+                    #region ( Exist Item )
+                    var existJob = await UnitOfWork.JobBranchRepository.TableNoTracking
+                        .Include(j => j.Address)
+                        .Include(j => j.Job)
+                        .FirstOrDefaultAsync(j => j.Address.CityId.Equals(insertJobsExcelFromGoogle.CityId)
+                                                  && j.Title.Contains(item.Name)
+                                                  && j.Job.PhoneNumberInfos.Contains($"{item.MobileNumber}"));
+
+                    if (existJob != null)
+                    {
+                        itemDuplicatedCount++;
+
+                        await UnitOfWork.JobRepository.RollBackTransactionAsync();
+
+                        continue;
+                    }
+                    #endregion
+
+                    #region ( Phone Number And Social Medias )
+                    List<SocialMediaInfosViewModel> socialMediaLinks = new();
+                    if (!string.IsNullOrWhiteSpace(item.InstagramProfile))
+                    {
+                        socialMediaLinks.Add(new SocialMediaInfosViewModel()
+                        {
+                            SocialMediaLink = item.InstagramProfile,
+                            SocialMediaType = SocialMediaTypes.Instagram
+                        });
+                    }
+
+                    List<PhoneNumberInfosViewModel> phoneNumberInfos = new();
+                    if (!string.IsNullOrWhiteSpace(item.MobileNumber))
+                    {
+                        if (item.MobileNumber.StartsWith("26") || item.MobileNumber.StartsWith("026"))
+                        {
+                            phoneNumberInfos.Add(new PhoneNumberInfosViewModel()
+                            {
+                                PhoneNumber = item.MobileNumber,
+                                PhoneNumberType = PhoneNumberTypes.PhoneNumberTel
+                            });
+                        }
+                        else
+                        {
+                            phoneNumberInfos.Add(new PhoneNumberInfosViewModel()
+                            {
+                                PhoneNumber = item.MobileNumber,
+                                PhoneNumberType = PhoneNumberTypes.PhoneNumberMobile
+                            });
+                        }
+                    }
+                    #endregion
+
+                    #region ( Fields )
+                    var name = item.Name.SanitizeText().ToLower();
+                    var route = item.Name.SanitizeText().ToLower().ToSlug();
+                    var description = item.BusinessDescription.SanitizeText().ToLower();
+
+                    int rating = 3;
+
+                    #region ( Fix Bug Rating )
+                    try
+                    {
+                        if (item.Rating != null)
+                        {
+                            var decimalNumber = Convert.ToDouble(item.Rating);
+                            rating = (int)Math.Floor(decimalNumber);
+                        }
+                    }
+                    catch
+                    {
+
+                    }
+                    #endregion
+
+
+                    var socialMedias = socialMediaLinks.Any() ? JsonSerializer.Serialize(socialMediaLinks) : string.Empty;
+                    var phoneNumbers = phoneNumberInfos.Any() ? JsonSerializer.Serialize(phoneNumberInfos) : string.Empty;
+                    var user = await UserManager.GetUserAsync(User);
+                    var city = await UnitOfWork.CityBaseRepository.GetByPredicate(a => a.Id.Equals(insertJobsExcelFromGoogle.CityId));
+                    #endregion
+
+                    #region ( Job )
+                    var job = new Job
+                    {
+                        Route = route,
+                        Title = name,
+                        SubTitle = name,
+                        Summary = description,
+                        AverageRate = rating,
+                        IsGoogleData = true,
+                        Content = description ?? name,
+                        SocialMediaInfos = socialMedias,
+                        PhoneNumberInfos = phoneNumbers,
+                        Status = JobBranchStatus.Accepted,
+                        CreateDate = DateTime.Now,
+                    };
+
+                    await UnitOfWork.JobRepository.InsertAsync(job);
+                    await UnitOfWork.SaveAsync();
+                    #endregion
+
+                    #region ( Job Category )
+                    var jobCategory = new JobCategory()
+                    {
+                        JobId = job.Id,
+                        CategoryId = insertJobsExcelFromGoogle.CategoryId
+                    };
+
+                    await UnitOfWork.JobCategoryRepository.InsertAsync(jobCategory);
+                    await UnitOfWork.SaveAsync();
+                    #endregion
+
+                    #region ( Job Branch )
+                    var jobBranch = new JobBranch
+                    {
+                        Route = route,
+                        Title = name,
+                        JobId = job.Id,
+                        Description = description ?? name,
+                        JobTimeWorkType = JobTimeWorkType.WorkAllTime,
+                        IsConfirmedByAdmin = true,
+                        CanonicalMeta = false,
+                        IndexMeta = false,
+                        IsOffer = false,
+                        AddressId = string.Empty,
+                        ConfirmationDate = DateTime.Now,
+                        LastUpdateDate = DateTime.Now,
+                        Status = JobBranchStatus.Accepted,
+                        UserId = user.Id,
+                        Job = job,
+                        ApplicationUser = null,
+                        Address = null
+                    };
+
+                    await UnitOfWork.JobBranchRepository.InsertAsync(jobBranch);
+                    await UnitOfWork.SaveAsync();
+                    #endregion
+
+                    #region ( Implement Location (Address) )
+                    LocationDataViewModel? locationDataViewModel = await NeshanApiService.GetReverseGeocodeAsync(item.Latitude, item.Longitude);
+
+                    #region ( Insert Location )
+                    var location = new Location
+                    {
+                        Lat = Convert.ToDouble(item.Latitude),
+                        Long = Convert.ToDouble(item.Longitude),
+                        Route = string.Empty
+                    };
+
+                    await UnitOfWork.LocationRepository.InsertAsync(location);
+                    await UnitOfWork.SaveAsync();
+                    #endregion
+
+                    #region ( Insert Address )
+                    var address = new Address();
+                    address.JobBranchId = jobBranch.Id;
+                    address.LocationId = location.Id;
+                    address.PostalCode = item.PostalCode;
+                    address.CityId = city.Id;
+                    address.StateId = city.StateId;
+
+                    if (locationDataViewModel == null)
+                    {
+                        #region ( Neshan Not Returned Data )
+                        address.OtherAddress = item.Address;
+                        address.PostalAddress = item.Address;
+                        address.Neighbourhood = string.Empty;
+
+                        itemAddressFailedCount += $"{item.Name} - ";
+                        #endregion
+                    }
+                    else
+                    {
+                        #region ( Nesham Reurned Data )
+                        address.OtherAddress = locationDataViewModel.FormattedAddress;
+                        address.PostalAddress = locationDataViewModel.FormattedAddress;
+                        address.Neighbourhood = locationDataViewModel.Neighbourhood;
+
+                        var currentCity = await NeshanApiService.GetCityState
+                            (locationDataViewModel.City,
+                            locationDataViewModel.State,
+                            locationDataViewModel.Neighbourhood,
+                            UnitOfWork);
+
+                        if (currentCity != null)
+                        {
+                            address.CityId = currentCity.Id;
+                            address.StateId = currentCity.StateId;
+                        }
+                        #endregion
+                    }
+
+                    await UnitOfWork.AddressRepository.InsertAsync(address);
+
+                    jobBranch.AddressId = address.Id;
+
+                    await UnitOfWork.JobBranchRepository.UpdateAsync(jobBranch);
+                    await UnitOfWork.SaveAsync();
+                    #endregion
+                    #endregion
+
+                    itemCount++;
+                }
+                catch (Exception exception)
+                {
+                    await UnitOfWork.JobRepository.RollBackTransactionAsync();
+
+                    continue;
+                }
+
+                await UnitOfWork.JobRepository.CommitTransactionAsync();
+
+            }
+
+
+            SuccessAlert($"آیتم های استخراج شده از فایل : {jobs.Count} , \r\nآیتم های اضافه شده :  {itemCount} , \r\nآیتم های تکراری : {itemDuplicatedCount} , \r\nآیتم هایی که آدرس از نشان درج نشده و نیاز به بررسی دارد : \"{itemAddressFailedCount}\"");
+
+            return RedirectToAction("IndexJob");
+        }
+
         #endregion
 
     }
