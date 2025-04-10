@@ -14,7 +14,7 @@ public class GetJobBranchByRouteQueryHandler : IRequestHandler<GetJobBranchByRou
 
     public async Task<Result<JobBranchViewModel>> Handle(GetJobBranchByRouteQuery request, CancellationToken cancellationToken)
     {
-        var result = await UnitOfWork.JobBranchRepository.TableNoTracking.Include(a => a.JobTimeWorks)
+        var result = await UnitOfWork.JobBranchRepository.TableNoTracking.Include(a => a.JobTimeWorks).Include(a => a.Address.City)
             .Include(a => a.Address).ThenInclude(a => a.Location).Include(a => a.JobBranchGalleries)
             .Include(a => a.Job).ThenInclude(a => a.JobCategories).ThenInclude(a => a.Category)
             .Where(a => a.IsDeleted != null && !a.IsDeleted.Value).Where(a => a.Job.Status == JobBranchStatus.Accepted)
