@@ -13,8 +13,8 @@ public class CreateCommentCommandValidator : AbstractValidator<CreateCommentComm
             .Matches(@"^(?:0|98|\+98|\+980|0098|098|00980)?(9\d{9})$")
             .WithMessage(Resources.Messages.Validations.PhoneNumberIsInvalid);
 
-        RuleFor(r => r.Email)
+        /*RuleFor(r => r.Email)
             .EmailAddress()
-            .WithMessage(Resources.Messages.Validations.EmailAddressInvalid);
+            .WithMessage(Resources.Messages.Validations.EmailAddressInvalid);*/
     }
 }

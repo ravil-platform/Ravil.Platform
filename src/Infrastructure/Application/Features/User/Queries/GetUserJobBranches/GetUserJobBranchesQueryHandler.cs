@@ -1,4 +1,6 @@
-﻿namespace Application.Features.User.Queries.GetUserJobBranches;
+﻿using AutoMapper.QueryableExtensions;
+
+namespace Application.Features.User.Queries.GetUserJobBranches;
 
 public class GetUserJobBranchesQueryHandler : IRequestHandler<GetUserJobBranchesQuery, List<UserJobBranchesViewModel>>
 {
@@ -17,18 +19,9 @@ public class GetUserJobBranchesQueryHandler : IRequestHandler<GetUserJobBranches
             .Include(j => j.Job)
             .ThenInclude(j => j.JobCategories)
             .ThenInclude(j => j.Category)
+            .Include(j => j.Comments)
             .Include(j => j.JobUserBookMarks)
-            .Select(jobBranch => new UserJobBranchesViewModel()
-            {
-                Id = jobBranch.Id,
-                Title = jobBranch.Title,
-                CommentCount = jobBranch.Comments.Count,
-                BookMarkCount = jobBranch.JobUserBookMarks.Count(j => j.UserBookMarkType == UserBookMarkType.JobBranch),
-                Route = jobBranch.Route,
-                Categories = Mapper.Map<List<CategoryViewModel>>(jobBranch.Job.JobCategories.Select(j => j.Category).ToList()),
-                PictureName = jobBranch.SmallPicture,
-                ViewCount = jobBranch.ViewCount,
-            })
+            .ProjectTo<UserJobBranchesViewModel>(Mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
 
         return userJobBranches;

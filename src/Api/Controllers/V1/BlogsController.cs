@@ -1,4 +1,6 @@
-﻿using Application.Features.Blog.Queries.GetById;
+﻿using Application.Features.Blog.Queries.GetAll;
+using Application.Features.Blog.Queries.GetById;
+using Application.Features.Job.Queries.GetAll;
 
 namespace Api.Controllers.V1
 {
@@ -11,6 +13,21 @@ namespace Api.Controllers.V1
         }
 
         #region ( Queries )
+        /// <summary>
+        /// Returns all blogs (using for seo)
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        [HttpGet(Routes.Action)]
+        [ProducesResponseType(type: typeof(Result<List<BlogViewModel>>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetAll([FromQuery] GetAllBlogsQuery query)
+        {
+            var result = await Mediator.Send(query);
+
+            return FluentResult(result);
+        }
+
         /// <summary>
         /// Returns all blogs by given filter
         /// </summary>

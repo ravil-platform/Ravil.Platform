@@ -20,6 +20,7 @@ public class GetCityBaseByLocationQueryHandler(IMapper mapper, IUnitOfWork unitO
             var result = await NeshanApiService.GetCityState(locationDataViewModel.City, locationDataViewModel.State, locationDataViewModel.Neighbourhood, UnitOfWork);
             var cityBaseViewModel = Mapper.Map<CityInfoViewModel>(result);
 
+            cityBaseViewModel.Neighbourhood = locationDataViewModel.Neighbourhood;
             return cityBaseViewModel;
         }
 

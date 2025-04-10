@@ -13,7 +13,10 @@ public class GetAllFaqsByCategoryIdQueryHandler : IRequestHandler<GetAllFaqsByCa
 
     public async Task<Result<List<FaqViewModel>>> Handle(GetAllFaqsByCategoryIdQuery request, CancellationToken cancellationToken)
     {
-        var result = await UnitOfWork.FaqRepository.GetAllAsync(f => f.CategoryId == request.CategoryId);
+        var result = await UnitOfWork.FaqJobCategoryRepository.TableNoTracking.Include(a => a.Faq)
+            .Where(f => f.JobCategoryId == request.CategoryId)
+            .Select(f => f.Faq).Take(10)
+            .ToListAsync(cancellationToken: cancellationToken);
 
         var faqsViewModel = Mapper.Map<List<FaqViewModel>>(result);
 

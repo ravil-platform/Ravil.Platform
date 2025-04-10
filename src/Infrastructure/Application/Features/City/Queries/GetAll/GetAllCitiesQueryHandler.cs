@@ -14,7 +14,7 @@ public class GetAllCitiesQueryHandler : IRequestHandler<GetAllCitiesQuery, List<
 
     public async Task<Result<List<CityViewModel>>> Handle(GetAllCitiesQuery request, CancellationToken cancellationToken)
     {
-        var result = await UnitOfWork.CityRepository.GetAllAsync();
+        var result = await UnitOfWork.CityRepository.GetAllAsync(includes: nameof(Domain.Entities.City.City.CityBase));
 
         var citiesViewModel = Mapper.Map<List<CityViewModel>>(result);
 

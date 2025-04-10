@@ -1,16 +1,34 @@
-﻿using Application.Features.Job.Queries.GetJobBranchByRoute;
+﻿using Application.Features.Job.Queries.GetAll;
+using Application.Features.Job.Queries.GetJobBranchByRoute;
 
 namespace Api.Controllers.V1
 {
+    /// <inheritdoc />
     [Route(Routes.Controller)]
     public class JobsController : GenericBaseController<JobsController>
     {
+        /// <inheritdoc />
         public JobsController(IMediator mediator, Logging.Base.ILogger<JobsController> logger) : base(mediator, logger)
         {
 
         }
 
         #region ( Queries )
+        /// <summary>
+        /// Returns all job branches 
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        [HttpGet(Routes.Action)]
+        [ProducesResponseType(type: typeof(Result<List<JobBranchViewModel>>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetAll([FromQuery] GetAllJobsQuery query)
+        {
+            var result = await Mediator.Send(query);
+
+            return FluentResult(result);
+        }
+
         /// <summary>
         /// Returns all advertising job branches 
         /// </summary>
@@ -306,6 +324,7 @@ namespace Api.Controllers.V1
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
+        [Authorize]
         [HttpPost(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<JobBranchViewModel>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
@@ -368,7 +387,8 @@ namespace Api.Controllers.V1
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
-        [HttpPut(Routes.Action)]
+        //[HttpPut(Routes.Action)]
+        [HttpPost(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<UpdateJobBranchViewModel>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateJobBranch([FromForm] UpdateJobBranchCommand command)
@@ -383,7 +403,8 @@ namespace Api.Controllers.V1
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
-        [HttpPut(Routes.Action)]
+        //[HttpPut(Routes.Action)]
+        [HttpPost(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<UpdateJobBranchLocationViewModel>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateJobBranchLocation([FromForm] UpdateJobBranchLocationCommand command)
@@ -398,7 +419,8 @@ namespace Api.Controllers.V1
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
-        [HttpPut(Routes.Action)]
+        //[HttpPut(Routes.Action)]
+        [HttpPost(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<JobViewModel>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateJob(UpdateJobCommand command)
@@ -413,7 +435,8 @@ namespace Api.Controllers.V1
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
-        [HttpPut(Routes.Action)]
+        //[HttpPut(Routes.Action)]
+        [HttpPost(Routes.Action)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateJobCategory(UpdateJobCategoryCommand command)

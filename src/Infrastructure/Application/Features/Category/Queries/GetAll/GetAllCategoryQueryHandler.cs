@@ -1,21 +1,38 @@
-﻿namespace Application.Features.Category.Queries.GetAll;
+﻿using Microsoft.Extensions.Caching.Memory;
 
-public class GetAllCategoryQueryHandler : IRequestHandler<GetAllCategoriesQuery, List<CategoryViewModel>>
+namespace Application.Features.Category.Queries.GetAll;
+
+public class GetAllCategoryQueryHandler : IRequestHandler<GetAllCategoriesQuery, List<CategoryListViewModel>>
 {
     protected IMapper Mapper { get; }
     protected IUnitOfWork UnitOfWork { get; }
-    public GetAllCategoryQueryHandler(IMapper mapper, IUnitOfWork unitOfWork)
+    protected IMemoryCache MemoryCache { get; }
+
+    public GetAllCategoryQueryHandler(IMapper mapper, IUnitOfWork unitOfWork, IMemoryCache memoryCache)
     {
         Mapper = mapper;
         UnitOfWork = unitOfWork;
+        MemoryCache = memoryCache;
     }
 
-    public async Task<Result<List<CategoryViewModel>>> Handle(GetAllCategoriesQuery request, CancellationToken cancellationToken)
+    public async Task<Result<List<CategoryListViewModel>>> Handle(GetAllCategoriesQuery request, CancellationToken cancellationToken)
     {
-        var categories = await UnitOfWork.CategoryRepository.GetAllAsync();
+        if (!MemoryCache.TryGetValue(nameof(GetAllCategoriesQuery), out List<CategoryListViewModel>? categoriesViewModel))
+        {
+            var categories = await UnitOfWork.CategoryRepository.GetAllAsync();
 
-        var categoriesViewModel = Mapper.Map<List<CategoryViewModel>>(categories);
+            categoriesViewModel = Mapper.Map<List<CategoryListViewModel>>(categories);
 
-        return categoriesViewModel;
+            MemoryCache.Set(nameof(GetAllCategoriesQuery), categoriesViewModel,
+            options: new MemoryCacheEntryOptions 
+            {
+                Priority = CacheItemPriority.High,
+                SlidingExpiration = TimeSpan.FromMinutes(4200)
+            });
+
+            return categoriesViewModel;
+        }
+        
+        return categoriesViewModel!;
     }
 }

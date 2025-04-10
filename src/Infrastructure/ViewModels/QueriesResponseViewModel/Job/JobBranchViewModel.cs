@@ -24,7 +24,7 @@
         
         public JobInfoViewModel JobInfo { get; set; }
         public AddressViewModel Address { get; set; }
-        public List<CategoryViewModel> Categories { get; set; }
+        public List<CategoryListViewModel> Categories { get; set; }
         public List<JobTimeWorkViewModel> TimeWorks { get; set; }
         public List<JobBranchGalleryViewModel> Galleries { get; set; }
     }

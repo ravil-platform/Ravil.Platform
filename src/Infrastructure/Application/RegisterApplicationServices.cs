@@ -11,6 +11,7 @@ namespace Application
         
         public static void AddApplicationServices(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment environment, JwtSettings jwtSettings = null)
         {
+            services.AddMemoryCache();
             services.AddHttpContextAccessor();
             services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
 

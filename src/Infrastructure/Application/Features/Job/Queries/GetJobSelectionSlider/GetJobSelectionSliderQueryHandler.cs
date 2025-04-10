@@ -30,10 +30,13 @@ public class GetJobSelectionSliderQueryHandler : IRequestHandler<GetJobSelection
             }
 
             var selectionSliderViewModel = Mapper.Map<List<JobSelectionSliderViewModel>>(result);
-            
+            var selectionJobBranchesId = selectionSliderViewModel.Select(s => s.JobBranchId);
+
             var jobBranchListResult = await UnitOfWork.JobBranchRepository.TableNoTracking
                 .Include(a => a.Job).Include(a => a.JobBranchGalleries)
+                .Include(a => a.Job.JobCategories).ThenInclude(a => a.Category)
                 .Include(a => a.Address).ThenInclude(a => a.Location)
+                .Where(a => selectionJobBranchesId.Contains(a.Id))
                 .Take(selectionSliderViewModel.Count)
                 .ToListAsync(cancellationToken: cancellationToken);
 
@@ -53,10 +56,13 @@ public class GetJobSelectionSliderQueryHandler : IRequestHandler<GetJobSelection
             }
 
             var selectionSliderViewModel = Mapper.Map<List<JobSelectionSliderViewModel>>(result);
+            var selectionJobBranchesId = selectionSliderViewModel.Select(s => s.JobBranchId);
 
             var jobBranchListResult = await UnitOfWork.JobBranchRepository.TableNoTracking
                 .Include(a => a.Job).Include(a => a.JobBranchGalleries)
+                .Include(a => a.Job.JobCategories).ThenInclude(a => a.Category)
                 .Include(a => a.Address).ThenInclude(a => a.Location)
+                .Where(a => selectionJobBranchesId.Contains(a.Id))
                 .Take(selectionSliderViewModel.Count).ToListAsync(cancellationToken: cancellationToken);
 
             var jobBranchViewModel = Mapper.Map<List<JobBranchViewModel>>(jobBranchListResult);
@@ -75,10 +81,13 @@ public class GetJobSelectionSliderQueryHandler : IRequestHandler<GetJobSelection
             }
 
             var selectionSliderViewModel = Mapper.Map<List<JobSelectionSliderViewModel>>(result);
+            var selectionJobBranchesId = selectionSliderViewModel.Select(s => s.JobBranchId);
 
             var jobBranchListResult = await UnitOfWork.JobBranchRepository.TableNoTracking
                 .Include(a => a.Job).Include(a => a.JobBranchGalleries)
+                .Include(a => a.Job.JobCategories).ThenInclude(a => a.Category)
                 .Include(a => a.Address).ThenInclude(a => a.Location)
+                .Where(a => selectionJobBranchesId.Contains(a.Id))
                 .Take(selectionSliderViewModel.Count).ToListAsync(cancellationToken: cancellationToken);
 
             var jobBranchViewModel = Mapper.Map<List<JobBranchViewModel>>(jobBranchListResult);
