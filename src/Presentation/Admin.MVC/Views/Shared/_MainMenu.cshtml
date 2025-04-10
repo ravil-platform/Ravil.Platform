@@ -55,8 +55,11 @@
 					<li class="@(selected == "Jobs_Create" ? "active" : "null")">
 						<a asp-controller="Job" asp-action="CreateJob"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">افزودن شغل</span></a>
 					</li>
-					<li class="@(selected == "Jobs_InsertJobsFromGoogle" ? "active" : "null")">
-						<a asp-controller="Job" asp-action="InsertJobsFromGoogle"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">افزودن از فایل</span></a>
+					<li class="@(selected == "Jobs_InsertJobsJsonFromGoogle" ? "active" : "null")">
+						<a asp-controller="Job" asp-action="InsertJobsFromGoogle"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">افزودن از فایل Json</span></a>
+					</li>
+					<li class="@(selected == "Jobs_InsertJobsExcelFromGoogle" ? "active" : "null")">
+						<a asp-controller="Job" asp-action="InsertJobsExcelFromGoogle"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">افزودن از فایل Excel</span></a>
 					</li>
 				</ul>
 			</li>

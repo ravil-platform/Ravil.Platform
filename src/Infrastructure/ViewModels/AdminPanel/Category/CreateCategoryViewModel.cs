@@ -42,12 +42,13 @@ public class CreateCategoryViewModel : BaseMetaViewModel
 
 
     [Display(Name = "تصویر")]
-    public IFormFile PictureFile { get; set; } = null!;
+    public IFormFile? PictureFile { get; set; } 
 
     [Display(Name = "آیکن")]
-    public IFormFile IconPictureFile { get; set; } = null!;
+    public IFormFile? IconPictureFile { get; set; } 
 
     [Display(Name = "ترتیب")]
+    [Required(ErrorMessage = "پر کردن {0} الزامی است.")]
     public int Sort { get; set; }
 
 
@@ -118,6 +119,7 @@ public class UpdateCategoryViewModel : BaseMetaViewModel
     public string? CurrentIconPictureName { get; set; }
 
     [Display(Name = "ترتیب")]
+    [Required(ErrorMessage = "پر کردن {0} الزامی است.")]
     public int Sort { get; set; }
 
 

@@ -87,34 +87,41 @@
 	@await RenderSectionAsync("Scripts", required: false)
 
 	<script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const forms = document.querySelectorAll("form");
-            forms.forEach(form => {
-                form.addEventListener("submit", function () {
-                    showLoading();
-                });
-            });
+		// document.addEventListener("DOMContentLoaded", function () {
+		// 	const forms = document.querySelectorAll("form");
+		// 	forms.forEach(form => {
+		// 		form.addEventListener("submit", function (event) {
+		// 			if (!form.checkValidity()) {
+		// 				event.preventDefault();  
+		// 				hideLoading();
+		// 				return;
+		// 			}
 
-            document.addEventListener("ajaxStart", function () {
-                showLoading();
-            });
+		// 			showLoading();
+		// 		});
+		// 	});
 
-            document.addEventListener("ajaxStop", function () {
-                hideLoading();
-            });
+		// 	document.addEventListener("ajaxStart", function () {
+		// 		showLoading();
+		// 	});
 
-            function showLoading() {
-                const overlay = document.getElementById("loading-overlay");
-                overlay.style.visibility = "visible";
-                overlay.style.opacity = "1";
-            }
+		// 	document.addEventListener("ajaxStop", function () {
+		// 		hideLoading();
+		// 	});
 
-            function hideLoading() {
-                const overlay = document.getElementById("loading-overlay");
-                overlay.style.opacity = "0";
-                setTimeout(() => { overlay.style.visibility = "hidden"; }, 300);
-            }
-        });
+		// 	function showLoading() {
+		// 		const overlay = document.getElementById("loading-overlay");
+		// 		overlay.style.visibility = "visible";
+		// 		overlay.style.opacity = "1";
+		// 	}
+
+		// 	function hideLoading() {
+		// 		const overlay = document.getElementById("loading-overlay");
+		// 		overlay.style.opacity = "0";
+		// 		setTimeout(() => { overlay.style.visibility = "hidden"; }, 300);
+		// 	}
+		// });
+
     </script>
 </body>
 </html>

@@ -1,5 +1,6 @@
 ﻿using Common.Utilities.Services.FTP;
 using Domain.Entities.Category;
+using Domain.Entities.Faq;
 using Domain.Entities.Tag;
 using Enums;
 using Microsoft.EntityFrameworkCore;
@@ -84,11 +85,21 @@ namespace Admin.MVC.Controllers
             var category = Mapper.Map<Category>(createCategoryViewModel);
 
             #region ( Picture & Icon )
-            var largePictureName = await FtpService.UploadFileToFtpServer(createCategoryViewModel.PictureFile, TypeFile.Image, Paths.Category, createCategoryViewModel.PictureFile.FileName);
-            var smallPictureName = await FtpService.UploadFileToFtpServer(createCategoryViewModel.IconPictureFile, TypeFile.Image, Paths.Category, createCategoryViewModel.IconPictureFile.FileName);
 
-            category.Picture = largePictureName;
-            category.IconPicture = smallPictureName;
+            category.Picture = "noPic.webp";
+            if (createCategoryViewModel.PictureFile != null)
+            {
+                var largePictureName = await FtpService.UploadFileToFtpServer(createCategoryViewModel.PictureFile, TypeFile.Image, Paths.Category, createCategoryViewModel.PictureFile.FileName);
+                category.Picture = largePictureName;
+            }
+
+            category.IconPicture = "noIcon.webp";
+            if (createCategoryViewModel.IconPictureFile != null)
+            {
+                var smallPictureName = await FtpService.UploadFileToFtpServer(createCategoryViewModel.IconPictureFile, TypeFile.Image, Paths.Category, createCategoryViewModel.IconPictureFile.FileName);
+                category.IconPicture = smallPictureName;
+            }
+
             #endregion
 
             await UnitOfWork.CategoryRepository.InsertAsync(category);
@@ -232,6 +243,28 @@ namespace Admin.MVC.Controllers
             try
             {
                 await UnitOfWork.SaveAsync();
+
+                if (updateCategoryViewModel.Faqs != null)
+                {
+                    var currentFaqJobCategory = await UnitOfWork.FaqJobCategoryRepository.GetAllAsync(f => f.JobCategoryId == category.Id);
+
+                    UnitOfWork.FaqJobCategoryRepository.RemoveRange(currentFaqJobCategory);
+
+                    await UnitOfWork.SaveAsync();
+
+                    foreach (var faqId in updateCategoryViewModel.Faqs)
+                    {
+                        var faqJobCategory = new FaqJobCategory()
+                        {
+                            JobCategoryId = category.Id,
+                            FaqId = faqId,
+                        };
+
+                        await UnitOfWork.FaqJobCategoryRepository.InsertAsync(faqJobCategory);
+                    }
+
+                    await UnitOfWork.SaveAsync();
+                }
 
                 SuccessAlert();
             }

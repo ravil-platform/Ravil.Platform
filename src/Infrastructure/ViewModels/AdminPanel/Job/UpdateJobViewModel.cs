@@ -15,7 +15,6 @@ public class UpdateJobViewModel
     public string Title { get; set; }
 
     [Display(Name = "زیر عنوان")]
-    [Required(ErrorMessage = "پر کردن {0} الزامی است.")]
     [StringLength(256, MinimumLength = 3, ErrorMessage = "{0} باید بین {2} تا {1} کاراکتر باشد.")]
     public string SubTitle { get; set; }
 
@@ -25,7 +24,6 @@ public class UpdateJobViewModel
     public string Summary { get; set; }
 
     [Display(Name = "محتوا")]
-    [Required(ErrorMessage = "پر کردن {0} الزامی است.")]
     public string Content { get; set; }
 
     [Display(Name = "تصویر بزرگ")]
