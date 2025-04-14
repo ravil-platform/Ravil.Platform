@@ -1,4 +1,6 @@
-﻿using ViewModels.AdminPanel.Filter;
+﻿using Domain.Entities.City;
+using Microsoft.EntityFrameworkCore;
+using ViewModels.AdminPanel.Filter;
 using ViewModels.Filter.Category;
 using ViewModels.QueriesResponseViewModel.Category;
 
@@ -108,6 +110,32 @@ public class CategoryRepository : Repository<Domain.Entities.Category.Category>,
         }
 
         return category.PageContent;
+    }
+
+    public async Task<string> SetCategoryPicture(Domain.Entities.Category.Category category)
+    {
+        if (category.NodeLevel > 1 && string.IsNullOrWhiteSpace(category.Picture))
+        {
+            int node = category.NodeLevel;
+            int parent = category.ParentId;
+            List<Domain.Entities.Category.Category> parents = new();
+            while (node > 1)
+            {
+                var c = await ApplicationDbContext.Category
+                    .FromSqlInterpolated($"select * from dbo.Category where Id={parent} and IsActive=1")
+                    .AsNoTracking().SingleAsync();
+
+                parents.Add(c);
+                node = c.NodeLevel;
+                parent = c.ParentId;
+            }
+
+            parents = parents.OrderBy(a => a.NodeLevel).ToList();
+
+            return parents.FirstOrDefault(a => a.NodeLevel == 2 && !string.IsNullOrWhiteSpace(a.Picture))?.Picture ?? category.Picture;
+        }
+
+        return category.Picture;
     }
 
     public CategoriesFilterViewModel GetByAdminFilter(CategoriesFilterViewModel filter)

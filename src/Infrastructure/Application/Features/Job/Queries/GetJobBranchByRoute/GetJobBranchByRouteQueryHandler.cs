@@ -18,7 +18,7 @@ public class GetJobBranchByRouteQueryHandler : IRequestHandler<GetJobBranchByRou
             .Include(a => a.Address).ThenInclude(a => a.Location).Include(a => a.JobBranchGalleries)
             .Include(a => a.Job).ThenInclude(a => a.JobCategories).ThenInclude(a => a.Category)
             .Where(a => a.IsDeleted != null && !a.IsDeleted.Value).Where(a => a.Job.Status == JobBranchStatus.Accepted)
-            .SingleOrDefaultAsync(current => current.Route != null && current.Route.Equals(request.Route), cancellationToken: cancellationToken);
+            .FirstOrDefaultAsync(current => current.Route != null && current.Route.Equals(request.Route), cancellationToken: cancellationToken);
 
         if (result is null)
         {
