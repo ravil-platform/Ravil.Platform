@@ -20,6 +20,7 @@ namespace Persistence.Entities.Category.Repositories
 
         Task<List<Domain.Entities.Category.Category>> ReplaceCategoryContent(List<Domain.Entities.Category.Category> categories, int cityId);
         Task<string?> ReplaceCategoryContent(Domain.Entities.Category.Category category, int cityId);
+        Task<string> SetCategoryPicture(Domain.Entities.Category.Category category);
 
 
         CategoriesFilterViewModel GetByAdminFilter(CategoriesFilterViewModel filter);

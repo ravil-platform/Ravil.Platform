@@ -1,5 +1,4 @@
-﻿
-namespace Application.Features.Category.Queries.GetByRoute;
+﻿namespace Application.Features.Category.Queries.GetByRoute;
 
 public class GetCategoryByRouteQueryHandler : IRequestHandler<GetCategoryByRouteQuery, CategoryViewModel>
 {
@@ -17,10 +16,11 @@ public class GetCategoryByRouteQueryHandler : IRequestHandler<GetCategoryByRoute
 
         if (category is null)
         {
-            throw new NotFoundException();
+            return Result.Fail(Resources.Messages.Validations.NotFoundException);
         }
 
         category.PageContent = (await UnitOfWork.CategoryRepository.ReplaceCategoryContent(category, request.CityId))!;
+        category.Picture = (await UnitOfWork.CategoryRepository.SetCategoryPicture(category));
 
         var categoryViewModel = Mapper.Map<CategoryViewModel>(category);
 
