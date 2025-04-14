@@ -21,8 +21,7 @@ public class UpdateJobBranchViewModel : BaseMetaViewModel
     public string? HeadingTitle { get; set; }
 
     [Display(Name = "شرح")]
-    [Required(ErrorMessage = "پر کردن {0} الزامی است.")]
-    public string Description { get; set; } = null!;
+    public string? Description { get; set; }
 
     [Display(Name = "محتوا")]
     public string? BranchContent { get; set; }

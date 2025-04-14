@@ -1,4 +1,5 @@
-﻿using ViewModels.AdminPanel.Filter;
+﻿using System.Text.RegularExpressions;
+using ViewModels.AdminPanel.Filter;
 using ViewModels.Filter.User;
 
 namespace Persistence.Entities.Job.Repositories.Implementations;
@@ -53,7 +54,7 @@ public class JobRepository : Repository<Domain.Entities.Job.Job>, IJobRepository
     public async Task<List<Domain.Entities.Job.Job>> SearchJob(string? title = null, string? city = null)
     {
         var jobs = new List<Domain.Entities.Job.Job>();
-        
+
         try
         {
 
@@ -95,7 +96,7 @@ public class JobRepository : Repository<Domain.Entities.Job.Job>, IJobRepository
                         || EF.Functions.Like(j.JobBranch.Job.Summary, $"%{title}%")
                         || (j.JobBranch.Job.JobCategories.Any() && EF.Functions.Like(j.JobBranch.Job.JobCategories.First().Category.Name, $"%{title}%"))
                         || (j.JobBranch.Job.JobCategories.Any() && EF.Functions.Like(j.JobBranch.Job.JobCategories.First().Category.HeadingTitle, $"%{title}%"))
-                        || (j.JobBranch.Job.JobCategories.Any() && EF.Functions.Like(j.JobBranch.Job.JobCategories.First().Category.PageContent, $"%{title}%"))) 
+                        || (j.JobBranch.Job.JobCategories.Any() && EF.Functions.Like(j.JobBranch.Job.JobCategories.First().Category.PageContent, $"%{title}%")))
                         && j.JobBranch.Job.Status == JobBranchStatus.Accepted && j.JobBranch.Job.IsDeleted == false)
                     .Select(a => new Domain.Entities.Job.Job
                     {
@@ -232,6 +233,27 @@ public class JobRepository : Repository<Domain.Entities.Job.Job>, IJobRepository
             }
         }
 
+        if (filter.IsDuplicate != null && filter.IsDuplicate == true)
+        {
+            var duplicateJobIds = ApplicationDbContext.Job
+                .AsNoTracking()
+                .Select(j => new { j.Id, j.Title, j.Route })
+                .ToList()
+                .GroupBy(j => new { j.Title, j.Route })
+                .Where(g => g.Count() > 1)
+                .SelectMany(g => g.Select(j => j.Id))
+                .ToList();
+
+            query = query.Where(j => duplicateJobIds.Contains(j.Id));
+        }
+
+        if (filter.IsEnglishOnly != null && filter.IsEnglishOnly == true)
+        {
+            query = query
+                .AsEnumerable()
+                .Where(j => Regex.IsMatch(j.Title ?? "", "^[a-zA-Z0-9\\s]+$"))
+                .AsQueryable();
+        }
 
         try
         {

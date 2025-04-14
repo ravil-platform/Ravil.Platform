@@ -11,7 +11,7 @@
             builder.Property(j => j.JobTimeWorkType).IsRequired();
             builder.Property(j => j.Title).IsRequired().HasMaxLength(MaxLength.Title);
             builder.Property(j => j.HeadingTitle).IsRequired(false).HasMaxLength(MaxLength.Title);
-            builder.Property(j => j.Description).IsRequired().HasMaxLength(MaxLength.Description);
+            builder.Property(j => j.Description).IsRequired(false).HasMaxLength(MaxLength.Description);
             builder.Property(j => j.BranchContent).IsRequired(false);
             builder.Property(j => j.BranchVideo).IsRequired(false).HasMaxLength(MaxLength.Video);
             builder.Property(j => j.LargePicture).IsRequired(false).HasMaxLength(MaxLength.Picture);

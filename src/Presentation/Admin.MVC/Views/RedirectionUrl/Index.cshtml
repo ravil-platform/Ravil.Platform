@@ -6,7 +6,7 @@
     ViewData["Title"] = "تغییر مسیر";
     ViewData["selected"] = "RedirectionUrl_Index";
 
-    int counter = 1;
+    int counter = ((Model.CurrentPage - 1) * Model.PageSize) + 1;
 }
 <a href="javascript:void(0)" class="btn btn-success mb-2" data-toggle="modal" data-target="#CreateForm">
     افزودن تغییر مسیر جدید <i class="bx bx-plus"></i>

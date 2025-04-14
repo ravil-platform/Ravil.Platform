@@ -11,7 +11,7 @@ public class JobConfigurations : IEntityTypeConfiguration<Domain.Entities.Job.Jo
         builder.Property(j => j.Title).IsRequired().HasMaxLength(MaxLength.Title);
         builder.Property(j => j.SubTitle).IsRequired(false).HasMaxLength(MaxLength.Title);
         builder.Property(j => j.Summary).IsRequired(false).HasMaxLength(MaxLength.Summary);
-        builder.Property(j => j.Content).IsRequired().HasMaxLength(MaxLength.Content);
+        builder.Property(j => j.Content).IsRequired(false).HasMaxLength(MaxLength.Content);
         builder.Property(j => j.LargePicture).IsRequired(false).HasMaxLength(MaxLength.Picture);
         builder.Property(j => j.SmallPicture).IsRequired(false).HasMaxLength(MaxLength.Picture);
         builder.Property(j => j.Email).IsRequired(false).HasMaxLength(MaxLength.Email);

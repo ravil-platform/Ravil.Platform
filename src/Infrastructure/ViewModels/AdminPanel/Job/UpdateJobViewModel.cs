@@ -16,15 +16,14 @@ public class UpdateJobViewModel
 
     [Display(Name = "زیر عنوان")]
     [StringLength(256, MinimumLength = 3, ErrorMessage = "{0} باید بین {2} تا {1} کاراکتر باشد.")]
-    public string SubTitle { get; set; }
+    public string? SubTitle { get; set; }
 
     [Display(Name = "خلاصه")]
-    [Required(ErrorMessage = "پر کردن {0} الزامی است.")]
     [StringLength(512, MinimumLength = 50, ErrorMessage = "{0} باید بین {2} تا {1} کاراکتر باشد.")]
-    public string Summary { get; set; }
+    public string? Summary { get; set; }
 
     [Display(Name = "محتوا")]
-    public string Content { get; set; }
+    public string? Content { get; set; }
 
     [Display(Name = "تصویر بزرگ")]
     public IFormFile? LargePictureFile { get; set; }

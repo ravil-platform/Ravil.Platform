@@ -6,7 +6,7 @@
 	ViewData["Title"] = "مدیریت شهر ها";
 	ViewData["selected"] = "CityBases_Index";
 	var states = (List<StateBase>)ViewData["states"]!;
-	int count = 1;
+	int counter = ((Model.CurrentPage - 1) * Model.PageSize) + 1;
 }
 
 <section>
@@ -78,12 +78,12 @@
 							@foreach (var item in Model.Entities)
 							{
 								<tr role="row" class="odd">
-									<td>@count</td>
+									<td>@counter</td>
 									<td>@item.Id</td>
 									<td>@item.CountyId</td>
 									<td>@item.Name</td>
 								</tr>
-								count++;
+								counter++;
 							}
 						}
 						else

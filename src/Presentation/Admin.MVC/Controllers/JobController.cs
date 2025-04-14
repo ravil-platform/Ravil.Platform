@@ -190,6 +190,7 @@ namespace Admin.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> UpdateJob(int id)
         {
+
             #region ( Fill View Datas )
             ViewData["brands"] = await UnitOfWork.BrandRepository.TableNoTracking.ToListAsync();
             ViewData["categories"] = await UnitOfWork.CategoryRepository.TableNoTracking.ToListAsync();
@@ -212,11 +213,17 @@ namespace Admin.MVC.Controllers
             model.Categories = job.JobCategories.Select(j => j.CategoryId).ToArray();
             model.UserOwnerId = job.AdminId;
 
+            #region ( previous Page )
+            string previousPage = Request.Headers["Referer"].ToString();
+            ViewData["previousPage"] = previousPage;
+            #endregion
+
+
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateJob(UpdateJobViewModel updateJobViewModel)
+        public async Task<IActionResult> UpdateJob(UpdateJobViewModel updateJobViewModel, string? previousPage)
         {
             var job = await UnitOfWork.JobRepository.GetByIdAsync(updateJobViewModel.Id);
             string jobBranch = await UnitOfWork.JobBranchRepository.Table.Where(j => j.JobId == job.Id).Select(j => j.UserId).SingleOrDefaultAsync();
@@ -434,6 +441,12 @@ namespace Admin.MVC.Controllers
                 ErrorAlert(e.Message);
             }
 
+
+            if (previousPage != null)
+            {
+                return Redirect(previousPage);
+            }
+
             return RedirectToAction("IndexJob");
         }
         #endregion
@@ -448,7 +461,7 @@ namespace Admin.MVC.Controllers
             {
                 await UnitOfWork.SaveAsync();
 
-                SuccessAlert();
+                SuccessAlert("حذف سیستمی انجام شد");
             }
             catch (Exception ex)
             {
@@ -591,12 +604,19 @@ namespace Admin.MVC.Controllers
                 #endregion
                 await UnitOfWork.JobRepository.CommitTransactionAsync();
 
-                SuccessAlert();
+                SuccessAlert("حذف فیزیکی به طور کامل انجام شد");
             }
             catch (Exception e)
             {
                 ErrorAlert(e.Message);
             }
+
+            #region ( previous Page )
+            if (Request.Headers["Referer"].ToString() != null)
+            {
+                return Redirect(Request.Headers["Referer"].ToString());
+            } 
+            #endregion
 
             return RedirectToAction("IndexJob", new { IsDeleted = true });
         }
@@ -616,6 +636,74 @@ namespace Admin.MVC.Controllers
             bool exists = await UnitOfWork.JobRepository.JobRouteExist(route);
 
             return Json(new { exists = exists });
+        }
+        #endregion
+
+        #region ( Fix Address With Api Neshan )
+        [HttpGet]
+        public async Task<IActionResult> FixAddress(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return BadRequest("مقدار وارد شده معتبر نیست.");
+            }
+
+            var address = await UnitOfWork.AddressRepository.Table.Where(a => a.JobBranchId == id)
+                .Include(a => a.Location).FirstOrDefaultAsync();
+
+            try
+            {
+                #region ( Implement Location (Address) )
+
+                string latitude = address.Location.Lat.ToString();
+                string longitude = address.Location.Long.ToString();
+
+                if (longitude == "0" || latitude == "0")
+                {
+                    InfoAlert("امکان تغییر این آدرس وجود ندارد به علت نبود مختصات جغرافیایی ، دستی تغییر دهید");
+
+                    return Redirect(Request.Headers["Referer"].ToString());
+                }
+
+                LocationDataViewModel? locationDataViewModel = await NeshanApiService.GetReverseGeocodeAsync(latitude, longitude);
+
+                #region ( Update Address )
+                if (locationDataViewModel != null)
+                {
+                    #region ( Neshan Reurned Data )
+                    address.OtherAddress = locationDataViewModel.FormattedAddress;
+                    address.PostalAddress = locationDataViewModel.FormattedAddress;
+                    address.Neighbourhood = locationDataViewModel.Neighbourhood;
+
+                    var currentCity = await NeshanApiService.GetCityState
+                    (locationDataViewModel.City,
+                        locationDataViewModel.State,
+                        locationDataViewModel.Neighbourhood,
+                        UnitOfWork);
+
+                    if (currentCity != null)
+                    {
+                        address.CityId = currentCity.Id;
+                        address.StateId = currentCity.StateId;
+                    }
+                    #endregion
+                }
+
+                await UnitOfWork.AddressRepository.UpdateAsync(address);
+
+                await UnitOfWork.SaveAsync();
+                #endregion
+                #endregion
+
+                SuccessAlert("آدرس با موفقیت تغییر کرد");
+
+                return Redirect(Request.Headers["Referer"].ToString());
+            }
+            catch (Exception exception)
+            {
+                ErrorAlert("در حال حاضر  api  نشان پاسخگو نیست!");
+                return Redirect(Request.Headers["Referer"].ToString());
+            }
         }
         #endregion
         #endregion

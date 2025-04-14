@@ -24,7 +24,9 @@
 	var socialMedias = JsonConvert.DeserializeObject<List<SocialMediaInfosViewModel>>(Model.CurrentSocialMediaInfos);
 	var phoneNumberInfos = JsonConvert.DeserializeObject<List<PhoneNumberInfosViewModel>>(Model.CurrentPhoneNumberInfos);
 
-	//Todo : Image
+
+	//for redirect to previous page
+	string previousPage = (string)ViewData["previousPage"];
 }
 
 @section CSS
@@ -50,6 +52,7 @@
 				<div class="tab-content">
 					<div class="tab-pane active">
 						<form method="post" enctype="multipart/form-data">
+							<input type="hidden" name="previousPage" value="@previousPage" />
 							<input type="hidden" asp-for="Id" value="@Model.Id" />
 							<div class="card-title-details d-flex align-items-center mb-1 ml-1">
 								<div>
@@ -195,7 +198,6 @@
 								<div class="col-12 col-sm-12 col-lg-12">
 									<div class="form-group">
 										<div class="controls">
-											<span class="text-danger">*</span>
 											<label asp-for="Summary"></label>
 											<textarea asp-for="Summary" rows="4" class="form-control text-left"></textarea>
 											<div class="help-block">
@@ -208,7 +210,6 @@
 
 								<div class="col-12 col-sm-12 col-lg-12">
 									<div class="form-group">
-										<span class="text-danger">*</span>
 										<label asp-for="Content"></label>
 										<textarea class="form-control" id="ckeditor5" asp-for="Content"></textarea>
 										<div class="help-block">
@@ -426,30 +427,33 @@
 										<div class="card-content">
 											<div class="card-body">
 												<div id="phoneNumberContainer">
-													@for (int index = 0; index < phoneNumberInfos.Count; index++)
+													@if (phoneNumberInfos != null)
 													{
-														<div class="row justify-content-center phone-number-form">
-															<div class="col-md-6 col-sm-6 form-group">
-																<label>نوع شماره تماس</label>
-																<select name="PhoneNumberInfosViewModel[@index].PhoneNumberType" class="form-control">
-																	<!option value="PhoneNumberTel" @(phoneNumberInfos[index].PhoneNumberType == PhoneNumberTypes.PhoneNumberTel ? "selected" : "")>تلفن</!option>
-																	<!option value="PhoneNumberMobile" @(phoneNumberInfos[index].PhoneNumberType == PhoneNumberTypes.PhoneNumberMobile ? "selected" : "")>موبایل</!option>
-																	<!option value="FaxNumber" @(phoneNumberInfos[index].PhoneNumberType == PhoneNumberTypes.FaxNumber ? "selected" : "")>فکس</!option>
-																</select>
-															</div>
+														@for (int index = 0; index < phoneNumberInfos.Count; index++)
+														{
+															<div class="row justify-content-center phone-number-form">
+																<div class="col-md-6 col-sm-6 form-group">
+																	<label>نوع شماره تماس</label>
+																	<select name="PhoneNumberInfosViewModel[@index].PhoneNumberType" class="form-control">
+																		<!option value="PhoneNumberTel" @(phoneNumberInfos[index].PhoneNumberType == PhoneNumberTypes.PhoneNumberTel ? "selected" : "")>تلفن</!option>
+																		<!option value="PhoneNumberMobile" @(phoneNumberInfos[index].PhoneNumberType == PhoneNumberTypes.PhoneNumberMobile ? "selected" : "")>موبایل</!option>
+																		<!option value="FaxNumber" @(phoneNumberInfos[index].PhoneNumberType == PhoneNumberTypes.FaxNumber ? "selected" : "")>فکس</!option>
+																	</select>
+																</div>
 
-															<div class="col-md-6 col-sm-6 form-group">
-																<label>شماره تماس</label>
-																<input name="PhoneNumberInfosViewModel[@index].PhoneNumber" value="@(phoneNumberInfos[index].PhoneNumber)" class="form-control text-right" maxlength="11" type="number" placeholder="0910xxx8433">
-															</div>
+																<div class="col-md-6 col-sm-6 form-group">
+																	<label>شماره تماس</label>
+																	<input name="PhoneNumberInfosViewModel[@index].PhoneNumber" value="@(phoneNumberInfos[index].PhoneNumber)" class="form-control text-right" maxlength="11" type="number" placeholder="0910xxx8433">
+																</div>
 
-															<div class="col-md-2 col-sm-12 form-group d-flex align-items-end pt-2">
-																<button class="btn btn-danger text-nowrap px-1 remove-phone-number" type="button">
-																	<i class="bx bx-x"></i>
-																	حذف
-																</button>
+																<div class="col-md-2 col-sm-12 form-group d-flex align-items-end pt-2">
+																	<button class="btn btn-danger text-nowrap px-1 remove-phone-number" type="button">
+																		<i class="bx bx-x"></i>
+																		حذف
+																	</button>
+																</div>
 															</div>
-														</div>
+														}
 													}
 												</div>
 

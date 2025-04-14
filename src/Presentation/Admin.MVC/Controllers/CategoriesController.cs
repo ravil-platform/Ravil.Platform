@@ -83,6 +83,7 @@ namespace Admin.MVC.Controllers
             #endregion
 
             var category = Mapper.Map<Category>(createCategoryViewModel);
+            category.IsActive = true;
 
             #region ( Picture & Icon )
 
@@ -813,7 +814,7 @@ namespace Admin.MVC.Controllers
 
         //todo: check and fix remove bug
         [HttpPost]
-        public async Task<IActionResult> UpdateCategoryTag(UpdateTagViewModel updateTagViewModel, int currentCategoryId , int categoryId)
+        public async Task<IActionResult> UpdateCategoryTag(UpdateTagViewModel updateTagViewModel, int currentCategoryId, int categoryId)
         {
             if (!ModelState.IsValid)
             {

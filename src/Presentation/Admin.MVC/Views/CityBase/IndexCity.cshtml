@@ -9,7 +9,7 @@
 
 	ViewData["Title"] = "مدیریت شهرهای فعلی راویل";
 	ViewData["selected"] = "Cities_Index";
-	int count = 1;
+	int counter = ((Model.CurrentPage - 1) * Model.PageSize) + 1;
 }
 
 <section>
@@ -71,7 +71,7 @@
 						@foreach (var item in Model.Entities)
 						{
 							<tr role="row" class="odd">
-								<td>@count</td>
+								<td>@counter</td>
 								<td class="text-bold-700">
 									@if (!string.IsNullOrEmpty(item.Picture))
 									{
@@ -97,7 +97,7 @@
 									<a onclick="update('@item.Id')" data-toggle="tooltip" data-placement="top" data-original-title="ویرایش"><i class="bx bxs-edit-alt text-warning"></i></a>
 								</td> *@
 							</tr>
-							count++;
+							counter++;
 						}
 					}
 					else

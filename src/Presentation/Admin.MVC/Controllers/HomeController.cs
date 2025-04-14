@@ -56,5 +56,11 @@ namespace Admin.MVC.Controllers
 
             return View();
         }
+
+        public async Task<IActionResult> Test()
+        {
+            return Content(
+                $"RemoteIpAddress :{HttpContext.Connection.RemoteIpAddress?.ToString()}\n LocalIpAddress :{HttpContext.Connection.LocalIpAddress?.ToString()}");
+        }
     }
 }

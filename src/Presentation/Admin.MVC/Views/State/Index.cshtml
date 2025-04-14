@@ -5,7 +5,7 @@
 	ViewData["Title"] = "مدیریت استان ها";
 	ViewData["selected"] = "StateBases_Index";
 
-	int count = 1;
+	int counter = ((Model.CurrentPage - 1) * Model.PageSize) + 1;
 }
 
 <a href="javascript:void(0)" class="btn btn-success mb-2" data-toggle="modal" data-target="#CreateForm">
@@ -68,7 +68,7 @@
 							@foreach (var item in Model.Entities)
 							{
 								<tr role="row" class="odd">
-									<td>@count</td>
+									<td>@counter</td>
 									<td>@item.Id</td>
 									<td>@item.Name</td>
 									<td>
@@ -76,7 +76,7 @@
 										@* <a asp-controller="State" asp-action="Delete" asp-route-id="@item.Id" data-toggle="tooltip" data-placement="top" data-original-title="حذف"><i class='bx bx-trash text-danger'></i></a> *@
 									</td>
 								</tr>
-								count++;
+								counter++;
 							}
 						}
 						else

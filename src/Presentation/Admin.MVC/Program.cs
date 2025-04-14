@@ -54,18 +54,18 @@ builder.Services.AddCors(options =>
 
 #region ( LoggingServices )
 
-if (builder.Environment.IsProduction())
-{
-    NLog.LogManager.Configuration.Variables["rootDir"] = AppDomain.CurrentDomain.BaseDirectory;
-}
-else if (builder.Environment.IsDevelopment())
-{
-    NLog.LogManager.Configuration.Variables["rootDir"] = @"C:\Temp\RavilLogs\";
-}
-else
-{
-    NLog.LogManager.Configuration.Variables["rootDir"] = AppDomain.CurrentDomain.BaseDirectory;
-}
+//if (builder.Environment.IsProduction())
+//{
+//    NLog.LogManager.Configuration.Variables["rootDir"] = AppDomain.CurrentDomain.BaseDirectory;
+//}
+//else if (builder.Environment.IsDevelopment())
+//{
+//    NLog.LogManager.Configuration.Variables["rootDir"] = @"C:\Temp\RavilLogs\";
+//}
+//else
+//{
+//    NLog.LogManager.Configuration.Variables["rootDir"] = AppDomain.CurrentDomain.BaseDirectory;
+//}
 services.AddTransient(serviceType: typeof(Logging.Base.ILogger<>), implementationType: typeof(NLogAdapter<>));
 
 #endregion

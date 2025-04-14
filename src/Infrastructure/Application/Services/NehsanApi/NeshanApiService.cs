@@ -51,7 +51,7 @@ namespace Application.Services.NehsanApi
         }
 
         #region ( GetCityState )
-        
+
         public async Task<CityBase?> GetCityState(string city, string state, string neighbourhood, IUnitOfWork unitOfWork)
         {
             if (!string.IsNullOrWhiteSpace(city))

@@ -26,7 +26,10 @@ namespace ViewModels.AdminPanel.Job
 
     public class JobsGoogleExcelViewModel
     {
+        [JsonPropertyName("latitude")]
         public string Latitude { get; set; }
+
+        [JsonPropertyName("longitude")]
         public string Longitude { get; set; }
         public string PostalCode { get; set; }
         public string Name { get; set; }

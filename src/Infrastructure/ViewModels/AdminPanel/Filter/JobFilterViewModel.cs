@@ -10,6 +10,8 @@ public class JobFilterViewModel : Paging<Domain.Entities.Job.Job>
 
     public bool? HasNotAnyJobBranches { get; set; }
     public bool? IsGoogleData { get; set; }
+    public bool? IsDuplicate { get; set; }
+    public bool? IsEnglishOnly { get; set; }
 
     public JobBranchStatus? Status { get; set; }
     public JobSortedBy? SortedBy { get; set; }
