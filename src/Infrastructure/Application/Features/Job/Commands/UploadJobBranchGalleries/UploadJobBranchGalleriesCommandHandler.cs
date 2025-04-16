@@ -4,11 +4,13 @@ public class UploadJobBranchGalleriesCommandHandler : IRequestHandler<UploadJobB
 {
     protected IMapper Mapper { get; }
     protected IUnitOfWork UnitOfWork { get; }
+    protected IFtpService FtpService { get; }
 
-    public UploadJobBranchGalleriesCommandHandler(IMapper mapper, IUnitOfWork unitOfWork)
+    public UploadJobBranchGalleriesCommandHandler(IMapper mapper, IUnitOfWork unitOfWork, IFtpService ftpService)
     {
         Mapper = mapper;
         UnitOfWork = unitOfWork;
+        FtpService = ftpService;
     }
 
     public async Task<Result> Handle(UploadJobBranchGalleriesCommand request, CancellationToken cancellationToken)
@@ -24,7 +26,9 @@ public class UploadJobBranchGalleriesCommandHandler : IRequestHandler<UploadJobB
 
         foreach (var item in request.Images)
         {
-            var imageName = item.SaveFileAndReturnName(Paths.JobBranchGalleryServer + request.JobBranchId, TypeFile.Image, null, null, null, jobBranch.SmallPicture);
+            //var imageName = item.SaveFileAndReturnName(Paths.JobBranchGalleryServer + request.JobBranchId, TypeFile.Image, null, null, null, jobBranch.SmallPicture);
+
+            var imageName = await FtpService.UploadFileToFtpServer(item, TypeFile.Image, Paths.JobBranchGallery + request.JobBranchId, item.FileName, 777, null, null, null, jobBranch.SmallPicture);
 
             var gallery = new JobBranchGallery()
             {

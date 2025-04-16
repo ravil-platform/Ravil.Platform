@@ -19,5 +19,17 @@ public enum ActionType
     [Display(Name = "خرید اکانت", GroupName = "نوع عملیات کاربر")]
     OrderAction = 7,
     [Display(Name = "ثبت کسب و کار", GroupName = "نوع عملیات کاربر")]
-    CreateJobAction = 8
+    CreateJobAction = 8,
+    [Display(Name = "کلیک روی چت", GroupName = "نوع عملیات کاربر")]
+    ClickOnChat = 9,
+    [Display(Name = "کلیک روی تصاویر", GroupName = "نوع عملیات کاربر")]
+    ClickOnImage = 10,
+    [Display(Name = "کلیک روی وب‌سایت", GroupName = "نوع عملیات کاربر")]
+    ClickOnWebSite = 11,
+    [Display(Name = "کلیک روی مسیریابی", GroupName = "نوع عملیات کاربر")]
+    ClickOnMaps = 12,
+    [Display(Name = "کلیک روی تماس", GroupName = "نوع عملیات کاربر")]
+    ClickOnCall = 13,
+    [Display(Name = "کلیک روی کارت کسب‌وکار", GroupName = "نوع عملیات کاربر")]
+    ClickOnCard = 13,
 }

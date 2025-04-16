@@ -61,16 +61,15 @@ public class JobBranch : BaseMetaDataEntity
 
     public virtual ICollection<Banner.Banner>? Banners { get; set; } 
     public virtual ICollection<Comment.Comment>? Comments { get; set; }
-    public virtual ICollection<Order.Order>? Orders { get; set; }
     public virtual ICollection<MainSlider.MainSlider>? MainSliders { get; set; }
 
-    public virtual ICollection<JobBranchAttr>? JobBranchAttributes { get; set; }
     public virtual ICollection<JobBranchGallery>? JobBranchGalleries { get; set; }
     public virtual ICollection<JobBranchShortLink>? JobBranchShortLinks { get; set; }
     public virtual ICollection<JobBranchTag>? JobBranchTags { get; set; }
     public virtual ICollection<JobSelectionSlider>? JobSelectionSliders { get; set; }
     public virtual ICollection<JobService>? JobServices { get; set; }
     public virtual ICollection<JobTimeWork>? JobTimeWorks { get; set; }
+    public virtual ICollection<JobKeyword> JobKeywords { get; set; }
 
     public virtual ICollection<UserBookMark>? JobUserBookMarks { get; set; }
     public virtual ICollection<UsersFeedbackSlider>? UsersFeedbackSliders { get; set; }

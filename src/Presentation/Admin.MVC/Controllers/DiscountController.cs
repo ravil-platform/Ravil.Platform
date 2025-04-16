@@ -1,5 +1,5 @@
 ﻿using System.Globalization;
-using Domain.Entities.Order;
+using Domain.Entities.Payment;
 using ViewModels.AdminPanel.Filter;
 using ViewModels.Discounts;
 

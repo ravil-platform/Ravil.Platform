@@ -46,7 +46,7 @@ public class Job : Entity
     public bool IsGoogleData { get; set; } = false;
 
 
-    public JobBranchStatus? Status { get; set; } 
+    public JobBranchStatus? Status { get; set; }
     public string RejectedReason { get; set; }
     #endregion
 
@@ -59,5 +59,6 @@ public class Job : Entity
     public virtual ICollection<JobBranch> JobBranches { get; set; }
 
     public virtual ICollection<JobCategory> JobCategories { get; set; }
+
     #endregion
 }

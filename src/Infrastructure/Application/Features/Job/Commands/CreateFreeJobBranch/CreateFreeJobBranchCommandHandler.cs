@@ -1,13 +1,15 @@
-﻿namespace Application.Features.Job.Commands.CreateFreeJobBranch;
+﻿using Common.Utilities.Services.FTP;
 
-public class CreateFreeJobBranchCommandHandler(IMapper mapper, IUnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor, UserManager<ApplicationUser> userManager)
+namespace Application.Features.Job.Commands.CreateFreeJobBranch;
+
+public class CreateFreeJobBranchCommandHandler(IMapper mapper, IUnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor, UserManager<ApplicationUser> userManager, IFtpService ftpService)
     : IRequestHandler<CreateFreeJobBranchCommand, JobBranchViewModel>
 {
     protected IMapper Mapper { get; } = mapper;
     protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
     protected IHttpContextAccessor HttpContextAccessor { get; } = httpContextAccessor;
     protected UserManager<ApplicationUser> UserManager { get; } = userManager;
-
+    protected IFtpService FtpService { get; } = ftpService;
 
     public async Task<Result<JobBranchViewModel>> Handle(CreateFreeJobBranchCommand request, CancellationToken cancellationToken)
     {
@@ -148,7 +150,9 @@ public class CreateFreeJobBranchCommandHandler(IMapper mapper, IUnitOfWork unitO
             {
                 foreach (var image in request.JobBranch.Gallery)
                 {
-                    var fileName = image.SaveFileAndReturnName(Paths.JobBranchGalleryServer + jobBranch.Id, TypeFile.Image);
+                    var fileName = await FtpService.UploadFileToFtpServer(image, TypeFile.Image, Paths.JobBranchGallery + jobBranch.Id, image.FileName);
+
+                    //var fileName = image.SaveFileAndReturnName(Paths.JobBranchGalleryServer + jobBranch.Id, TypeFile.Image);
 
                     await UnitOfWork.JobBranchGalleryRepository
                         .InsertAsync(new JobBranchGallery() { ImageName = fileName, JobBranchId = jobBranch.Id });
@@ -161,21 +165,27 @@ public class CreateFreeJobBranchCommandHandler(IMapper mapper, IUnitOfWork unitO
             #region ( Job Branch Images )
             if (request.JobBranch.LargePictureFile is not null)
             {
-                var largePictureName = request.JobBranch.LargePictureFile.SaveFileAndReturnName(Paths.JobBranchImageServer + jobBranch.Id, TypeFile.Image);
+                var largePictureName = await FtpService.UploadFileToFtpServer(request.JobBranch.LargePictureFile, TypeFile.Image, Paths.JobBranch + jobBranch.Id, request.JobBranch.LargePictureFile.FileName);
+
+                //var largePictureName = request.JobBranch.LargePictureFile.SaveFileAndReturnName(Paths.JobBranchImageServer + jobBranch.Id, TypeFile.Image);
 
                 jobBranch.LargePicture = largePictureName;
             }
 
             if (request.JobBranch.SmallPictureFile is not null)
             {
-                var smallPictureName = request.JobBranch.SmallPictureFile.SaveFileAndReturnName(Paths.JobBranchImageServer + jobBranch.Id, TypeFile.Image);
+                var smallPictureName = await FtpService.UploadFileToFtpServer(request.JobBranch.SmallPictureFile, TypeFile.Image, Paths.JobBranch + jobBranch.Id, request.JobBranch.SmallPictureFile.FileName);
+
+                //var smallPictureName = request.JobBranch.SmallPictureFile.SaveFileAndReturnName(Paths.JobBranchImageServer + jobBranch.Id, TypeFile.Image);
 
                 jobBranch.SmallPicture = smallPictureName;
             }
 
             if (request.JobBranch.BranchVideo is not null)
             {
-                var branchVideoName = request.JobBranch.BranchVideo.SaveFileAndReturnName(Paths.JobBranchVideoServer + jobBranch.Id, TypeFile.Video);
+                var branchVideoName = await FtpService.UploadFileToFtpServer(request.JobBranch.BranchVideo, TypeFile.Video, Paths.JobBranchVideo + jobBranch.Id, request.JobBranch.BranchVideo.FileName);
+
+                //var branchVideoName = request.JobBranch.BranchVideo.SaveFileAndReturnName(Paths.JobBranchVideoServer + jobBranch.Id, TypeFile.Video);
 
                 jobBranch.BranchVideo = branchVideoName;
             }

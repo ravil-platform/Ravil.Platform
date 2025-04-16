@@ -523,17 +523,11 @@ namespace Admin.MVC.Controllers
 
                     UnitOfWork.CommentRepository.RemoveRange(comments);
 
-                    var orders = await UnitOfWork.OrderRepository.GetAllAsync(c => c.JobBranchId == branch.Id);
-                    UnitOfWork.OrderRepository.RemoveRange(orders);
-
                     var mainSliders = await UnitOfWork.MainSliderRepository.GetAllAsync(c => c.JobBranchId == branch.Id);
                     UnitOfWork.MainSliderRepository.RemoveRange(mainSliders);
 
                     var jobServices = await UnitOfWork.JobServiceRepository.GetAllAsync(c => c.JobBranchId == branch.Id);
                     UnitOfWork.JobServiceRepository.RemoveRange(jobServices);
-
-                    var jobBranchAttributes = await UnitOfWork.JobBranchAttrRepository.GetAllAsync(c => c.JobBranchId == branch.Id);
-                    UnitOfWork.JobBranchAttrRepository.RemoveRange(jobBranchAttributes);
 
                     var jobBranchShortLinks = await UnitOfWork.JobBranchShortLinkRepository.GetAllAsync(c => c.JobBranchId == branch.Id);
                     UnitOfWork.JobBranchShortLinkRepository.RemoveRange(jobBranchShortLinks);

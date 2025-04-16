@@ -4,7 +4,7 @@ using Application.Features.Category.Queries.GetAllByFilter;
 using Application.Features.Job.Queries.GetAllJobBranch;
 using Application.Features.Job.Queries.GetRelatedJobBranches;
 using Domain.Entities.FeedbackSlider;
-using Domain.Entities.Order;
+using Domain.Entities.Payment;
 using Domain.Entities.RedirectionUrl;
 using RNX.CustomResult;
 using ViewModels.AdminPanel.Banner;

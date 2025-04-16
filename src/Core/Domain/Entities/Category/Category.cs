@@ -37,12 +37,12 @@ namespace Domain.Entities.Category
         #endregion
 
         #region (Relation)
-        public virtual ICollection<Attr.Attr> Attributes { get; set; }
         public virtual ICollection<JobCategory> JobCategories { get; set; }
         public virtual ICollection<CityCategory> CityCategories { get; set; }
         public virtual ICollection<CategoryService> CategoryServices { get; set; }
         public virtual ICollection<FaqJobCategory> FaqJobCategories { get; set; }
         public virtual ICollection<CategoryTag> CategoryTags { get; set; }
+        public virtual ICollection<Keyword> Keywords { get; set; }
         #endregion
     }
 }

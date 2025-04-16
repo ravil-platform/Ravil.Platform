@@ -1,15 +1,13 @@
 ﻿namespace Persistence.Entities.PaymentPortal.Configurations
 {
-    public class PaymentPortalConfigurations : IEntityTypeConfiguration<Domain.Entities.PaymentPortal.PaymentPortal>
+    public class PaymentPortalConfigurations : IEntityTypeConfiguration<Domain.Entities.Payment.PaymentPortal>
     {
-        public void Configure(EntityTypeBuilder<Domain.Entities.PaymentPortal.PaymentPortal> builder)
+        public void Configure(EntityTypeBuilder<Domain.Entities.Payment.PaymentPortal> builder)
         {
             builder.ToTable("PaymentPortal", DatabaseSchemas.PaymentPortals);
 
             builder.HasKey(p => p.Id);
             builder.Property(p => p.Title).IsRequired().HasMaxLength(MaxLength.Title);
-            builder.Property(p => p.Status).IsRequired();
-            builder.Property(p => p.Picture).IsRequired().HasMaxLength(MaxLength.Picture);
         }
     }
 }
