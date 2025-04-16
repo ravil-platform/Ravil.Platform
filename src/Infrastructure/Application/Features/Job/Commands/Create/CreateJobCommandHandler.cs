@@ -4,17 +4,20 @@ public class CreateJobCommandHandler : IRequestHandler<CreateJobCommand, JobView
 {
     protected IMapper Mapper { get; }
     protected IUnitOfWork UnitOfWork { get; }
+    protected IFtpService FtpService { get; }
 
-    public CreateJobCommandHandler(IMapper mapper, IUnitOfWork unitOfWork)
+    public CreateJobCommandHandler(IMapper mapper, IUnitOfWork unitOfWork, IFtpService ftpService)
     {
         Mapper = mapper;
         UnitOfWork = unitOfWork;
+        FtpService = ftpService;
     }
 
     public async Task<Result<JobViewModel>> Handle(CreateJobCommand request, CancellationToken cancellationToken)
     {
-        var largePictureName = request.LargePictureFile.SaveFileAndReturnName(Paths.Job, TypeFile.Image);
-        var smallPictureName = request.SmallPictureFile.SaveFileAndReturnName(Paths.Job, TypeFile.Image);
+        var largePictureName = await FtpService.UploadFileToFtpServer(request.LargePictureFile, TypeFile.Image, Paths.Job, request.LargePictureFile.FileName);
+        var smallPictureName = await FtpService.UploadFileToFtpServer(request.SmallPictureFile, TypeFile.Image, Paths.Job, request.SmallPictureFile.FileName);
+
 
         var job = Mapper.Map<Domain.Entities.Job.Job>(request);
 

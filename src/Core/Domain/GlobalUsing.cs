@@ -1,5 +1,4 @@
-﻿global using Domain.Entities.Account;
-global using Domain.Entities.Attr;
+﻿global using System.ComponentModel.DataAnnotations;
 global using Domain.Entities.Blog;
 global using Domain.Entities.Category;
 global using Domain.Entities.City;
@@ -9,5 +8,3 @@ global using Domain.Entities.User;
 global using Enums;
 global using Microsoft.AspNetCore.Identity;
 global using RNX.Domain;
-global using System.ComponentModel.DataAnnotations;
-global using System.ComponentModel.DataAnnotations.Schema;

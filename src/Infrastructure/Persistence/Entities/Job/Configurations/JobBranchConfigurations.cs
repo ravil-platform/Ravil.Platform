@@ -35,19 +35,6 @@
                 .WithOne(c => c.JobBranch)
                 .HasForeignKey(c => c.JobBranchId)
                 .IsRequired(false);
-
-            builder
-                .HasMany(j => j.JobBranchAttributes)
-                .WithOne(j => j.JobBranch)
-                .HasForeignKey(c => c.JobBranchId)
-                .IsRequired(false);
-
-
-            builder
-                .HasMany(j => j.Orders)
-                .WithOne(j => j.JobBranch)
-                .HasForeignKey(c => c.JobBranchId)
-                .IsRequired(false);
         }
     }
 }

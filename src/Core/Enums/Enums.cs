@@ -349,4 +349,55 @@ namespace Enums
         [Display(Name = "در انتظار بررسی")]
         WaitingToCheck
     }
+
+    public enum SubscriptionDurationType
+    {
+        [Display(Name = "یک ماهه")]
+        OneMonth = 0,
+
+        [Display(Name = "سه ماهه")]
+        ThreeMonth = 1,
+
+        [Display(Name = "شش ماهه")]
+        SixMonth = 2,
+
+        [Display(Name = "یک ساله")]
+        OneYear = 3,
+    }
+
+    public enum ClickType
+    {
+        [Display(Name = "کلیک روی تبلیغات")]
+        ClickOnAds,
+
+        [Display(Name = "کلیک روی تماس")]
+        ClickOnCall,
+
+        [Display(Name = "کلیک روی مسیریابی")]
+        ClickOnMaps
+    }
+
+    public enum PaymentMethod
+    {
+        [Display(Name = "درگاه پرداخت آنلاین")]
+        OnlinePortal,
+
+        [Display(Name = "از طریق کیف پول")]
+        FromWallet
+    }
+
+    public enum WalletTransactionType
+    {
+        [Display(ResourceType = typeof(DisplayNames), Name = nameof(DisplayNames.Deposit))]
+        Deposit = 1,
+        [Display(ResourceType = typeof(DisplayNames), Name = nameof(DisplayNames.Harvest))]
+        Harvest = 2
+    }
+
+    public enum TransactionStatus
+    {
+        Success = 1,
+        Failed = 2,
+        Pending = 3,
+    }
 }

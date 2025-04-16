@@ -1,4 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Persistence.Entities.PanelTutorial.Repositories;
+using Persistence.Entities.Payment.Repositories;
+using Persistence.Entities.Subscription.Repositories.Implementations;
+using Persistence.Entities.Subscription.Repositories.Interfaces;
+using Persistence.Entities.Wallet.Repositories;
+using IPaymentPortalRepository = Persistence.Entities.PaymentPortal.Repositories.IPaymentPortalRepository;
+using PaymentPortalRepository = Persistence.Entities.PaymentPortal.Repositories.PaymentPortalRepository;
 
 namespace Persistence.Contracts
 {
@@ -7,67 +14,6 @@ namespace Persistence.Contracts
         #region ( Constructor )
         public UnitOfWork(Options options) : base(options: options)
         {
-        }
-        #endregion
-
-        #region ( Account )
-        private IAccountAttrRepository? _accountAttrRepository;
-        public IAccountAttrRepository AccountAttrRepository
-        {
-            get
-            {
-                if (_accountAttrRepository is null)
-                {
-                    _accountAttrRepository = new AccountAttrRepository(DatabaseContext);
-                }
-
-                return _accountAttrRepository;
-            }
-        }
-
-
-        private IAccountCategoryRepository? _accountCategoryRepository;
-        public IAccountCategoryRepository AccountCategoryRepository
-        {
-            get
-            {
-                if (_accountCategoryRepository is null)
-                {
-                    _accountCategoryRepository = new AccountCategoryRepository(DatabaseContext);
-                }
-
-                return _accountCategoryRepository;
-            }
-        }
-
-
-        private IAccountLevelRepository? _accountLevelRepository;
-        public IAccountLevelRepository AccountLevelRepository
-        {
-            get
-            {
-                if (_accountLevelRepository is null)
-                {
-                    _accountLevelRepository = new AccountLevelRepository(DatabaseContext);
-                }
-
-                return _accountLevelRepository;
-            }
-        }
-
-
-        private IAccountRepository? _accountRepository;
-        public IAccountRepository AccountRepository
-        {
-            get
-            {
-                if (_accountRepository is null)
-                {
-                    _accountRepository = new AccountRepository(DatabaseContext);
-                }
-
-                return _accountRepository;
-            }
         }
         #endregion
 
@@ -83,99 +29,6 @@ namespace Persistence.Contracts
                 }
 
                 return _addressRepository;
-            }
-        }
-        #endregion
-
-        #region ( Admin Theme )
-        private IAdminThemeRepository? _adminThemeRepository;
-
-        public IAdminThemeRepository AdminThemeRepository
-        {
-            get
-            {
-                if (_adminThemeRepository is null)
-                {
-                    _adminThemeRepository = new AdminThemeRepository(DatabaseContext);
-                }
-
-                return _adminThemeRepository;
-            }
-        }
-        #endregion
-
-        #region ( Attr )
-        private IAttrAccountRepository? _attrAccountRepository;
-        public IAttrAccountRepository AttrAccountRepository
-        {
-            get
-            {
-                if (_attrAccountRepository == null)
-                {
-                    _attrAccountRepository = new AttrAccountRepository(DatabaseContext);
-                }
-
-                return _attrAccountRepository;
-            }
-        }
-
-
-        private IAttrAccountValueRepository? _attrAccountValueRepository;
-        public IAttrAccountValueRepository AttrAccountValueRepository
-        {
-            get
-            {
-                if (_attrAccountValueRepository == null)
-                {
-                    _attrAccountValueRepository = new AttrAccountValueRepository(DatabaseContext);
-                }
-
-                return _attrAccountValueRepository;
-            }
-        }
-
-
-        private IAttrCategoryRepository? _attrCategoryRepository;
-        public IAttrCategoryRepository AttrCategoryRepository
-        {
-            get
-            {
-                if (_attrCategoryRepository == null)
-                {
-                    _attrCategoryRepository = new AttrCategoryRepository(DatabaseContext);
-                }
-
-                return _attrCategoryRepository;
-            }
-        }
-
-
-        private IAttrRepository? _attrRepository;
-        public IAttrRepository? AttrRepository
-        {
-            get
-            {
-                if (_attrRepository == null)
-                {
-                    _attrRepository = new AttrRepository(DatabaseContext);
-                }
-
-                return _attrRepository;
-            }
-        }
-
-
-        private IAttrValueRepository? _attrValueRepository;
-        public IAttrValueRepository AttrValueRepository
-        {
-            get
-            {
-                if (_attrValueRepository == null)
-                {
-                    _attrValueRepository = new AttrValueRepository(DatabaseContext);
-                }
-
-                return _attrValueRepository;
             }
         }
         #endregion
@@ -542,21 +395,6 @@ namespace Persistence.Contracts
         #endregion
 
         #region ( Job )
-        private IJobBranchAttrRepository? _jobBranchAttrRepository;
-        public IJobBranchAttrRepository JobBranchAttrRepository
-        {
-            get
-            {
-                if (_jobBranchAttrRepository == null)
-                {
-                    _jobBranchAttrRepository = new JobBranchAttrRepository(DatabaseContext);
-                }
-
-                return _jobBranchAttrRepository;
-            }
-        }
-
-
         private IJobBranchRepository? _jobBranchRepository;
         public IJobBranchRepository JobBranchRepository
         {
@@ -584,7 +422,6 @@ namespace Persistence.Contracts
                 return _jobBranchRelatedJobRepository;
             }
         }
-
 
         private IJobBranchGalleryRepository? _jobBranchGalleryRepository;
         public IJobBranchGalleryRepository JobBranchGalleryRepository
@@ -734,6 +571,34 @@ namespace Persistence.Contracts
                 return _jobBranchAdsRepository;
             }
         }
+
+        private IJobKeywordRepository? _jobKeywordRepository;
+        public IJobKeywordRepository JobKeywordRepository
+        {
+            get
+            {
+                if (_jobKeywordRepository == null)
+                {
+                    _jobKeywordRepository = new JobKeywordRepository(DatabaseContext);
+                }
+
+                return _jobKeywordRepository;
+            }
+        }
+
+        private IKeywordRepository? _keywordRepository;
+        public IKeywordRepository KeywordRepository
+        {
+            get
+            {
+                if (_keywordRepository == null)
+                {
+                    _keywordRepository = new KeywordRepository(DatabaseContext);
+                }
+
+                return _keywordRepository;
+            }
+        }
         #endregion
 
         #region ( Location )
@@ -766,39 +631,30 @@ namespace Persistence.Contracts
                 return _mainSliderRepository;
             }
         }
+
+
         #endregion
 
-        #region ( Order )
-        private IOrderRepository? _orderRepository;
-        public IOrderRepository OrderRepository
+        #region ( Panel Tutorial )
+
+        private IPanelTutorialRepository? _panelTutorialRepository;
+
+        public IPanelTutorialRepository PanelTutorialRepository
         {
             get
             {
-                if (_orderRepository == null)
+                if (_panelTutorialRepository == null)
                 {
-                    _orderRepository = new OrderRepository(DatabaseContext);
+                    _panelTutorialRepository = new PanelTutorialRepository(DatabaseContext);
                 }
 
-                return _orderRepository;
+                return _panelTutorialRepository;
             }
         }
 
-        private IPromotionCodeRepository? _promotionCodeRepository;
-        public IPromotionCodeRepository PromotionCodeRepository
-        {
-            get
-            {
-                if (_promotionCodeRepository == null)
-                {
-                    _promotionCodeRepository = new PromotionCodeRepository(DatabaseContext);
-                }
-
-                return _promotionCodeRepository;
-            }
-        }
         #endregion
 
-        #region ( Payment Portal )
+        #region ( Payment )
         private IPaymentPortalRepository? _paymentPortalRepository;
         public IPaymentPortalRepository PaymentPortalRepository
         {
@@ -810,6 +666,34 @@ namespace Persistence.Contracts
                 }
 
                 return _paymentPortalRepository;
+            }
+        }
+
+        private IPaymentRepository _paymentRepository;
+        public IPaymentRepository PaymentRepository
+        {
+            get
+            {
+                if (_paymentRepository == null)
+                {
+                    _paymentRepository = new PaymentRepository(DatabaseContext);
+                }
+
+                return _paymentRepository;
+            }
+        }
+
+        private IPromotionCodeRepository _promotionCodeRepository;
+        public IPromotionCodeRepository PromotionCodeRepository
+        {
+            get
+            {
+                if (_promotionCodeRepository == null)
+                {
+                    _promotionCodeRepository = new PromotionCodeRepository(DatabaseContext);
+                }
+
+                return _promotionCodeRepository;
             }
         }
         #endregion
@@ -877,7 +761,6 @@ namespace Persistence.Contracts
             }
         }
 
-
         private IStateBaseRepository? _stateBaseRepository;
         public IStateBaseRepository StateBaseRepository
         {
@@ -891,6 +774,97 @@ namespace Persistence.Contracts
                 return _stateBaseRepository;
             }
         }
+        #endregion
+
+        #region ( Subscription )
+        private IClickRepository? _clickRepository;
+        public IClickRepository ClickRepository
+        {
+            get
+            {
+                if (_clickRepository == null)
+                {
+                    _clickRepository = new ClickRepository(DatabaseContext);
+                }
+
+                return _clickRepository;
+            }
+        }
+
+
+        private IFeatureRepository? _featureRepository;
+        public IFeatureRepository FeatureRepository
+        {
+            get
+            {
+                if (_featureRepository == null)
+                {
+                    _featureRepository = new FeatureRepository(DatabaseContext);
+                }
+
+                return _featureRepository;
+            }
+        }
+
+        private ISubscriptionRepository? _subscriptionRepository;
+        public ISubscriptionRepository SubscriptionRepository
+        {
+            get
+            {
+                if (_subscriptionRepository == null)
+                {
+                    _subscriptionRepository = new SubscriptionRepository(DatabaseContext);
+                }
+
+                return _subscriptionRepository;
+            }
+        }
+
+
+        private ISubscriptionFeatureRepository? _subscriptionFeatureRepository;
+        public ISubscriptionFeatureRepository SubscriptionFeatureRepository
+        {
+            get
+            {
+                if (_subscriptionFeatureRepository == null)
+                {
+                    _subscriptionFeatureRepository = new SubscriptionFeatureRepository(DatabaseContext);
+                }
+
+                return _subscriptionFeatureRepository;
+            }
+        }
+
+
+        private ISubscriptionClickRepository? _subscriptionClickRepository;
+        public ISubscriptionClickRepository SubscriptionClickRepository
+        {
+            get
+            {
+                if (_subscriptionClickRepository == null)
+                {
+                    _subscriptionClickRepository = new SubscriptionClickRepository(DatabaseContext);
+                }
+
+                return _subscriptionClickRepository;
+            }
+        }
+
+
+        private IUserSubscriptionRepository? _userSubscriptionRepository;
+        public IUserSubscriptionRepository UserSubscriptionRepository
+        {
+            get
+            {
+                if (_userSubscriptionRepository == null)
+                {
+                    _userSubscriptionRepository = new UserSubscriptionRepository(DatabaseContext);
+                }
+
+                return _userSubscriptionRepository;
+            }
+        }
+
         #endregion
 
         #region ( Tag )
@@ -921,52 +895,6 @@ namespace Persistence.Contracts
                 }
 
                 return _teamRepository;
-            }
-        }
-        #endregion
-
-        #region ( Transaction )
-        private ITransactionRepository? _transactionRepository;
-        public ITransactionRepository TransactionRepository
-        {
-            get
-            {
-                if (_transactionRepository == null)
-                {
-                    _transactionRepository = new TransactionRepository(DatabaseContext);
-                }
-
-                return _transactionRepository;
-            }
-        }
-
-
-        private IWalletRepository? _walletRepository;
-        public IWalletRepository WalletRepository
-        {
-            get
-            {
-                if (_walletRepository == null)
-                {
-                    _walletRepository = new WalletRepository(DatabaseContext);
-                }
-
-                return _walletRepository;
-            }
-        }
-
-
-        private IWalletTransactionRepository? _walletTransactionRepository;
-        public IWalletTransactionRepository WalletTransactionRepository
-        {
-            get
-            {
-                if (_walletTransactionRepository == null)
-                {
-                    _walletTransactionRepository = new WalletTransactionRepository(DatabaseContext);
-                }
-
-                return _walletTransactionRepository;
             }
         }
         #endregion
@@ -1107,7 +1035,51 @@ namespace Persistence.Contracts
         }
         #endregion
 
+        #region ( Wallet )
+        private ITransactionRepository? _transactionRepository;
+        public ITransactionRepository TransactionRepository
+        {
+            get
+            {
+                if (_transactionRepository == null)
+                {
+                    _transactionRepository = new TransactionRepository(DatabaseContext);
+                }
 
+                return _transactionRepository;
+            }
+        }
+
+
+        private IWalletRepository? _walletRepository;
+        public IWalletRepository WalletRepository
+        {
+            get
+            {
+                if (_walletRepository == null)
+                {
+                    _walletRepository = new WalletRepository(DatabaseContext);
+                }
+
+                return _walletRepository;
+            }
+        }
+
+
+        private IWalletTransactionRepository? _walletTransactionRepository;
+        public IWalletTransactionRepository WalletTransactionRepository
+        {
+            get
+            {
+                if (_walletTransactionRepository == null)
+                {
+                    _walletTransactionRepository = new WalletTransactionRepository(DatabaseContext);
+                }
+
+                return _walletTransactionRepository;
+            }
+        }
+        #endregion
         //AI Recommendation
 
         #region ( Action Histories )

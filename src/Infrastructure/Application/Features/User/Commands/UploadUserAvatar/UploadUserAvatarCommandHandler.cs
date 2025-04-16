@@ -1,16 +1,21 @@
-﻿namespace Application.Features.User.Commands.UploadUserAvatar;
+﻿using Domain.Entities.Job;
+
+namespace Application.Features.User.Commands.UploadUserAvatar;
 
 public class UploadUserAvatarCommandHandler : IRequestHandler<UploadUserAvatarCommand>
 {
     protected IMapper Mapper { get; }
     protected IUnitOfWork UnitOfWork { get; }
+    protected IFtpService FtpService { get; }
+
     protected UserManager<ApplicationUser> UserManager { get; }
 
-    public UploadUserAvatarCommandHandler(IMapper mapper, IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager)
+    public UploadUserAvatarCommandHandler(IMapper mapper, IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager, IFtpService ftpService)
     {
         Mapper = mapper;
         UnitOfWork = unitOfWork;
         UserManager = userManager;
+        FtpService = ftpService;
     }
 
     public async Task<Result> Handle(UploadUserAvatarCommand request, CancellationToken cancellationToken)
@@ -27,8 +32,11 @@ public class UploadUserAvatarCommandHandler : IRequestHandler<UploadUserAvatarCo
 
         avatar = user.Avatar ?? null;
 
-        var avatarName = request.Avatar
-            .SaveFileAndReturnName(Paths.UserServer, TypeFile.Image, null, null, null, avatar);
+        //var avatarName = request.Avatar
+        //    .SaveFileAndReturnName(Paths.UserServer, TypeFile.Image, null, null, null, avatar);
+
+        var avatarName = await FtpService.UploadFileToFtpServer(request.Avatar, TypeFile.Image, Paths.UserServer, request.Avatar.FileName, 777, null, null, null, avatar);
+
 
         user.Avatar = avatarName;
         user.UpdateDate = DateTime.Now;

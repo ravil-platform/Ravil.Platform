@@ -23,213 +23,6 @@ namespace Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Domain.Entities.Account.Account", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("AccountCategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("AccountLevelId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Discount")
-                        .HasColumnType("int");
-
-                    b.Property<double>("DiscountedPrice")
-                        .HasColumnType("float");
-
-                    b.Property<DateTime>("ExpireDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("ExpireDay")
-                        .HasColumnType("int");
-
-                    b.Property<string>("IconPicture")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsRecommended")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("LastDeleteBicycleDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("LastDeletePermanentDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("LastUpdateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Picture")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
-
-                    b.Property<int>("SalesCount")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Subtitle")
-                        .IsRequired()
-                        .HasMaxLength(350)
-                        .HasColumnType("nvarchar(350)");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(350)
-                        .HasColumnType("nvarchar(350)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AccountCategoryId");
-
-                    b.HasIndex("AccountLevelId");
-
-                    b.ToTable("Account", "dbo");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Account.AccountAttr", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AccountId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AttrId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool?>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("LastDeleteBicycleDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("LastDeletePermanentDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("LastUpdateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("ValueId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AccountId");
-
-                    b.HasIndex("AttrId");
-
-                    b.HasIndex("ValueId");
-
-                    b.ToTable("AccountAttr", "dbo");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Account.AccountCategory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime?>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("IconPicture")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("LastDeleteBicycleDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("LastDeletePermanentDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("LastUpdateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<short>("Sort")
-                        .HasColumnType("smallint");
-
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(350)
-                        .HasColumnType("nvarchar(350)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AccountCategory", "dbo");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Account.AccountLevel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime?>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool?>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("LastDeleteBicycleDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("LastDeletePermanentDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("LastUpdateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LevelStyle")
-                        .HasMaxLength(350)
-                        .HasColumnType("nvarchar(350)");
-
-                    b.Property<string>("LevelTitle")
-                        .IsRequired()
-                        .HasMaxLength(350)
-                        .HasColumnType("nvarchar(350)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AccountLevel", "dbo");
-                });
-
             modelBuilder.Entity("Domain.Entities.Address.Address", b =>
                 {
                     b.Property<string>("Id")
@@ -268,7 +61,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("UpdateDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2025, 4, 13, 9, 18, 57, 24, DateTimeKind.Local).AddTicks(2086));
+                        .HasDefaultValue(new DateTime(2025, 4, 16, 14, 43, 12, 444, DateTimeKind.Local).AddTicks(1925));
 
                     b.HasKey("Id");
 
@@ -284,204 +77,6 @@ namespace Persistence.Migrations
                     b.HasIndex("StateId");
 
                     b.ToTable("Address", "dbo");
-                });
-
-            modelBuilder.Entity("Domain.Entities.AdminTheme.AdminTheme", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Theme")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AdminTheme", "dbo");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Attr.Attr", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("AttrCategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AttrType")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Filter")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("IconHtmlCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("IconPicture")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("LastDeleteBicycleDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("LastDeletePermanentDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("LastUpdateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("ShowInPage")
-                        .HasColumnType("bit");
-
-                    b.Property<short>("Sort")
-                        .HasColumnType("smallint");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(350)
-                        .HasColumnType("nvarchar(350)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AttrCategoryId");
-
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("Attr", "dbo");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Attr.AttrAccount", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("AttrCategoryId")
-                        .IsRequired()
-                        .HasColumnType("int");
-
-                    b.Property<int>("AttrType")
-                        .HasColumnType("int");
-
-                    b.Property<string>("IconHtmlCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("IconPicture")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<short>("Sort")
-                        .HasColumnType("smallint");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(350)
-                        .HasColumnType("nvarchar(350)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AttrCategoryId");
-
-                    b.ToTable("AttrAccount", "dbo");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Attr.AttrAccountValue", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AttrAccountId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Sort")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Value")
-                        .IsRequired()
-                        .HasMaxLength(350)
-                        .HasColumnType("nvarchar(350)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AttrAccountId");
-
-                    b.ToTable("AttrAccountValue", "dbo");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Attr.AttrCategory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("IconPicture")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<short>("Sort")
-                        .HasColumnType("smallint");
-
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(350)
-                        .HasColumnType("nvarchar(350)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AttrCategory", "dbo");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Attr.AttrValue", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AttrId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Sort")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Value")
-                        .IsRequired()
-                        .HasMaxLength(350)
-                        .HasColumnType("nvarchar(350)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AttrId");
-
-                    b.ToTable("AttrValue", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.Banner.Banner", b =>
@@ -2254,34 +1849,6 @@ namespace Persistence.Migrations
                     b.ToTable("JobBranchAds", "dbo");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Job.JobBranchAttr", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AttrId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("JobBranchId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("ValueId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AttrId");
-
-                    b.HasIndex("JobBranchId");
-
-                    b.HasIndex("ValueId");
-
-                    b.ToTable("JobBranchAttr", "dbo");
-                });
-
             modelBuilder.Entity("Domain.Entities.Job.JobBranchGallery", b =>
                 {
                     b.Property<int>("Id")
@@ -2412,6 +1979,33 @@ namespace Persistence.Migrations
                     b.ToTable("JobCategory", "dbo");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Job.JobKeyword", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<int>("CostPerClick")
+                        .HasColumnType("int");
+
+                    b.Property<string>("JobBranchId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<Guid>("KeywordId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("JobBranchId");
+
+                    b.HasIndex("KeywordId");
+
+                    b.ToTable("JobKeyword", "dbo");
+                });
+
             modelBuilder.Entity("Domain.Entities.Job.JobSelectionSlider", b =>
                 {
                     b.Property<int>("Id")
@@ -2516,6 +2110,36 @@ namespace Persistence.Migrations
                     b.HasIndex("JobBranchId");
 
                     b.ToTable("JobTimeWork", "dbo");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Job.Keyword", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWSEQUENTIALID()");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Slug")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("Keyword", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.Location.Location", b =>
@@ -2629,104 +2253,97 @@ namespace Persistence.Migrations
                     b.ToTable("MainSlider", "dbo");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Order.Order", b =>
+            modelBuilder.Entity("Domain.Entities.PanelTutorial.PanelTutorial", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AccountId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("AdditionalInfo")
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CoverName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("AdminId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("AdminName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CookieValue")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Discount")
+                    b.Property<int>("Sort")
                         .HasColumnType("int");
 
-                    b.Property<double>("DiscountAmount")
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
+
+                    b.Property<string>("VideoName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PanelTutorial", "dbo");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Payment.Payment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWSEQUENTIALID()");
+
+                    b.Property<double>("Amount")
                         .HasColumnType("float");
 
-                    b.Property<DateTime>("ExpireDate")
+                    b.Property<DateTime>("PaymentDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ExpireDay")
+                    b.Property<int>("PaymentMethod")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsActiveAccount")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("JobBranchId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("JobId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("LastDeleteBicycleDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("LastDeletePermanentDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("LastUpdateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("OrderNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double?>("PaymentAmount")
-                        .IsRequired()
-                        .HasColumnType("float");
-
-                    b.Property<int?>("PaymentPortalId")
+                    b.Property<int>("PaymentPortalId")
                         .HasColumnType("int");
-
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
 
                     b.Property<int?>("PromotionCodeId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Status")
+                    b.Property<int>("UserSubscriptionId")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("AccountId");
-
-                    b.HasIndex("JobBranchId");
 
                     b.HasIndex("PaymentPortalId");
 
                     b.HasIndex("PromotionCodeId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserSubscriptionId");
 
-                    b.ToTable("Order", "dbo");
+                    b.ToTable("Payment", "dbo");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Order.PromotionCode", b =>
+            modelBuilder.Entity("Domain.Entities.Payment.PaymentPortal", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PictureName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PaymentPortal", "dbo");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Payment.PromotionCode", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -2790,32 +2407,6 @@ namespace Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("PromotionCode", "dbo");
-                });
-
-            modelBuilder.Entity("Domain.Entities.PaymentPortal.PaymentPortal", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Picture")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
-
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(350)
-                        .HasColumnType("nvarchar(350)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PaymentPortal", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.RedirectionUrl.RedirectionUrl", b =>
@@ -3001,6 +2592,272 @@ namespace Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("StateBase", "dbo");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Subscription.Click", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CostPerClick")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Click", "dbo");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CostPerClick = 30000,
+                            Title = "کلیک روی تبلیغات",
+                            Type = 0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CostPerClick = 15000,
+                            Title = "کلیک روی مسیریابی",
+                            Type = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CostPerClick = 20000,
+                            Title = "کلیک روی تماس",
+                            Type = 1
+                        });
+                });
+
+            modelBuilder.Entity("Domain.Entities.Subscription.Feature", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Feature", "dbo");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Subscription.Subscription", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("DurationTime")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DurationType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GiftCharge")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Icon")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SubTitle")
+                        .IsRequired()
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Subscription", "dbo");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DurationTime = 90,
+                            DurationType = 1,
+                            GiftCharge = 250000,
+                            Icon = "empty.webp",
+                            IsActive = true,
+                            Price = 50000000,
+                            SubTitle = "برای کسب‌وکارهای متوسط که رقیب‌های زیادی ندارند.",
+                            Title = "سه ماهه استاندارد"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DurationTime = 180,
+                            DurationType = 2,
+                            GiftCharge = 500000,
+                            Icon = "empty.webp",
+                            IsActive = true,
+                            Price = 100000000,
+                            SubTitle = "برای کسب‌وکارهای متوسط که رقیب‌های زیادی ندارند.",
+                            Title = "شش ماهه استاندارد"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            DurationTime = 365,
+                            DurationType = 3,
+                            GiftCharge = 1000000,
+                            Icon = "empty.webp",
+                            IsActive = true,
+                            Price = 200000000,
+                            SubTitle = "برای کسب‌وکارهای متوسط که رقیب‌های زیادی ندارند.",
+                            Title = "یک ساله استاندارد"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            DurationTime = 90,
+                            DurationType = 1,
+                            GiftCharge = 2500000,
+                            Icon = "empty.webp",
+                            IsActive = true,
+                            Price = 500000000,
+                            SubTitle = "برای کسب‌وکارهای که رقیب‌های زیادی دارند.",
+                            Title = "سه ماهه حرفه ای"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            DurationTime = 180,
+                            DurationType = 2,
+                            GiftCharge = 5000000,
+                            Icon = "empty.webp",
+                            IsActive = true,
+                            Price = 1000000000,
+                            SubTitle = "برای کسب‌وکارهای که رقیب‌های زیادی دارند.",
+                            Title = "شش ماهه حرفه ای"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            DurationTime = 365,
+                            DurationType = 3,
+                            GiftCharge = 10000000,
+                            Icon = "empty.webp",
+                            IsActive = true,
+                            Price = 2000000000,
+                            SubTitle = "برای کسب‌وکارهای که رقیب‌های زیادی دارند.",
+                            Title = "یک ساله حرفه ای"
+                        });
+                });
+
+            modelBuilder.Entity("Domain.Entities.Subscription.SubscriptionClick", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWSEQUENTIALID()");
+
+                    b.Property<int>("ClickId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ClickedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("SubscriptionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClickId");
+
+                    b.HasIndex("SubscriptionId");
+
+                    b.ToTable("SubscriptionClick", "dbo");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Subscription.SubscriptionFeature", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("FeatureId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SubscriptionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FeatureId");
+
+                    b.HasIndex("SubscriptionId");
+
+                    b.ToTable("SubscriptionFeature", "dbo");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Subscription.UserSubscription", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BuyCount")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("SubscriptionId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SubscriptionId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserSubscription", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entities.Tag.Tag", b =>
@@ -3275,7 +3132,7 @@ namespace Persistence.Migrations
                             Id = "05446344-f9cc-4566-bd2c-36791b4e28ed",
                             AccessFailedCount = 0,
                             BlockedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "f0b8766e-17f9-471e-8b7d-769a3ce427d3",
+                            ConcurrencyStamp = "2c7040b6-e71a-4517-ac5e-f36fe8b2df56",
                             Email = "admin@localhost.com",
                             EmailConfirmed = true,
                             ExpireTimeSpanBlock = 0,
@@ -3287,10 +3144,10 @@ namespace Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "ADMIN@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEKgGuSvO2BaE18x1gYIkn+dtabfpx9rSUv71MrUVDc84mZRA0swnK18hLTX66VS2xA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGmEDBvUGyqpScsORWRxYnevIARbhd2Qo2HvqfnVyPEv4J0p0XKMtLe0aK9l5ve0ZQ==",
                             PhoneNumberConfirmed = false,
-                            RegisterDate = new DateTime(2025, 4, 13, 9, 18, 57, 39, DateTimeKind.Local).AddTicks(3255),
-                            SecurityStamp = "67d69f8c-a83c-44aa-8b13-f902ffe4c6d8",
+                            RegisterDate = new DateTime(2025, 4, 16, 14, 43, 12, 460, DateTimeKind.Local).AddTicks(238),
+                            SecurityStamp = "6ee9b0ca-e57a-46c3-bac1-099601a0b85c",
                             TwoFactorEnabled = false,
                             UpdateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserIsBlocked = false,
@@ -3302,7 +3159,7 @@ namespace Persistence.Migrations
                             Id = "2ec9f480-7288-4d0f-a1cd-53cc89968b45",
                             AccessFailedCount = 0,
                             BlockedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "8009d613-9419-4e84-af3a-765a8ab9815f",
+                            ConcurrencyStamp = "3a7310a6-0fc2-40ed-9874-4856c14018c1",
                             Email = "user@localhost.com",
                             EmailConfirmed = true,
                             ExpireTimeSpanBlock = 0,
@@ -3314,10 +3171,10 @@ namespace Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "USER@LOCALHOST.COM",
                             NormalizedUserName = "USER@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAECFMY04BE8jUqkmJ7HO4Ia7fDtJk04F9gQYr8SZpp2grhXCFs5J/OzGESDzK5Sr8Zw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEDzV0CsAgyHDsPwGce+mdkXjxEr7HjO0xvys3XfOt+AmhKXEtQaEEB/uwM0tsZ3HDw==",
                             PhoneNumberConfirmed = false,
-                            RegisterDate = new DateTime(2025, 4, 13, 9, 18, 57, 85, DateTimeKind.Local).AddTicks(9455),
-                            SecurityStamp = "db36bd9a-a30b-4bf2-b0b2-90ea10e46879",
+                            RegisterDate = new DateTime(2025, 4, 16, 14, 43, 12, 505, DateTimeKind.Local).AddTicks(2739),
+                            SecurityStamp = "4bd00ad9-1716-4e65-96e9-748b6ef62e55",
                             TwoFactorEnabled = false,
                             UpdateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserIsBlocked = false,
@@ -3598,6 +3455,95 @@ namespace Persistence.Migrations
                     b.ToTable("UsersFeedbackSlider", "dbo");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Wallets.Transaction", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWSEQUENTIALID()");
+
+                    b.Property<string>("AuthCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("PaymentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("RefId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TrackingCode")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime>("TransactionDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PaymentId");
+
+                    b.ToTable("Transaction", "dbo");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Wallets.Wallet", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWSEQUENTIALID()");
+
+                    b.Property<string>("ApplicationUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<double>("Inventory")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId")
+                        .IsUnique();
+
+                    b.ToTable("Wallet", "dbo");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Wallets.WalletTransaction", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWSEQUENTIALID()");
+
+                    b.Property<double>("Amount")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("TransactionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("TransactionType")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("WalletId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TransactionId");
+
+                    b.HasIndex("WalletId");
+
+                    b.ToTable("WalletTransaction", "dbo");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -3745,48 +3691,6 @@ namespace Persistence.Migrations
                     b.ToTable("AspNetUserTokens", "dbo");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Account.Account", b =>
-                {
-                    b.HasOne("Domain.Entities.Account.AccountCategory", "AccountCategory")
-                        .WithMany("Accounts")
-                        .HasForeignKey("AccountCategoryId");
-
-                    b.HasOne("Domain.Entities.Account.AccountLevel", "AccountLevel")
-                        .WithMany("Accounts")
-                        .HasForeignKey("AccountLevelId");
-
-                    b.Navigation("AccountCategory");
-
-                    b.Navigation("AccountLevel");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Account.AccountAttr", b =>
-                {
-                    b.HasOne("Domain.Entities.Account.Account", "Account")
-                        .WithMany("AccountAttrs")
-                        .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.Attr.AttrAccount", "AttrAccount")
-                        .WithMany("AttrAccounts")
-                        .HasForeignKey("AttrId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.Attr.AttrAccountValue", "AttrAccountValue")
-                        .WithMany("AccountAttrs")
-                        .HasForeignKey("ValueId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Account");
-
-                    b.Navigation("AttrAccount");
-
-                    b.Navigation("AttrAccountValue");
-                });
-
             modelBuilder.Entity("Domain.Entities.Address.Address", b =>
                 {
                     b.HasOne("Domain.Entities.City.CityBase", "City")
@@ -3818,56 +3722,6 @@ namespace Persistence.Migrations
                     b.Navigation("Location");
 
                     b.Navigation("State");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Attr.Attr", b =>
-                {
-                    b.HasOne("Domain.Entities.Attr.AttrCategory", "AttrCategory")
-                        .WithMany("Attributes")
-                        .HasForeignKey("AttrCategoryId");
-
-                    b.HasOne("Domain.Entities.Category.Category", "Category")
-                        .WithMany("Attributes")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AttrCategory");
-
-                    b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Attr.AttrAccount", b =>
-                {
-                    b.HasOne("Domain.Entities.Attr.AttrCategory", "AttrCategory")
-                        .WithMany("AttributeAccounts")
-                        .HasForeignKey("AttrCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AttrCategory");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Attr.AttrAccountValue", b =>
-                {
-                    b.HasOne("Domain.Entities.Attr.AttrAccount", "AttrAccount")
-                        .WithMany("AttrAccountValues")
-                        .HasForeignKey("AttrAccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AttrAccount");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Attr.AttrValue", b =>
-                {
-                    b.HasOne("Domain.Entities.Attr.Attr", "Attr")
-                        .WithMany("AttrValues")
-                        .HasForeignKey("AttrId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Attr");
                 });
 
             modelBuilder.Entity("Domain.Entities.Banner.Banner", b =>
@@ -4088,32 +3942,6 @@ namespace Persistence.Migrations
                     b.Navigation("Job");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Job.JobBranchAttr", b =>
-                {
-                    b.HasOne("Domain.Entities.Attr.Attr", "Attr")
-                        .WithMany("AttrJobBranches")
-                        .HasForeignKey("AttrId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.Job.JobBranch", "JobBranch")
-                        .WithMany("JobBranchAttributes")
-                        .HasForeignKey("JobBranchId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.HasOne("Domain.Entities.Attr.AttrValue", "AttrValue")
-                        .WithMany("JobBranchAttrs")
-                        .HasForeignKey("ValueId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Attr");
-
-                    b.Navigation("AttrValue");
-
-                    b.Navigation("JobBranch");
-                });
-
             modelBuilder.Entity("Domain.Entities.Job.JobBranchGallery", b =>
                 {
                     b.HasOne("Domain.Entities.Job.JobBranch", "JobBranch")
@@ -4172,6 +4000,25 @@ namespace Persistence.Migrations
                     b.Navigation("Category");
 
                     b.Navigation("Job");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Job.JobKeyword", b =>
+                {
+                    b.HasOne("Domain.Entities.Job.JobBranch", "JobBranch")
+                        .WithMany("JobKeywords")
+                        .HasForeignKey("JobBranchId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Job.Keyword", "Keyword")
+                        .WithMany("JobKeywords")
+                        .HasForeignKey("KeywordId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("JobBranch");
+
+                    b.Navigation("Keyword");
                 });
 
             modelBuilder.Entity("Domain.Entities.Job.JobSelectionSlider", b =>
@@ -4242,6 +4089,17 @@ namespace Persistence.Migrations
                     b.Navigation("JobBranch");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Job.Keyword", b =>
+                {
+                    b.HasOne("Domain.Entities.Category.Category", "Category")
+                        .WithMany("Keywords")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
             modelBuilder.Entity("Domain.Entities.MainSlider.MainSlider", b =>
                 {
                     b.HasOne("Domain.Entities.City.CityBase", "City")
@@ -4269,41 +4127,29 @@ namespace Persistence.Migrations
                     b.Navigation("State");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Order.Order", b =>
+            modelBuilder.Entity("Domain.Entities.Payment.Payment", b =>
                 {
-                    b.HasOne("Domain.Entities.Account.Account", "Account")
-                        .WithMany("Orders")
-                        .HasForeignKey("AccountId")
+                    b.HasOne("Domain.Entities.Payment.PaymentPortal", "PaymentPortal")
+                        .WithMany("Payments")
+                        .HasForeignKey("PaymentPortalId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Job.JobBranch", "JobBranch")
-                        .WithMany("Orders")
-                        .HasForeignKey("JobBranchId");
-
-                    b.HasOne("Domain.Entities.PaymentPortal.PaymentPortal", "PaymentPortal")
-                        .WithMany()
-                        .HasForeignKey("PaymentPortalId");
-
-                    b.HasOne("Domain.Entities.Order.PromotionCode", "PromotionCode")
-                        .WithMany("Orders")
+                    b.HasOne("Domain.Entities.Payment.PromotionCode", "PromotionCode")
+                        .WithMany("Payments")
                         .HasForeignKey("PromotionCodeId");
 
-                    b.HasOne("Domain.Entities.User.ApplicationUser", "ApplicationUser")
-                        .WithMany("Orders")
-                        .HasForeignKey("UserId")
+                    b.HasOne("Domain.Entities.Subscription.UserSubscription", "UserSubscription")
+                        .WithMany("Payments")
+                        .HasForeignKey("UserSubscriptionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Account");
-
-                    b.Navigation("ApplicationUser");
-
-                    b.Navigation("JobBranch");
 
                     b.Navigation("PaymentPortal");
 
                     b.Navigation("PromotionCode");
+
+                    b.Navigation("UserSubscription");
                 });
 
             modelBuilder.Entity("Domain.Entities.State.State", b =>
@@ -4315,6 +4161,63 @@ namespace Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("StateBase");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Subscription.SubscriptionClick", b =>
+                {
+                    b.HasOne("Domain.Entities.Subscription.Click", "Click")
+                        .WithMany("SubscriptionClicks")
+                        .HasForeignKey("ClickId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Subscription.Subscription", "Subscription")
+                        .WithMany("SubscriptionClicks")
+                        .HasForeignKey("SubscriptionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Click");
+
+                    b.Navigation("Subscription");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Subscription.SubscriptionFeature", b =>
+                {
+                    b.HasOne("Domain.Entities.Subscription.Feature", "Feature")
+                        .WithMany("SubscriptionFeatures")
+                        .HasForeignKey("FeatureId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Subscription.Subscription", "Subscription")
+                        .WithMany("SubscriptionFeatures")
+                        .HasForeignKey("SubscriptionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Feature");
+
+                    b.Navigation("Subscription");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Subscription.UserSubscription", b =>
+                {
+                    b.HasOne("Domain.Entities.Subscription.Subscription", "Subscription")
+                        .WithMany("UserSubscriptions")
+                        .HasForeignKey("SubscriptionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.User.ApplicationUser", "User")
+                        .WithMany("UserSubscriptions")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Subscription");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Domain.Entities.User.ApplicationUser", b =>
@@ -4446,6 +4349,45 @@ namespace Persistence.Migrations
                     b.Navigation("JobBranch");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Wallets.Transaction", b =>
+                {
+                    b.HasOne("Domain.Entities.Payment.Payment", "Payment")
+                        .WithMany("Transactions")
+                        .HasForeignKey("PaymentId");
+
+                    b.Navigation("Payment");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Wallets.Wallet", b =>
+                {
+                    b.HasOne("Domain.Entities.User.ApplicationUser", "ApplicationUser")
+                        .WithOne("Wallet")
+                        .HasForeignKey("Domain.Entities.Wallets.Wallet", "ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ApplicationUser");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Wallets.WalletTransaction", b =>
+                {
+                    b.HasOne("Domain.Entities.Wallets.Transaction", "Transaction")
+                        .WithMany("WalletTransactions")
+                        .HasForeignKey("TransactionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Wallets.Wallet", "Wallet")
+                        .WithMany("WalletTransactions")
+                        .HasForeignKey("WalletId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Transaction");
+
+                    b.Navigation("Wallet");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -4497,54 +4439,6 @@ namespace Persistence.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Domain.Entities.Account.Account", b =>
-                {
-                    b.Navigation("AccountAttrs");
-
-                    b.Navigation("Orders");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Account.AccountCategory", b =>
-                {
-                    b.Navigation("Accounts");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Account.AccountLevel", b =>
-                {
-                    b.Navigation("Accounts");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Attr.Attr", b =>
-                {
-                    b.Navigation("AttrJobBranches");
-
-                    b.Navigation("AttrValues");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Attr.AttrAccount", b =>
-                {
-                    b.Navigation("AttrAccountValues");
-
-                    b.Navigation("AttrAccounts");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Attr.AttrAccountValue", b =>
-                {
-                    b.Navigation("AccountAttrs");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Attr.AttrCategory", b =>
-                {
-                    b.Navigation("AttributeAccounts");
-
-                    b.Navigation("Attributes");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Attr.AttrValue", b =>
-                {
-                    b.Navigation("JobBranchAttrs");
-                });
-
             modelBuilder.Entity("Domain.Entities.Banner.Banner", b =>
                 {
                     b.Navigation("UserBannerClicks");
@@ -4575,8 +4469,6 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.Category.Category", b =>
                 {
-                    b.Navigation("Attributes");
-
                     b.Navigation("CategoryServices");
 
                     b.Navigation("CategoryTags");
@@ -4586,6 +4478,8 @@ namespace Persistence.Migrations
                     b.Navigation("FaqJobCategories");
 
                     b.Navigation("JobCategories");
+
+                    b.Navigation("Keywords");
                 });
 
             modelBuilder.Entity("Domain.Entities.City.City", b =>
@@ -4645,13 +4539,13 @@ namespace Persistence.Migrations
 
                     b.Navigation("Comments");
 
-                    b.Navigation("JobBranchAttributes");
-
                     b.Navigation("JobBranchGalleries");
 
                     b.Navigation("JobBranchShortLinks");
 
                     b.Navigation("JobBranchTags");
+
+                    b.Navigation("JobKeywords");
 
                     b.Navigation("JobSelectionSliders");
 
@@ -4663,9 +4557,12 @@ namespace Persistence.Migrations
 
                     b.Navigation("MainSliders");
 
-                    b.Navigation("Orders");
-
                     b.Navigation("UsersFeedbackSliders");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Job.Keyword", b =>
+                {
+                    b.Navigation("JobKeywords");
                 });
 
             modelBuilder.Entity("Domain.Entities.Location.Location", b =>
@@ -4673,9 +4570,19 @@ namespace Persistence.Migrations
                     b.Navigation("Address");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Order.PromotionCode", b =>
+            modelBuilder.Entity("Domain.Entities.Payment.Payment", b =>
                 {
-                    b.Navigation("Orders");
+                    b.Navigation("Transactions");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Payment.PaymentPortal", b =>
+                {
+                    b.Navigation("Payments");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Payment.PromotionCode", b =>
+                {
+                    b.Navigation("Payments");
                 });
 
             modelBuilder.Entity("Domain.Entities.Service.Service", b =>
@@ -4707,6 +4614,30 @@ namespace Persistence.Migrations
                     b.Navigation("UserAddresses");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Subscription.Click", b =>
+                {
+                    b.Navigation("SubscriptionClicks");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Subscription.Feature", b =>
+                {
+                    b.Navigation("SubscriptionFeatures");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Subscription.Subscription", b =>
+                {
+                    b.Navigation("SubscriptionClicks");
+
+                    b.Navigation("SubscriptionFeatures");
+
+                    b.Navigation("UserSubscriptions");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Subscription.UserSubscription", b =>
+                {
+                    b.Navigation("Payments");
+                });
+
             modelBuilder.Entity("Domain.Entities.Tag.Tag", b =>
                 {
                     b.Navigation("BlogTags");
@@ -4724,8 +4655,6 @@ namespace Persistence.Migrations
 
                     b.Navigation("JobBranches");
 
-                    b.Navigation("Orders");
-
                     b.Navigation("UserAddresses");
 
                     b.Navigation("UserBannerClicks");
@@ -4735,6 +4664,21 @@ namespace Persistence.Migrations
                     b.Navigation("UserBlogLikes");
 
                     b.Navigation("UserBookMarks");
+
+                    b.Navigation("UserSubscriptions");
+
+                    b.Navigation("Wallet")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Entities.Wallets.Transaction", b =>
+                {
+                    b.Navigation("WalletTransactions");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Wallets.Wallet", b =>
+                {
+                    b.Navigation("WalletTransactions");
                 });
 #pragma warning restore 612, 618
         }

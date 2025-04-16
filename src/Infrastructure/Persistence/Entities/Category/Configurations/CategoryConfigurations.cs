@@ -24,16 +24,10 @@
 
             //relations 
             builder
-                .HasMany(a => a.Attributes)
-                .WithOne(a => a.Category)
-                .HasForeignKey(a => a.CategoryId)
-                .IsRequired();
-
-            builder
-                .HasMany(a => a.CategoryServices)
-                .WithOne(a => a.Category)
-                .HasForeignKey(a => a.CategoryId)
-                .IsRequired();
+                  .HasMany(a => a.CategoryServices)
+                  .WithOne(a => a.Category)
+                  .HasForeignKey(a => a.CategoryId)
+                  .IsRequired();
 
             builder
                 .HasMany(c => c.CityCategories)

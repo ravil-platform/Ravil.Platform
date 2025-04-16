@@ -79,12 +79,6 @@ namespace Persistence.Entities.User.Configurations
                 .IsRequired(false);
 
             builder
-                .HasMany(u => u.Orders)
-                .WithOne(o => o.ApplicationUser)
-                .HasForeignKey(o => o.UserId)
-                .IsRequired();
-
-            builder
                 .HasMany(u => u.Comments)
                 .WithOne(o => o.ApplicationUser)
                 .HasForeignKey(o => o.UserId)

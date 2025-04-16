@@ -1,28 +1,16 @@
-﻿namespace Persistence.Contracts
+﻿using Persistence.Entities.PanelTutorial.Repositories;
+using Persistence.Entities.Payment.Repositories;
+using Persistence.Entities.Subscription.Repositories.Implementations;
+using Persistence.Entities.Subscription.Repositories.Interfaces;
+using Persistence.Entities.Wallet.Repositories;
+using IPaymentPortalRepository = Persistence.Entities.PaymentPortal.Repositories.IPaymentPortalRepository;
+
+namespace Persistence.Contracts
 {
     public interface IUnitOfWork : RNX.Persistence.IUnitOfWork
     {
-        #region  ( Account )
-        public IAccountAttrRepository AccountAttrRepository { get; }
-        public IAccountCategoryRepository AccountCategoryRepository { get; }
-        public IAccountLevelRepository AccountLevelRepository { get; }
-        public IAccountRepository AccountRepository { get; }
-        #endregion
-
         #region ( Address )
         public IAddressRepository AddressRepository { get; }
-        #endregion
-
-        #region ( Admin Theme )
-        public IAdminThemeRepository AdminThemeRepository { get; }
-        #endregion
-
-        #region ( Attr )
-        public IAttrAccountRepository AttrAccountRepository { get; }
-        public IAttrAccountValueRepository AttrAccountValueRepository { get; }
-        public IAttrCategoryRepository AttrCategoryRepository { get; }
-        public IAttrRepository AttrRepository { get; }
-        public IAttrValueRepository AttrValueRepository { get; }
         #endregion
 
         #region ( Banner )
@@ -83,7 +71,6 @@
         #endregion
 
         #region ( Job )
-        public IJobBranchAttrRepository JobBranchAttrRepository { get; }
         public IJobBranchRepository JobBranchRepository { get; }
         public IJobBranchRelatedJobRepository JobBranchRelatedJobRepository { get; }
         public IJobBranchGalleryRepository JobBranchGalleryRepository { get; }
@@ -96,6 +83,8 @@
         public IJobTagRepository JobTagRepository { get; }
         public IJobTimeWorkRepository JobTimeWorkRepository { get; }
         public IJobBranchAdsRepository JobBranchAdsRepository { get; }
+        public IJobKeywordRepository JobKeywordRepository { get; }
+        public IKeywordRepository KeywordRepository { get; }
         #endregion
 
         #region ( Location )
@@ -106,13 +95,14 @@
         public IMainSliderRepository MainSliderRepository { get; }
         #endregion
 
-        #region ( Order )
-        public IOrderRepository OrderRepository { get; }
-        public IPromotionCodeRepository PromotionCodeRepository { get; }
+        #region ( Pannel Tutorial )
+        public IPanelTutorialRepository PanelTutorialRepository { get; }
         #endregion
 
-        #region ( Payment Portal )
+        #region ( Payment )
+        public IPromotionCodeRepository PromotionCodeRepository { get; }
         public IPaymentPortalRepository PaymentPortalRepository { get; }
+        public IPaymentRepository PaymentRepository { get; }
         #endregion
 
         #region ( Redirection Url )
@@ -132,18 +122,21 @@
         public IStateBaseRepository StateBaseRepository { get; }
         #endregion
 
+        #region ( Subscription ) 
+        public IClickRepository ClickRepository { get; }
+        public IFeatureRepository FeatureRepository { get; }
+        public ISubscriptionRepository SubscriptionRepository { get; }
+        public ISubscriptionFeatureRepository SubscriptionFeatureRepository { get; }
+        public ISubscriptionClickRepository SubscriptionClickRepository { get; }
+        public IUserSubscriptionRepository UserSubscriptionRepository { get; }
+        #endregion
+
         #region ( Tag )
         public ITagRepository TagRepository { get; }
         #endregion
 
         #region ( Team )
         public ITeamRepository TeamRepository { get; }
-        #endregion
-
-        #region ( Transaction )
-        public ITransactionRepository TransactionRepository { get; }
-        public IWalletRepository WalletRepository { get; }
-        public IWalletTransactionRepository WalletTransactionRepository { get; }
         #endregion
 
         #region ( Uploaded File )
@@ -166,6 +159,11 @@
         public IUserTokensRepository UserTokensRepository { get; }
         #endregion
 
+        #region ( Wallet )
+        public ITransactionRepository TransactionRepository { get; }
+        public IWalletRepository WalletRepository { get; }
+        public IWalletTransactionRepository WalletTransactionRepository { get; }
+        #endregion
 
         //AI Recommendation
 

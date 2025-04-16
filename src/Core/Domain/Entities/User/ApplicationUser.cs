@@ -1,4 +1,7 @@
-﻿namespace Domain.Entities.User
+﻿using Domain.Entities.Subscription;
+using Domain.Entities.Wallets;
+
+namespace Domain.Entities.User
 {
     public class ApplicationUser : IdentityUser , IEntity
     {
@@ -53,18 +56,18 @@
         public int? CityBaseId { get; set; }
         public virtual CityBase CityBase { get; set; }
 
-        //public virtual Wallet Wallet { get; set; }
+        public virtual Wallet Wallet { get; set; }
 
-        public virtual ICollection<Order.Order> Orders { get; set; }
         public virtual ICollection<Comment.Comment> Comments { get; set; }
         public virtual ICollection<JobBranch> JobBranches { get; set; }
-        //public virtual ICollection<Transaction.Transaction> Transactions { get; set; }
 
         public virtual ICollection<UserAddress> UserAddresses { get; set; }
         public virtual ICollection<UserBookMark> UserBookMarks { get; set; }
         public virtual ICollection<UserBlogLike> UserBlogLikes { get; set; }
         public virtual ICollection<UserBannerView> UserBannerViews { get; set; }
         public virtual ICollection<UserBannerClick> UserBannerClicks { get; set; }
+
+        public virtual ICollection<UserSubscription> UserSubscriptions { get; set; }
         #endregion
     }
 }

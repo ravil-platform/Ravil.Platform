@@ -1,4 +1,10 @@
-﻿namespace Persistence.Context
+﻿using Domain.Entities.PanelTutorial;
+using Domain.Entities.Payment;
+using Domain.Entities.Subscription;
+using Domain.Entities.Wallets;
+using Persistence.Entities.Address.Configurations;
+
+namespace Persistence.Context
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
@@ -15,27 +21,8 @@
         #endregion
 
         #region ( Database Set )
-        #region ( Account )
-        public DbSet<Account> Account { get; set; }
-        public DbSet<AccountAttr> AccountAttr { get; set; }
-        public DbSet<AccountLevel> AccountLevel { get; set; }
-        public DbSet<AccountCategory> AccountCategory { get; set; }
-        #endregion
-
         #region ( Address )
         public DbSet<Address> Address { get; set; }
-        #endregion
-
-        #region ( Admin Theme )
-        public DbSet<AdminTheme> AdminTheme { get; set; }
-        #endregion
-
-        #region ( Attr )
-        public DbSet<Attr> Attr { get; set; }
-        public DbSet<AttrAccount> AttrAccount { get; set; }
-        public DbSet<AttrAccountValue> AttrAccountValue { get; set; }
-        public DbSet<AttrCategory> AttrCategory { get; set; }
-        public DbSet<AttrValue> AttrValue { get; set; }
         #endregion
 
         #region ( Banner )
@@ -100,19 +87,19 @@
         public DbSet<JobTag> JobTag { get; set; }
         public DbSet<JobBranch> JobBranch { get; set; }
         public DbSet<JobBranchTag> JobBranchTag { get; set; }
-        public DbSet<JobBranchAttr> JobBranchAttr { get; set; }
         public DbSet<JobCategory> JobCategory { get; set; }
         public DbSet<JobSelectionSlider> JobSelectionSlider { get; set; }
         public DbSet<JobBranchShortLink> JobBranchShortLink { get; set; }
         public DbSet<JobBranchRelatedJob> JobBranchRelatedJobs { get; set; }
         public DbSet<JobBranchAds> JobBranchAds { get; set; }
         public DbSet<JobBranchGallery> JobBranchGallery { get; set; }
-        //public DbSet<JobCategoryAttr> JobCategoryAttr { get; set; }
         public DbSet<JobTimeWork> JobTimeWork { get; set; }
         public DbSet<JobService> JobService { get; set; }
-        //public DbSet<JobLocation> JobLocation { get; set; }
-        //public DbSet<JobRanking> JobRanking { get; set; }
         public DbSet<JobCategoriesView> JobCategoriesView { get; set; }
+
+        public DbSet<JobKeyword> JobKeyword { get; set; }
+        public DbSet<Keyword> Keyword { get; set; }
+
         #endregion
 
         #region ( Location )
@@ -123,12 +110,13 @@
         public DbSet<MainSlider> MainSlider { get; set; }
         #endregion
 
-        #region ( Order )
-        public DbSet<Order> Order { get; set; }
-        public DbSet<PromotionCode> PromotionCode { get; set; }
+        #region ( Panel Tutorial )
+        public DbSet<PanelTutorial> PanelTutorial { get; set; }
         #endregion
 
-        #region ( Payment Portal )
+        #region ( Payment )
+        public DbSet<PromotionCode> PromotionCode { get; set; }
+        public DbSet<Payment> Payment { get; set; }
         public DbSet<PaymentPortal> PaymentPortal { get; set; }
         #endregion
 
@@ -149,6 +137,15 @@
         public DbSet<State> State { get; set; }
         #endregion
 
+        #region ( Subscription )
+        public DbSet<Click> Click { get; set; }
+        public DbSet<Feature> Feature { get; set; }
+        public DbSet<Subscription> Subscription { get; set; }
+        public DbSet<SubscriptionClick> SubscriptionClick { get; set; }
+        public DbSet<SubscriptionFeature> SubscriptionFeature { get; set; }
+        public DbSet<UserSubscription> UserSubscription { get; set; }
+        #endregion
+
         #region ( Tag )
         public DbSet<Tag> Tag { get; set; }
         #endregion
@@ -163,9 +160,9 @@
         #endregion
 
         #region ( Transaction )
-        //public DbSet<Transaction> Transaction { get; set; }
-        //public DbSet<Wallet> Wallets { get; set; }
-        //public DbSet<WalletTransaction> WalletTransactions { get; set; }
+        public DbSet<Transaction> Transaction { get; set; }
+        public DbSet<Wallet> Wallet { get; set; }
+        public DbSet<WalletTransaction> WalletTransaction { get; set; }
         #endregion
 
         #region ( Uploaded Files )
@@ -209,17 +206,6 @@
             modelBuilder.Entity<UserAddress>().HasOne(i => i.ApplicationUser)
                 .WithMany(a => a.UserAddresses).OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity<AccountAttr>().HasOne(i => i.Account)
-                .WithMany(a => a.AccountAttrs).OnDelete(DeleteBehavior.NoAction);
-            modelBuilder.Entity<AccountAttr>().HasOne(i => i.AttrAccountValue)
-                .WithMany(a => a.AccountAttrs).OnDelete(DeleteBehavior.NoAction);
-
-            modelBuilder.Entity<JobBranchAttr>().HasOne(i => i.JobBranch)
-                .WithMany(a => a.JobBranchAttributes).OnDelete(DeleteBehavior.NoAction);
-            modelBuilder.Entity<JobBranchAttr>().HasOne(i => i.AttrValue)
-                .WithMany(a => a.JobBranchAttrs).OnDelete(DeleteBehavior.NoAction);
-
-
             /// 
             modelBuilder
                 .Entity<JobCategoriesView>(
@@ -231,7 +217,7 @@
             /// 
 
             modelBuilder.AddSequentialGuidForIdConvention();
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(AccountConfigurations).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(AddressConfigurations).Assembly);
             modelBuilder.HasDefaultSchema(DatabaseSchemas.Dbo);
         }
     }

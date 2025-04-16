@@ -92,3 +92,4 @@ global using ViewModels.QueriesResponseViewModel.Tag;
 global using ViewModels.QueriesResponseViewModel.Team;
 global using ViewModels.QueriesResponseViewModel.User;
 global using ViewModels.QueriesResponseViewModel.FeedbackSlider;
+global using Common.Utilities.Services.FTP;
