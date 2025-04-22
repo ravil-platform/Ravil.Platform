@@ -2,13 +2,19 @@
 
 public class RegisterOrLoginUserCommandHandler : IRequestHandler<RegisterOrLoginUserCommand, RegisterOrLoginUserResponseViewModel>
 {
-    protected IUnitOfWork UnitOfWork { get; }
+    #region ( Dependencies )
+
     protected IMapper Mapper { get; }
-    protected IJwtService JwtService { get; }
     protected ISmsSender SmsSender { get; }
+    protected IUnitOfWork UnitOfWork { get; }
+    protected IJwtService JwtService { get; }
+    protected IHttpContextAccessor HttpContextAccessor { get; }
     protected UserManager<ApplicationUser> UserManager { get; }
     protected SignInManager<ApplicationUser> SignInManager { get; }
-    protected IHttpContextAccessor HttpContextAccessor { get; }
+
+    #endregion
+
+    #region ( Constructor )
 
     public RegisterOrLoginUserCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IJwtService jwtService, ISmsSender smsSender, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IHttpContextAccessor httpContextAccessor)
     {
@@ -21,9 +27,12 @@ public class RegisterOrLoginUserCommandHandler : IRequestHandler<RegisterOrLogin
         HttpContextAccessor = httpContextAccessor;
     }
 
+    #endregion
 
     public async Task<Result<RegisterOrLoginUserResponseViewModel>> Handle(RegisterOrLoginUserCommand request, CancellationToken cancellationToken)
     {
+        #region ( Register Or Login User Command )
+
         var result = new Result<RegisterOrLoginUserResponseViewModel>();
 
         #region ( Check LogedIn User )
@@ -254,6 +263,8 @@ public class RegisterOrLoginUserCommandHandler : IRequestHandler<RegisterOrLogin
             }
             #endregion
         }
+        #endregion
+
         #endregion
     }
 }

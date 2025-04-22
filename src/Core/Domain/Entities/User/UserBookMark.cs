@@ -2,7 +2,7 @@
 {
     public class UserBookMark : Entity
     {
-        #region (Fields
+        #region (Fields)
         public UserBookMarkType UserBookMarkType { get; set; }
 
         public int? BlogId { get; set; }

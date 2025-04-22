@@ -21,6 +21,7 @@ public class GetUserJobBranchesQueryHandler : IRequestHandler<GetUserJobBranches
             .ThenInclude(j => j.Category)
             .Include(j => j.Comments)
             .Include(j => j.JobUserBookMarks)
+            .Where(a => a.Job.Status == JobBranchStatus.Accepted)
             .ProjectTo<UserJobBranchesViewModel>(Mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
 

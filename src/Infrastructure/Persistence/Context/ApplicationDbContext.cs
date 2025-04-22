@@ -90,7 +90,7 @@ namespace Persistence.Context
         public DbSet<JobCategory> JobCategory { get; set; }
         public DbSet<JobSelectionSlider> JobSelectionSlider { get; set; }
         public DbSet<JobBranchShortLink> JobBranchShortLink { get; set; }
-        public DbSet<JobBranchRelatedJob> JobBranchRelatedJobs { get; set; }
+        public DbSet<JobBranchRelatedJob> JobBranchRelatedJob { get; set; }
         public DbSet<JobBranchAds> JobBranchAds { get; set; }
         public DbSet<JobBranchGallery> JobBranchGallery { get; set; }
         public DbSet<JobTimeWork> JobTimeWork { get; set; }

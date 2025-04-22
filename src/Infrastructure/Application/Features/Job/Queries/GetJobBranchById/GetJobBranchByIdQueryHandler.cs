@@ -22,7 +22,7 @@ public class GetJobBranchByIdQueryHandler : IRequestHandler<GetJobBranchByIdQuer
 
         if (result is null)
         {
-            throw new NotFoundException();
+            return Result.Fail(Resources.Messages.Validations.NotFoundException);
         }
 
         var jobBranchViewModel = Mapper.Map<JobBranchViewModel>(result);

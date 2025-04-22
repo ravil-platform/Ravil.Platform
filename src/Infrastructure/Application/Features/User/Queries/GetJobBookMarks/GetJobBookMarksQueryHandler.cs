@@ -20,24 +20,20 @@ public class GetJobBookMarksQueryHandler : IRequestHandler<GetJobBookMarksQuery,
             .Where(current => current.UserId.Equals(request.UserId))
             .ToListAsync(cancellationToken: cancellationToken);
 
-        if (userBookMarks is null)
-        {
+        if (userBookMarks.Any())
             return Result.Fail(Resources.Messages.Validations.NotFound);
-        }
-            
+
         var jobBranches = await UnitOfWork.JobBranchRepository.TableNoTracking
             .Include(a => a.Job).Include(a => a.JobBranchGalleries)
             .Include(a => a.Address).ThenInclude(a => a.Location)
             .Where(j => userBookMarks.Select(a => a.JobBranchId).Contains(j.Id))
             .ToListAsync(cancellationToken: cancellationToken);
 
-        if (jobBranches is null)
-        {
+        if (jobBranches.Any())
             return Result.Fail(Resources.Messages.Validations.NotFound);
-        }
+
 
         var result = Mapper.Map<List<JobBranchViewModel>>(jobBranches);
-
         return result;
     }
 }

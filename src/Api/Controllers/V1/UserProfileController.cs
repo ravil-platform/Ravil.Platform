@@ -117,7 +117,7 @@ namespace Api.Controllers.V1
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
-        [HttpDelete(Routes.Action)]
+        [HttpPost(Routes.Action)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> RemoveBookMark(RemoveBookMarkCommand command)

@@ -132,7 +132,7 @@ public class CategoryRepository : Repository<Domain.Entities.Category.Category>,
 
             parents = parents.OrderBy(a => a.NodeLevel).ToList();
 
-            return parents.FirstOrDefault(a => a.NodeLevel == 2 && !string.IsNullOrWhiteSpace(a.Picture))?.Picture ?? category.Picture;
+            return parents.FirstOrDefault(a => a.NodeLevel >= 2 && !string.IsNullOrWhiteSpace(a.Picture))?.Picture ?? category.Picture;
         }
 
         return category.Picture;

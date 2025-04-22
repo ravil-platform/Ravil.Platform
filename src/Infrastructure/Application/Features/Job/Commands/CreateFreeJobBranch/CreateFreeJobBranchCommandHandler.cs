@@ -1,15 +1,23 @@
-﻿using Common.Utilities.Services.FTP;
+﻿using System.Collections;
 
 namespace Application.Features.Job.Commands.CreateFreeJobBranch;
 
-public class CreateFreeJobBranchCommandHandler(IMapper mapper, IUnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor, UserManager<ApplicationUser> userManager, IFtpService ftpService)
+public class CreateFreeJobBranchCommandHandler(IMapper mapper, IUnitOfWork unitOfWork, ISmsSender smsSender,
+    IHttpContextAccessor httpContextAccessor, UserManager<ApplicationUser> userManager, IFtpService ftpService,
+    Logging.Base.ILogger<CreateFreeJobBranchCommandHandler> logger)
     : IRequestHandler<CreateFreeJobBranchCommand, JobBranchViewModel>
 {
+    #region ( Dependencies )
+
     protected IMapper Mapper { get; } = mapper;
+    protected ISmsSender SmsSender { get; } = smsSender;
     protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
-    protected IHttpContextAccessor HttpContextAccessor { get; } = httpContextAccessor;
-    protected UserManager<ApplicationUser> UserManager { get; } = userManager;
     protected IFtpService FtpService { get; } = ftpService;
+    protected UserManager<ApplicationUser> UserManager { get; } = userManager;
+    protected IHttpContextAccessor HttpContextAccessor { get; } = httpContextAccessor;
+    protected Logging.Base.ILogger<CreateFreeJobBranchCommandHandler> Logger { get; } = logger;
+
+    #endregion
 
     public async Task<Result<JobBranchViewModel>> Handle(CreateFreeJobBranchCommand request, CancellationToken cancellationToken)
     {
@@ -93,7 +101,7 @@ public class CreateFreeJobBranchCommandHandler(IMapper mapper, IUnitOfWork unitO
 
             #region ( JobTimeWork )
 
-            if (request.JobTimeWork != null)
+            if (request.JobTimeWork != null && request.JobTimeWork.Any())
             {
                 if (request.JobBranch.JobTimeWorkType.Equals(JobTimeWorkType.WorkSomeTime) && request.JobTimeWork.Count > 0)
                 {
@@ -194,6 +202,7 @@ public class CreateFreeJobBranchCommandHandler(IMapper mapper, IUnitOfWork unitO
             #endregion
 
             #region ( Implement Location (Address) )
+
             var location = new Location
             {
                 Lat = request.Lat,
@@ -228,6 +237,33 @@ public class CreateFreeJobBranchCommandHandler(IMapper mapper, IUnitOfWork unitO
             #endregion
 
             await UnitOfWork.JobRepository.CommitTransactionAsync();
+
+            #region ( Send Sms For User And Admin )
+
+            if (!string.IsNullOrWhiteSpace(request.JobBranch.UserId))
+            {
+                var userInfo = await UnitOfWork.ApplicationUserRepository.GetByPredicate(u => u.Id.Equals(request.JobBranch.UserId));
+                var number = await UnitOfWork.ConfigRepository.TableNoTracking.Select(c => c.OrderNotificationPhoneNumber).FirstAsync(cancellationToken);
+
+                if (userInfo is not null && !string.IsNullOrWhiteSpace(number))
+                {
+                    var responseSms = await SmsSender.SendPattern(request.JobBranch.UserId, string.Empty, "addJobToAdmin");
+                    if (!responseSms.Equals("ok"))
+                    {
+                        var parameters = new Hashtable
+                        {
+                            { nameof(request.JobBranch.UserId),  request.JobBranch.UserId},
+                            { nameof(request.JobBranch.Title),  request.JobBranch.Title},
+                            { nameof(userInfo.Firstname),  userInfo.Firstname},
+                            { nameof(userInfo.Lastname),  userInfo.Lastname},
+                            { nameof(number),  number}
+                        };
+                        Logger.LogError(message: "عملیات ارسال پیامک موفقیت آمیز نبود", parameters: parameters);
+                    }
+                }
+            }
+
+            #endregion
 
             var jobBranchViewModel = Mapper.Map<JobBranchViewModel>(jobBranch);
 

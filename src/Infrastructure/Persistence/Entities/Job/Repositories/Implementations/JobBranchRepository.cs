@@ -18,7 +18,7 @@ public class JobBranchRepository : Repository<JobBranch>, IJobBranchRepository
             .Where(a => a.IsDeleted != null && !a.IsDeleted.Value)
             .Where(a => a.Job.Status == JobBranchStatus.Accepted);
 
-        var relatedCities = await ApplicationDbContext.JobBranchRelatedJobs.AsNoTracking()
+        var relatedCities = await ApplicationDbContext.JobBranchRelatedJob.AsNoTracking()
             .Where(j => j.CurrentCityId == cityId)
             .OrderBy(j => j.Sort)
             .ToListAsync();

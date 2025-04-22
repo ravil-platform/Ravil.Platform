@@ -23,6 +23,8 @@
 
         public int AverageRate { get; set; }
 
+        public JobBranchStatus Status { get; set; }
+
         #region Contact Informations
         public List<PhoneNumberInfosViewModel> PhoneNumberInfos { get; set; } //Json Format (PhoneNumberInfosVm)
 

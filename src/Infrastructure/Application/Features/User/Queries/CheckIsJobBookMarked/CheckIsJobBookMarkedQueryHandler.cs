@@ -1,7 +1,4 @@
-﻿using Domain.Entities.Blog;
-using Domain.Entities.User;
-
-namespace Application.Features.User.Queries.CheckIsJobBookMarked;
+﻿namespace Application.Features.User.Queries.CheckIsJobBookMarked;
 
 public class CheckIsJobBookMarkedQueryHandler : IRequestHandler<CheckIsJobBookMarkedQuery, UserJobBookMarkViewModel>
 {
@@ -18,6 +15,8 @@ public class CheckIsJobBookMarkedQueryHandler : IRequestHandler<CheckIsJobBookMa
 
     public async Task<Result<UserJobBookMarkViewModel>> Handle(CheckIsJobBookMarkedQuery request, CancellationToken cancellationToken)
     {
+        #region ( Check Is Job BookMarked )
+
         var jobBranch = await UnitOfWork.JobBranchRepository.TableNoTracking.Include(a => a.JobUserBookMarks)
             .SingleOrDefaultAsync(b => b.Id == request.JobBranchId, cancellationToken: cancellationToken);
         
@@ -38,7 +37,7 @@ public class CheckIsJobBookMarkedQueryHandler : IRequestHandler<CheckIsJobBookMa
             return result;
         }
 
-        var userJobBookMark = jobBranch.JobUserBookMarks!.SingleOrDefault(a => a.UserId.Equals(request.UserId));
+        var userJobBookMark = jobBranch.JobUserBookMarks!.FirstOrDefault(a => a.UserId.Equals(request.UserId));
         
         if (userJobBookMark is not null)
         {
@@ -56,5 +55,7 @@ public class CheckIsJobBookMarkedQueryHandler : IRequestHandler<CheckIsJobBookMa
 
             return result;
         }
+
+        #endregion
     }
 }
