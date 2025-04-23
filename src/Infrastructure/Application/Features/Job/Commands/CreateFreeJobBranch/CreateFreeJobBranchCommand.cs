@@ -41,7 +41,7 @@
         
         public int StateId { get; set; }
         public int CityId { get; set; }
-
-        public List<JobTimeWorkViewModel>? JobTimeWork { get; set; }
+        
+        public string? JobTimeWork { get; set; }
     }
 }

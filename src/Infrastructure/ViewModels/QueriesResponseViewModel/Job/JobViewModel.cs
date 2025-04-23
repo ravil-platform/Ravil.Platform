@@ -1,4 +1,6 @@
-﻿namespace ViewModels.QueriesResponseViewModel.Job
+﻿using System.Text.Json.Serialization;
+
+namespace ViewModels.QueriesResponseViewModel.Job
 {
     public class JobViewModel
     {
@@ -44,9 +46,11 @@
         {
             //PhoneNumberType = PhoneNumberTypes.PhoneNumberTel;
         }
-        
+
+        [JsonPropertyName("phoneNumber")]
         public string PhoneNumber { get; set; }
 
+        [JsonPropertyName("phoneNumberType")]
         public PhoneNumberTypes? PhoneNumberType { get; set; }
     }
 
@@ -57,8 +61,10 @@
             //SocialMediaType = SocialMediaTypes.Telegram;
         }
 
+        [JsonPropertyName("socialMediaLink")]
         public string SocialMediaLink { get; set; }
 
+        [JsonPropertyName("socialMediaType")]
         public SocialMediaTypes? SocialMediaType { get; set; }
     }
 }

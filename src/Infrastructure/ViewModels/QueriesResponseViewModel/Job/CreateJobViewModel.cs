@@ -20,9 +20,9 @@
 
         public string? WebSiteName { get; set; }
 
-        public List<SocialMediaInfosViewModel>? SocialMediaInfos { get; set; }
+        public string? SocialMediaInfos { get; set; }
 
-        public List<PhoneNumberInfosViewModel>? PhoneNumberInfos { get; set; }
+        public string? PhoneNumberInfos { get; set; }
 
         public bool? ShowPhoneTelInSite { get; set; }
 

@@ -43,7 +43,6 @@ namespace Application
 
             services.AddTransient<JwtCustomValidation>();
             services.AddTransient<IJwtService, JwtService>();
-            services.AddSingleton<IFtpService, FtpService>();
             services.AddTransient<ISmsSender, SmsSender>();
             services.AddHttpClient<NeshanApiService>();
 

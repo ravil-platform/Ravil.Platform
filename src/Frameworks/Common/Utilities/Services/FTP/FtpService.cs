@@ -128,6 +128,7 @@ public class FtpService : object, IFtpService
     #endregion
 
     #region ( Upload File To FtpServer )
+    
     /// <summary>
     /// ذخیره فایل و بازگشت نام فایل
     /// </summary>
@@ -203,11 +204,11 @@ public class FtpService : object, IFtpService
             #region  ( Delete Old File )
             if (!string.IsNullOrEmpty(deleteFileName))
             {
-                var fullPath = originSavePath + deleteFileName;
+                var fullPath = segmentSeperatorSingle + rootDirectory + originSavePath + deleteFileName;
 
                 if (FtpClient.FileExists(fullPath)) FtpClient.DeleteFile(fullPath);
 
-                var fullThumbPath = thumbSavePath + deleteFileName;
+                var fullThumbPath = segmentSeperatorSingle + rootDirectory + thumbSavePath + deleteFileName;
 
                 if (!string.IsNullOrEmpty(thumbSavePath))
                 {
@@ -217,13 +218,21 @@ public class FtpService : object, IFtpService
             #endregion
 
             #region ( Set FileName )
+
             string fileExtension = Path.GetExtension(file.FileName);
             string randomChar = Strings.RandomString();
             string fileName;
 
             if (!string.IsNullOrWhiteSpace(originSaveFilename))
             {
-                fileName = Path.GetFileNameWithoutExtension(file.FileName) + randomChar + fileExtension;
+                if (typeFile == TypeFile.Video)
+                {
+                    fileName = Path.GetFileNameWithoutExtension(originSaveFilename) + randomChar + fileExtension;
+                }
+                else
+                {
+                    fileName = Path.GetFileNameWithoutExtension(file.FileName) + randomChar + fileExtension;
+                }
             }
             else fileName = Path.GetRandomFileName() + fileExtension;
 
@@ -233,6 +242,7 @@ public class FtpService : object, IFtpService
             #endregion
 
             #region  ( Create Current File )
+
             var originPath = segmentSeperatorSingle + rootDirectory + originSavePath + fileName;
             var response = FtpClient.UploadStream(file.OpenReadStream(), originPath, FtpRemoteExists.Overwrite, true);
             if (response == FtpStatus.Failed)
@@ -258,12 +268,17 @@ public class FtpService : object, IFtpService
                 ImageResizer(originPath, thumbSavePath, extensionTypeFile, fileExtension, resizeWidth, resizeHeight);
             };
             #endregion
+
             #endregion
+
+            DisconnectAsync();
+            //FtpClient.Dispose();
 
             return fileName;
         }
-        catch
+        catch (Exception e)
         {
+            Logger.LogError(e, e.InnerException?.Message ?? e.Message);
             throw new FileLoadException();
         }
     }
@@ -294,6 +309,7 @@ public class FtpService : object, IFtpService
     #endregion
 
     #region ( Download File From FtpServer )
+
     /// <summary>
     /// دانلود فایل و بازگشت وضعیت عملیات
     /// </summary>
@@ -311,14 +327,72 @@ public class FtpService : object, IFtpService
             if (!hasConnect) throw new FtpInvalidCertificateException("is not Connected");
             #endregion
 
-            var inputFileStream = FtpClient.DownloadStream(stream, inputImagePath, progress: progress => { });
-            if (!inputFileStream) return false;
+            bool fileExists = FtpClient.FileExists(inputImagePath);
+            if (!fileExists)
+            {
+                throw new FileNotFoundException($"The file '{inputImagePath}' does not exist on the FTP server.");
+            }
+
+            var originPath = segmentSeperatorSingle + rootDirectory + inputImagePath;
+            var inputFileStream = FtpClient.DownloadStream(stream, originPath, progress: progress => { });
+            if (!inputFileStream)
+            {
+                DisconnectAsync();
+                // ReSharper disable once DisposeOnUsingVariable
+                await stream.DisposeAsync();
+
+                return false;
+            }
         }
         catch (FtpException exception)
         {
             DisconnectAsync();
+            FtpClient.Dispose();
             // ReSharper disable once DisposeOnUsingVariable
             await stream.DisposeAsync();
+
+            Logger.LogError(exception, exception.InnerException?.Message ?? exception.Message);
+
+            return false;
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// دانلود فایل و بازگشت وضعیت عملیات
+    /// </summary>
+    /// <param name="localFilePath">فایل مورد نظر</param>
+    /// <param name="ftpFilePath"> مسیر ذخیره فایل اصلی</param>
+    /// <returns>status of download file operation</returns>
+    /// <exception cref="ArgumentNullException"></exception>
+    public async Task<bool> DownloadFileFromFtpServer(string localFilePath, string ftpFilePath)
+    {
+        try
+        {
+            #region  ( Set Ftp Connection )
+            var hasConnect = await SetFtpConnection(ftpFilePath);
+            if (!hasConnect) throw new FtpInvalidCertificateException("is not Connected");
+            #endregion
+
+            bool fileExists = FtpClient.FileExists(ftpFilePath);
+            if (!fileExists)
+            {
+                throw new FileNotFoundException($"The file '{ftpFilePath}' does not exist on the FTP server.");
+            }
+
+            var originPath = segmentSeperatorSingle + rootDirectory + ftpFilePath;
+            var inputFile = FtpClient.DownloadFile(localFilePath, originPath, progress: progress => { });
+            if (inputFile != FtpStatus.Success)
+            {
+                DisconnectAsync();
+                return false;
+            }
+        }
+        catch (FtpException exception)
+        {
+            DisconnectAsync();
+            FtpClient.Dispose();
 
             Logger.LogError(exception, exception.InnerException?.Message ?? exception.Message);
 

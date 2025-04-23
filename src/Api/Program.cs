@@ -1,4 +1,6 @@
 using Common.Utilities.ModelState;
+using Common.Utilities.Services.FTP;
+using Common.Utilities.Services.FTP.Models;
 using Constants.Security;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,8 +8,8 @@ var services = builder.Services;
 var configuration = builder.Configuration;
 var environment = builder.Environment;
 
+services.Configure<FTPConnectionOptions>(configuration.GetSection(nameof(FTPConnectionOptions)));
 var _siteSetting = configuration.GetSection(nameof(SiteSettings)).Get<SiteSettings>();
-
 services.Configure<SiteSettings>(configuration.GetSection(nameof(SiteSettings)));
 
 services.AddControllers().ConfigureApiBehaviorOptions(option =>
@@ -24,6 +26,7 @@ services.AddControllers().ConfigureApiBehaviorOptions(option =>
 services.AddEndpointsApiExplorer();
 services.AddApplicationServices(configuration, environment, _siteSetting.JwtSettings);
 services.AddPersistenceServices(configuration);
+services.AddSingleton<IFtpService, FtpService>();
 
 services.AddSwaggerDocumentation();
 

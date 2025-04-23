@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Application.Features.Job.Commands.CreateFreeJobBranch;
 
@@ -32,13 +33,13 @@ public class CreateFreeJobBranchCommandHandler(IMapper mapper, IUnitOfWork unitO
 
             if (request.Job.SocialMediaInfos != null)
             {
-                job.SocialMediaInfos = request.Job.SocialMediaInfos.All(a => !string.IsNullOrWhiteSpace(a.SocialMediaLink))
-                    ? System.Text.Json.JsonSerializer.Serialize(request.Job.SocialMediaInfos) : string.Empty;
+                var socialMediaInfos = JsonSerializer.Deserialize<List<SocialMediaInfosViewModel>>(request.Job.SocialMediaInfos.Replace(@"\", ""));
+                job.SocialMediaInfos = socialMediaInfos is not null ? System.Text.Json.JsonSerializer.Serialize(socialMediaInfos) : string.Empty;
             }
             if (request.Job.PhoneNumberInfos != null)
             {
-                job.PhoneNumberInfos = request.Job.PhoneNumberInfos.All(a => !string.IsNullOrWhiteSpace(a.PhoneNumber))
-                    ? System.Text.Json.JsonSerializer.Serialize(request.Job.PhoneNumberInfos) : string.Empty;
+                var phoneNumberInfos = JsonSerializer.Deserialize<List<PhoneNumberInfosViewModel>>(request.Job.PhoneNumberInfos.Replace(@"\", ""));
+                job.PhoneNumberInfos = phoneNumberInfos is not null ? System.Text.Json.JsonSerializer.Serialize(phoneNumberInfos) : string.Empty;
             }
 
             job.Route = !string.IsNullOrWhiteSpace(request.Job.Route) ? request.Job.Route : request.Job.Title;
@@ -101,11 +102,12 @@ public class CreateFreeJobBranchCommandHandler(IMapper mapper, IUnitOfWork unitO
 
             #region ( JobTimeWork )
 
-            if (request.JobTimeWork != null && request.JobTimeWork.Any())
+            if (request.JobTimeWork is { Length: > 0 })
             {
-                if (request.JobBranch.JobTimeWorkType.Equals(JobTimeWorkType.WorkSomeTime) && request.JobTimeWork.Count > 0)
+                var jobTimeWorks = JsonSerializer.Deserialize<List<JobTimeWorkViewModel>>(request.JobTimeWork);
+                if (request.JobBranch.JobTimeWorkType.Equals(JobTimeWorkType.WorkSomeTime) && jobTimeWorks != null)
                 {
-                    foreach (var item in request.JobTimeWork)
+                    foreach (var item in jobTimeWorks)
                     {
                         if (item is { StartTime: not null, EndTime: not null })
                         {
@@ -158,7 +160,8 @@ public class CreateFreeJobBranchCommandHandler(IMapper mapper, IUnitOfWork unitO
             {
                 foreach (var image in request.JobBranch.Gallery)
                 {
-                    var fileName = await FtpService.UploadFileToFtpServer(image, TypeFile.Image, Paths.JobBranchGallery + jobBranch.Id, image.FileName);
+                    string originSavePath = string.Format("{0}{1}/", Paths.JobBranchGallery, jobBranch.Id);
+                    var fileName = await FtpService.UploadFileToFtpServer(image, TypeFile.Image, originSavePath, image.FileName);
 
                     //var fileName = image.SaveFileAndReturnName(Paths.JobBranchGalleryServer + jobBranch.Id, TypeFile.Image);
 
@@ -171,9 +174,11 @@ public class CreateFreeJobBranchCommandHandler(IMapper mapper, IUnitOfWork unitO
             #endregion
 
             #region ( Job Branch Images )
+
             if (request.JobBranch.LargePictureFile is not null)
             {
-                var largePictureName = await FtpService.UploadFileToFtpServer(request.JobBranch.LargePictureFile, TypeFile.Image, Paths.JobBranch + jobBranch.Id, request.JobBranch.LargePictureFile.FileName);
+                string originSavePath = string.Format("{0}{1}/", Paths.JobBranch, jobBranch.Id);
+                var largePictureName = await FtpService.UploadFileToFtpServer(request.JobBranch.LargePictureFile, TypeFile.Image, originSavePath, request.JobBranch.LargePictureFile.FileName);
 
                 //var largePictureName = request.JobBranch.LargePictureFile.SaveFileAndReturnName(Paths.JobBranchImageServer + jobBranch.Id, TypeFile.Image);
 
@@ -182,7 +187,8 @@ public class CreateFreeJobBranchCommandHandler(IMapper mapper, IUnitOfWork unitO
 
             if (request.JobBranch.SmallPictureFile is not null)
             {
-                var smallPictureName = await FtpService.UploadFileToFtpServer(request.JobBranch.SmallPictureFile, TypeFile.Image, Paths.JobBranch + jobBranch.Id, request.JobBranch.SmallPictureFile.FileName);
+                string originSavePath = string.Format("{0}{1}/", Paths.JobBranch, jobBranch.Id);
+                var smallPictureName = await FtpService.UploadFileToFtpServer(request.JobBranch.SmallPictureFile, TypeFile.Image, originSavePath, request.JobBranch.SmallPictureFile.FileName);
 
                 //var smallPictureName = request.JobBranch.SmallPictureFile.SaveFileAndReturnName(Paths.JobBranchImageServer + jobBranch.Id, TypeFile.Image);
 
@@ -191,7 +197,8 @@ public class CreateFreeJobBranchCommandHandler(IMapper mapper, IUnitOfWork unitO
 
             if (request.JobBranch.BranchVideo is not null)
             {
-                var branchVideoName = await FtpService.UploadFileToFtpServer(request.JobBranch.BranchVideo, TypeFile.Video, Paths.JobBranchVideo + jobBranch.Id, request.JobBranch.BranchVideo.FileName);
+                string originSavePath = string.Format("{0}{1}/", Paths.JobBranchVideo, jobBranch.Id);
+                var branchVideoName = await FtpService.UploadFileToFtpServer(request.JobBranch.BranchVideo, TypeFile.Video, originSavePath, request.JobBranch.BranchVideo.FileName);
 
                 //var branchVideoName = request.JobBranch.BranchVideo.SaveFileAndReturnName(Paths.JobBranchVideoServer + jobBranch.Id, TypeFile.Video);
 
