@@ -21,7 +21,17 @@
         public JobTimeWorkType JobTimeWorkType { get; set; }
         public string? UserId { get; set; }
         public string? AddressId { get; set; }
-        
+
+        #region ( Meta SEO Props )
+
+        public string? MetaTitle { get; set; }
+        public string? MetaDesc { get; set; }
+        public bool IndexMeta { get; set; }
+        public bool CanonicalMeta { get; set; }
+        public string? MetaCanonicalUrl { get; set; }
+
+        #endregion
+
         public JobInfoViewModel JobInfo { get; set; }
         public AddressViewModel Address { get; set; }
         public List<CategoryListViewModel> Categories { get; set; }

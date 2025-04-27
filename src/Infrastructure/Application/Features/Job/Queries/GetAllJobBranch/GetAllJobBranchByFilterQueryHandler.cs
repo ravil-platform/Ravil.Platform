@@ -18,10 +18,30 @@ public class GetAllJobBranchByFilterQueryHandler : IRequestHandler<GetAllJobBran
         request.Step ??= 24;
         JobBranchFilter = Mapper.Map<JobBranchFilter>(request);
 
-        var jobsId = await UnitOfWork.JobCategoryRepository.TableNoTracking
-            .Where(j => j.CategoryId == request.CategoryId)
-            .Select(a => a.JobId)
-            .ToListAsync(cancellationToken: cancellationToken);
+        List<int> jobsId;
+        var category = await UnitOfWork.CategoryRepository.TableNoTracking
+            .Where(j => j.Id == request.CategoryId)
+            .SingleOrDefaultAsync(cancellationToken: cancellationToken);
+
+        if (category is null)
+            return Result.Fail(Resources.Messages.Validations.NotFoundException);
+
+        if (category is { NodeLevel: 2 })
+        {
+            jobsId = await UnitOfWork.JobCategoryRepository.TableNoTracking
+                .Include(a => a.Category)
+                .Where(j => j.Category.ParentId == request.CategoryId)
+                .OrderBy(a => a.Category.Sort)
+                .Select(a => a.JobId)
+                .ToListAsync(cancellationToken: cancellationToken);
+        }
+        else
+        {
+            jobsId = await UnitOfWork.JobCategoryRepository.TableNoTracking
+                .Where(j => j.CategoryId == request.CategoryId)
+                .Select(a => a.JobId)
+                .ToListAsync(cancellationToken: cancellationToken);
+        }
         
         var baseJobsId = jobsId.Distinct();
         var jobBranchQuery = UnitOfWork.JobBranchRepository.TableNoTracking
@@ -66,10 +86,14 @@ public class GetAllJobBranchByFilterQueryHandler : IRequestHandler<GetAllJobBran
             {
                 var take = 20 - JobBranchFilter.EntitiesCount;
 
-                var parentId = await UnitOfWork.CategoryRepository.TableNoTracking
-                    .Where(j => j.Id == request.CategoryId)
-                    .Select(a => a.ParentId)
-                    .FirstOrDefaultAsync(cancellationToken: cancellationToken);
+                int parentId = category.Id;
+                if (category.NodeLevel != 2)
+                {
+                    parentId = await UnitOfWork.CategoryRepository.TableNoTracking
+                        .Where(j => j.Id == request.CategoryId)
+                        .Select(a => a.ParentId)
+                        .FirstOrDefaultAsync(cancellationToken: cancellationToken);
+                }
 
                 var relatedCategoryJobsId = await UnitOfWork.JobCategoryRepository.TableNoTracking
                     .Include(a => a.Category)
