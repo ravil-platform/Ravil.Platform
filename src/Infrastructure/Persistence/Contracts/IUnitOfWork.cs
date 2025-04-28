@@ -1,11 +1,4 @@
-﻿using Persistence.Entities.PanelTutorial.Repositories;
-using Persistence.Entities.Payment.Repositories;
-using Persistence.Entities.Subscription.Repositories.Implementations;
-using Persistence.Entities.Subscription.Repositories.Interfaces;
-using Persistence.Entities.Wallet.Repositories;
-using IPaymentPortalRepository = Persistence.Entities.PaymentPortal.Repositories.IPaymentPortalRepository;
-
-namespace Persistence.Contracts
+﻿namespace Persistence.Contracts
 {
     public interface IUnitOfWork : RNX.Persistence.IUnitOfWork
     {
@@ -85,6 +78,10 @@ namespace Persistence.Contracts
         public IJobBranchAdsRepository JobBranchAdsRepository { get; }
         public IJobKeywordRepository JobKeywordRepository { get; }
         public IKeywordRepository KeywordRepository { get; }
+
+        public IJobRankingRepository JobRankingRepository { get; }
+        public IJobInfoRepository JobInfoRepository { get; }
+
         #endregion
 
         #region ( Location )
@@ -93,6 +90,10 @@ namespace Persistence.Contracts
 
         #region ( Main Slider )
         public IMainSliderRepository MainSliderRepository { get; }
+        #endregion
+
+        #region ( Message Box )
+        public IMessageBoxRepository MessageBoxRepository { get; }
         #endregion
 
         #region ( Pannel Tutorial )

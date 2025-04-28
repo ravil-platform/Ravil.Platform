@@ -4,7 +4,7 @@ public class ShortLinkConfigurations : IEntityTypeConfiguration<Domain.Entities.
 {
     public void Configure(EntityTypeBuilder<Domain.Entities.ShortLink.ShortLink> builder)
     {
-        builder.ToTable("ShortLink", DatabaseSchemas.ShortLinks);
+        builder.ToTable("ShortLink", DatabaseSchemas.Shared);
 
         builder.HasKey(s => s.Id);
         builder.Property(s => s.ShortKey).IsRequired().HasMaxLength(MaxLength.ShortLinkLength);

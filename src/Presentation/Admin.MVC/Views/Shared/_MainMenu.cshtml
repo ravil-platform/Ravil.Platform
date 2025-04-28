@@ -23,7 +23,7 @@
 			</li>
 
 			<li class=" navigation-header">
-				<span>کاربران</span>
+				<span>کاربران </span>
 			</li>
 
 			<li class="nav-item">
@@ -35,10 +35,44 @@
 				</ul>
 			</li>
 
+			<li class="navigation-header">
+				<span> خریداران اشتراک های سایت </span>
+			</li>
+
+			<li class="nav-item">
+				<a><i class="menu-livicon" data-icon="rocket"></i><span class="menu-title" data-i18n="Invoice">مدیریت اشتراک ها</span></a>
+				<ul class="menu-content">
+					<li class="@(selected == "SellSubscription" ? "active" : "null")">
+						<a asp-controller="Subscription" asp-action="SellSubscriptionToUser"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">فروش سریع</span></a>
+					</li>
+
+					<li class="@(selected == "UserSubscription_Index" ? "active" : "null")">
+						<a asp-controller="Subscription" asp-action="IndexUserSubscription"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">لیست مشتریان</span></a>
+					</li>
+				</ul>
+			</li>
+
+
+			<li class="navigation-header">
+				<span>کیف پول کاربران</span>
+			</li>
+
+			<li class="nav-item">
+				<a><i class="menu-livicon" data-icon="rocket"></i><span class="menu-title" data-i18n="Invoice">مدیریت کیف پول ها</span></a>
+				<ul class="menu-content">
+					<li class="@(selected == "ChargeWallet" ? "active" : "null")">
+						<a asp-controller="Wallet" asp-action="ChargeWallet"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">شارژ سریع</span></a>
+					</li>
+
+					<li class="@(selected == "Wallet_Index" ? "active" : "null")">
+						<a asp-controller="Wallet" asp-action="Index"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">مشاهده لیست</span></a>
+					</li>
+				</ul>
+			</li>
+
 			<li class=" navigation-header">
 				<span>دسته بندی و کسب و کار ها</span>
 			</li>
-
 
 			<li class="nav-item">
 				<a><i class="menu-livicon" data-icon="home"></i><span class="menu-title" data-i18n="Invoice">مدیریت کسب و کار</span></a>
@@ -105,8 +139,6 @@
 					</li>
 				</ul>
 			</li>
-
-
 
 			<li class="navigation-header">
 				<span>درخواست مشاوره و تماس با ما</span>
@@ -251,17 +283,42 @@
 				</ul>
 			</li>
 
+
 			<li class="navigation-header">
-				<span>تنظیمات و پیکربندی سایت</span>
+				<span>پرداخت و درگاه ها</span>
 			</li>
 
-			<li class="nav-item  @(selected == "Configs_Index" ? "active" : "null")">
-				<a asp-controller="Config" asp-action="IndexConfig"><i class="menu-livicon" data-icon="gear"></i><span class="menu-title" data-i18n="Disabled Menu">اطلاعات پایه</span></a>
+			<li class="nav-item">
+				<a><i class="menu-livicon" data-icon="rocket"></i><span class="menu-title" data-i18n="Invoice">مدیریت پرداخت ها</span></a>
+				<ul class="menu-content">
+					<li class="@(selected == "PaymentPortals_Index" ? "active" : "null")">
+						<a asp-controller="Payment" asp-action="IndexPaymentPortal"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">درگاه ها</span></a>
+					</li>
+					<li class="@(selected == "Payments_Index" ? "active" : "null")">
+						<a asp-controller="Payment" asp-action="Index"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">لیست پرداخت ها</span></a>
+					</li>
+
+				</ul>
 			</li>
 
-			<li class="nav-item  @(selected == "Configs_IndexPageInformation" ? "active" : "null")">
-				<a asp-controller="Config" asp-action="IndexConfigPageInformation"><i class="menu-livicon" data-icon="gear"></i><span class="menu-title" data-i18n="Disabled Menu">اطلاعات صفحات</span></a>
+
+			<li class="navigation-header">
+				<span> اشتراک و ویژگی ها </span>
 			</li>
+
+			<li class="nav-item">
+				<a><i class="menu-livicon" data-icon="rocket"></i><span class="menu-title" data-i18n="Invoice">مدیریت اشتراک ها</span></a>
+				<ul class="menu-content">
+					<li class="@(selected == "Subscriptions_Index" ? "active" : "null")">
+						<a asp-controller="Subscription" asp-action="Index"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">اشتراک ها</span></a>
+					</li>
+
+					<li class="@(selected == "Features_Index" ? "active" : "null")">
+						<a asp-controller="Subscription" asp-action="IndexFeature"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">ویژگی ها</span></a>
+					</li>
+				</ul>
+			</li>
+
 
 			<li class="navigation-header">
 				<span>دسترسی سریع موارد SEO</span>
@@ -289,15 +346,20 @@
 			</li>
 
 			<li class="navigation-header">
+				<span>تنظیمات و پیکربندی سایت</span>
+			</li>
+
+			<li class="nav-item  @(selected == "Configs_Index" ? "active" : "null")">
+				<a asp-controller="Config" asp-action="IndexConfig"><i class="menu-livicon" data-icon="gear"></i><span class="menu-title" data-i18n="Disabled Menu">اطلاعات پایه</span></a>
+			</li>
+
+			<li class="nav-item  @(selected == "Configs_IndexPageInformation" ? "active" : "null")">
+				<a asp-controller="Config" asp-action="IndexConfigPageInformation"><i class="menu-livicon" data-icon="gear"></i><span class="menu-title" data-i18n="Disabled Menu">اطلاعات صفحات</span></a>
+			</li>
+
+
+			<li class="navigation-header">
 				<span>غیرفعال ...</span>
-			</li>
-
-			<li class="nav-item disabled ">
-				<a href="#"><i class="menu-livicon" data-icon="clock"></i><span class="menu-title" data-i18n="Disabled Menu">پلنینگ و فروش اکانت</span></a>
-			</li>
-
-			<li class="nav-item disabled ">
-				<a href="#"><i class="menu-livicon" data-icon="clock"></i><span class="menu-title" data-i18n="Disabled Menu">سفارشات و تراکنش ها</span></a>
 			</li>
 
 			<li class="nav-item disabled ">

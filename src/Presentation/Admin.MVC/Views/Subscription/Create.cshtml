@@ -1,0 +1,188 @@
+﻿@using Constants.Files
+@using Domain.Entities.Subscription
+@using Enums
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model ViewModels.AdminPanel.Subscription.CreateSubscriptionViewModel
+
+@{
+	ViewData["Title"] = "ثبت اشتراک جدید";
+	ViewData["selected"] = "Subscriptions_Create";
+	var features = (List<Feature>)ViewData["features"]!;
+}
+
+<section>
+	<div class="card">
+		<div class="card-content">
+			<div class="card-body">
+				<ul class="nav nav-tabs mb-2">
+					<li class="nav-item current">
+						<a class="nav-link d-flex align-items-center active">
+							<i class='bx bx-task'></i><span class="d-none d-sm-block">اشتراک</span>
+						</a>
+					</li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane active">
+						<form method="post" enctype="multipart/form-data">
+							<input type="hidden" asp-for="IsActive" value="true" />
+							<div class="card-title-details d-flex align-items-center mb-1 ml-1">
+								<div>
+									<div class="avatar bg-rgba-primary p-25 mr-2 ml-0">
+										<img id="selected-picture" class="img-fluid" src="@Paths.DefaultsImagePath/PlaceHolder.svg" height="100" width="100">
+									</div>
+									<div class="mt-n25">
+										<h5>تصویر انتخاب شده</h5>
+										<p class="text-info">راهنمای سایز :W: x-px * H: x-px </p>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-12 col-md-12 mb-1">
+									<fieldset>
+										<div class="input-group">
+											<div class="custom-file">
+												<input asp-for="Icon" type="file" class="custom-file-input" accept=".jpg,.png,.jpeg,.gif,.webp">
+												<label class="custom-file-label">انتخاب آیکن</label>
+											</div>
+										</div>
+									</fieldset>
+									<div class="help-block">
+										<span asp-validation-for="Icon" class="text-danger"></span>
+									</div>
+								</div>
+
+
+
+								<div class="col-12 col-sm-6 col-lg-3">
+									<div class="form-group">
+										<div class="controls">
+											<span class="text-danger">*</span>
+											<label asp-for="Title"></label>
+											<input asp-for="Title" type="text" class="form-control text-left">
+											<div class="help-block">
+												<span asp-validation-for="Title" class="text-danger"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-12 col-sm-6 col-lg-3">
+									<div class="form-group">
+										<div class="controls">
+											<span class="text-danger">*</span>
+											<label asp-for="SubTitle"></label>
+											<input asp-for="SubTitle" type="text" class="form-control text-left">
+											<div class="help-block">
+												<span asp-validation-for="SubTitle" class="text-danger"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+
+
+								<div class="col-12 col-sm-6 col-lg-3">
+									<div class="form-group">
+										<div class="controls">
+											<span class="text-danger">*</span>
+											<label asp-for="Price"></label>
+											<input asp-for="Price" type="number" class="form-control text-right">
+											<div class="help-block">
+												<span asp-validation-for="Price" class="text-danger"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-12 col-sm-6 col-lg-3">
+									<div class="form-group">
+										<div class="controls">
+											<span class="text-danger">*</span>
+											<label asp-for="GiftCharge"></label>
+											<input asp-for="GiftCharge" type="number" class="form-control text-right">
+											<div class="help-block">
+												<span asp-validation-for="GiftCharge" class="text-danger"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-12 col-sm-6 col-lg-4">
+									<div class="form-group">
+										<div class="controls">
+											<span class="text-danger">*</span>
+											<label asp-for="DurationTime"></label>
+											<input asp-for="DurationTime" type="number" class="form-control text-right">
+											<div class="help-block">
+												<span asp-validation-for="DurationTime" class="text-danger"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-12 col-sm-6 col-lg-4">
+									<div class="form-group">
+										<div class="controls">
+											<label asp-for="Features"></label>
+											<select asp-for="Features" class="select2 form-control" multiple>
+												@if (features.Any() && features.Count > 1)
+												{
+													@foreach (var item in features)
+													{
+														<option value="@item.Id">@item.Title</option>
+													}
+												}
+											</select>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-12 col-sm-6 col-lg-4">
+									<div class="form-group">
+										<div class="controls">
+											<span class="text-danger">*</span>
+											<label asp-for="DurationType"></label>
+											<select asp-for="DurationType" class="form-control">
+												<option value="@SubscriptionDurationType.OneMonth">@SubscriptionDurationType.OneMonth.GetEnumDisplayName()</option>
+												<option value="@SubscriptionDurationType.ThreeMonth">@SubscriptionDurationType.ThreeMonth.GetEnumDisplayName()</option>
+												<option value="@SubscriptionDurationType.SixMonth">@SubscriptionDurationType.SixMonth.GetEnumDisplayName()</option>
+												<option value="@SubscriptionDurationType.OneYear">@SubscriptionDurationType.OneYear.GetEnumDisplayName()</option>
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
+								<button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">ذخیره</button>
+								<button onclick="history.back()" type="reset" class="btn btn-light">انصراف</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+@section Scripts {
+	<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+	<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+	<script>
+		function readURL(input) {
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+
+				reader.onload = function (e) {
+					$('#selected-picture').attr('src', e.target.result);
+				}
+
+				reader.readAsDataURL(input.files[0]);
+			}
+		}
+
+		$("#Icon").change(function () {
+			readURL(this);
+		});
+	</script>
+}

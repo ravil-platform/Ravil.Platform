@@ -1,0 +1,53 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model ViewModels.AdminPanel.Subscription.UpdateFeatureViewModel
+@{
+	ViewData["Title"] = "ویرایش ویژگی";
+	ViewData["selected"] = "Features_Index";
+}
+<section>
+	<div class="card">
+		<div class="card-content">
+			<div class="card-body">
+				<ul class="nav nav-tabs mb-2">
+					<li class="nav-item current">
+						<a class="nav-link d-flex align-items-center active">
+							<i class='bx bx-task'></i><span class="d-none d-sm-block">اشتراک</span>
+						</a>
+					</li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane active">
+						<form method="post" enctype="multipart/form-data">
+							<input type="hidden" asp-for="Id" />
+
+							<div class="row">
+								<div class="col-12 col-sm-12 col-lg-12">
+									<div class="form-group">
+										<div class="controls">
+											<span class="text-danger">*</span>
+											<label asp-for="Title"></label>
+											<input asp-for="Title" type="text" class="form-control text-left">
+											<div class="help-block">
+												<span asp-validation-for="Title" class="text-danger"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
+								<button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">ذخیره</button>
+								<button onclick="history.back()" type="reset" class="btn btn-light">انصراف</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+@section Scripts {
+	<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+	<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+}

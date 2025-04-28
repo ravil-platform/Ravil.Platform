@@ -341,7 +341,7 @@
 										<div class="card-content">
 											<div class="card-body">
 												<div id="socialMediaContainer">
-													@if (socialMedias != null)
+													@if (socialMedias != null && socialMedias.Any())
 													{
 														@for (int index = 0; index < socialMedias.Count; index++)
 														{
@@ -427,7 +427,7 @@
 										<div class="card-content">
 											<div class="card-body">
 												<div id="phoneNumberContainer">
-													@if (phoneNumberInfos != null)
+													@if (phoneNumberInfos != null && phoneNumberInfos.Any())
 													{
 														@for (int index = 0; index < phoneNumberInfos.Count; index++)
 														{
@@ -454,6 +454,31 @@
 																</div>
 															</div>
 														}
+													}
+													else
+													{
+														<div class="row justify-content-center phone-number-form">
+															<div class="col-md-6 col-sm-6 form-group">
+																<label>نوع شماره تماس</label>
+																<select name="PhoneNumberInfosViewModel[0].PhoneNumberType" class="form-control">
+																	<!option value="PhoneNumberTel">تلفن</!option>
+																	<!option value="PhoneNumberMobile">موبایل</!option>
+																	<!option value="FaxNumber">فکس</!option>
+																</select>
+															</div>
+
+															<div class="col-md-6 col-sm-6 form-group">
+																<label>شماره تماس</label>
+																<input name="PhoneNumberInfosViewModel[0].PhoneNumber" class="form-control text-right" maxlength="11" type="number" placeholder="0910xxx8433">
+															</div>
+
+															<div class="col-md-2 col-sm-12 form-group d-flex align-items-end pt-2">
+																<button class="btn btn-danger text-nowrap px-1 remove-phone-number" type="button">
+																	<i class="bx bx-x"></i>
+																	حذف
+																</button>
+															</div>
+														</div>
 													}
 												</div>
 
@@ -529,13 +554,21 @@
 		}
 
 		$(document).on('click', '.add-social-media', function () {
+
 			const newForm = $(".social-media-form:first").clone();
+
 			newForm.find('input, select').val('');
 			$("#socialMediaContainer").append(newForm);
 			updateIndexes("#socialMediaContainer", ".social-media-form", "SocialMediaInfosViewModel");
 		});
 
 		$(document).on('click', '.remove-social-media', function () {
+			const socialCount = $(".social-media-form").length;
+
+			if ( socialCount == 1 ){
+				return;
+			}
+
 			$(this).closest('.social-media-form').remove();
 			updateIndexes("#socialMediaContainer", ".social-media-form", "SocialMediaInfosViewModel");
 		});
@@ -548,6 +581,14 @@
 		});
 
 		$(document).on('click', '.remove-phone-number', function () {
+
+			const phoneNumberCount = $(".phone-number-form").length;
+
+			if ( phoneNumberCount == 1 ){
+				return;
+			}
+
+
 			$(this).closest('.phone-number-form').remove();
 			updateIndexes("#phoneNumberContainer", ".phone-number-form", "PhoneNumberInfosViewModel");
 		});

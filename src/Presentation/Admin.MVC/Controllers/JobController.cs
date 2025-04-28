@@ -190,7 +190,6 @@ namespace Admin.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> UpdateJob(int id)
         {
-
             #region ( Fill View Datas )
             ViewData["brands"] = await UnitOfWork.BrandRepository.TableNoTracking.ToListAsync();
             ViewData["categories"] = await UnitOfWork.CategoryRepository.TableNoTracking.ToListAsync();
@@ -218,7 +217,6 @@ namespace Admin.MVC.Controllers
             ViewData["previousPage"] = previousPage;
             #endregion
 
-
             return View(model);
         }
 
@@ -231,7 +229,7 @@ namespace Admin.MVC.Controllers
             #region ( Job is null )
             if (job == null)
             {
-                ErrorAlert();
+                ErrorAlert("چیزی یافت نشد!");
 
                 return RedirectToAction("IndexJob");
             }
@@ -317,7 +315,7 @@ namespace Admin.MVC.Controllers
             #region ( Change Status And Send Sms )
             var sendSms = "";
             var phoneNumber = "";
-            var userId = jobBranch ?? job.AdminId;
+            var userId = updateJobViewModel.UserOwnerId ?? job.AdminId;
 
             if (updateJobViewModel.SendSms)
             {
@@ -473,7 +471,6 @@ namespace Admin.MVC.Controllers
         #endregion
 
         #region ( Hard Delete )
-
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
@@ -609,13 +606,11 @@ namespace Admin.MVC.Controllers
             if (Request.Headers["Referer"].ToString() != null)
             {
                 return Redirect(Request.Headers["Referer"].ToString());
-            } 
+            }
             #endregion
 
             return RedirectToAction("IndexJob", new { IsDeleted = true });
         }
-
-
         #endregion
 
         #region ( SlugExist )
@@ -1317,7 +1312,6 @@ namespace Admin.MVC.Controllers
         #endregion
 
         #region ( Insert From Google Bot Excel File )
-
         [HttpGet]
         public async Task<IActionResult> InsertJobsExcelFromGoogle()
         {
@@ -1605,7 +1599,6 @@ namespace Admin.MVC.Controllers
 
             return RedirectToAction("IndexJob");
         }
-
         #endregion
 
     }

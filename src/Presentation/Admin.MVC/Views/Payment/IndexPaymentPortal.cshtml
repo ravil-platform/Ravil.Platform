@@ -1,0 +1,145 @@
+﻿@using ViewModels.AdminPanel.Payment
+@model List<Domain.Entities.Payment.PaymentPortal>
+@{
+	ViewData["Title"] = "درگاه ها";
+	ViewData["selected"] = "PaymentPortals_Index";
+}
+<a href="javascript:void(0)" class="btn btn-success mb-2" data-toggle="modal" data-target="#CreateForm">
+	افزودن درگاه جدید <i class="bx bx-plus"></i>
+</a>
+
+<section>
+	<div class="card">
+		<div class="table-responsive">
+			<div class="dataTables_wrapper no-footer">
+				<table class="table mb-0 table-striped table-hover no-footer">
+					<thead class="thead-dark">
+					<tr role="row">
+						<th>@(Resources.General.DisplayNames.Picture)</th>
+						<th>@(Resources.General.DisplayNames.Title)</th>
+						<th>@(Resources.General.DisplayNames.Actions)</th>
+					</tr>
+					</thead>
+					<tbody>
+					@if (Model.Any())
+					{
+						@foreach (var item in Model)
+						{
+							<tr role="row" class="odd">
+								<td class="text-bold-700">
+									@if (!string.IsNullOrEmpty(item.PictureName))
+									{
+										<img src="@Paths.PaymentPortal@item.PictureName" class="rounded-circle mr-1" height="70" width="70">
+									}
+									else
+									{
+										<span class="text-danger">ندارد</span>
+									}
+								</td>
+								<td>@item.Title</td>
+								<td>
+									<a onclick="update('@item.Id')" data-toggle="tooltip" data-placement="top" data-original-title="ویرایش"><i class="bx bxs-edit-alt text-warning"></i></a>
+								</td>
+							</tr>
+						}
+					}
+					else
+					{
+						<tr>
+							<td colspan="3" class="text-center">@(Resources.General.DisplayNames.ListEmpty)</td>
+						</tr>
+					}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal fade text-left" id="CreateForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">افزودن درگاه جدید</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-label="بستن">
+						<i class="bx bx-x"></i>
+					</button>
+				</div>
+				@{
+					var model = new CreatePaymentPortalViewModel();
+				}
+				<partial name="_CreatePaymentPortal" model="model" />
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade text-left" id="UpdateForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">ویرایش</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-label="بستن">
+						<i class="bx bx-x"></i>
+					</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</section>
+@section Scripts {
+	<script>
+		function update(id) {
+			var modalBody = $("#UpdateForm").find('.modal-body');
+			var modalFooter = $("#UpdateForm").find('.modal-footer');
+
+			if (modalBody && modalFooter) {
+				modalBody.remove();
+				modalFooter.remove();
+			}
+
+			$.ajax({
+				url: '@Url.Action("UpdatePaymentPortal")',
+				data: { id: id },
+				success: function (result) {
+					$("#UpdateForm").find('.modal-content').append(result);
+					new bootstrap.Modal(document.getElementById('UpdateForm'), {
+						keyboard: false
+					}).show();
+				},
+				complete: function () {
+					function readURLUpdate(input) {
+						if (input.files && input.files[0]) {
+							var reader = new FileReader();
+
+							reader.onload = function (e) {
+								$('#updateSelectImage').attr('src', e.target.result);
+							}
+
+							reader.readAsDataURL(input.files[0]);
+						}
+					}
+					$("#updateFile").change(function () {
+						readURLUpdate(this);
+					});
+				}
+			});
+		}
+
+		function readURL(input) {
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+
+				reader.onload = function (e) {
+					$('#createSelectImage').attr('src', e.target.result);
+				}
+
+				reader.readAsDataURL(input.files[0]);
+			}
+		}
+
+		$("#createFile").change(function () {
+			readURL(this);
+		});
+
+	</script>
+}

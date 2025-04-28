@@ -2,36 +2,38 @@
 {
     public static class DatabaseSchemas
     {
-        public static readonly String TimeWorks = "dbo";
-        public static readonly String Comments = "dbo";
-        public static readonly String Users = "dbo";
-        public static readonly String UploadedFiles = "dbo";
-        public static readonly String Teams = "dbo";
-        public static readonly String Tags = "dbo";
-        public static readonly String Sates = "dbo";
-        public static readonly String ShortLinks = "dbo";
-        public static readonly String Services = "dbo";
-        public static readonly String RedirectionUrls = "dbo";
-        public static readonly String PaymentPortals = "dbo";
-        public static readonly String Payment = "dbo";
-        public static readonly String Wallet = "dbo";
-        public static readonly String MainSliders = "dbo";
-        public static readonly String Locations = "dbo";
-        public static readonly String Jobs = "dbo";
-        public static readonly String FeedbackSliders = "dbo";
-        public static readonly String Faqs = "dbo";
-        public static readonly String ContactUs = "dbo";
-        public static readonly String Configs = "dbo";
-        public static readonly String Cities = "dbo";
-        public static readonly String Categories = "dbo";
-        public static readonly String Brands = "dbo";
-        public static readonly String Blogs = "dbo";
-        public static readonly String Banners = "dbo";
-        public static readonly String Addresses = "dbo";
+        public static readonly String Comments = "Comment";
+
+        public static readonly String Users = "User";
+        
+        public static readonly String Tags = "Tag";
+        
+        public static readonly String Sates = "State";
+        
+        public static readonly String Shared = "Shared";
+        
+        public static readonly String Payment = "Payment";
+        
+        public static readonly String Wallet = "Wallet";
+        
+        public static readonly String Jobs = "Job";
+        
+        public static readonly String Faqs = "Faq";
+        
+        public static readonly String ContactUs = "Contact";
+        
+        public static readonly String Cities = "City";
+        
+        public static readonly String Categories = "Category";
+        
+        public static readonly String Blogs = "Blog";
+       
+        public static readonly String Addresses = "Address";
+        
         public static readonly String Schema = "Schema";
-        public static readonly String ActionHistories = "dbo";
-        public static readonly String Subscription = "dbo";
-        public static readonly String PanelTutorial = "dbo";
+        
+        public static readonly String Subscription = "Subscription";
+        
         public static readonly String Dbo = "dbo";
     }
 }

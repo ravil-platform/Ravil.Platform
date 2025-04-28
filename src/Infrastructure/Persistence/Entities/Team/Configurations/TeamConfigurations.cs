@@ -4,7 +4,7 @@
     {
         public void Configure(EntityTypeBuilder<Domain.Entities.Team.Team> builder)
         {
-            builder.ToTable("Team", DatabaseSchemas.Teams);
+            builder.ToTable("Team", DatabaseSchemas.Shared);
 
             builder.HasKey(t => t.Id);
             builder.Property(t => t.FullName).IsRequired().HasMaxLength(MaxLength.FullName);

@@ -383,7 +383,10 @@ namespace Enums
         OnlinePortal,
 
         [Display(Name = "از طریق کیف پول")]
-        FromWallet
+        FromWallet,
+
+        [Display(Name = "پرداخت توسط ادمین")]
+        FromAdmin,
     }
 
     public enum WalletTransactionType
@@ -399,5 +402,17 @@ namespace Enums
         Success = 1,
         Failed = 2,
         Pending = 3,
+    }
+
+    public enum MessageBoxType
+    {
+        [Display(Name = "ثبت نام")]
+        Registration,
+
+        [Display(Name = "اطلاعات")]
+        Info,
+
+        [Display(Name = "خبر")]
+        News
     }
 }

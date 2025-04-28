@@ -6,6 +6,7 @@ using Application.Features.Job.Queries.GetRelatedJobBranches;
 using Domain.Entities.FeedbackSlider;
 using Domain.Entities.Payment;
 using Domain.Entities.RedirectionUrl;
+using Domain.Entities.Subscription;
 using RNX.CustomResult;
 using ViewModels.AdminPanel.Banner;
 using ViewModels.AdminPanel.Category;
@@ -16,6 +17,7 @@ using ViewModels.AdminPanel.Config;
 using ViewModels.AdminPanel.FeedbackSlider;
 using ViewModels.AdminPanel.MainSlider;
 using ViewModels.AdminPanel.RedirectionUrl;
+using ViewModels.AdminPanel.Subscription;
 using ViewModels.Discounts;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
@@ -121,7 +123,7 @@ namespace Application.Profiles
                 .ForMember(src => src.Route, expression => expression.MapFrom(a =>
                     !a.Route.Contains("-") ? a.Route.Trim().Replace(' ', '-') : a.Route))
                 .ReverseMap();
-            
+
             CreateMap<Category, MainCategories>()
                 .ForMember(src => src.Route, expression => expression.MapFrom(a =>
                     !a.Route.Contains("-") ? a.Route.Trim().Replace(' ', '-') : a.Route))
@@ -221,7 +223,7 @@ namespace Application.Profiles
             CreateMap<Job, CreateJobCommand>().ReverseMap();
             CreateMap<Job, CreateJobViewModel>().ReverseMap();
             CreateMap<Job, UpdateJobCommand>().ReverseMap();
-            
+
             CreateMap<Job, JobSearchResultViewModel>()
                 .ForMember(src => src.Categories, expression =>
                 {
@@ -334,6 +336,14 @@ namespace Application.Profiles
             CreateMap<ShortLink, ShortLinkViewModel>().ReverseMap();
             #endregion
 
+            #region ( Subscription )
+            CreateMap<CreateSubscriptionViewModel, Subscription>().ReverseMap();
+            CreateMap<UpdateSubscriptionViewModel, Subscription>().ReverseMap();
+
+            CreateMap<UpdateFeatureViewModel, Feature>().ReverseMap();
+            CreateMap<CreateFeatureViewModel, Feature>().ReverseMap();
+            #endregion
+
             #region ( Tag )
             CreateMap<Tag, TagViewModel>().ReverseMap();
             CreateMap<BlogTag, BlogTagViewModel>().ReverseMap();
@@ -345,7 +355,7 @@ namespace Application.Profiles
             #region ( City & City Base & State )
             CreateMap<City, CityViewModel>()
                 .ForMember(src => src.Name, expression => expression.MapFrom(a => a.CityBase.Name))
-                .ForMember(src => src.Route, expression => expression.MapFrom(a => 
+                .ForMember(src => src.Route, expression => expression.MapFrom(a =>
                     !a.CityBase.Name.Contains("کرج") ? $"{a.CityBase.Name}-کرج".Trim().Replace(' ', '-') :
                     !a.CityBase.Name.Contains("-") ? a.CityBase.Name.Trim().Replace(' ', '-') : a.CityBase.Name))
                 .ReverseMap();

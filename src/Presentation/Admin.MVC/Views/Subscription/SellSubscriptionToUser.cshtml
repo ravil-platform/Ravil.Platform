@@ -1,0 +1,58 @@
+﻿@model ViewModels.AdminPanel.Subscription.SellSubscriptionViewModel
+
+@using Domain.Entities.Subscription
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+	ViewData["Title"] = "فروش اشتراک";
+	ViewData["selected"] = "SellSubscription";
+
+	var users = (List<ApplicationUser>)ViewData["users"]!;
+	var subscription = (List<Subscription>)ViewData["subscription"]!;
+}
+
+<div class="col-md-12 col-12">
+	<div class="card">
+		<div class="card-content">
+			<div class="card-body">
+				<form class="form form-horizontal" method="post">
+					<div class="form-body">
+						<div class="row">
+							<div class="col-6 form-group">
+								<span class="text-danger">*</span>
+								<label>کاربر را انتخاب نمایید</label>
+								<select asp-for="UserId" class="select2 form-control">
+									@foreach (var item in users)
+									{
+										<option value="@item.Id">@item.PhoneNumber</option>
+									}
+								</select>
+								<div class="help-block">
+									<span asp-validation-for="UserId" class="text-danger"></span>
+								</div>
+							</div>
+
+							<div class="col-6 form-group">
+								<span class="text-danger">*</span>
+								<label>اشتراک مورد نظر را انتخاب نمایید</label>
+								<select asp-for="SubscriptionId" class="select2 form-control">
+									@foreach (var item in subscription)
+									{
+										<option value="@item.Id">@item.Title</option>
+									}
+								</select>
+								<div class="help-block">
+									<span asp-validation-for="SubscriptionId" class="text-danger"></span>
+								</div>
+							</div>
+
+							<div class="col-sm-12 d-flex justify-content-end">
+								<button type="submit" id="submitBtn" class="btn btn-primary mr-1 mb-1">ثبت</button>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,13 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Persistence.Entities.PanelTutorial.Repositories;
-using Persistence.Entities.Payment.Repositories;
-using Persistence.Entities.Subscription.Repositories.Implementations;
-using Persistence.Entities.Subscription.Repositories.Interfaces;
-using Persistence.Entities.Wallet.Repositories;
-using IPaymentPortalRepository = Persistence.Entities.PaymentPortal.Repositories.IPaymentPortalRepository;
-using PaymentPortalRepository = Persistence.Entities.PaymentPortal.Repositories.PaymentPortalRepository;
-
-namespace Persistence.Contracts
+﻿namespace Persistence.Contracts
 {
     public class UnitOfWork : UnitOfWork<ApplicationDbContext>, IUnitOfWork
     {
@@ -599,6 +590,34 @@ namespace Persistence.Contracts
                 return _keywordRepository;
             }
         }
+
+        private IJobRankingRepository? _jobRankingRepository;
+        public IJobRankingRepository JobRankingRepository
+        {
+            get
+            {
+                if (_jobRankingRepository == null)
+                {
+                    _jobRankingRepository = new JobRankingRepository(DatabaseContext);
+                }
+
+                return _jobRankingRepository;
+            }
+        }
+
+        private IJobInfoRepository? _jobInfoRepository;
+        public IJobInfoRepository JobInfoRepository
+        {
+            get
+            {
+                if (_jobInfoRepository == null)
+                {
+                    _jobInfoRepository = new JobInfoRepository(DatabaseContext);
+                }
+
+                return _jobInfoRepository;
+            }
+        }
         #endregion
 
         #region ( Location )
@@ -631,8 +650,22 @@ namespace Persistence.Contracts
                 return _mainSliderRepository;
             }
         }
+        #endregion
 
+        #region ( Message Box )
+        protected IMessageBoxRepository? _messageBoxRepository;
+        public IMessageBoxRepository MessageBoxRepository
+        {
+            get
+            {
+                if (_messageBoxRepository == null)
+                {
+                    _messageBoxRepository = new MessageBoxRepository(DatabaseContext);
+                }
 
+                return _messageBoxRepository;
+            }
+        }
         #endregion
 
         #region ( Panel Tutorial )

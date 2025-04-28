@@ -5,29 +5,21 @@
         #region (Fields)
         public int Id { get; set; }
 
-        public byte Sort { get; set; }
+        /// <summary>
+        /// آدرس صفحه
+        /// </summary>
+        public string PageUrl { get; set; } = null!;
 
-        public int ExpireSortDay { get; set; }
+        /// <summary>
+        /// میانگین جایگاه
+        /// </summary>
+        public double AveragePosition { get; set; }
 
-        public DateTime RegisterDate { get; set; } = DateTime.Now;
-        
-        public DateTime LastUpdateDate { get; set; } = DateTime.Now;
-
-        public long RegisterHistoryDay { get; set; }
-
-        public long JobReviewCount { get; set; }
-
-        public int JobSharedCount { get; set; }
-
-        public int JobCommentCount { get; set; }
-
-        public int ViewCount { get; set; } = 0;
-
-        public long TotalScore { get; set; } = 0;
+        public int ClickCount { get; set; }
         #endregion
 
         #region (Relations)
-        public string JobId { get; set; }
+        public int JobId { get; set; }
         public virtual Job Job { get; set; }
         #endregion
     }
