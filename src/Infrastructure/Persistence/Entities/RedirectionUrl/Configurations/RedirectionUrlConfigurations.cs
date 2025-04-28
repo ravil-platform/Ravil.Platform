@@ -4,7 +4,7 @@ public class RedirectionUrlConfigurations : IEntityTypeConfiguration<Domain.Enti
 {
     public void Configure(EntityTypeBuilder<Domain.Entities.RedirectionUrl.RedirectionUrl> builder)
     {
-        builder.ToTable("RedirectionUrl", DatabaseSchemas.RedirectionUrls);
+        builder.ToTable("RedirectionUrl", DatabaseSchemas.Shared);
 
         builder.HasKey(r => r.Id);
         builder.Property(r => r.Status).IsRequired();

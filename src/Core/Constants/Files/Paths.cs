@@ -36,6 +36,14 @@
         public static string JobBranchVideoServer = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot{JobBranchVideo}");
         #endregion
 
+        #region ( Payment Portal )
+        public static string PaymentPortal = "/img/paymentPortal/";
+        #endregion
+
+        #region ( Subscription )
+        public static string Subscription = "/img/subscription/";
+        #endregion
+
         #region ( Category )
         public static string Category = "/img/category/";
         #endregion

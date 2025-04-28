@@ -1,10 +1,4 @@
-﻿using Domain.Entities.PanelTutorial;
-using Domain.Entities.Payment;
-using Domain.Entities.Subscription;
-using Domain.Entities.Wallets;
-using Persistence.Entities.Address.Configurations;
-
-namespace Persistence.Context
+﻿namespace Persistence.Context
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
@@ -100,6 +94,8 @@ namespace Persistence.Context
         public DbSet<JobKeyword> JobKeyword { get; set; }
         public DbSet<Keyword> Keyword { get; set; }
 
+        public DbSet<JobInfo> JobInfo { get; set; }
+        public DbSet<JobRanking> JobRanking { get; set; }
         #endregion
 
         #region ( Location )
@@ -108,6 +104,10 @@ namespace Persistence.Context
 
         #region ( Main Slider )
         public DbSet<MainSlider> MainSlider { get; set; }
+        #endregion
+
+        #region ( Message Box )
+        public DbSet<MessageBox> MessageBox { get; set; }
         #endregion
 
         #region ( Panel Tutorial )

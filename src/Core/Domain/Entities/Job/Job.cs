@@ -60,5 +60,9 @@ public class Job : Entity
 
     public virtual ICollection<JobCategory> JobCategories { get; set; }
 
+    public virtual JobRanking JobRanking { get; set; }
+    public virtual JobInfo JobInfo { get; set; }
+
+    public virtual ICollection<MessageBox.MessageBox> MessageBoxes { get; set; }
     #endregion
 }

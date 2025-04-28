@@ -54,4 +54,3 @@ public class JobConfigurations : IEntityTypeConfiguration<Domain.Entities.Job.Jo
             .IsRequired();
     }
 }
-

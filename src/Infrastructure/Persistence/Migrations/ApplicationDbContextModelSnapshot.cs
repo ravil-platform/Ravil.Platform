@@ -61,7 +61,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("UpdateDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2025, 4, 16, 14, 43, 12, 444, DateTimeKind.Local).AddTicks(1925));
+                        .HasDefaultValue(new DateTime(2025, 4, 28, 9, 57, 53, 138, DateTimeKind.Local).AddTicks(2742));
 
                     b.HasKey("Id");
 
@@ -76,7 +76,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("StateId");
 
-                    b.ToTable("Address", "dbo");
+                    b.ToTable("Address", "Address");
                 });
 
             modelBuilder.Entity("Domain.Entities.Banner.Banner", b =>
@@ -152,7 +152,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("JobBranchId");
 
-                    b.ToTable("Banner", "dbo");
+                    b.ToTable("Banner", "Shared");
                 });
 
             modelBuilder.Entity("Domain.Entities.Blog.Blog", b =>
@@ -247,7 +247,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Blog", "dbo");
+                    b.ToTable("Blog", "Blog");
                 });
 
             modelBuilder.Entity("Domain.Entities.Blog.BlogCategory", b =>
@@ -286,7 +286,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BlogCategory", "dbo");
+                    b.ToTable("BlogCategory", "Blog");
                 });
 
             modelBuilder.Entity("Domain.Entities.Blog.BlogCategoryRel", b =>
@@ -324,7 +324,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("BlogId");
 
-                    b.ToTable("BlogCategoryRel", "dbo");
+                    b.ToTable("BlogCategoryRel", "Blog");
                 });
 
             modelBuilder.Entity("Domain.Entities.Blog.BlogTag", b =>
@@ -362,7 +362,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("TagId");
 
-                    b.ToTable("BlogTag", "dbo");
+                    b.ToTable("BlogTag", "Blog");
                 });
 
             modelBuilder.Entity("Domain.Entities.Brand.Brand", b =>
@@ -412,7 +412,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Brand", "dbo");
+                    b.ToTable("Brand", "Shared");
                 });
 
             modelBuilder.Entity("Domain.Entities.Category.CategoriesCityContent", b =>
@@ -443,7 +443,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CategoriesCityContent", "dbo");
+                    b.ToTable("CategoriesCityContent", "Job");
                 });
 
             modelBuilder.Entity("Domain.Entities.Category.Category", b =>
@@ -543,7 +543,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Category", "dbo");
+                    b.ToTable("Category", "Category");
                 });
 
             modelBuilder.Entity("Domain.Entities.Category.CategoryService", b =>
@@ -581,7 +581,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("ServiceId");
 
-                    b.ToTable("CategoryService", "dbo");
+                    b.ToTable("CategoryService", "Category");
                 });
 
             modelBuilder.Entity("Domain.Entities.Category.CategoryTag", b =>
@@ -604,7 +604,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("TagId");
 
-                    b.ToTable("CategoryTag", "dbo");
+                    b.ToTable("CategoryTag", "Category");
                 });
 
             modelBuilder.Entity("Domain.Entities.Category.RelatedCategorySeo", b =>
@@ -638,7 +638,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RelatedCategorySeo", "dbo");
+                    b.ToTable("RelatedCategorySeo", "Job");
                 });
 
             modelBuilder.Entity("Domain.Entities.Category.Target", b =>
@@ -665,7 +665,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Target", "dbo");
+                    b.ToTable("Target", "Job");
                 });
 
             modelBuilder.Entity("Domain.Entities.City.City", b =>
@@ -735,7 +735,7 @@ namespace Persistence.Migrations
                     b.HasIndex("CityBaseId")
                         .IsUnique();
 
-                    b.ToTable("City", "dbo");
+                    b.ToTable("City", "City");
                 });
 
             modelBuilder.Entity("Domain.Entities.City.CityBase", b =>
@@ -781,7 +781,7 @@ namespace Persistence.Migrations
                         .IsUnique()
                         .HasFilter("[StateBaseId] IS NOT NULL");
 
-                    b.ToTable("CityBase", "dbo");
+                    b.ToTable("CityBase", "City");
                 });
 
             modelBuilder.Entity("Domain.Entities.City.CityCategory", b =>
@@ -819,7 +819,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("CityId");
 
-                    b.ToTable("CityCategory", "dbo");
+                    b.ToTable("CityCategory", "City");
                 });
 
             modelBuilder.Entity("Domain.Entities.Comment.AnswerComment", b =>
@@ -895,7 +895,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("CommentId");
 
-                    b.ToTable("AnswerComment", "dbo");
+                    b.ToTable("AnswerComment", "Comment");
                 });
 
             modelBuilder.Entity("Domain.Entities.Comment.Comment", b =>
@@ -971,7 +971,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Comment", "dbo");
+                    b.ToTable("Comment", "Comment");
                 });
 
             modelBuilder.Entity("Domain.Entities.Config.Config", b =>
@@ -1253,7 +1253,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Config", "dbo");
+                    b.ToTable("Config", "Shared");
 
                     b.HasData(
                         new
@@ -1351,7 +1351,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ContactUs", "dbo");
+                    b.ToTable("ContactUs", "Contact");
                 });
 
             modelBuilder.Entity("Domain.Entities.DayOfWeek.DayOfWeek", b =>
@@ -1411,7 +1411,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Faq", "dbo");
+                    b.ToTable("Faq", "Faq");
                 });
 
             modelBuilder.Entity("Domain.Entities.Faq.FaqCategory", b =>
@@ -1435,7 +1435,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FaqCategory", "dbo");
+                    b.ToTable("FaqCategory", "Faq");
                 });
 
             modelBuilder.Entity("Domain.Entities.Faq.FaqJobCategory", b =>
@@ -1458,7 +1458,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("JobCategoryId");
 
-                    b.ToTable("FaqJobCategory", "dbo");
+                    b.ToTable("FaqJobCategory", "Faq");
                 });
 
             modelBuilder.Entity("Domain.Entities.FeedbackSlider.FeedbackSlider", b =>
@@ -1497,7 +1497,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FeedbackSlider", "dbo");
+                    b.ToTable("FeedbackSlider", "Shared");
                 });
 
             modelBuilder.Entity("Domain.Entities.Histories.ActionHistories", b =>
@@ -1549,7 +1549,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ActionHistories", "dbo");
+                    b.ToTable("ActionHistories", "Shared");
                 });
 
             modelBuilder.Entity("Domain.Entities.Histories.JobCategoriesView", b =>
@@ -1684,7 +1684,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("JobBrandId");
 
-                    b.ToTable("Job", "dbo");
+                    b.ToTable("Job", "Job");
                 });
 
             modelBuilder.Entity("Domain.Entities.Job.JobBranch", b =>
@@ -1812,7 +1812,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("JobBranch", "dbo");
+                    b.ToTable("JobBranch", "Job");
                 });
 
             modelBuilder.Entity("Domain.Entities.Job.JobBranchAds", b =>
@@ -1846,7 +1846,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("JobBranchAds", "dbo");
+                    b.ToTable("JobBranchAds", "Job");
                 });
 
             modelBuilder.Entity("Domain.Entities.Job.JobBranchGallery", b =>
@@ -1873,7 +1873,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("JobBranchId");
 
-                    b.ToTable("JobBranchGallery", "dbo");
+                    b.ToTable("JobBranchGallery", "Job");
                 });
 
             modelBuilder.Entity("Domain.Entities.Job.JobBranchRelatedJob", b =>
@@ -1903,7 +1903,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("JobBranchRelatedJob", "dbo");
+                    b.ToTable("JobBranchRelatedJob", "Job");
                 });
 
             modelBuilder.Entity("Domain.Entities.Job.JobBranchShortLink", b =>
@@ -1929,7 +1929,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("JobBranchId");
 
-                    b.ToTable("JobBranchShortLink", "dbo");
+                    b.ToTable("JobBranchShortLink", "Job");
                 });
 
             modelBuilder.Entity("Domain.Entities.Job.JobBranchTag", b =>
@@ -1953,7 +1953,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("TagId");
 
-                    b.ToTable("JobBranchTag", "dbo");
+                    b.ToTable("JobBranchTag", "Job");
                 });
 
             modelBuilder.Entity("Domain.Entities.Job.JobCategory", b =>
@@ -1977,6 +1977,49 @@ namespace Persistence.Migrations
                     b.HasIndex("JobId");
 
                     b.ToTable("JobCategory", "dbo");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Job.JobInfo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<double>("AverageClickOnCall")
+                        .HasColumnType("float");
+
+                    b.Property<int>("ClickOnCall")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ClickOnCard")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ClickOnChat")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ClickOnImages")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ClickOnMap")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ClickOnWebSite")
+                        .HasColumnType("int");
+
+                    b.Property<int>("JobId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Visit")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("JobId")
+                        .IsUnique();
+
+                    b.ToTable("JobInfo", "Job");
                 });
 
             modelBuilder.Entity("Domain.Entities.Job.JobKeyword", b =>
@@ -2003,7 +2046,37 @@ namespace Persistence.Migrations
 
                     b.HasIndex("KeywordId");
 
-                    b.ToTable("JobKeyword", "dbo");
+                    b.ToTable("JobKeyword", "Job");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Job.JobRanking", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<double>("AveragePosition")
+                        .HasColumnType("float");
+
+                    b.Property<int>("ClickCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("JobId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PageUrl")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("JobId")
+                        .IsUnique();
+
+                    b.ToTable("JobRanking", "Job");
                 });
 
             modelBuilder.Entity("Domain.Entities.Job.JobSelectionSlider", b =>
@@ -2028,7 +2101,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("JobBranchId");
 
-                    b.ToTable("JobSelectionSlider", "dbo");
+                    b.ToTable("JobSelectionSlider", "Job");
                 });
 
             modelBuilder.Entity("Domain.Entities.Job.JobService", b =>
@@ -2052,7 +2125,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("ServiceId");
 
-                    b.ToTable("JobService", "dbo");
+                    b.ToTable("JobService", "Job");
                 });
 
             modelBuilder.Entity("Domain.Entities.Job.JobTag", b =>
@@ -2075,7 +2148,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("TagId");
 
-                    b.ToTable("JobTag", "dbo");
+                    b.ToTable("JobTag", "Job");
                 });
 
             modelBuilder.Entity("Domain.Entities.Job.JobTimeWork", b =>
@@ -2109,7 +2182,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("JobBranchId");
 
-                    b.ToTable("JobTimeWork", "dbo");
+                    b.ToTable("JobTimeWork", "Job");
                 });
 
             modelBuilder.Entity("Domain.Entities.Job.Keyword", b =>
@@ -2139,7 +2212,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Keyword", "dbo");
+                    b.ToTable("Keyword", "Job");
                 });
 
             modelBuilder.Entity("Domain.Entities.Location.Location", b =>
@@ -2180,7 +2253,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Location", "dbo");
+                    b.ToTable("Location", "Address");
                 });
 
             modelBuilder.Entity("Domain.Entities.MainSlider.MainSlider", b =>
@@ -2250,7 +2323,50 @@ namespace Persistence.Migrations
 
                     b.HasIndex("StateId");
 
-                    b.ToTable("MainSlider", "dbo");
+                    b.ToTable("MainSlider", "Shared");
+                });
+
+            modelBuilder.Entity("Domain.Entities.MessageBox.MessageBox", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("JobId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("LastDeleteBicycleDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("LastDeletePermanentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("LastUpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("JobId");
+
+                    b.ToTable("MessageBox", "Shared");
                 });
 
             modelBuilder.Entity("Domain.Entities.PanelTutorial.PanelTutorial", b =>
@@ -2279,7 +2395,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PanelTutorial", "dbo");
+                    b.ToTable("PanelTutorial", "Shared");
                 });
 
             modelBuilder.Entity("Domain.Entities.Payment.Payment", b =>
@@ -2315,7 +2431,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("UserSubscriptionId");
 
-                    b.ToTable("Payment", "dbo");
+                    b.ToTable("Payment", "Payment");
                 });
 
             modelBuilder.Entity("Domain.Entities.Payment.PaymentPortal", b =>
@@ -2335,12 +2451,11 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(350)
-                        .HasColumnType("nvarchar(350)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("PaymentPortal", "dbo");
+                    b.ToTable("PaymentPortal", "Payment");
                 });
 
             modelBuilder.Entity("Domain.Entities.Payment.PromotionCode", b =>
@@ -2406,7 +2521,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PromotionCode", "dbo");
+                    b.ToTable("PromotionCode", "Payment");
                 });
 
             modelBuilder.Entity("Domain.Entities.RedirectionUrl.RedirectionUrl", b =>
@@ -2433,7 +2548,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RedirectionUrl", "dbo");
+                    b.ToTable("RedirectionUrl", "Shared");
                 });
 
             modelBuilder.Entity("Domain.Entities.Service.Service", b =>
@@ -2480,7 +2595,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Service", "dbo");
+                    b.ToTable("Service", "Shared");
                 });
 
             modelBuilder.Entity("Domain.Entities.ShortLink.ShortLink", b =>
@@ -2504,7 +2619,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ShortLink", "dbo");
+                    b.ToTable("ShortLink", "Shared");
                 });
 
             modelBuilder.Entity("Domain.Entities.State.State", b =>
@@ -2570,7 +2685,7 @@ namespace Persistence.Migrations
                     b.HasIndex("StateBaseId")
                         .IsUnique();
 
-                    b.ToTable("State", "dbo");
+                    b.ToTable("State", "State");
                 });
 
             modelBuilder.Entity("Domain.Entities.State.StateBase", b =>
@@ -2591,7 +2706,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("StateBase", "dbo");
+                    b.ToTable("StateBase", "State");
                 });
 
             modelBuilder.Entity("Domain.Entities.Subscription.Click", b =>
@@ -2615,7 +2730,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Click", "dbo");
+                    b.ToTable("Click", "Subscription");
 
                     b.HasData(
                         new
@@ -2656,7 +2771,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Feature", "dbo");
+                    b.ToTable("Feature", "Subscription");
                 });
 
             modelBuilder.Entity("Domain.Entities.Subscription.Subscription", b =>
@@ -2699,7 +2814,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Subscription", "dbo");
+                    b.ToTable("Subscription", "Subscription");
 
                     b.HasData(
                         new
@@ -2798,7 +2913,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("SubscriptionId");
 
-                    b.ToTable("SubscriptionClick", "dbo");
+                    b.ToTable("SubscriptionClick", "Subscription");
                 });
 
             modelBuilder.Entity("Domain.Entities.Subscription.SubscriptionFeature", b =>
@@ -2821,7 +2936,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("SubscriptionId");
 
-                    b.ToTable("SubscriptionFeature", "dbo");
+                    b.ToTable("SubscriptionFeature", "Subscription");
                 });
 
             modelBuilder.Entity("Domain.Entities.Subscription.UserSubscription", b =>
@@ -2857,7 +2972,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserSubscription", "dbo");
+                    b.ToTable("UserSubscription", "Subscription");
                 });
 
             modelBuilder.Entity("Domain.Entities.Tag.Tag", b =>
@@ -2894,7 +3009,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tag", "dbo");
+                    b.ToTable("Tag", "Tag");
                 });
 
             modelBuilder.Entity("Domain.Entities.Team.Team", b =>
@@ -2944,7 +3059,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Team", "dbo");
+                    b.ToTable("Team", "Shared");
                 });
 
             modelBuilder.Entity("Domain.Entities.UploadedFile.UploadedFile", b =>
@@ -2969,7 +3084,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UploadedFile", "dbo");
+                    b.ToTable("UploadedFile", "Shared");
                 });
 
             modelBuilder.Entity("Domain.Entities.User.ApplicationUser", b =>
@@ -3124,7 +3239,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("StateId");
 
-                    b.ToTable("ApplicationUser", "dbo");
+                    b.ToTable("ApplicationUser", "User");
 
                     b.HasData(
                         new
@@ -3132,7 +3247,7 @@ namespace Persistence.Migrations
                             Id = "05446344-f9cc-4566-bd2c-36791b4e28ed",
                             AccessFailedCount = 0,
                             BlockedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "2c7040b6-e71a-4517-ac5e-f36fe8b2df56",
+                            ConcurrencyStamp = "0eace3dd-45a1-47c0-a5c8-12fbbce2cccb",
                             Email = "admin@localhost.com",
                             EmailConfirmed = true,
                             ExpireTimeSpanBlock = 0,
@@ -3144,10 +3259,10 @@ namespace Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "ADMIN@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEGmEDBvUGyqpScsORWRxYnevIARbhd2Qo2HvqfnVyPEv4J0p0XKMtLe0aK9l5ve0ZQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEEcI+8Cg0MiG0m1thIwwBbH9RjZxOPCZrF7e+s1QtFgK9yHSP3W/T26w/mGH1BTHHQ==",
                             PhoneNumberConfirmed = false,
-                            RegisterDate = new DateTime(2025, 4, 16, 14, 43, 12, 460, DateTimeKind.Local).AddTicks(238),
-                            SecurityStamp = "6ee9b0ca-e57a-46c3-bac1-099601a0b85c",
+                            RegisterDate = new DateTime(2025, 4, 28, 9, 57, 53, 154, DateTimeKind.Local).AddTicks(6043),
+                            SecurityStamp = "dce27e4d-8d9b-4e32-8068-04bd5a7dcc8b",
                             TwoFactorEnabled = false,
                             UpdateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserIsBlocked = false,
@@ -3159,7 +3274,7 @@ namespace Persistence.Migrations
                             Id = "2ec9f480-7288-4d0f-a1cd-53cc89968b45",
                             AccessFailedCount = 0,
                             BlockedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "3a7310a6-0fc2-40ed-9874-4856c14018c1",
+                            ConcurrencyStamp = "dc514388-75dc-422d-bb24-53d1cd4e1ab9",
                             Email = "user@localhost.com",
                             EmailConfirmed = true,
                             ExpireTimeSpanBlock = 0,
@@ -3171,10 +3286,10 @@ namespace Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "USER@LOCALHOST.COM",
                             NormalizedUserName = "USER@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDzV0CsAgyHDsPwGce+mdkXjxEr7HjO0xvys3XfOt+AmhKXEtQaEEB/uwM0tsZ3HDw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAENhPtHCDRvsJYWCfvyNOfR6Pb5sw13Z2UHf7naz9zUdwqOHFFJPofrXkp+O3z6IwbA==",
                             PhoneNumberConfirmed = false,
-                            RegisterDate = new DateTime(2025, 4, 16, 14, 43, 12, 505, DateTimeKind.Local).AddTicks(2739),
-                            SecurityStamp = "4bd00ad9-1716-4e65-96e9-748b6ef62e55",
+                            RegisterDate = new DateTime(2025, 4, 28, 9, 57, 53, 202, DateTimeKind.Local).AddTicks(7164),
+                            SecurityStamp = "05809709-a83c-4b34-8e2b-4d2051e5f53e",
                             TwoFactorEnabled = false,
                             UpdateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserIsBlocked = false,
@@ -3243,7 +3358,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserAddresses", "dbo");
+                    b.ToTable("UserAddresses", "User");
                 });
 
             modelBuilder.Entity("Domain.Entities.User.UserBannerClick", b =>
@@ -3270,7 +3385,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserBannerClick", "dbo");
+                    b.ToTable("UserBannerClick", "User");
                 });
 
             modelBuilder.Entity("Domain.Entities.User.UserBannerView", b =>
@@ -3294,7 +3409,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserBannerView", "dbo");
+                    b.ToTable("UserBannerView", "User");
                 });
 
             modelBuilder.Entity("Domain.Entities.User.UserBlogLike", b =>
@@ -3321,7 +3436,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserBlogLike", "dbo");
+                    b.ToTable("UserBlogLike", "User");
                 });
 
             modelBuilder.Entity("Domain.Entities.User.UserBookMark", b =>
@@ -3369,7 +3484,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserBookMark", "dbo");
+                    b.ToTable("UserBookMark", "User");
                 });
 
             modelBuilder.Entity("Domain.Entities.User.UserTokens", b =>
@@ -3406,7 +3521,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UsersToken", "dbo");
+                    b.ToTable("UsersToken", "User");
                 });
 
             modelBuilder.Entity("Domain.Entities.User.UsersFeedbackSlider", b =>
@@ -3485,7 +3600,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("PaymentId");
 
-                    b.ToTable("Transaction", "dbo");
+                    b.ToTable("Transaction", "Wallet");
                 });
 
             modelBuilder.Entity("Domain.Entities.Wallets.Wallet", b =>
@@ -3507,7 +3622,7 @@ namespace Persistence.Migrations
                     b.HasIndex("ApplicationUserId")
                         .IsUnique();
 
-                    b.ToTable("Wallet", "dbo");
+                    b.ToTable("Wallet", "Wallet");
                 });
 
             modelBuilder.Entity("Domain.Entities.Wallets.WalletTransaction", b =>
@@ -3541,7 +3656,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("WalletId");
 
-                    b.ToTable("WalletTransaction", "dbo");
+                    b.ToTable("WalletTransaction", "Wallet");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -4002,6 +4117,17 @@ namespace Persistence.Migrations
                     b.Navigation("Job");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Job.JobInfo", b =>
+                {
+                    b.HasOne("Domain.Entities.Job.Job", "Job")
+                        .WithOne("JobInfo")
+                        .HasForeignKey("Domain.Entities.Job.JobInfo", "JobId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Job");
+                });
+
             modelBuilder.Entity("Domain.Entities.Job.JobKeyword", b =>
                 {
                     b.HasOne("Domain.Entities.Job.JobBranch", "JobBranch")
@@ -4019,6 +4145,17 @@ namespace Persistence.Migrations
                     b.Navigation("JobBranch");
 
                     b.Navigation("Keyword");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Job.JobRanking", b =>
+                {
+                    b.HasOne("Domain.Entities.Job.Job", "Job")
+                        .WithOne("JobRanking")
+                        .HasForeignKey("Domain.Entities.Job.JobRanking", "JobId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Job");
                 });
 
             modelBuilder.Entity("Domain.Entities.Job.JobSelectionSlider", b =>
@@ -4125,6 +4262,17 @@ namespace Persistence.Migrations
                     b.Navigation("JobBranch");
 
                     b.Navigation("State");
+                });
+
+            modelBuilder.Entity("Domain.Entities.MessageBox.MessageBox", b =>
+                {
+                    b.HasOne("Domain.Entities.Job.Job", "Job")
+                        .WithMany("MessageBoxes")
+                        .HasForeignKey("JobId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Job");
                 });
 
             modelBuilder.Entity("Domain.Entities.Payment.Payment", b =>
@@ -4527,7 +4675,15 @@ namespace Persistence.Migrations
 
                     b.Navigation("JobCategories");
 
+                    b.Navigation("JobInfo")
+                        .IsRequired();
+
+                    b.Navigation("JobRanking")
+                        .IsRequired();
+
                     b.Navigation("JobTags");
+
+                    b.Navigation("MessageBoxes");
                 });
 
             modelBuilder.Entity("Domain.Entities.Job.JobBranch", b =>

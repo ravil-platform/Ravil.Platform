@@ -4,7 +4,7 @@
     {
         public void Configure(EntityTypeBuilder<Domain.Entities.Config.Config> builder)
         {
-            builder.ToTable("Config", DatabaseSchemas.Configs);
+            builder.ToTable("Config", DatabaseSchemas.Shared);
 
             builder.HasKey(c => c.Id);
 

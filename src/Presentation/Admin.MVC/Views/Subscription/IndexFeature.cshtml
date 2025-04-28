@@ -1,0 +1,48 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model List<Domain.Entities.Subscription.Feature>
+@{
+
+	ViewData["Title"] = "ویژگی ها";
+	ViewData["selected"] = "Features_Index";
+}
+<a asp-controller="Subscription" asp-action="CreateFeature" class="btn btn-success mb-2">
+	افزودن ویژگی جدید <i class="bx bx-plus"></i>
+</a>
+
+<section>
+	<div class="card">
+		<div class="table-responsive">
+			<div class="dataTables_wrapper no-footer">
+				<table class="table mb-0 table-striped table-hover no-footer">
+					<thead class="thead-dark">
+						<tr role="row">
+							<th>@(Resources.General.DisplayNames.Title)</th>
+							<th>@(Resources.General.DisplayNames.Actions)</th>
+						</tr>
+					</thead>
+					<tbody>
+						@if (Model.Any())
+						{
+							@foreach (var item in Model)
+							{
+								<tr role="row" class="odd">
+									<td>@item.Title</td>
+									<td>
+										<a target="_blank" asp-controller="Subscription" asp-action="UpdateFeature" asp-route-id="@item.Id" data-toggle="tooltip" data-placement="top" data-original-title="ویرایش"><i class="bx bxs-edit-alt text-warning"></i></a>
+										<a asp-controller="Subscription" asp-action="DeleteFeature" asp-route-id="@item.Id" data-toggle="tooltip" data-placement="top" data-original-title="حذف کامل از دیتابیس"><i class='bx bx-trash text-danger'></i></a>
+									</td>
+								</tr>
+							}
+						}
+						else
+						{
+							<tr>
+								<td colspan="2" class="text-center">@(Resources.General.DisplayNames.ListEmpty)</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</section>

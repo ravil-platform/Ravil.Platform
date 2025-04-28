@@ -4,7 +4,7 @@ public class ServiceConfigurations : IEntityTypeConfiguration<Domain.Entities.Se
 {
     public void Configure(EntityTypeBuilder<Domain.Entities.Service.Service> builder)
     {
-        builder.ToTable("Service", DatabaseSchemas.Services);
+        builder.ToTable("Service", DatabaseSchemas.Shared);
 
         builder.HasKey(s => s.Id);
         builder.Property(s => s.ServiceTitle).IsRequired().HasMaxLength(MaxLength.Title);

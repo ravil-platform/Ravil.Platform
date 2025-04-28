@@ -1,6 +1,5 @@
 ﻿using System.Text.RegularExpressions;
 using ViewModels.AdminPanel.Filter;
-using ViewModels.Filter.User;
 
 namespace Persistence.Entities.Job.Repositories.Implementations;
 

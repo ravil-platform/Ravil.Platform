@@ -4,7 +4,7 @@
     {
         public void Configure(EntityTypeBuilder<Domain.Entities.Banner.Banner> builder)
         {
-            builder.ToTable("Banner", DatabaseSchemas.Banners);
+            builder.ToTable("Banner", DatabaseSchemas.Shared);
 
             builder.HasKey(b => b.Id);
             builder.Property(b => b.BannerType).IsRequired();

@@ -1,0 +1,95 @@
+﻿@model ViewModels.AdminPanel.Wallet.CreateWalletViewModel
+
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+	ViewData["Title"] = "شارژ کیف پول";
+	ViewData["selected"] = "ChargeWallet";
+
+	var users = (List<ApplicationUser>)ViewData["users"]!;
+}
+
+<div class="col-md-12 col-12">
+	<div class="card">
+		<div class="card-content">
+			<div class="card-body">
+				<form class="form form-horizontal" method="post">
+					<div class="form-body">
+						<div class="row">
+							<div class="col-6 form-group">
+								<span class="text-danger">*</span>
+								<label>کاربر را انتخاب نمایید</label>
+								<select asp-for="UserId" class="select2 form-control">
+									@foreach (var item in users)
+									{
+										<option value="@item.Id">@item.PhoneNumber</option>
+									}
+								</select>
+								<div class="help-block">
+									<span asp-validation-for="UserId" class="text-danger"></span>
+								</div>
+							</div>
+
+							<div class="col-6 form-group">
+								<div class="controls">
+									<span class="text-danger">*</span>
+									<label>مبلغ موجودی مورد نظر را انتخاب نمایید</label>
+									<input asp-for="Inventory" type="text" class="form-control text-left">
+									<div id="price-convert" class="help-block">
+										<span asp-validation-for="Inventory" class="text-danger"></span>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-sm-12 d-flex justify-content-end">
+								<button type="submit" id="submitBtn" class="btn btn-primary mr-1 mb-1">ثبت</button>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+@section Scripts
+{
+	<script src="~/assets/js/scripts/wordify/wordifyfa.min.js"></script>
+	<script>
+
+		$("#Inventory").keyup(function () {
+
+			var value = $("#Inventory").val();
+
+			var convert = wordifyfa(value);
+			if ($("#word-price").val() != "null") { $("#word-price").remove(); }
+			$("#price-convert").append($("<span id='word-price' class='text-secondry'></span>").val(convert).html(convert));
+
+			var seperatevalue = separate(value);
+
+			$("#Inventory").val(seperatevalue);
+
+			if (event.key === "Backspace" || event.key === "Delete") {
+
+				var value2 = $("#Inventory").val().replace(/,\s?/g, "");
+
+				var seperatevalue2 = separate(value2);
+
+				$("#Inventory").val(seperatevalue2);
+			}
+		});
+
+
+		function separate(Number) {
+			const number = Number.replace(/[^0-9]/g, '');
+			return number.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		}
+
+
+		$("form").submit(function () {
+			var InventoryValue = $("#Inventory").val();
+			var InventoryNormalValue = InventoryValue.replace(/,\s?/g, "");
+			$("#Inventory").val(InventoryNormalValue);
+		});
+	</script>
+}

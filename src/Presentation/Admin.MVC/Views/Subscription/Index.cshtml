@@ -1,0 +1,94 @@
+﻿@using Common.Utilities.Services.FTP.Models
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.Extensions.Options
+@model List<Domain.Entities.Subscription.Subscription>
+@inject IOptions<FTPConnectionOptions> FtpConnectionOptions
+@{
+	string UrlBase = FtpConnectionOptions.Value.UrlBase;
+
+	ViewData["Title"] = "اشتراک ها";
+	ViewData["selected"] = "Subscriptions_Index";
+}
+<a asp-controller="Subscription" asp-action="Create" class="btn btn-success mb-2">
+	افزودن اشتراک جدید <i class="bx bx-plus"></i>
+</a>
+
+<a asp-controller="Subscription" asp-action="Create" class="btn btn-success mb-2">
+	فروش اشتراک به کاربر <i class="bx bx-plus"></i>
+</a>
+
+<section>
+	<div class="card">
+		<div class="table-responsive">
+			<div class="dataTables_wrapper no-footer">
+				<table class="table mb-0 table-striped table-hover no-footer">
+					<thead class="thead-dark">
+						<tr role="row">
+							<th>@(Resources.General.DisplayNames.Icon)</th>
+							<th>@(Resources.General.DisplayNames.Title)</th>
+							<th>@(Resources.General.DisplayNames.SubTitle)</th>
+							<th>@(Resources.General.DisplayNames.Price)</th>
+							<th>مدت زمان</th>
+							<th>وضعیت</th>
+							<th>@(Resources.General.DisplayNames.Actions)</th>
+						</tr>
+					</thead>
+					<tbody>
+						@if (Model.Any())
+						{
+							@foreach (var item in Model)
+							{
+								<tr role="row" class="odd">
+									<td class="text-bold-700">
+										@if (!string.IsNullOrEmpty(item.Icon))
+										{
+											<img src="@UrlBase@Paths.Subscription@item.Icon" class="rounded-circle mr-1" height="70" width="70">
+										}
+										else
+										{
+											<span class="text-danger">ندارد</span>
+										}
+									</td>
+									<td>@item.Title</td>
+									<td>@item.SubTitle</td>
+									<td>@item.Price.ToString("#,0")</td>
+									<td>@item.DurationType.GetEnumDisplayName()</td>
+
+									@if (item.IsActive)
+									{
+										<td class="text-success">فعال</td>
+									}
+									else
+									{
+										<td class="text-danger">غیرفعال</td>
+									}
+
+									<td>
+										<a target="_blank" asp-controller="Subscription" asp-action="Update" asp-route-id="@item.Id" data-toggle="tooltip" data-placement="top" data-original-title="ویرایش"><i class="bx bxs-edit-alt text-warning"></i></a>
+
+										@if (item.IsActive)
+										{
+											<a asp-controller="Subscription" asp-action="SetIsDelete" asp-route-id="@item.Id" asp-route-delete="false" data-toggle="tooltip" data-placement="top" data-original-title="حذف سیستمی"><i class='bx bx-trash text-light-danger'></i></a>
+										}
+										else
+										{
+											<a asp-controller="Subscription" asp-action="SetIsDelete" asp-route-id="@item.Id" asp-route-delete="true" data-toggle="tooltip" data-placement="top" data-original-title="بازیابی"><i class='bx bx-undo text-primary'></i></a>
+										}
+
+										<a asp-controller="Subscription" asp-action="Delete" asp-route-id="@item.Id" data-toggle="tooltip" data-placement="top" data-original-title="حذف کامل از دیتابیس"><i class='bx bx-trash text-danger'></i></a>
+									</td>
+								</tr>
+							}
+						}
+						else
+						{
+							<tr>
+								<td colspan="7" class="text-center">@(Resources.General.DisplayNames.ListEmpty)</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</section>

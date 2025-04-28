@@ -1,10 +1,10 @@
 ﻿namespace Persistence.Entities.Payment.Configurations;
 
-public class PaymentPortalConfigurations : IEntityTypeConfiguration<Domain.Entities.Payment.PaymentPortal>
+public class PaymentPortalConfigurations : IEntityTypeConfiguration<PaymentPortal>
 {
-    public void Configure(EntityTypeBuilder<Domain.Entities.Payment.PaymentPortal> builder)
+    public void Configure(EntityTypeBuilder<PaymentPortal> builder)
     {
-        builder.ToTable("Payment", DatabaseSchemas.Payment);
+        builder.ToTable("PaymentPortal", DatabaseSchemas.Payment);
         builder.HasKey(p => p.Id);
 
         builder.Property(p => p.Title).IsRequired();

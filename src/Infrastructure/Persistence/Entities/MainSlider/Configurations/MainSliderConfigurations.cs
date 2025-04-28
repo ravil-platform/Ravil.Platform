@@ -4,7 +4,7 @@
     {
         public void Configure(EntityTypeBuilder<Domain.Entities.MainSlider.MainSlider> builder)
         {
-            builder.ToTable("MainSlider", DatabaseSchemas.MainSliders);
+            builder.ToTable("MainSlider", DatabaseSchemas.Shared);
 
             builder.HasKey(b => b.Id);
             builder.Property(b => b.Title).IsRequired().HasMaxLength(MaxLength.Title);
