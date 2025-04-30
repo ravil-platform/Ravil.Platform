@@ -1,0 +1,43 @@
+﻿@model ViewModels.AdminPanel.Job.CreateJobBranchImageGalleryViewModel
+@{
+	string jobBranchId = (string)ViewData["jobBranchId"]!;
+}
+<form asp-controller="Job" asp-action="CreateJobBranchImageGallery" method="post" enctype="multipart/form-data">
+	<input asp-for="JobBranchId" value="@jobBranchId" type="hidden"/>
+	<div class="modal-body">
+		<div class="card-title-details d-flex align-items-center mb-1 ml-1">
+			<div class="avatar bg-rgba-primary p-25 mr-2 ml-0">
+				<img id="createSelectImage" class="img-fluid" src="@Paths.DefaultIconPath" height="70" width="70">
+			</div>
+			<div class="mt-n25">
+				<h5>@(Resources.General.DisplayNames.Icon) انتخاب شده</h5>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="controls">
+				<fieldset>
+					<div class="input-group">
+						<div class="custom-file">
+							<input id="createFile" asp-for="Files" type="file" class="custom-file-input" accept="@MimeTypes.Images.ArrayToString()" multiple="">
+							<label class="custom-file-label">انتخاب @(Resources.General.DisplayNames.Icon)</label>
+						</div>
+					</div>
+				</fieldset>
+				<div class="help-block">
+					<span asp-validation-for="Files" class="text-danger"></span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal-footer">
+		<button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+			<i class="bx bx-x d-block d-sm-none"></i>
+			<span class="d-none d-sm-block">بستن</span>
+		</button>
+		<button type="submit" class="btn btn-primary ml-1">
+			<i class="bx bx-check d-block d-sm-none"></i>
+			<span class="d-none d-sm-block">تایید</span>
+		</button>
+	</div>
+</form>

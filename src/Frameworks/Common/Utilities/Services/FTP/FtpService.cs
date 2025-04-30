@@ -128,7 +128,7 @@ public class FtpService : object, IFtpService
     #endregion
 
     #region ( Upload File To FtpServer )
-    
+
     /// <summary>
     /// ذخیره فایل و بازگشت نام فایل
     /// </summary>
@@ -136,7 +136,7 @@ public class FtpService : object, IFtpService
     /// <param name="originSavePath"> مسیر ذخیره فایل اصلی</param>
     /// <param name="thumbSavePath"> مسیر ذخیره فایل ریسایز شده</param>
     /// <param name="typeFile">نوع فایل</param>
-    /// <param name="deletedFileNme"> نام فایلی که باید حذف شود</param>
+    /// <param name="deleteFileName"> نام فایلی که باید حذف شود</param>
     /// <param name="resizeWidth">عرض</param>
     /// <param name="resizeHeight">ارتفاع</param>
     /// <returns></returns>

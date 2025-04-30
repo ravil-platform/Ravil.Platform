@@ -1,7 +1,4 @@
-﻿using System.Text.RegularExpressions;
-using ViewModels.AdminPanel.Filter;
-
-namespace Persistence.Entities.Job.Repositories.Implementations;
+﻿namespace Persistence.Entities.Job.Repositories.Implementations;
 
 public class KeywordRepository : Repository<Keyword>, IKeywordRepository
 {
@@ -14,19 +11,19 @@ public class KeywordRepository : Repository<Keyword>, IKeywordRepository
     public KeywordFilterViewModel GetByFilter(KeywordFilterViewModel filter)
     {
         var query =
-          ApplicationDbContext.Keyword
+          ApplicationDbContext.Keyword.Include(k => k.Category)
               .AsQueryable();
 
         if (filter.FindAll)
         {
-            #region (Find All)
+            #region ( Find All )
             filter.Build(query.Count()).SetEntities(query);
 
             return filter;
             #endregion
         }
 
-        #region (Filter)
+        #region ( Filter )
         if (!string.IsNullOrWhiteSpace(filter.Title))
         {
             query = query.Where(a => a.Title.Contains(filter.Title));
@@ -51,5 +48,15 @@ public class KeywordRepository : Repository<Keyword>, IKeywordRepository
         filter.Build(query.Count()).SetEntities(query);
 
         return filter;
+    }
+
+    public async Task<bool> SlugExist(string slug)
+    {
+        return await ApplicationDbContext.Keyword.AnyAsync(j => j.Slug == slug.ToSlug());
+    }
+
+    public async Task<bool> SlugExist(Guid id, string slug)
+    {
+        return await ApplicationDbContext.Keyword.AnyAsync(j => j.Slug == slug.ToSlug() && j.Id != id);
     }
 }

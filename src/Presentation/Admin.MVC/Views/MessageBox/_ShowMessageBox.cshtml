@@ -1,0 +1,18 @@
+﻿@model Domain.Entities.MessageBox.MessageBox
+<div class="modal-header bg-info">
+	<h4 class="modal-title">@Model.Job.Title محتویات پیام</h4>
+	<button type="button" class="close" data-dismiss="modal" aria-label="بستن">
+		<i class="bx bx-x"></i>
+	</button>
+</div>
+<div class="modal-body line-height-2">
+	@Html.Raw(Model.Description)
+
+	تاریخ ارسال : @Model.CreateDate.ToShamsiDate() 
+</div>
+<div class="modal-footer">
+	<button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+		<i class="bx bx-x d-block d-sm-none"></i>
+		<span class="d-none d-sm-block">بستن</span>
+	</button>
+</div>

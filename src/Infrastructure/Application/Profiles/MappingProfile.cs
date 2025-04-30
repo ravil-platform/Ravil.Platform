@@ -4,6 +4,7 @@ using Application.Features.Category.Queries.GetAllByFilter;
 using Application.Features.Job.Queries.GetAllJobBranch;
 using Application.Features.Job.Queries.GetRelatedJobBranches;
 using Domain.Entities.FeedbackSlider;
+using Domain.Entities.MessageBox;
 using Domain.Entities.Payment;
 using Domain.Entities.RedirectionUrl;
 using Domain.Entities.Subscription;
@@ -15,11 +16,18 @@ using ViewModels.AdminPanel.Cms;
 using ViewModels.AdminPanel.Cms.Blog;
 using ViewModels.AdminPanel.Config;
 using ViewModels.AdminPanel.FeedbackSlider;
+using ViewModels.AdminPanel.Job;
 using ViewModels.AdminPanel.MainSlider;
+using ViewModels.AdminPanel.MessageBox;
 using ViewModels.AdminPanel.RedirectionUrl;
 using ViewModels.AdminPanel.Subscription;
 using ViewModels.Discounts;
+using CreateJobBranchViewModel = ViewModels.QueriesResponseViewModel.Job.CreateJobBranchViewModel;
+using CreateJobViewModel = ViewModels.QueriesResponseViewModel.Job.CreateJobViewModel;
 using JsonSerializer = System.Text.Json.JsonSerializer;
+using PhoneNumberInfosViewModel = ViewModels.QueriesResponseViewModel.Job.PhoneNumberInfosViewModel;
+using SocialMediaInfosViewModel = ViewModels.QueriesResponseViewModel.Job.SocialMediaInfosViewModel;
+using UpdateJobBranchViewModel = ViewModels.QueriesResponseViewModel.Job.UpdateJobBranchViewModel;
 
 namespace Application.Profiles
 {
@@ -315,6 +323,9 @@ namespace Application.Profiles
 
             CreateMap<UserBookMark, UserJobBookMarkViewModel>().ReverseMap();
             CreateMap<UserBlogLike, UserBlogLikeViewModel>().ReverseMap();
+
+            CreateMap<Keyword, CreateKeywordViewModel>().ReverseMap();
+            CreateMap<Keyword, UpdateKeywordViewModel>().ReverseMap();
             #endregion
 
             #region ( Service )
@@ -330,6 +341,11 @@ namespace Application.Profiles
                 .ReverseMap();
             CreateMap<MainSlider, CreateMainSliderViewModel>().ReverseMap();
             CreateMap<MainSlider, UpdateMainSliderViewModel>().ReverseMap();
+            #endregion
+
+            #region ( MessageBox )
+            CreateMap<MessageBox, CreateMessageBoxViewModel>().ReverseMap();
+            CreateMap<MessageBox, UpdateMessageBoxViewModel>().ReverseMap();
             #endregion
 
             #region ( Short Link )

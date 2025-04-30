@@ -41,7 +41,11 @@ namespace Admin.MVC.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ErrorAlert(Errors.ModelStateIsNotValidForm);
+                var errors = ModelState.Values.SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage)
+                    .ToList();
+
+                ErrorAlert($"{Errors.ModelStateIsNotValidForm} - ارور : {errors[0]}");
 
                 return RedirectToAction("Index");
             }

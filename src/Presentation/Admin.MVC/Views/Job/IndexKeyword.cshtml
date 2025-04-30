@@ -1,15 +1,19 @@
-﻿@using ViewModels.AdminPanel.Wallet
-@model ViewModels.AdminPanel.Filter.WalletFilterViewModel
+﻿@using Domain.Entities.Category
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model ViewModels.AdminPanel.Filter.KeywordFilterViewModel
 @{
-	ViewData["Title"] = "لیست کیف پول ها";
-	ViewData["selected"] = "Wallet_Index";
+	ViewData["Title"] = "لیست کلمات کلیدی";
+	ViewData["selected"] = "Keywords_Index";
 
-	var users = (List<ApplicationUser>)ViewData["users"]!;
+	var categories = (List<Category>)ViewData["categories"]!;
 	var counter = ((Model.CurrentPage - 1) * Model.PageSize) + 1;
 }
+<a asp-controller="Job" asp-action="CreateKeyword" class="btn btn-success mb-2">
+	افزودن کلمه کلیدی جدید <i class="bx bx-plus"></i>
+</a>
 
-<a asp-controller="Wallet" asp-action="ChargeWallet" class="btn btn-success mb-2">
-	شارژ/افزودن کیف پول <i class="bx bx-plus"></i>
+<a asp-controller="Job" asp-action="CreateKeywordCategory" class="btn btn-info mb-2">
+	تبدیل دسته بندی ها به کلمات کلیدی
 </a>
 
 <section>
@@ -30,30 +34,29 @@
 						</select>
 					</fieldset>
 				</div>
-
-				<div class="col-12 col-sm-6 col-lg-2">
-					<label>کاربر را انتخاب نمایید</label>
-					<select asp-for="ApplicationUserId" class="select2 form-control">
-						<option value="null">انتخاب نشده</option>
-						@foreach (var item in users)
-						{
-							<option value="@item.Id">@item.PhoneNumber</option>
-						}
-					</select>
+				
+				<div class="col-12 col-sm-6 col-lg-10">
+					<label>دسته بندی</label>
+					<fieldset class="form-group">
+						<select asp-for="CategoryId" class="form-control select2">
+							@foreach (var item in categories)
+							{
+								<option value="@item.Id">@item.Name</option>
+							}
+						</select>
+					</fieldset>
 				</div>
 
-
-				<div class="col-12 col-sm-6 col-lg-2">
-					<label>موجودی از</label>
-					<input asp-for="InventoryFrom" type="text" class="form-control text-right" />
+				<div class="col-12 col-sm-6 col-lg-3">
+					<label>@Resources.General.DisplayNames.Title</label>
+					<input type="text" class="form-control text-left" asp-for="Title" />
 				</div>
-
-				<div class="col-12 col-sm-6 col-lg-2">
-					<label>موجودی تا</label>
-					<input asp-for="InventoryTo" type="text" class="form-control text-right" />
+				<div class="col-12 col-sm-6 col-lg-3">
+					<label>@Resources.General.DisplayNames.Slug</label>
+					<input type="text" class="form-control text-left" asp-for="Slug" />
 				</div>
-
-				<div class="col-12 col-sm-12 col-lg-4 d-flex align-items-center">
+			
+				<div class="col-12 col-sm-12 col-lg-6 d-flex align-items-center">
 					<div class="col-4 col-sm-4 col-lg-4 d-flex align-items-center">
 						<button id="empty" type="button" class="btn btn-warning btn-block glow users-list-clear mb-0 mt-75">خالی </button>
 					</div>
@@ -77,9 +80,10 @@
 							<thead class="thead-dark">
 								<tr>
 									<th>ردیف</th>
-									<th>شناسه کاربر</th>
-									<th>تماس</th>
-									<th>موجودی</th>
+									<th>@(Resources.General.DisplayNames.Title)</th>
+									<th>@(Resources.General.DisplayNames.Slug)</th>
+									<th>دسته بندی</th>
+									<th>@(Resources.General.DisplayNames.Status)</th>
 									<th>@(Resources.General.DisplayNames.Actions)</th>
 								</tr>
 							</thead>
@@ -88,12 +92,29 @@
 								{
 									<tr>
 										<td>@counter</td>
-										<td>@item.ApplicationUserId</td>
-										<td>@item.ApplicationUser.PhoneNumber</td>
-										<td>@item.Inventory.ToString("#,0")</td>
+										<td>@item.Title</td>
+										<td>@item.Slug</td>
+										<td>@item.Category.Name</td>
+
+										@if (item.IsActive)
+										{
+											<td class="text-success">فعال</td>
+										}
+										else
+										{
+											<td class="text-danger">غیرفعال</td>
+										}
+
 										<td>
-											<a onclick="chargeWallet('@item.ApplicationUserId','@item.ApplicationUser.PhoneNumber')" data-toggle="tooltip" data-placement="top" data-original-title="شارژ کیف پول"><i class='bx bxs-wallet text-primary'></i></a>
-											<a target="_blank" asp-controller="Wallet" asp-action="IndexTransaction" asp-route-WalletId="@item.Id" data-toggle="tooltip" data-placement="top" data-original-title="مشاهده تراکنش ها"><i class='bx bx-show text-info'></i></a>
+											<div class="btn-group dropup dropdown-icon-wrapper mr-1 mb-1">
+												<button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+													<i class='bx bx-cog dropdown-icon-wrapper'></i>
+												</button>
+												<div class="dropdown-menu dropdown-menu-right" x-placement="top-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(49px, -8px, 0px);">
+													<a class="dropdown-item" asp-controller="Job" asp-action="UpdateKeyword" asp-route-id="@item.Id" data-toggle="tooltip" data-placement="top" data-original-title="ویرایش"><i class="bx bxs-edit-alt text-warning"></i></a>
+													<a onclick="deleteItem('@item.Id','@Url.Action("DeleteKeyword","Job")')" class="dropdown-item" data-toggle="tooltip" data-placement="top" data-original-title="حذف کامل از دیتابیس"><i class='bx bx-trash text-danger'></i></a>
+												</div>
+											</div>
 										</td>
 									</tr>
 									counter++;
@@ -101,7 +122,7 @@
 								@if (Model.Entities.Any() == false)
 								{
 									<tr>
-										<td colspan="7" class="text-center">@(Resources.General.DisplayNames.ListEmpty)</td>
+										<td colspan="6" class="text-center">@(Resources.General.DisplayNames.ListEmpty)</td>
 									</tr>
 								}
 							</tbody>
@@ -154,40 +175,11 @@
 			</div>
 		</div>
 	</div>
-
-	<div class="modal fade text-left" id="CreateForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h4 id="CreateFormTitle" class="modal-title">شارژ کیف پول</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-label="بستن">
-						<i class="bx bx-x"></i>
-					</button>
-				</div>
-				@{
-					var model = new CreateWalletViewModel();
-				}
-				<partial name="_ChargeWallet" model="model" />
-			</div>
-		</div>
-	</div>
-
 </section>
-@section Scripts
-{
-	<script src="~/assets/js/scripts/wordify/wordifyfa.min.js"></script>
+
+
+@section Scripts {
 	<script>
-		function chargeWallet(userId,phoneNumber) {
-			$("#ApplicationUserIdInput").val(userId);
-
-			$("#PhoneNumberInput").val(phoneNumber);
-
-			$("#CreateFormTitle").text('شارژ کیف پول - ' + phoneNumber);
-
-
-			$('#CreateForm').modal('show');
-		}
-
 		function changePage(Page) {
 			var url = new URL(window.location.href);
 			var SerachParams = url.searchParams;
@@ -206,44 +198,10 @@
 
 		$("#empty").click(function (event) {
 			$("#PageSize").val(20);
-			$("#ApplicationUserId").val('null');
-			$("#InventoryFrom").val(null);
-			$("#InventoryTo").val(null);
-		});
+			$("#CategoryId").val('null');
 
-		$("#Inventory").keyup(function () {
-
-			var value = $("#Inventory").val();
-
-			var convert = wordifyfa(value);
-			if ($("#word-price").val() != "null") { $("#word-price").remove(); }
-			$("#price-convert").append($("<span id='word-price' class='text-secondry'></span>").val(convert).html(convert));
-
-			var seperatevalue = separate(value);
-
-			$("#Inventory").val(seperatevalue);
-
-			if (event.key === "Backspace" || event.key === "Delete") {
-
-				var value2 = $("#Inventory").val().replace(/,\s?/g, "");
-
-				var seperatevalue2 = separate(value2);
-
-				$("#Inventory").val(seperatevalue2);
-			}
-		});
-
-
-		function separate(Number) {
-			const number = Number.replace(/[^0-9]/g, '');
-			return number.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-		}
-
-
-		$("form").submit(function () {
-			var InventoryValue = $("#Inventory").val();
-			var InventoryNormalValue = InventoryValue.replace(/,\s?/g, "");
-			$("#Inventory").val(InventoryNormalValue);
+			$("#Title").val(null);
+			$("#Slug").val(null);
 		});
 	</script>
 }

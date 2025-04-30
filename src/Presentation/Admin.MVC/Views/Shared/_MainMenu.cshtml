@@ -22,7 +22,7 @@
 				<a asp-controller="Home" asp-action="Index"><i class="menu-livicon" data-icon="desktop"></i><span class="menu-title" data-i18n="globe">داشبورد </span></a>
 			</li>
 
-			<li class=" navigation-header">
+			<li class="navigation-header">
 				<span>کاربران </span>
 			</li>
 
@@ -66,6 +66,24 @@
 
 					<li class="@(selected == "Wallet_Index" ? "active" : "null")">
 						<a asp-controller="Wallet" asp-action="Index"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">مشاهده لیست</span></a>
+					</li>
+				</ul>
+			</li>
+
+
+			<li class="navigation-header">
+				<span>پرداخت ها و تراکنش ها</span>
+			</li>
+
+			<li class="nav-item">
+				<a href="#"><i class="menu-livicon" data-icon="gift"></i><span class="menu-title" data-i18n="Disabled Menu">مدیریت پرداخت و تراکنش</span></a>
+				<ul class="menu-content">
+					<li class="@(selected == "Transaction_Index" ? "active" : "null")">
+						<a asp-controller="Wallet" asp-action="IndexTransaction"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">لیست تراکنش ها</span></a>
+					</li>
+
+					<li class="@(selected == "Payments_Index" ? "active" : "null")">
+						<a asp-controller="Payment" asp-action="Index"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">لیست پرداخت ها</span></a>
 					</li>
 				</ul>
 			</li>
@@ -126,8 +144,20 @@
 				</ul>
 			</li>
 
+			<li class="navigation-header">
+				<span>کلمات کلیدی</span>
+			</li>
 
-			<li class=" navigation-header">
+			<li class="nav-item">
+				<a><i class="menu-livicon" data-icon="tag"></i><span class="menu-title" data-i18n="Invoice">مدیریت کلمات کلیدی</span></a>
+				<ul class="menu-content">
+					<li class="@(selected == "Tags_Index" ? "active" : "null")">
+						<a asp-controller="Job" asp-action="IndexKeyword"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">مشاهده لیست</span></a>
+					</li>
+				</ul>
+			</li>
+
+			<li class="navigation-header">
 				<span>تگ ها</span>
 			</li>
 
@@ -141,7 +171,7 @@
 			</li>
 
 			<li class="navigation-header">
-				<span>درخواست مشاوره و تماس با ما</span>
+				<span>صندوق پیام و تماس با ما</span>
 			</li>
 
 			<li class="nav-item">
@@ -149,6 +179,14 @@
 				<ul class="menu-content">
 					<li class="@(selected == "Contacts_Index" ? "active" : "null")">
 						<a asp-controller="Contact" asp-action="Index"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">تماس با ما</span></a>
+					</li>
+
+					<li class="@(selected == "MessageBox_Index" ? "active" : "null")">
+						<a asp-controller="MessageBox" asp-action="Index"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">صندوق پیام</span></a>
+					</li>
+
+					<li class="@(selected == "MessageBox_Create" ? "active" : "null")">
+						<a asp-controller="MessageBox" asp-action="Create"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">افزودن پیام</span></a>
 					</li>
 				</ul>
 			</li>
@@ -203,26 +241,8 @@
 			</li>
 
 			<li class="navigation-header">
-				<span>پلن ها و تبلیغات کسب و کار ها</span>
-			</li>
-
-			<li class="nav-item">
-				<a><i class="menu-livicon" data-icon="trophy"></i><span class="menu-title" data-i18n="Invoice">مدیریت تبلیغات</span></a>
-				<ul class="menu-content">
-					<li class="@(selected == "Ads_IndexJobBranchAds" ? "active" : "null")">
-						<a asp-controller="Ads" asp-action="IndexJobBranchAds"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">مشاهده لیست</span></a>
-					</li>
-
-					<li class="@(selected == "Ads_CreateJobBranchAds" ? "active" : "null")">
-						<a asp-controller="Ads" asp-action="CreateJobBranchAds"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">افزودن تبلیغ جدید</span></a>
-					</li>
-				</ul>
-			</li>
-
-			<li class="navigation-header">
 				<span>اسلایدر و بنر ها</span>
 			</li>
-
 
 			<li class="nav-item">
 				<a><i class="menu-livicon" data-icon="image"></i><span class="menu-title" data-i18n="Invoice">مدیریت اسلایدر</span></a>
@@ -271,44 +291,16 @@
 			</li>
 
 			<li class="navigation-header">
-				<span>سفارشات</span>
+				<span>اشتراک و ویژگی ها | درگاه ها | کد تخفیف</span>
 			</li>
 
 			<li class="nav-item">
-				<a href="#"><i class="menu-livicon" data-icon="gift"></i><span class="menu-title" data-i18n="Disabled Menu">کد تخفیف</span></a>
+				<a><i class="menu-livicon" data-icon="rocket"></i><span class="menu-title" data-i18n="Invoice">مدیریت موارد</span></a>
 				<ul class="menu-content">
 					<li class="@(selected == "Discounts_Index" ? "active" : "null")">
 						<a asp-controller="Discounts" asp-action="Index"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">لیست کد های تخفیف</span></a>
 					</li>
-				</ul>
-			</li>
 
-
-			<li class="navigation-header">
-				<span>پرداخت و درگاه ها</span>
-			</li>
-
-			<li class="nav-item">
-				<a><i class="menu-livicon" data-icon="rocket"></i><span class="menu-title" data-i18n="Invoice">مدیریت پرداخت ها</span></a>
-				<ul class="menu-content">
-					<li class="@(selected == "PaymentPortals_Index" ? "active" : "null")">
-						<a asp-controller="Payment" asp-action="IndexPaymentPortal"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">درگاه ها</span></a>
-					</li>
-					<li class="@(selected == "Payments_Index" ? "active" : "null")">
-						<a asp-controller="Payment" asp-action="Index"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">لیست پرداخت ها</span></a>
-					</li>
-
-				</ul>
-			</li>
-
-
-			<li class="navigation-header">
-				<span> اشتراک و ویژگی ها </span>
-			</li>
-
-			<li class="nav-item">
-				<a><i class="menu-livicon" data-icon="rocket"></i><span class="menu-title" data-i18n="Invoice">مدیریت اشتراک ها</span></a>
-				<ul class="menu-content">
 					<li class="@(selected == "Subscriptions_Index" ? "active" : "null")">
 						<a asp-controller="Subscription" asp-action="Index"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">اشتراک ها</span></a>
 					</li>
@@ -316,9 +308,25 @@
 					<li class="@(selected == "Features_Index" ? "active" : "null")">
 						<a asp-controller="Subscription" asp-action="IndexFeature"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">ویژگی ها</span></a>
 					</li>
+
+					<li class="@(selected == "PaymentPortals_Index" ? "active" : "null")">
+						<a asp-controller="Payment" asp-action="IndexPaymentPortal"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">درگاه ها</span></a>
+					</li>
 				</ul>
 			</li>
 
+			<li class="nav-item">
+				<a><i class="menu-livicon" data-icon="trophy"></i><span class="menu-title" data-i18n="Invoice">مدیریت تبلیغات</span></a>
+				<ul class="menu-content">
+					<li class="@(selected == "Ads_IndexJobBranchAds" ? "active" : "null")">
+						<a asp-controller="Ads" asp-action="IndexJobBranchAds"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">مشاهده لیست</span></a>
+					</li>
+
+					<li class="@(selected == "Ads_CreateJobBranchAds" ? "active" : "null")">
+						<a asp-controller="Ads" asp-action="CreateJobBranchAds"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">افزودن تبلیغ جدید</span></a>
+					</li>
+				</ul>
+			</li>
 
 			<li class="navigation-header">
 				<span>دسترسی سریع موارد SEO</span>
