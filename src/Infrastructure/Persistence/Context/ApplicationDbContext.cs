@@ -52,6 +52,7 @@
         #region ( Commnet )
         public DbSet<Comment> Comment { get; set; }
         public DbSet<AnswerComment> AnswerComment { get; set; }
+        public DbSet<CommentInteraction> CommentInteraction { get; set; }
         #endregion
 
         #region ( Config )
@@ -96,6 +97,7 @@
 
         public DbSet<JobInfo> JobInfo { get; set; }
         public DbSet<JobRanking> JobRanking { get; set; }
+        public DbSet<JobRankingHistory> JobRankingHistory { get; set; }
         #endregion
 
         #region ( Location )
@@ -138,6 +140,7 @@
         #endregion
 
         #region ( Subscription )
+        public DbSet<SubscriptionClick> ClickAdsSetting { get; set; }
         public DbSet<Click> Click { get; set; }
         public DbSet<Feature> Feature { get; set; }
         public DbSet<Subscription> Subscription { get; set; }

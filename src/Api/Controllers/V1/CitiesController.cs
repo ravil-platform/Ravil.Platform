@@ -2,9 +2,15 @@
 
 namespace Api.Controllers.V1
 {
+    /// <inheritdoc />
     [Route(Routes.Controller)]
     public class CitiesController : GenericBaseController<CitiesController>
     {
+        /// <summary>
+        /// Cities Controller
+        /// </summary>
+        /// <param name="mediator"></param>
+        /// <param name="logger"></param>
         public CitiesController(IMediator mediator, Logging.Base.ILogger<CitiesController> logger) : base(mediator, logger)
         {
         }

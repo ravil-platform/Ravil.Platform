@@ -1,4 +1,5 @@
-﻿namespace Persistence.Contracts
+﻿
+namespace Persistence.Contracts
 {
     public class UnitOfWork : UnitOfWork<ApplicationDbContext>, IUnitOfWork
     {
@@ -245,6 +246,21 @@
         #endregion
 
         #region ( Comment )
+        private ICommentInteractionRepository? _commentInteractionRepository;
+        public ICommentInteractionRepository CommentInteractionRepository
+        {
+            get
+            {
+                if (_commentInteractionRepository == null)
+                {
+                    _commentInteractionRepository = new CommentInteractionRepository(DatabaseContext);
+                }
+
+                return _commentInteractionRepository;
+            }
+        }
+
+
         private IAnswerCommentRepository? _answerCommentRepository;
         public IAnswerCommentRepository AnswerCommentRepository
         {
@@ -605,6 +621,20 @@
             }
         }
 
+        private IJobRankingHistoryRepository? _jobRankingHistoryRepository;
+        public IJobRankingHistoryRepository JobRankingHistoryRepository
+        {
+            get
+            {   
+                if (_jobRankingHistoryRepository == null)
+                {
+                    _jobRankingHistoryRepository = new JobRankingHistoryRepository(DatabaseContext);
+                }
+
+                return _jobRankingHistoryRepository;
+            }
+        }
+
         private IJobInfoRepository? _jobInfoRepository;
         public IJobInfoRepository JobInfoRepository
         {
@@ -810,6 +840,21 @@
         #endregion
 
         #region ( Subscription )
+        private IClickAdsSettingRepository? _clickAdsSettingRepository;
+        public IClickAdsSettingRepository ClickAdsSettingRepository
+        {
+            get
+            {
+                if (_clickAdsSettingRepository == null)
+                {
+                    _clickAdsSettingRepository = new ClickAdsSettingRepository(DatabaseContext);
+                }
+
+                return _clickAdsSettingRepository;
+            }
+        }
+
+
         private IClickRepository? _clickRepository;
         public IClickRepository ClickRepository
         {

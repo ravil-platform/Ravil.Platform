@@ -10,10 +10,13 @@
 
         public int Price { get; set; }
         public int GiftCharge { get; set; }
+        public short? Discount { get; set; }
+        public double? DiscountAmount { get; set; }
 
         public int DurationTime { get; set; } // Ex:  30 Days
-
+        
         public SubscriptionDurationType DurationType { get; set; }
+        public SubscriptionType Type { get; set; }
 
         public bool IsActive { get; set; }
 

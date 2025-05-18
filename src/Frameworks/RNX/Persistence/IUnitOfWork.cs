@@ -2,6 +2,10 @@
 {
     public interface IUnitOfWork : IQueryUnitOfWork
     {
-        Task SaveAsync();
+        Task<int> SaveAsync();
+
+        Task BeginTransactionAsync(CancellationToken cancellationToken);
+        Task CommitTransactionAsync(CancellationToken cancellationToken);
+        Task RollbackTransactionAsync(CancellationToken cancellationToken);
     }
 }

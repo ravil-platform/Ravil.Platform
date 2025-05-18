@@ -1,0 +1,188 @@
+﻿using Application.Features.Job.Commands.AdsClickActivity;
+using Application.Features.Job.Commands.RechargeAdsClick;
+using Application.Features.Job.Commands.RechargeAdsClickVerification;
+using Application.Features.Job.Commands.RemoveJobBranchGalleries;
+using Application.Features.Job.Commands.SetAdsClickSetting;
+using Application.Features.Job.Commands.UpdateBusiness;
+using Application.Features.Job.Queries.Report;
+using Asp.Versioning;
+using ViewModels.QueriesResponseViewModel.Subscription;
+
+namespace Api.Controllers.V2
+{
+    /// <inheritdoc />
+    [ApiVersion(ApiVersions.V2)]
+    [Route(Routes.Controller)]
+    public class JobsController : GenericBaseController<JobsController>
+    {
+        /// <inheritdoc />
+        public JobsController(IMediator mediator, Logging.Base.ILogger<JobsController> logger) : base(mediator, logger)
+        {
+
+        }
+
+        #region ( Queries )
+
+        /// <summary>
+        /// Returns report job clicks information
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        [Authorize]
+        [HttpGet(Routes.Action)]
+        [ProducesResponseType(type: typeof(Result<List<SubscriptionClickViewModel>>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Report([FromQuery] JobReportQuery query)
+        {
+            var result = await Mediator.Send(query);
+
+            return FluentResult(result);
+        }
+        
+        #endregion
+
+        #region ( Commands )
+
+        /// <summary>
+        /// Creates a job and also job branch ( add free job in ravil ) 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [Authorize]
+        [HttpPost(Routes.Action)]
+        [ProducesResponseType(type: typeof(Result<JobBranchViewModel>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> CreateFreeJobBranch([FromForm] CreateFreeJobBranchCommand command)
+        {
+            var result = await Mediator.Send(command);
+
+            return FluentResult(result);
+        }
+
+        /// <summary>
+        /// Update a Business (job) 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [Authorize]
+        [HttpPost(Routes.Action)]
+        [ProducesResponseType(type: typeof(Result<JobBranchViewModel>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> UpdateBusiness([FromForm] UpdateBusinessCommand command)
+        {
+            var result = await Mediator.Send(command);
+
+            return FluentResult(result);
+        }
+
+
+        /// <summary>
+        /// Upload job branch galleries
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpPost(Routes.Action)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> RemoveJobBranchGallery([FromBody] RemoveJobBranchGalleriesCommand command)
+        {
+            var result = await Mediator.Send(command);
+
+            return FluentResult(result);
+        }
+
+        /// <summary>
+        /// Ads Click action command
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpPost(Routes.Action)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> AdsClickActivity(AdsClickActivityCommand command)
+        {
+            var result = await Mediator.Send(command);
+
+            return FluentResult(result);
+        }
+
+        /// <summary>
+        /// Set Ads Click settings for each user command
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [Authorize]
+        [HttpPost(Routes.Action)]
+        [ProducesResponseType(type: typeof(Result<ClickAdsSettingViewModel>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> SetAdsClickSetting(SetAdsClickSettingCommand command)
+        {
+            var result = await Mediator.Send(command);
+
+            return FluentResult(result);
+        }
+
+        /// <summary>
+        /// Recharge Ads Click account command
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [Authorize]
+        [HttpPost(Routes.Action)]
+        [ProducesResponseType(type: typeof(Result<RechargeAdsClickViewModel>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> RechargeAdsClick(RechargeAdsClickCommand command)
+        {
+            var result = await Mediator.Send(command);
+
+            return FluentResult(result);
+        }
+
+        /// <summary>
+        /// Verify Recharge Ads Click command
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [Authorize]
+        [HttpPost(Routes.Action)]
+        [ProducesResponseType(type: typeof(Result<RechargeAdsClickVerificationViewModel>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> RechargeAdsClickVerification(RechargeAdsClickVerificationCommand command)
+        {
+            var result = await Mediator.Send(command);
+
+            return FluentResult(result);
+        }
+
+        /*/// <summary>
+        /// Upload job branch galleries
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpPost(Routes.Action)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> RemoveJobBranchGallery([FromBody] RemoveJobBranchGalleriesCommand command)
+        {
+            var result = await Mediator.Send(command);
+
+            return FluentResult(result);
+        }
+
+        /// <summary>
+        /// Ads Click action
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpPost(Routes.Action)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> AdsClickActivity(AdsClickActivityCommand command)
+        {
+            var result = await Mediator.Send(command);
+
+            return FluentResult(result);
+        }*/
+        #endregion
+    }
+}

@@ -1,10 +1,17 @@
-﻿using System.Text.Json;
+﻿using System.Net;
+using Application.Features.ActionHistories.Create;
 using Application.Features.Blog.Queries.GetAllByFilter;
 using Application.Features.Category.Queries.GetAllByFilter;
+using Application.Features.GuideLine.Commands.GuideLineCompletion;
+using Application.Features.Job.Commands.AddJobRanking;
+using Application.Features.Job.Commands.AdsClickActivity;
+using Application.Features.Job.Commands.SetAdsClickSetting;
+using Application.Features.Job.Commands.UpdateBusiness;
 using Application.Features.Job.Queries.GetAllJobBranch;
 using Application.Features.Job.Queries.GetRelatedJobBranches;
 using Domain.Entities.FeedbackSlider;
 using Domain.Entities.MessageBox;
+using Domain.Entities.PanelTutorial;
 using Domain.Entities.Payment;
 using Domain.Entities.RedirectionUrl;
 using Domain.Entities.Subscription;
@@ -24,6 +31,11 @@ using ViewModels.AdminPanel.Subscription;
 using ViewModels.Discounts;
 using CreateJobBranchViewModel = ViewModels.QueriesResponseViewModel.Job.CreateJobBranchViewModel;
 using CreateJobViewModel = ViewModels.QueriesResponseViewModel.Job.CreateJobViewModel;
+using ViewModels.QueriesResponseViewModel.Analytics;
+using ViewModels.QueriesResponseViewModel.Job.GuideLines;
+using ViewModels.QueriesResponseViewModel.MessageBox;
+using ViewModels.QueriesResponseViewModel.PanelTutorial;
+using ViewModels.QueriesResponseViewModel.Subscription;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 using PhoneNumberInfosViewModel = ViewModels.QueriesResponseViewModel.Job.PhoneNumberInfosViewModel;
 using SocialMediaInfosViewModel = ViewModels.QueriesResponseViewModel.Job.SocialMediaInfosViewModel;
@@ -141,6 +153,17 @@ namespace Application.Profiles
             CreateMap<Category, UpdateCategoryViewModel>().ReverseMap();
             #endregion
 
+            #region ( ActionHistories )
+
+            CreateMap<ActionHistories, CreateActionHistoriesCommandData>()
+                .ReverseMap()
+                //.ForMember(src => src.Id, expression => expression.MapFrom(a => Guid.NewGuid()))
+                .ForMember(src => src.PageUrl, expression => expression.MapFrom(a => WebUtility.UrlDecode(a.PageUrl)))
+                .ForMember(src => src.PageSlug, expression => expression.MapFrom(a => WebUtility.UrlDecode(a.PageSlug)))
+                .ForMember(src => src.PageTitle, expression => expression.MapFrom(a => WebUtility.UrlDecode(a.PageTitle)));
+
+            #endregion
+
             #region ( Job )
             CreateMap<Job, JobInfoViewModel>()
                 /*.ForMember(src => src.WebSiteNames, expression =>
@@ -249,6 +272,80 @@ namespace Application.Profiles
             CreateMap<JobCategory, CreateJobCategoryCommand>().ReverseMap();
             CreateMap<JobCategory, UpdateJobCategoryCommand>().ReverseMap();
 
+            #region ( UpdateBusinessCommand )
+
+            CreateMap<UpdateBusinessCommand, JobBranch>()
+                .ForMember(src => src.Description, expression => expression.MapFrom(a => a.Summary))
+                .ForMember(src => src.BranchContent, expression => expression.MapFrom(a => a.Description))
+                .ReverseMap();
+
+            CreateMap<UpdateBusinessCommand, Address>()
+                //.ForMember(src => src.Location.Lat, expression => expression.MapFrom(a => a.Lat))
+                //.ForMember(src => src.Location.Long, expression => expression.MapFrom(a => a.Long))
+                .ForMember(src => src.PostalAddress, expression => expression.MapFrom(a => a.FullAddress))
+                .ReverseMap();
+
+            CreateMap<UpdateBusinessCommand, Location>()
+                .ForMember(src => src.Lat, expression => expression.MapFrom(a => a.Lat))
+                .ForMember(src => src.Long, expression => expression.MapFrom(a => a.Long))
+                .ReverseMap();
+
+            #endregion
+
+            #region ( GuideLine )
+
+            CreateMap<JobBranch, GuideLineCompletionViewModel>()
+                .ForMember(src => src.Business, expression =>
+                {
+                    expression.MapFrom(a => a);
+                })
+                .ReverseMap();
+
+            CreateMap<GuideLineCompletionCommand, Job>()
+                .ReverseMap();
+
+            CreateMap<GuideLineCompletionCommand, JobBranch>()
+                .ForMember(src => src.Description, expression => expression.MapFrom(a => a.Summary))
+                .ForMember(src => src.BranchContent, expression => expression.MapFrom(a => a.Description))
+                .ReverseMap();
+
+            CreateMap<GuideLineCompletionCommand, Address>()
+                .ForMember(src => src.PostalAddress, expression => expression.MapFrom(a => a.FullAddress))
+                .ReverseMap()
+                .ForMember(src => src.Lat, expression => expression.MapFrom(a => a.Location.Lat))
+                .ForMember(src => src.Long, expression => expression.MapFrom(a => a.Location.Long));
+
+            CreateMap<GuideLineCompletionCommand, Location>()
+                .ForMember(src => src.Lat, expression => expression.MapFrom(a => a.Lat))
+                .ForMember(src => src.Long, expression => expression.MapFrom(a => a.Long))
+                .ReverseMap();
+
+            #endregion
+
+            #region ( Keyword )
+
+            CreateMap<Keyword, JobTagsViewModel>().ReverseMap();
+            CreateMap<Keyword, KeywordViewModel>()
+                .ForMember(src => src.Category, expression =>
+                {
+                    expression.MapFrom(a => a.Category);
+                })
+                .ReverseMap();
+
+            #endregion
+
+            #region ( JobRankingHistory )
+
+            CreateMap<JobRankingHistory, AddJobRankingCommandData>()
+                .ReverseMap()
+                //.ForMember(src => src.Id, expression => expression.MapFrom(a => Guid.NewGuid()))
+                .ForMember(src => src.PageUrl, expression => expression.MapFrom(a => WebUtility.UrlDecode(a.PageUrl)))
+                .ForMember(src => src.CreateAt, expression => expression.MapFrom(a => DateTime.UtcNow));
+            
+            CreateMap<JobInfo, JobStatisticsViewModel>().ReverseMap();
+
+            #endregion
+
             CreateMap<JobBranch, UpdateJobBranchLocationCommand>().ReverseMap();
             CreateMap<JobBranch, JobBranchViewModel>()
                 .ForMember(src => src.JobInfo, expression =>
@@ -266,6 +363,11 @@ namespace Application.Profiles
                 .ForMember(src => src.TimeWorks, expression =>
                 {
                     expression.MapFrom(a => a.JobTimeWorks);
+                })
+                .ForMember(src => src.Keywords, expression =>
+                {
+                    expression.Condition(a => a.JobTimeWorks != null && a.JobKeywords.Any());
+                    expression.MapFrom(dest => dest.JobKeywords.Select(a => a.Keyword));
                 })
                 .ForMember(src => src.Categories, expression =>
                 {
@@ -324,8 +426,21 @@ namespace Application.Profiles
             CreateMap<UserBookMark, UserJobBookMarkViewModel>().ReverseMap();
             CreateMap<UserBlogLike, UserBlogLikeViewModel>().ReverseMap();
 
+
             CreateMap<Keyword, CreateKeywordViewModel>().ReverseMap();
             CreateMap<Keyword, UpdateKeywordViewModel>().ReverseMap();
+            
+            CreateMap<SubscriptionClick, AdsClickActivityCommand>().ReverseMap();
+            CreateMap<ClickAdsSetting, SetAdsClickSettingCommand>().ReverseMap();
+            CreateMap<ClickAdsSetting, ClickAdsSettingViewModel>().ReverseMap();
+            #endregion
+
+            #region ( MessageBox )
+
+            CreateMap<MessageBox, MessageBoxViewModel>()
+                .ForMember(src => src.Type, expression => expression.MapFrom(a => a.Type.GetEnumDisplayName()))
+                .ReverseMap();
+
             #endregion
 
             #region ( Service )
@@ -358,6 +473,34 @@ namespace Application.Profiles
 
             CreateMap<UpdateFeatureViewModel, Feature>().ReverseMap();
             CreateMap<CreateFeatureViewModel, Feature>().ReverseMap();
+            
+
+            CreateMap<Subscription, SubscriptionViewModel>().ReverseMap();
+            CreateMap<UserSubscription, UserSubscriptionViewModel>()
+            .ForMember(src => src.Subscription, expression =>
+            {
+                expression.MapFrom(a => a.Subscription);
+            })
+            .ReverseMap();
+
+            #region ( Subscription Click )
+
+            CreateMap<SubscriptionClick, SubscriptionClickViewModel>()
+                .ForMember(src => src.ClickedTimeStamp, expression => expression.MapFrom(a => new DateTimeOffset(a.ClickedTime).ToUnixTimeSeconds()))
+                .ForMember(src => src.ClickTitle, expression => expression.MapFrom(a => a.Click.Title))
+                .ForMember(src => src.ClickType, expression => expression.MapFrom(a => a.Click.Type))
+                .ReverseMap();
+
+            #endregion
+
+            #endregion
+
+            #region ( PanelTutorial )
+
+            CreateMap<PanelTutorial, PanelTutorialViewModel>()
+                .ForMember(src => src.Time, expression => expression.MapFrom(a => string.Format("{0}:{1}", a.Time.Minutes, a.Time.Seconds)))
+                .ReverseMap();
+
             #endregion
 
             #region ( Tag )

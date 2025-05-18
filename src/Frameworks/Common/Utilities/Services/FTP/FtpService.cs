@@ -186,6 +186,10 @@ public class FtpService : object, IFtpService
                     if (!MimeTypes.DocumentsAndImages.Contains(file.ContentType))
                         return string.Empty;
                     break;
+                case TypeFile.Gallery:
+                    if (!MimeTypes.Galleries.Contains(file.ContentType))
+                        return string.Empty;
+                    break;
                 case TypeFile.Other:
                     if (!MimeTypes.All.Contains(file.ContentType))
                         return string.Empty;
@@ -266,7 +270,8 @@ public class FtpService : object, IFtpService
                 thumbSavePath += fileName;
                 var extensionTypeFile = ExtensionTypeFile.Webp;
                 ImageResizer(originPath, thumbSavePath, extensionTypeFile, fileExtension, resizeWidth, resizeHeight);
-            };
+            }
+            ;
             #endregion
 
             #endregion
@@ -283,23 +288,54 @@ public class FtpService : object, IFtpService
         }
     }
 
-    public async Task<bool> DeleteFileToFtpServer(string originSavePath, string deleteFileName)
+    /// <summary>
+    /// حذف فایل و بازگشت نتیجه عملیات
+    /// </summary>
+    /// <param name="originSavePath"> مسیر حذف فایل اصلی</param>
+    /// <param name="thumbSavePath"> مسیر حذف فایل ریسایز شده احتمالی</param>
+    /// <returns>نتیجه درخواست حذف فایل را بصورت bool برمیگرداند</returns>
+    /// <exception cref="ArgumentNullException"></exception>
+    public async Task<bool> DeleteFileToFtpServer(string originSavePath, string deleteFileName, string? thumbSavePath = null)
     {
         try
         {
             #region  ( Delete Old File )
             if (!string.IsNullOrEmpty(deleteFileName))
             {
-                var fullPath = originSavePath + deleteFileName;
+                var fullPath = segmentSeperatorSingle + rootDirectory + originSavePath + deleteFileName;
 
                 if (FtpClient.FileExists(fullPath)) FtpClient.DeleteFile(fullPath);
-                return true;
+
+                if (!string.IsNullOrEmpty(thumbSavePath))
+                {
+                    var fullThumbPath = segmentSeperatorSingle + rootDirectory + thumbSavePath + deleteFileName;
+                    if (FtpClient.FileExists(fullThumbPath)) FtpClient.DeleteFile(fullThumbPath);
+                }
             }
             #endregion
-
         }
-        catch
+        catch(FtpCommandException ex)
         {
+            Logger.LogError(ex, ex.InnerException?.Message ?? ex.Message,
+            new Hashtable
+            {
+                { "originSavePath", originSavePath },
+                { "deleteFileName", deleteFileName },
+                { "thumbSavePath", thumbSavePath }
+            });
+
+            return false;
+        }
+        catch(Exception ex)
+        {
+            Logger.LogError(ex, ex.InnerException?.Message ?? ex.Message,
+            new Hashtable
+            {
+                { "originSavePath", originSavePath },
+                { "deleteFileName", deleteFileName },
+                { "thumbSavePath", thumbSavePath }
+            });
+
             return false;
         }
 

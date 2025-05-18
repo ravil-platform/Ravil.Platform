@@ -55,8 +55,9 @@ namespace Domain.Entities.User
 
         public int? CityBaseId { get; set; }
         public virtual CityBase CityBase { get; set; }
-
+        
         public virtual Wallet Wallet { get; set; }
+        public virtual ClickAdsSetting ClickAdsSetting { get; set; }
 
         public virtual ICollection<Comment.Comment> Comments { get; set; }
         public virtual ICollection<JobBranch> JobBranches { get; set; }

@@ -227,7 +227,7 @@
 
     public enum TypeFile
     {
-        Image, Video, Audio, Document, DocumentAndImage, Other
+        Image, Video, Audio, Document, DocumentAndImage, Gallery, Other
     }
 
     public enum ExtensionTypeFile

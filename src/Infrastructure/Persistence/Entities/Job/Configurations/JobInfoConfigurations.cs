@@ -4,13 +4,15 @@ public class JobInfoConfigurations : IEntityTypeConfiguration<JobInfo>
 {
     public void Configure(EntityTypeBuilder<JobInfo> builder)
     {
-        builder.ToTable("JobInfo", DatabaseSchemas.Jobs);
+        builder.ToTable(nameof(JobInfo), DatabaseSchemas.Jobs);
 
         builder.HasKey(j => j.Id);
+        builder.Property(j => j.CreateAt).IsRequired();
+        builder.Property(j => j.IsActiveAds).IsRequired();
 
         //relations
         builder.HasOne(w => w.Job)
-            .WithOne(w => w.JobInfo)
-            .HasForeignKey<JobInfo>(w => w.JobId);
+            .WithMany(w => w.JobInfos)
+            .HasForeignKey(w => w.JobId);
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Domain.Entities.Job;
+﻿using Domain.Entities.Subscription;
+
+namespace Domain.Entities.Job;
 
 public class Job : Entity
 {
@@ -54,15 +56,20 @@ public class Job : Entity
     public int? JobBrandId { get; set; }
     public virtual Brand.Brand Brand { get; set; }
 
+    public virtual JobRanking JobRanking { get; set; }
+
     public virtual ICollection<JobTag> JobTags { get; set; }
+
+    public virtual ICollection<JobInfo> JobInfos { get; set; }
 
     public virtual ICollection<JobBranch> JobBranches { get; set; }
 
     public virtual ICollection<JobCategory> JobCategories { get; set; }
 
-    public virtual JobRanking JobRanking { get; set; }
-    public virtual JobInfo JobInfo { get; set; }
-
     public virtual ICollection<MessageBox.MessageBox> MessageBoxes { get; set; }
+
+    public virtual ICollection<JobRankingHistory> JobRankingHistories { get; set; }
+
+    public virtual ICollection<SubscriptionClick> JobSubscriptionClicks { get; set; }
     #endregion
 }

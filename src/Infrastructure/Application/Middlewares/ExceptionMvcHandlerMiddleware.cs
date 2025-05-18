@@ -1,13 +1,5 @@
 ﻿namespace Application.Middlewares;
 
-public static class CustomExceptionMvcHandlerMiddlewareExtensions
-{
-    public static IApplicationBuilder UseCustomExceptionMvcHandler(this IApplicationBuilder builder)
-    {
-        return builder.UseMiddleware<ExceptionMvcHandlerMiddleware>();
-    }
-}
-
 public class ExceptionMvcHandlerMiddleware
 {
     protected RequestDelegate Next { get; }
@@ -143,5 +135,12 @@ public class ExceptionMvcHandlerMiddleware
         }
 
         return Task.CompletedTask;
+    }
+}
+public static class CustomExceptionMvcHandlerMiddlewareExtensions
+{
+    public static IApplicationBuilder UseCustomExceptionMvcHandler(this IApplicationBuilder builder)
+    {
+        return builder.UseMiddleware<ExceptionMvcHandlerMiddleware>();
     }
 }

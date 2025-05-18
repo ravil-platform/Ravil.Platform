@@ -1,9 +1,13 @@
-﻿using Application.Features.Job.Queries.GetAll;
+﻿using Application.Features.Job.Commands.AdsClickActivity;
+using Application.Features.Job.Commands.RemoveJobBranchGalleries;
+using Application.Features.Job.Queries.GetAll;
 using Application.Features.Job.Queries.GetJobBranchByRoute;
+using Asp.Versioning;
 
 namespace Api.Controllers.V1
 {
     /// <inheritdoc />
+    [ApiVersion(1.0)]
     [Route(Routes.Controller)]
     public class JobsController : GenericBaseController<JobsController>
     {
@@ -361,6 +365,22 @@ namespace Api.Controllers.V1
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UploadJobBranchGalleries([FromForm] UploadJobBranchGalleriesCommand command)
+        {
+            var result = await Mediator.Send(command);
+
+            return FluentResult(result);
+        }
+
+
+        /// <summary>
+        /// Upload job branch galleries
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpPost(Routes.Action)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> RemoveJobBranchGallery([FromBody] RemoveJobBranchGalleriesCommand command)
         {
             var result = await Mediator.Send(command);
 

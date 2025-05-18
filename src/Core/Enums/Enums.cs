@@ -343,11 +343,13 @@ namespace Enums
     public enum JobBranchStatus
     {
         [Display(Name = "تایید شده")]
-        Accepted,
+        Accepted = 0,
         [Display(Name = "رد شده")]
-        Rejected,
+        Rejected = 1,
         [Display(Name = "در انتظار بررسی")]
-        WaitingToCheck
+        WaitingToCheck = 2,
+        [Display(Name = "اتمام فعالیت")]
+        EndWork = 3
     }
 
     public enum SubscriptionDurationType
@@ -365,16 +367,28 @@ namespace Enums
         OneYear = 3,
     }
 
+    public enum SubscriptionType
+    {
+        [Display(Name = "ساده")]
+        Simple = 0,
+
+        [Display(Name = "استاندارد")]
+        Standard = 1,
+        
+        [Display(Name = "حرفه ای")]
+        Premium = 2,
+    }
+
     public enum ClickType
     {
         [Display(Name = "کلیک روی تبلیغات")]
-        ClickOnAds,
+        ClickOnAds = 0,
 
         [Display(Name = "کلیک روی تماس")]
-        ClickOnCall,
+        ClickOnCall = 1,
 
         [Display(Name = "کلیک روی مسیریابی")]
-        ClickOnMaps
+        ClickOnMaps = 2
     }
 
     public enum PaymentMethod

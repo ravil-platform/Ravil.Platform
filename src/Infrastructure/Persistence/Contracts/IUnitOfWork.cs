@@ -1,4 +1,6 @@
-﻿namespace Persistence.Contracts
+﻿using Persistence.Entities.Comment.Repositories.Interfaces;
+
+namespace Persistence.Contracts
 {
     public interface IUnitOfWork : RNX.Persistence.IUnitOfWork
     {
@@ -35,8 +37,9 @@
         public ICityCategoryRepository CityCategoryRepository { get; }
         public ICityRepository CityRepository { get; }
         #endregion
-
+        
         #region ( Comment )
+        public ICommentInteractionRepository CommentInteractionRepository { get; }
         public IAnswerCommentRepository AnswerCommentRepository { get; }
         public ICommentRepository CommentRepository { get; }
         #endregion
@@ -78,8 +81,9 @@
         public IJobBranchAdsRepository JobBranchAdsRepository { get; }
         public IJobKeywordRepository JobKeywordRepository { get; }
         public IKeywordRepository KeywordRepository { get; }
-
+        
         public IJobRankingRepository JobRankingRepository { get; }
+        public IJobRankingHistoryRepository JobRankingHistoryRepository { get; }
         public IJobInfoRepository JobInfoRepository { get; }
 
         #endregion
@@ -123,7 +127,8 @@
         public IStateBaseRepository StateBaseRepository { get; }
         #endregion
 
-        #region ( Subscription ) 
+        #region ( Subscription )
+        public IClickAdsSettingRepository ClickAdsSettingRepository { get; }
         public IClickRepository ClickRepository { get; }
         public IFeatureRepository FeatureRepository { get; }
         public ISubscriptionRepository SubscriptionRepository { get; }

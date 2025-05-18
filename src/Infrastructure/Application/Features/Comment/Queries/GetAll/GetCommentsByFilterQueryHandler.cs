@@ -1,14 +1,10 @@
 ﻿namespace Application.Features.Comment.Queries.GetAll;
 
-public class GetCommentsByFilterQueryHandler : IRequestHandler<GetCommentsByFilterQuery, List<CommentViewModel>>
+public class GetCommentsByFilterQueryHandler(IMapper mapper, IUnitOfWork unitOfWork)
+    : IRequestHandler<GetCommentsByFilterQuery, List<CommentViewModel>>
 {
-    protected IMapper Mapper { get; }
-    protected IUnitOfWork UnitOfWork { get; }
-    public GetCommentsByFilterQueryHandler(IMapper mapper, IUnitOfWork unitOfWork)
-    {
-        Mapper = mapper;
-        UnitOfWork = unitOfWork;
-    }
+    protected IMapper Mapper { get; } = mapper;
+    protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
 
     public async Task<Result<List<CommentViewModel>>> Handle(GetCommentsByFilterQuery request, CancellationToken cancellationToken)
     {
@@ -20,6 +16,12 @@ public class GetCommentsByFilterQueryHandler : IRequestHandler<GetCommentsByFilt
             query = query.Where(c => c.IsConfirmed);
         }
 
+        if (request.HasAnswered.HasValue)
+        {
+            query = query.Include(a => a.AnswerComments)
+                .Where(c => c.AnswerComments.Any(a => a.IsConfirmed));
+        }
+
         if (request.CommentType != null)
         {
             query = query.Where(c => c.CommentType == request.CommentType);
@@ -27,7 +29,22 @@ public class GetCommentsByFilterQueryHandler : IRequestHandler<GetCommentsByFilt
 
         if (request.JobBranchId != null)
         {
-            query = query.Where(c => c.JobBranchId == request.JobBranchId);
+            if (!string.IsNullOrWhiteSpace(request.BusinessOwnerId))
+            {
+                var businessOwner = await UnitOfWork.JobBranchRepository.TableNoTracking
+                    .Where(a => a.UserId != null && a.UserId.Equals(request.BusinessOwnerId))
+                    .SingleOrDefaultAsync(a => a.Id == request.JobBranchId, cancellationToken: cancellationToken);
+
+                if (businessOwner is not null)
+                {
+                    query = query.Where(c => c.JobBranchId == businessOwner.Id);
+                    query = query.Where(c => c.CommentType == CommentTypes.JobBranch);
+                }
+            }
+            else
+            {
+                query = query.Where(c => c.JobBranchId == request.JobBranchId);
+            }
         }
 
         if (request.BlogId != null)
@@ -42,7 +59,8 @@ public class GetCommentsByFilterQueryHandler : IRequestHandler<GetCommentsByFilt
 
         if (request.Take != null)
         {
-            query = query.Take((int)request.Take);
+            query = query.Include(a => a.AnswerComments)
+                .Take((int)request.Take).AsQueryable();
         }
         #endregion
 

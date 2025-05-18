@@ -16,7 +16,7 @@ public class GetAllCategoriesByFilterQueryHandler : IRequestHandler<GetAllCatego
     {
         CategoryFilterViewModel = Mapper.Map<CategoryFilterViewModel>(request);
 
-        var query = UnitOfWork.CategoryRepository.TableNoTracking;
+        var query = UnitOfWork.CategoryRepository.TableNoTracking.Where(a => a.IsActive);
 
         #region ( Filters )
         if (CategoryFilterViewModel.ParentId != null)
