@@ -26,6 +26,16 @@ public class TransactionRepository : Repository<Domain.Entities.Wallets.Transact
         }
 
         #region (Filter)
+
+        if (filter.WalletId != null)
+        {
+            query = ApplicationDbContext.WalletTransaction
+                .Include(w => w.Transaction)
+                .Where(w => w.WalletId == filter.WalletId)
+                .Select(w => w.Transaction)
+                .AsQueryable();
+        }
+
         if (filter.AuthCode != null)
         {
             query = query.Where(a => a.AuthCode.Equals(filter.AuthCode));
@@ -79,7 +89,6 @@ public class TransactionRepository : Repository<Domain.Entities.Wallets.Transact
         {
         }
         #endregion
-
         #endregion
 
         filter.Build(query.Count()).SetEntities(query);

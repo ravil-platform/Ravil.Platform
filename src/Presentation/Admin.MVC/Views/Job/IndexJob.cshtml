@@ -10,6 +10,8 @@
 
 	ViewData["Title"] = "لیست مشاغل اصلی";
 	ViewData["selected"] = "Jobs_Index";
+
+	var users = (List<ApplicationUser>)ViewData["users"]!;
 	var counter = ((Model.CurrentPage - 1) * Model.PageSize) + 1;
 }
 
@@ -21,7 +23,7 @@
 	<div class="users-list-filter px-1">
 		<form method="get" id="search-form">
 			<input type="hidden" name="CurrentPage" value="@Model.CurrentPage" />
-			<input type="hidden" asp-for="FindAll" id="FindAll" value="false"/>
+			<input type="hidden" asp-for="FindAll" id="FindAll" value="false" />
 			<div class="row border rounded py-2 mb-2">
 				<div class="col-12 col-sm-6 col-lg-2">
 					<label>تعداد نمایش در هر صفحه</label>
@@ -113,38 +115,51 @@
 					</fieldset>
 				</div>
 
-				<div class="col-12 col-sm-6 col-lg-4">
+				<div class="col-12 col-sm-6 col-lg-2">
+					<label>صاحب کسب و کار</label>
+					<fieldset class="form-group">
+						<select asp-for="UserId" class="form-control select2">
+							<option value="">همه</option>
+							@foreach (var item in users)
+							{
+								<option value="@item.Id">@item.PhoneNumber</option>
+							}
+						</select>
+					</fieldset>
+				</div>
+
+				<div class="col-12 col-sm-6 col-lg-2">
 					<label>@Resources.General.DisplayNames.Title</label>
-					<input type="text" class="form-control text-left" asp-for="Title"/>
+					<input type="text" class="form-control text-left" asp-for="Title" />
 				</div>
 
 				<div class="col-12 col-sm-6 col-lg-4">
 					<label>@Resources.General.DisplayNames.SubTitle</label>
-					<input type="text" class="form-control text-left" asp-for="SubTitle"/>
+					<input type="text" class="form-control text-left" asp-for="SubTitle" />
 				</div>
 
 				<div class="col-12 col-sm-6 col-lg-4">
 					<label>@Resources.General.DisplayNames.Summary</label>
-					<input type="text" class="form-control text-left" asp-for="Summary"/>
+					<input type="text" class="form-control text-left" asp-for="Summary" />
 				</div>
 
 				<div class="col-12 col-sm-6 col-lg-4">
 					<label>@Resources.General.DisplayNames.Slug</label>
-					<input type="text" class="form-control text-right" asp-for="Route"/>
+					<input type="text" class="form-control text-right" asp-for="Route" />
 				</div>
 				<div class="col-12 col-sm-6 col-lg-4">
 					<label>@Resources.General.DisplayNames.Content</label>
-					<input type="text" class="form-control text-left" asp-for="Content"/>
+					<input type="text" class="form-control text-left" asp-for="Content" />
 				</div>
 
 				<div class="col-12 col-sm-6 col-lg-3">
 					<label>تاریخ ثبت شغل از</label>
-					<input asp-for="CreatedDateFrom" type="text" class="form-control text-right" data-jdp/>
+					<input asp-for="CreatedDateFrom" type="text" class="form-control text-right" data-jdp />
 				</div>
 
 				<div class="col-12 col-sm-6 col-lg-3">
 					<label>تاریخ ثبت شغل تا</label>
-					<input asp-for="CreatedDateTo" type="text" class="form-control text-right" data-jdp/>
+					<input asp-for="CreatedDateTo" type="text" class="form-control text-right" data-jdp />
 				</div>
 
 				<div class="col-12 col-sm-12 col-lg-6 d-flex align-items-center">
@@ -252,17 +267,18 @@
 														if (!(bool)Model.IsDeleted)
 														{
 															<a class="dropdown-item" asp-controller="Job" asp-action="SetIsDelete" asp-route-id="@data.Id" asp-route-delete="true" data-toggle="tooltip" data-placement="top" data-original-title="حذف سیستمی"><i class='bx bx-trash text-light-danger'></i></a>
-															<a class="dropdown-item" asp-controller="Job" asp-action="Delete" asp-route-id="@data.Id" data-toggle="tooltip" data-placement="top" data-original-title="حذف کامل از دیتابیس"><i class='bx bx-trash text-danger'></i></a>		}
+															<a class="dropdown-item" onclick="deleteItem('@data.Id','@Url.Action("Delete","Job")')" data-toggle="tooltip" data-placement="top" data-original-title="حذف کامل از دیتابیس"><i class='bx bx-trash text-danger'></i></a>
+														}
 														else
 														{
-															<a class="dropdown-item" asp-controller="Job" asp-action="Delete" asp-route-id="@data.Id" data-toggle="tooltip" data-placement="top" data-original-title="حذف کامل از دیتابیس"><i class='bx bx-trash text-danger'></i></a>
+															<a class="dropdown-item" onclick="deleteItem('@data.Id','@Url.Action("Delete","Job")')" data-toggle="tooltip" data-placement="top" data-original-title="حذف کامل از دیتابیس"><i class='bx bx-trash text-danger'></i></a>
 															<a class="dropdown-item" asp-controller="Job" asp-action="SetIsDelete" asp-route-id="@data.Id" asp-route-delete="false" data-toggle="tooltip" data-placement="top" data-original-title="بازیابی"><i class='bx bx-undo text-primary'></i></a>
 														}
 													}
 													else
 													{
 														<a class="dropdown-item" asp-controller="Job" asp-action="SetIsDelete" asp-route-id="@data.Id" asp-route-delete="true" data-toggle="tooltip" data-placement="top" data-original-title="حذف سیستمی"><i class='bx bx-trash text-light-danger'></i></a>
-														<a class="dropdown-item" asp-controller="Job" asp-action="Delete" asp-route-id="@data.Id" data-toggle="tooltip" data-placement="top" data-original-title="حذف کامل از دیتابیس"><i class='bx bx-trash text-danger'></i></a>
+														<a onclick="deleteItem('@data.Id','@Url.Action("Delete","Job")')" class="dropdown-item" data-toggle="tooltip" data-placement="top" data-original-title="حذف کامل از دیتابیس"><i class='bx bx-trash text-danger'></i></a>
 
 													}
 													@* <a target="_blank" class="dropdown-item" asp-controller="" asp-action="" asp-route-id="Id" data-placement="top" data-original-title="گالری تصاویر"><i class='bx bxs-detail text-primary'></i></a> *@

@@ -2,6 +2,8 @@
 
 public class JobFilterViewModel : Paging<Domain.Entities.Job.Job>
 {
+    public string? UserId { get; set; }
+
     public string? Route { get; set; }
     public string? Title { get; set; }
     public string? SubTitle { get; set; }

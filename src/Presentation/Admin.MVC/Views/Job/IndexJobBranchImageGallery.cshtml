@@ -1,0 +1,82 @@
+﻿@using Common.Utilities.Services.FTP.Models
+@using Constants.Files
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.Extensions.Options
+@using ViewModels.AdminPanel.Job
+@model ICollection<Domain.Entities.Job.JobBranchGallery>
+
+@inject IOptions<FTPConnectionOptions> FtpConnectionOptions
+
+@{
+	string UrlBase = FtpConnectionOptions.Value.UrlBase;
+
+	ViewData["Title"] = "لیست تصاویر";
+	ViewData["selected"] = "Jobs_Index";
+
+	string jobBranchId = (string)ViewData["jobBranchId"]!;
+}
+
+<a href="javascript:void(0)" class="btn btn-success mb-2" data-toggle="modal" data-target="#CreateForm">
+	افزودن تصویر جدید <i class="bx bx-plus"></i>
+</a>
+
+<section>
+	<div>
+		<div class="card">
+			<div class="card-content">
+				<div class="car-body">
+					<div class="table-responsive card card-body p-0">
+						<table class="table mb-0 table-striped table-hover no-footer">
+							<thead class="thead-dark">
+								<tr>
+									<th>@(Resources.General.DisplayNames.Picture)</th>
+									<th>@(Resources.General.DisplayNames.Actions)</th>
+								</tr>
+							</thead>
+							<tbody>
+								@foreach (var item in Model)
+								{
+									<tr>
+										<td class="text-bold-700">
+											<img class="rounded-circle mr-1" src="@UrlBase@Paths.JobBranchGallery@item.ImageName" height="75" width="75">
+										</td>
+
+										<td>
+											<a onclick="deleteItem('@item.Id','@Url.Action("DeleteJobBranchImageGallery","Job")')" data-toggle="tooltip" data-placement="top" data-original-title="حذف"><i class="bx bxs-trash text-danger"></i></a>
+										</td>
+									</tr>
+								}
+								@if (Model.Any() == false)
+								{
+									<tr>
+										<td colspan="2" class="text-center">@(Resources.General.DisplayNames.ListEmpty)</td>
+									</tr>
+								}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade text-left" id="CreateForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">افزودن تصاویر جدید</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-label="بستن">
+						<i class="bx bx-x"></i>
+					</button>
+				</div>
+				@{
+					var model = new CreateJobBranchImageGalleryViewModel();
+
+					model.JobBranchId = jobBranchId;
+				}
+				<partial name="_CreateJobBranchImageGallery" model="model" />
+			</div>
+		</div>
+	</div>
+
+</section>

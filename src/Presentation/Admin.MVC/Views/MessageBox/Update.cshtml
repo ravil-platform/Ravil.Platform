@@ -1,0 +1,105 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Domain.Entities.Job
+@using Enums
+@model ViewModels.AdminPanel.MessageBox.UpdateMessageBoxViewModel
+@{
+	ViewData["Title"] = "ویرایش پیام";
+	ViewData["selected"] = "MessageBoxes_Index";
+
+	var jobs = (List<Job>)ViewData["jobs"]!;
+}
+
+@section CSS
+{
+	<style>
+		.ck-editor__editable_inline {
+			min-height: 400px;
+		}
+	</style>
+}
+<section>
+	<div class="card">
+		<div class="card-content">
+			<div class="card-body">
+				<ul class="nav nav-tabs mb-2">
+					<li class="nav-item current">
+						<a class="nav-link d-flex align-items-center active">
+							<i class="bx bxs-discount"></i><span class="d-none d-sm-block">پیام</span>
+						</a>
+					</li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane active">
+						<form asp-controller="MessageBox" asp-action="Update" method="post" enctype="multipart/form-data">
+							<input asp-for="Id" type="hidden" />
+
+							<div class="modal-body">
+								<div class="form-group">
+									<div class="controls">
+										<label asp-for="JobId"></label>
+										<fieldset class="form-group">
+											<select asp-for="JobId" class="form-control select2">
+												@foreach (var item in jobs)
+												{
+													<option value="@item.Id">@item.Title</option>
+												}
+											</select>
+											<div class="help-block">
+												<span asp-validation-for="JobId" class="text-danger"></span>
+											</div>
+										</fieldset>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="controls">
+										<label asp-for="Description"></label>
+										<textarea class="form-control" id="ckeditor5" asp-for="Description"></textarea>
+										<div class="help-block">
+											<span asp-validation-for="Description" class="text-danger"></span>
+										</div>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="controls">
+										<label asp-for="Type"></label>
+										<select asp-for="Type" class="form-control">
+											<option value="Registration">@MessageBoxType.Registration.GetEnumDisplayName()</option>
+											<option value="Info">@MessageBoxType.Info.GetEnumDisplayName()</option>
+											<option value="News">@MessageBoxType.News.GetEnumDisplayName()</option>
+										</select>
+										<div class="help-block">
+											<span asp-validation-for="Type" class="text-danger"></span>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="modal-footer">
+								<button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+									<i class="bx bx-x d-block d-sm-none"></i>
+									<span class="d-none d-sm-block">بستن</span>
+								</button>
+								<button type="submit" class="btn btn-primary ml-1">
+									<i class="bx bx-check d-block d-sm-none"></i>
+									<span class="d-none d-sm-block">تایید</span>
+								</button>
+							</div>
+						</form>
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</section>
+
+@section Scripts
+{
+	<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+	<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+	<script src="~/lib/ckeditor5/ckeditor.js"></script>
+	<script src="~/lib/ckeditor5/customckeditor.js"></script>
+}

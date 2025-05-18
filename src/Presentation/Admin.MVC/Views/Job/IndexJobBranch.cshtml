@@ -5,139 +5,112 @@
 @model List<Domain.Entities.Job.JobBranch>
 @inject IOptions<FTPConnectionOptions> FtpConnectionOptions
 @{
-    string UrlBase = FtpConnectionOptions.Value.UrlBase;
-    var jobTitle = (string)ViewData["jobTitle"]!;
-    var jobId = (int)ViewData["jobId"]!;
-    ViewData["Title"] = $"شعبه های شغل {jobTitle} ";
-    ViewData["selected"] = "Jobs_Index";
+	string UrlBase = FtpConnectionOptions.Value.UrlBase;
+	var jobTitle = (string)ViewData["jobTitle"]!;
+	var jobId = (int)ViewData["jobId"]!;
+	ViewData["Title"] = $"شعبه های شغل {jobTitle} ";
+	ViewData["selected"] = "Jobs_Index";
 
-    int counter = 1;
-    string Id = "";
-    if (Model.Any())
-    {
-        Id = @Model[0].Id;
-    }
+	int counter = 1;
+	string Id = "";
+	if (Model.Any())
+	{
+		Id = @Model[0].Id;
+	}
 }
-
-<form method="post" id="Delete" asp-controller="Job" asp-action="DeleteJobBranch" asp-route-jobBranchId="@Id"></form>
 
 <a asp-controller="Job" asp-action="CreateJobBranch" asp-route-jobId="@jobId" class="btn btn-success mb-2"> افزودن شعبه جدید <i class="bx bx-plus"></i></a>
 
 <section>
-    <div class="card">
-        <div class="table-responsive">
-            <div class="dataTables_wrapper no-footer">
-                <table class="table mb-0 table-striped table-hover no-footer">
-                    <thead class="thead-dark">
-                        <tr role="row">
-                            <th>ردیف</th>
-                            <th>@(Resources.General.DisplayNames.Picture)</th>
-                            <th>@(Resources.General.DisplayNames.Title)</th>
-                            <th>@(Resources.General.DisplayNames.SubTitle)</th>
-                            <th>@(Resources.General.DisplayNames.Route)</th>
-                            <th>@(Resources.General.DisplayNames.CreateDate)</th>
-                            <th>@(Resources.General.DisplayNames.Status)</th>
-                            <th>@(Resources.General.DisplayNames.View)</th>
-                            <th>@(Resources.General.DisplayNames.Actions)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (Model.Count > 0)
-                        {
-                            @foreach (var data in Model)
-                            {
-                                <tr>
-                                    <td>@counter</td>
-                                    <td class="text-bold-700">
-                                        
-                                        @if (data.SmallPicture != null)
-                                        {
-                                            <img class="rounded-circle mr-1" src="@UrlBase@Paths.JobBranch@data.Id/@data.SmallPicture" height="100" width="100">
-                                        }
-                                        else
-                                        {
-                                            <img class="rounded-circle mr-1" src="@UrlBase@Paths.DefaultsImageJobPath" height="100" width="100">
-                                        }
-                                    </td>
-                                    <td>@data.Title</td>
-                                    <td>@data.HeadingTitle</td>
-                                    <td>@data.Route</td>
-                                    @if (data.CreateDate.HasValue)
-                                    {
-                                        <td> @data.CreateDate.Value.ToShamsiDate()</td>
-                                    }
-                                    else
-                                    {
-                                        <td>---</td>
-                                    }
+	<div class="card">
+		<div class="table-responsive">
+			<div class="dataTables_wrapper no-footer">
+				<table class="table mb-0 table-striped table-hover no-footer">
+					<thead class="thead-dark">
+						<tr role="row">
+							<th>ردیف</th>
+							<th>@(Resources.General.DisplayNames.Picture)</th>
+							<th>@(Resources.General.DisplayNames.Title)</th>
+							<th>@(Resources.General.DisplayNames.SubTitle)</th>
+							<th>@(Resources.General.DisplayNames.Route)</th>
+							<th>@(Resources.General.DisplayNames.CreateDate)</th>
+							<th>@(Resources.General.DisplayNames.Status)</th>
+							<th>@(Resources.General.DisplayNames.View)</th>
+							<th>@(Resources.General.DisplayNames.Actions)</th>
+						</tr>
+					</thead>
+					<tbody>
+						@if (Model.Count > 0)
+						{
+							@foreach (var data in Model)
+							{
+								<tr>
+									<td>@counter</td>
+									<td class="text-bold-700">
 
-                                    @if (data.Status == JobBranchStatus.Accepted)
-                                    {
-                                        <td class="text-success">@JobBranchStatus.Accepted.GetEnumDisplayName()</td>
-                                    }
-                                    else if (data.Status == JobBranchStatus.Rejected)
-                                    {
-                                        <td class="text-danger">@JobBranchStatus.Rejected.GetEnumDisplayName()</td>
-                                    }
-                                    else if (data.Status == JobBranchStatus.WaitingToCheck)
-                                    {
-                                        <td class="text-warning">@JobBranchStatus.WaitingToCheck.GetEnumDisplayName()</td>
-                                    }
+										@if (data.SmallPicture != null)
+										{
+											<img class="rounded-circle mr-1" src="@UrlBase@Paths.JobBranch@data.Id/@data.SmallPicture" height="100" width="100">
+										}
+										else
+										{
+											<img class="rounded-circle mr-1" src="@UrlBase@Paths.DefaultsImageJobPath" height="100" width="100">
+										}
+									</td>
+									<td>@data.Title</td>
+									<td>@data.HeadingTitle</td>
+									<td>@data.Route</td>
+									@if (data.CreateDate.HasValue)
+									{
+										<td> @data.CreateDate.Value.ToShamsiDate()</td>
+									}
+									else
+									{
+										<td>---</td>
+									}
 
-                                    <td class="text-primary">@data.ViewCount</td>
+									@if (data.Status == JobBranchStatus.Accepted)
+									{
+										<td class="text-success">@JobBranchStatus.Accepted.GetEnumDisplayName()</td>
+									}
+									else if (data.Status == JobBranchStatus.Rejected)
+									{
+										<td class="text-danger">@JobBranchStatus.Rejected.GetEnumDisplayName()</td>
+									}
+									else if (data.Status == JobBranchStatus.WaitingToCheck)
+									{
+										<td class="text-warning">@JobBranchStatus.WaitingToCheck.GetEnumDisplayName()</td>
+									}
 
-                                    <td>
-                                        <div class="btn-group dropup dropdown-icon-wrapper mr-1 mb-1">
-                                            <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class='bx bx-cog dropdown-icon-wrapper'></i>
-                                            </button>
-                                            <div class="dropdown-menu dropdown-menu-right" x-placement="top-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(49px, -8px, 0px);">
-                                                <a class="dropdown-item" asp-controller="Job" asp-action="UpdateJobBranch" asp-route-id="@data.Id" data-toggle="tooltip" data-placement="top" data-original-title="ویرایش"><i class="bx bxs-edit-alt text-warning"></i></a>
-                                                <a class="dropdown-item" onclick="DeleteConfirm(this)" data-toggle="tooltip" data-placement="top" data-original-title="حذف کامل از دیتابیس"><i class='bx bx-trash text-danger'></i></a>
-                                                <a class="dropdown-item" asp-controller="Job" asp-action="AddressJobBranch" asp-route-id="@data.Id" data-toggle="tooltip" data-placement="top" data-original-title="افزودن آدرس"><i class='bx bx-map text-primary'></i></a>
-                                                <a class="dropdown-item" asp-controller="Job" asp-action="FixAddress" asp-route-id="@data.Id" data-toggle="tooltip" data-placement="top" data-original-title="اصلاح آدرس"><i class='bx bx-reset text-info'></i></a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                counter++;
-                            }
-                        }
-                        else
-                        {
-                            <tr>
-                                <td colspan="10" class="text-center">موردی برای نمایش وجود ندارد</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+									<td class="text-primary">@data.ViewCount</td>
+
+									<td>
+										<div class="btn-group dropup dropdown-icon-wrapper mr-1 mb-1">
+											<button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+												<i class='bx bx-cog dropdown-icon-wrapper'></i>
+											</button>
+											<div class="dropdown-menu dropdown-menu-right" x-placement="top-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(49px, -8px, 0px);">
+												<a class="dropdown-item" asp-controller="Job" asp-action="UpdateJobBranch" asp-route-id="@data.Id" data-toggle="tooltip" data-placement="top" data-original-title="ویرایش"><i class="bx bxs-edit-alt text-warning"></i></a>
+												<a class="dropdown-item" onclick="deleteItem('@data.Id','@Url.Action("DeleteJobBranch","Job")')" data-toggle="tooltip" data-placement="top" data-original-title="حذف کامل از دیتابیس"><i class='bx bx-trash text-danger'></i></a>
+												<a class="dropdown-item" asp-controller="Job" asp-action="IndexJobBranchImageGallery" asp-route-id="@data.Id" data-toggle="tooltip" data-placement="top" data-original-title="گالری تصویر"><i class='bx bx-images text-success'></i></a>
+												<a class="dropdown-item" asp-controller="Job" asp-action="AddressJobBranch" asp-route-id="@data.Id" data-toggle="tooltip" data-placement="top" data-original-title="افزودن آدرس"><i class='bx bx-map text-primary'></i></a>
+												<a class="dropdown-item" asp-controller="Job" asp-action="FixAddress" asp-route-id="@data.Id" data-toggle="tooltip" data-placement="top" data-original-title="اصلاح آدرس"><i class='bx bx-reset text-info'></i></a>
+											</div>
+										</div>
+									</td>
+								</tr>
+								counter++;
+							}
+						}
+						else
+						{
+							<tr>
+								<td colspan="10" class="text-center">موردی برای نمایش وجود ندارد</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
 </section>
-
-
-@section Scripts
-{
-    <script>
-        function DeleteConfirm(event) {
-            Swal.fire({
-                title: 'آیااطمینان دارید؟',
-                text: 'درصورت حذف امکان بازگشت این آیتم وجود ندارد',
-                icon: "info",
-                showCancelButton: true,
-                cancelButtonText: 'خیر',
-                canceButtonClass: 'btn btn-danger',
-                showConfirButton: true,
-                confirmButtonText: 'بله',
-                confirmButtonClass: 'btn btn-success'
-            }).then((result) => {
-                if (result.value) {
-                    $("#Delete").submit();
-                }
-            });
-
-            return false;
-        }
-    </script>
-}

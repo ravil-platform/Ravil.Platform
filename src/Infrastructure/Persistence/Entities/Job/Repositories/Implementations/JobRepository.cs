@@ -166,6 +166,11 @@ public class JobRepository : Repository<Domain.Entities.Job.Job>, IJobRepository
         }
 
         #region (Filter)
+        if (!string.IsNullOrWhiteSpace(filter.UserId))
+        {
+            query = query.Where(a => a.AdminId == filter.UserId);
+        }
+
         if (!string.IsNullOrWhiteSpace(filter.Route))
         {
             query = query.Where(a => a.Route.Contains(filter.Route.ToSlug().Trim()));
@@ -195,19 +200,19 @@ public class JobRepository : Repository<Domain.Entities.Job.Job>, IJobRepository
         {
             query = query.Where(a => a.Status == filter.Status);
         }
-        //else
-        //{
-        //    query = query.Where(a => a.Status == JobBranchStatus.Accepted);
-        //}
+        else
+        {
+            query = query.Where(a => a.Status == JobBranchStatus.Accepted);
+        }
 
         if (filter.IsDeleted != null)
         {
             query = query.Where(a => a.IsDeleted == filter.IsDeleted);
         }
-        //else
-        //{
-        //    query = query.Where(a => a.IsDeleted == false);
-        //}
+        else
+        {
+            query = query.Where(a => a.IsDeleted == false);
+        }
 
         if (filter.IsGoogleData != null)
         {

@@ -8,6 +8,8 @@ public class TransactionFilterViewModel : Paging<Transaction>
     public string? AuthCode { get; set; }
     public string? TrackingCode { get; set; }
 
+    public Guid? WalletId { get; set; }
+
     public TransactionStatus? Status { get; set; }
 
     public DateTime? From { get; set; }

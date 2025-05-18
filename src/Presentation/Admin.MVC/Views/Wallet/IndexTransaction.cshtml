@@ -1,24 +1,21 @@
 ﻿@using ViewModels.AdminPanel.Wallet
-@model ViewModels.AdminPanel.Filter.WalletFilterViewModel
+@model ViewModels.AdminPanel.Filter.TransactionFilterViewModel
 @{
-	ViewData["Title"] = "لیست کیف پول ها";
-	ViewData["selected"] = "Wallet_Index";
+	ViewData["Title"] = "لیست تراکنش ها";
+	ViewData["selected"] = "Transaction_Index";
 
-	var users = (List<ApplicationUser>)ViewData["users"]!;
 	var counter = ((Model.CurrentPage - 1) * Model.PageSize) + 1;
 }
-
-<a asp-controller="Wallet" asp-action="ChargeWallet" class="btn btn-success mb-2">
-	شارژ/افزودن کیف پول <i class="bx bx-plus"></i>
-</a>
 
 <section>
 	<div class="users-list-filter px-1">
 		<form method="get" id="search-form">
 			<input type="hidden" name="CurrentPage" value="@Model.CurrentPage" />
 			<input type="hidden" asp-for="FindAll" id="FindAll" value="false" />
+			<input type="hidden" asp-for="WalletId" value="@Model.WalletId" />
+
 			<div class="row border rounded py-2 mb-2">
-				<div class="col-12 col-sm-6 col-lg-2">
+				<div class="col-12 col-sm-6 col-lg-3">
 					<label>تعداد نمایش در هر صفحه</label>
 					<fieldset class="form-group">
 						<select asp-for="PageSize" class="form-control">
@@ -31,29 +28,32 @@
 					</fieldset>
 				</div>
 
-				<div class="col-12 col-sm-6 col-lg-2">
-					<label>کاربر را انتخاب نمایید</label>
-					<select asp-for="ApplicationUserId" class="select2 form-control">
-						<option value="null">انتخاب نشده</option>
-						@foreach (var item in users)
-						{
-							<option value="@item.Id">@item.PhoneNumber</option>
-						}
-					</select>
+				<div class="col-12 col-sm-6 col-lg-3">
+					<label>RefId</label>
+					<input asp-for="RefId" type="text" class="form-control text-right" />
 				</div>
 
-
-				<div class="col-12 col-sm-6 col-lg-2">
-					<label>موجودی از</label>
-					<input asp-for="InventoryFrom" type="text" class="form-control text-right" />
+				<div class="col-12 col-sm-6 col-lg-3">
+					<label>Auth Code</label>
+					<input asp-for="AuthCode" type="text" class="form-control text-right" />
 				</div>
 
-				<div class="col-12 col-sm-6 col-lg-2">
-					<label>موجودی تا</label>
-					<input asp-for="InventoryTo" type="text" class="form-control text-right" />
+				<div class="col-12 col-sm-6 col-lg-3">
+					<label>Tracking Code</label>
+					<input asp-for="TrackingCode" type="text" class="form-control text-right" />
 				</div>
 
-				<div class="col-12 col-sm-12 col-lg-4 d-flex align-items-center">
+				<div class="col-12 col-sm-6 col-lg-3">
+					<label>تاریخ از</label>
+					<input asp-for="From" type="text" class="form-control text-right" data-jdp />
+				</div>
+
+				<div class="col-12 col-sm-6 col-lg-3">
+					<label>تاریخ تا</label>
+					<input asp-for="To" type="text" class="form-control text-right" data-jdp />
+				</div>
+
+				<div class="col-12 col-sm-12 col-lg-6 d-flex align-items-center">
 					<div class="col-4 col-sm-4 col-lg-4 d-flex align-items-center">
 						<button id="empty" type="button" class="btn btn-warning btn-block glow users-list-clear mb-0 mt-75">خالی </button>
 					</div>
@@ -77,31 +77,31 @@
 							<thead class="thead-dark">
 								<tr>
 									<th>ردیف</th>
-									<th>شناسه کاربر</th>
-									<th>تماس</th>
-									<th>موجودی</th>
-									<th>@(Resources.General.DisplayNames.Actions)</th>
+									<th>RefId</th>
+									<th>Auth Code</th>
+									<th>Tracking Code</th>
+									<th>وضعیت</th>
+									<th>تاریخ</th>
 								</tr>
 							</thead>
 							<tbody>
-								@foreach (var item in Model.Entities)
+								@foreach (var data in Model.Entities)
 								{
 									<tr>
 										<td>@counter</td>
-										<td>@item.ApplicationUserId</td>
-										<td>@item.ApplicationUser.PhoneNumber</td>
-										<td>@item.Inventory.ToString("#,0")</td>
-										<td>
-											<a onclick="chargeWallet('@item.ApplicationUserId','@item.ApplicationUser.PhoneNumber')" data-toggle="tooltip" data-placement="top" data-original-title="شارژ کیف پول"><i class='bx bxs-wallet text-primary'></i></a>
-											<a target="_blank" asp-controller="Wallet" asp-action="IndexTransaction" asp-route-WalletId="@item.Id" data-toggle="tooltip" data-placement="top" data-original-title="مشاهده تراکنش ها"><i class='bx bx-show text-info'></i></a>
-										</td>
+										<td>@data.RefId</td>
+										<td>@data.AuthCode</td>
+										<td>@data.TrackingCode</td>
+										<td>@data.Status.GetEnumDisplayName()</td>
+										<td>@data.TransactionDate.ToStringShamsiDate()</td>
+									
 									</tr>
 									counter++;
 								}
 								@if (Model.Entities.Any() == false)
 								{
 									<tr>
-										<td colspan="7" class="text-center">@(Resources.General.DisplayNames.ListEmpty)</td>
+										<td colspan="6" class="text-center">@(Resources.General.DisplayNames.ListEmpty)</td>
 									</tr>
 								}
 							</tbody>
@@ -175,19 +175,7 @@
 </section>
 @section Scripts
 {
-	<script src="~/assets/js/scripts/wordify/wordifyfa.min.js"></script>
 	<script>
-		function chargeWallet(userId,phoneNumber) {
-			$("#ApplicationUserIdInput").val(userId);
-
-			$("#PhoneNumberInput").val(phoneNumber);
-
-			$("#CreateFormTitle").text('شارژ کیف پول - ' + phoneNumber);
-
-
-			$('#CreateForm').modal('show');
-		}
-
 		function changePage(Page) {
 			var url = new URL(window.location.href);
 			var SerachParams = url.searchParams;
@@ -207,43 +195,13 @@
 		$("#empty").click(function (event) {
 			$("#PageSize").val(20);
 			$("#ApplicationUserId").val('null');
-			$("#InventoryFrom").val(null);
-			$("#InventoryTo").val(null);
+			$("#AuthCode").val(null);
+			$("#RefId").val(null);
+			$("#TrackingCode").val(null);
+			$("#From").val(null);
+			$("#To").val(null);
 		});
 
-		$("#Inventory").keyup(function () {
-
-			var value = $("#Inventory").val();
-
-			var convert = wordifyfa(value);
-			if ($("#word-price").val() != "null") { $("#word-price").remove(); }
-			$("#price-convert").append($("<span id='word-price' class='text-secondry'></span>").val(convert).html(convert));
-
-			var seperatevalue = separate(value);
-
-			$("#Inventory").val(seperatevalue);
-
-			if (event.key === "Backspace" || event.key === "Delete") {
-
-				var value2 = $("#Inventory").val().replace(/,\s?/g, "");
-
-				var seperatevalue2 = separate(value2);
-
-				$("#Inventory").val(seperatevalue2);
-			}
-		});
-
-
-		function separate(Number) {
-			const number = Number.replace(/[^0-9]/g, '');
-			return number.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-		}
-
-
-		$("form").submit(function () {
-			var InventoryValue = $("#Inventory").val();
-			var InventoryNormalValue = InventoryValue.replace(/,\s?/g, "");
-			$("#Inventory").val(InventoryNormalValue);
-		});
+		jalaliDatepicker.startWatch();
 	</script>
 }

@@ -3,13 +3,16 @@ using System.Text.Json;
 using Application.Services.NehsanApi;
 using Application.Services.SMS;
 using Common.Utilities.Services.FTP;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using Domain.Entities.Address;
 using Domain.Entities.Job;
 using Domain.Entities.Location;
 using Enums;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using ViewModels.AdminPanel.Filter;
 using ViewModels.AdminPanel.Job;
+using ViewModels.QueriesResponseViewModel.Job;
 using CreateJobBranchViewModel = ViewModels.AdminPanel.Job.CreateJobBranchViewModel;
 using PhoneNumberInfosViewModel = ViewModels.AdminPanel.Job.PhoneNumberInfosViewModel;
 using SocialMediaInfosViewModel = ViewModels.AdminPanel.Job.SocialMediaInfosViewModel;
@@ -17,32 +20,34 @@ using UpdateJobBranchViewModel = ViewModels.AdminPanel.Job.UpdateJobBranchViewMo
 
 namespace Admin.MVC.Controllers
 {
-    public class JobController : BaseController
+    public class JobController(
+        IUnitOfWork unitOfWork,
+        IMapper mapper,
+        IFtpService ftpService,
+        ISmsSender smsSender,
+        UserManager<ApplicationUser> userManager,
+        NeshanApiService neshanApiService)
+        : BaseController
     {
         #region ( DI )
-        protected IUnitOfWork UnitOfWork { get; }
-        protected IMapper Mapper { get; }
-        protected IFtpService FtpService { get; }
-        protected ISmsSender SmsSender { get; }
-        protected UserManager<ApplicationUser> UserManager { get; }
-        protected NeshanApiService NeshanApiService { get; }
+        protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
+        protected IMapper Mapper { get; } = mapper;
+        protected IFtpService FtpService { get; } = ftpService;
+        protected ISmsSender SmsSender { get; } = smsSender;
+        protected UserManager<ApplicationUser> UserManager { get; } = userManager;
+        protected NeshanApiService NeshanApiService { get; } = neshanApiService;
 
-        public JobController(IUnitOfWork unitOfWork, IMapper mapper, IFtpService ftpService, ISmsSender smsSender, UserManager<ApplicationUser> userManager, NeshanApiService neshanApiService)
-        {
-            UnitOfWork = unitOfWork;
-            Mapper = mapper;
-            FtpService = ftpService;
-            SmsSender = smsSender;
-            UserManager = userManager;
-            NeshanApiService = neshanApiService;
-        }
         #endregion
 
         #region ( Job )
         #region ( Index )
         [HttpGet]
-        public IActionResult IndexJob(JobFilterViewModel filter)
+        public async Task<IActionResult> IndexJob(JobFilterViewModel filter)
         {
+            var users = await UnitOfWork.ApplicationUserRepository.GetAllAsync();
+
+            ViewData["users"] = users;
+
             return View(UnitOfWork.JobRepository.GetByAdminFilter(filter));
         }
         #endregion
@@ -224,7 +229,6 @@ namespace Admin.MVC.Controllers
         public async Task<IActionResult> UpdateJob(UpdateJobViewModel updateJobViewModel, string? previousPage)
         {
             var job = await UnitOfWork.JobRepository.GetByIdAsync(updateJobViewModel.Id);
-            string jobBranch = await UnitOfWork.JobBranchRepository.Table.Where(j => j.JobId == job.Id).Select(j => j.UserId).SingleOrDefaultAsync();
 
             #region ( Job is null )
             if (job == null)
@@ -695,6 +699,235 @@ namespace Admin.MVC.Controllers
             }
         }
         #endregion
+
+        #region ( Key Words )
+        #region ( Index )
+        [HttpGet]
+        public async Task<IActionResult> IndexKeyword(KeywordFilterViewModel filter)
+        {
+            #region ( Fill View Data )
+            var categories = await UnitOfWork.CategoryRepository.GetAllAsync(c => c.IsActive && c.ParentId != 0);
+
+            ViewData["categories"] = categories;
+            #endregion
+
+            return View(UnitOfWork.KeywordRepository.GetByFilter(filter));
+        }
+        #endregion
+
+        #region ( Create )
+        [HttpGet]
+        public async Task<IActionResult> CreateKeyword()
+        {
+            #region ( Fill View Data )
+            var categories = await UnitOfWork.CategoryRepository.GetAllAsync(c => c.IsActive);
+
+            ViewData["categories"] = categories;
+            #endregion
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateKeyword(CreateKeywordViewModel createKeywordViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values.SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage)
+                    .ToList();
+
+                ErrorAlert($"{Errors.ModelStateIsNotValidForm} - ارور : {errors[0]}");
+
+                #region ( Fill View Data )
+                var categories = await UnitOfWork.CategoryRepository.GetAllAsync(c => c.IsActive);
+
+                ViewData["categories"] = categories;
+                #endregion
+
+                return View(createKeywordViewModel);
+            }
+
+            #region ( Check route is duplicated or not )
+            bool slugExist = await UnitOfWork.KeywordRepository.SlugExist(createKeywordViewModel.Slug);
+
+            if (slugExist)
+            {
+                ErrorAlert(Errors.RouteDuplicate);
+
+                #region ( Fill View Data )
+                var categories = await UnitOfWork.CategoryRepository.GetAllAsync();
+
+                ViewData["categories"] = categories;
+                #endregion
+
+                return View(createKeywordViewModel);
+            }
+            #endregion
+
+            var keyword = Mapper.Map<Keyword>(createKeywordViewModel);
+
+            keyword.IsActive = true;
+            keyword.Slug = keyword.Slug.ToSlug();
+
+            await UnitOfWork.KeywordRepository.InsertAsync(keyword);
+
+            try
+            {
+                await UnitOfWork.SaveAsync();
+
+                SuccessAlert();
+            }
+            catch (Exception exception)
+            {
+                ErrorAlert(exception.Message);
+            }
+
+            return RedirectToAction("IndexKeyword");
+        }
+        #endregion
+
+        #region ( Update )
+        [HttpGet]
+        public async Task<IActionResult> UpdateKeyword(Guid id)
+        {
+            #region ( Fill View Data )
+            var categories = await UnitOfWork.CategoryRepository.GetAllAsync(c => c.IsActive);
+
+            ViewData["categories"] = categories;
+            #endregion
+
+            var keyword = await UnitOfWork.KeywordRepository.TableNoTracking.SingleOrDefaultAsync(k => k.Id == id);
+
+            var model = Mapper.Map<UpdateKeywordViewModel>(keyword);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateKeyword(UpdateKeywordViewModel updateKeywordViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values.SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage)
+                    .ToList();
+
+                ErrorAlert($"{Errors.ModelStateIsNotValidForm} - ارور : {errors[0]}");
+
+                #region ( Fill View Data )
+                var categories = await UnitOfWork.CategoryRepository.GetAllAsync(c => c.IsActive);
+
+                ViewData["categories"] = categories;
+                #endregion
+
+                return View(updateKeywordViewModel);
+            }
+
+            #region ( Check route is duplicated or not )
+            bool slugExist = await UnitOfWork.KeywordRepository.SlugExist(updateKeywordViewModel.Id, updateKeywordViewModel.Slug);
+
+            if (slugExist)
+            {
+                ErrorAlert(Errors.RouteDuplicate);
+
+                #region ( Fill View Data )
+                var categories = await UnitOfWork.CategoryRepository.GetAllAsync();
+
+                ViewData["categories"] = categories;
+                #endregion
+
+                return View(updateKeywordViewModel);
+            }
+            #endregion
+
+            var keyword = await UnitOfWork.KeywordRepository.TableNoTracking.SingleOrDefaultAsync(k => k.Id == updateKeywordViewModel.Id);
+
+            keyword = Mapper.Map(updateKeywordViewModel, keyword);
+            keyword.Slug = keyword.Slug.ToSlug();
+
+            await UnitOfWork.KeywordRepository.UpdateAsync(keyword);
+
+            try
+            {
+                await UnitOfWork.SaveAsync();
+
+                SuccessAlert();
+            }
+            catch (Exception exception)
+            {
+                ErrorAlert(exception.Message);
+            }
+
+            return RedirectToAction("IndexKeyword");
+        }
+        #endregion
+
+        #region ( Delete )
+        [HttpGet]
+        public async Task<IActionResult> DeleteKeyword(Guid id)
+        {
+            var keyword = await UnitOfWork.KeywordRepository.TableNoTracking.SingleOrDefaultAsync(k => k.Id == id);
+
+            if (keyword == null)
+            {
+                ErrorAlert("چیزی یافت نشد!");
+
+                return RedirectToAction("IndexKeyword");
+            }
+
+            try
+            {
+                await UnitOfWork.KeywordRepository.DeleteAsync(keyword);
+                await UnitOfWork.SaveAsync();
+            }
+            catch (Exception exception)
+            {
+                ErrorAlert(exception.Message);
+            }
+
+            return RedirectToAction("IndexKeyword");
+        }
+        #endregion
+
+        #region ( Create KeyWords From Category )
+        [HttpGet]
+        public async Task<IActionResult> CreateKeywordCategory()
+        {
+            var categories = await UnitOfWork.CategoryRepository.GetAllAsync(c => c.IsActive);
+            var keywords = await UnitOfWork.KeywordRepository.GetAllAsync();
+
+            foreach (var category in categories)
+            {
+                if (keywords.Any(k => k.Slug == category.Route))
+                {
+                    continue;
+                }
+
+                var keyword = new Keyword()
+                {
+                    Title = category.Name,
+                    Slug = category.Route.ToSlug(),
+                    IsActive = true,
+                    CategoryId = category.Id,
+                };
+
+                await UnitOfWork.KeywordRepository.InsertAsync(keyword);
+            }
+
+            try
+            {
+                await UnitOfWork.SaveAsync();
+            }
+            catch (Exception exception)
+            {
+                ErrorAlert(exception.Message);
+            }
+
+            return RedirectToAction("IndexKeyword");
+        }
+        #endregion
+        #endregion
         #endregion
 
         #region ( Job Branches )
@@ -1016,9 +1249,9 @@ namespace Admin.MVC.Controllers
 
         #region ( Delete )
         [HttpPost]
-        public async Task<IActionResult> DeleteJobBranch(string jobBranchId)
+        public async Task<IActionResult> DeleteJobBranch(string id)
         {
-            var jobBranch = await UnitOfWork.JobBranchRepository.GetByIdAsync(jobBranchId);
+            var jobBranch = await UnitOfWork.JobBranchRepository.GetByIdAsync(id);
 
             var jobId = jobBranch != null ? jobBranch.JobId : 0;
 
@@ -1033,8 +1266,87 @@ namespace Admin.MVC.Controllers
             return RedirectToAction("IndexJob");
         }
         #endregion
-        #endregion
 
+        #region ( Image Gallery )
+        [HttpGet]
+        public async Task<IActionResult> IndexJobBranchImageGallery(string id)
+        {
+            var model = await UnitOfWork.JobBranchGalleryRepository.GetAllAsync(j => j.JobBranchId == id);
+
+            ViewData["jobBranchId"] = id;
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateJobBranchImageGallery(CreateJobBranchImageGalleryViewModel createJobBranchImageGalleryViewModel)
+        {
+            var jobBranch = await UnitOfWork.JobBranchRepository.GetByIdAsync(createJobBranchImageGalleryViewModel.JobBranchId);
+
+            if (jobBranch == null)
+            {
+                return RedirectToAction("IndexJob");
+            }
+
+            byte sort = 0;
+
+            foreach (var item in createJobBranchImageGalleryViewModel.Files)
+            {
+                var imageGallery = await FtpService.UploadFileToFtpServer(item, TypeFile.Image, Paths.JobBranchGallery, item.FileName);
+
+                var jobBranchGallery = new JobBranchGallery()
+                {
+                    ImageName = imageGallery,
+                    JobBranchId = jobBranch.Id,
+                    Sort = sort,
+                };
+
+                await UnitOfWork.JobBranchGalleryRepository.InsertAsync(jobBranchGallery);
+
+                sort++;
+            }
+
+            await UnitOfWork.SaveAsync();
+
+            return RedirectToAction("IndexJobBranchImageGallery", new { id = createJobBranchImageGalleryViewModel.JobBranchId });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DeleteJobBranchImageGallery(int id)
+        {
+            var imageGallery = await UnitOfWork.JobBranchGalleryRepository.GetByIdAsync(id);
+
+            if (imageGallery == null)
+            {
+                ErrorAlert("چیزی یافت نشد!");
+
+                return RedirectToAction("IndexJobBranchImageGallery");
+            }
+
+            await UnitOfWork.JobBranchGalleryRepository.DeleteAsync(imageGallery);
+
+            try
+            {
+                await UnitOfWork.SaveAsync();
+
+                await FtpService.DeleteFileToFtpServer(Paths.JobBranch, imageGallery.ImageName);
+            }
+            catch (Exception exception)
+            {
+                ErrorAlert(exception.Message);
+            }
+
+            string referer = Request.Headers["Referer"].ToString();
+
+            if (!string.IsNullOrEmpty(referer))
+            {
+                return Redirect(referer);
+            }
+
+            return RedirectToAction("IndexJobBranch");
+        }
+        #endregion
+        #endregion
 
         #region ( Insert From Google Bot Json File )
         [HttpGet]
@@ -1600,6 +1912,5 @@ namespace Admin.MVC.Controllers
             return RedirectToAction("IndexJob");
         }
         #endregion
-
     }
 }

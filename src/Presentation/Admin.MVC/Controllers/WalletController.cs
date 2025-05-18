@@ -1,5 +1,4 @@
-﻿using DocumentFormat.OpenXml.Office2013.Drawing.ChartStyle;
-using Domain.Entities.Wallets;
+﻿using Domain.Entities.Wallets;
 using Enums;
 using ViewModels.AdminPanel.Filter;
 using ViewModels.AdminPanel.Wallet;
@@ -16,6 +15,7 @@ public class WalletController(
     protected IMapper Mapper { get; } = mapper;
     #endregion
 
+    #region ( Wallet )
     #region ( Index )
     [HttpGet]
     public async Task<IActionResult> Index(WalletFilterViewModel filter)
@@ -143,6 +143,16 @@ public class WalletController(
 
         return RedirectToAction("Index");
     }
+    #endregion
+    #endregion
 
+    #region ( Transaction )
+    #region ( Index )
+    [HttpGet]
+    public IActionResult IndexTransaction(TransactionFilterViewModel filter)
+    {
+        return View(UnitOfWork.TransactionRepository.GetByFilter(filter));
+    }
+    #endregion
     #endregion
 }

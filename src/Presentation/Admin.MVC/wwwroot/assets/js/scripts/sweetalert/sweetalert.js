@@ -116,3 +116,41 @@ $(document).ready(function ()
 });
 
 
+function deleteItem(id, actionUrl) {
+    Swal.fire({
+        title: 'آیا مطمئن هستید؟',
+        text: "این عملیات قابل بازگشت نیست!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'بله، حذف کن!',
+        cancelButtonText: 'لغو'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: "GET",
+                url: actionUrl,
+                data: { id: id },
+                success: function (response) {
+                    Swal.fire(
+                        'حذف شد!',
+                        'آیتم مورد نظر با موفقیت حذف شد.',
+                        'success'
+                    ).then(() => {
+                        location.reload();
+                    });
+                },
+                error: function () {
+                    Swal.fire(
+                        'خطا!',
+                        'مشکلی در حذف آیتم به وجود آمده است.',
+                        'error'
+                    );
+                }
+            });
+        }
+    });
+}
+
+

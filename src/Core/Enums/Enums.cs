@@ -413,8 +413,13 @@ namespace Enums
 
     public enum TransactionStatus
     {
+        [Display(Name = "موفق")]
         Success = 1,
+
+        [Display(Name = "ناموفق")]
         Failed = 2,
+
+        [Display(Name = "درانتظار پرداخت")]
         Pending = 3,
     }
 
