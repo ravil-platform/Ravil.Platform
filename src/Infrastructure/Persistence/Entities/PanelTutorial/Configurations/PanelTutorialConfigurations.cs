@@ -4,11 +4,12 @@
     {
         public void Configure(EntityTypeBuilder<Domain.Entities.PanelTutorial.PanelTutorial> builder)
         {
-            builder.ToTable("PanelTutorial", DatabaseSchemas.Shared);
+            builder.ToTable(nameof(PanelTutorial), DatabaseSchemas.Shared);
             builder.HasKey(b => b.Id);
             builder.Property(b => b.Title).IsRequired().HasMaxLength(MaxLength.Title);
             builder.Property(b => b.CoverName).IsRequired();
             builder.Property(b => b.VideoName).IsRequired();
+            builder.Property(c => c.Time);
         }
     }
 }

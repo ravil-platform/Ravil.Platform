@@ -101,5 +101,15 @@
             return new string(Enumerable.Repeat(chars, length)
                 .Select(s => s[random.Next(s.Length)]).ToArray());
         }
+
+        public static string RandomNumberGenerator(int length = 7)
+        {
+            const string chars = "123456789";
+
+            Random random = new Random();
+
+            return new string(Enumerable.Repeat(chars, length)
+                .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
     }
 }

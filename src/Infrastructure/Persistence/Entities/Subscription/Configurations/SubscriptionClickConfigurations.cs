@@ -6,10 +6,20 @@ public class SubscriptionClickConfigurations : IEntityTypeConfiguration<Subscrip
 {
     public void Configure(EntityTypeBuilder<SubscriptionClick> builder)
     {
-        builder.ToTable("SubscriptionClick", DatabaseSchemas.Subscription);
+        builder.ToTable(nameof(SubscriptionClick), DatabaseSchemas.Subscription);
 
         builder.HasKey(t => t.Id);
+
+        builder.Property(t => t.CostPerClick).IsRequired();
         builder.Property(t => t.ClickedTime).IsRequired();
+        builder.Property(t => t.Position).IsRequired();
+
+        builder.Property(t => t.KeywordId).IsRequired();
+        builder.Property(t => t.KeywordSlug).IsRequired();
+        builder.Property(t => t.KeywordPageUrl).IsRequired();
+        builder.Property(t => t.KeywordPageTitle).IsRequired();
+
+        builder.Property(t => t.IsDeposit).IsRequired().HasDefaultValue(false);
 
 
         //relations
@@ -21,6 +31,11 @@ public class SubscriptionClickConfigurations : IEntityTypeConfiguration<Subscrip
         builder.HasOne(f => f.Click)
             .WithMany(s => s.SubscriptionClicks)
             .HasForeignKey(s => s.ClickId)
+            .IsRequired();
+
+        builder.HasOne(f => f.Job)
+            .WithMany(s => s.JobSubscriptionClicks)
+            .HasForeignKey(s => s.JobId)
             .IsRequired();
     }
 }

@@ -4,7 +4,14 @@ public class CreateCommentCommandValidator : AbstractValidator<CreateCommentComm
 {
     public CreateCommentCommandValidator()
     {
+        RuleFor(r => r.UserId)
+            .Cascade(CascadeMode.Stop)
+            .NotEmpty()
+            .WithName(Resources.General.DisplayNames.User)
+            .WithMessage(Resources.Messages.Validations.RequiredFluent);
+
         RuleFor(r => r.CommentText)
+            .Cascade(CascadeMode.Stop)
             .NotNull()
             .WithName(Resources.General.DisplayNames.Comments)
             .WithMessage(Resources.Messages.Validations.RequiredFluent);

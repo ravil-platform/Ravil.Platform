@@ -1,8 +1,8 @@
-﻿using Application.Services.NehsanApi;
-using Application.Services.SMS;
-using Common.Utilities.Services.FTP;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using System;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Application.Services.NehsanApi;
+using ZarinPalDriver;
+using Hangfire;
+using Application.BackgroundServices;
 
 namespace Application
 {
@@ -45,10 +45,19 @@ namespace Application
             services.AddTransient<IJwtService, JwtService>();
             services.AddTransient<ISmsSender, SmsSender>();
             services.AddHttpClient<NeshanApiService>();
-
+            
             services.AddHttpClient();
 
             services.AddJwtAuthentication(jwtSettings);
+            services.AddZarinPalDriver();
+
+            #region ( Background Services )
+
+            services.AddHangfire(x => x.UseSqlServerStorage(configuration.GetConnectionString("DefaultConnection")));
+            services.AddHangfireServer();
+            services.AddTransient<UpdateSubscriptionClickService>();
+
+            #endregion
         }
 
 

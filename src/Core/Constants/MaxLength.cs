@@ -23,6 +23,7 @@
         public const int Color = 7;
         public const int CookieValue = 100;
 
+        public const int AdDisplayRange = 10;
 
         public const int Code = 20;
         public const int RefCode = 100;

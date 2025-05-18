@@ -17,8 +17,9 @@ public class GetJobBranchByIdQueryHandler : IRequestHandler<GetJobBranchByIdQuer
         var result = await UnitOfWork.JobBranchRepository.TableNoTracking.Include(a => a.JobTimeWorks)
             .Include(a => a.Address).ThenInclude(a => a.Location).Include(a => a.JobBranchGalleries)
             .Include(a => a.Job).ThenInclude(a => a.JobCategories).ThenInclude(a => a.Category)
-            .Where(a => a.IsDeleted != null && !a.IsDeleted.Value).Where(a => a.Job.Status == JobBranchStatus.Accepted)
-            .SingleOrDefaultAsync(current => current.Id.Equals(request.Id), cancellationToken: cancellationToken);
+            .Where(a => a.Job.Status == JobBranchStatus.Accepted || a.Status == JobBranchStatus.Accepted)
+            .Where(a => a.IsDeleted != null && !a.IsDeleted.Value && a.Id.Equals(request.Id))
+            .SingleOrDefaultAsync(cancellationToken: cancellationToken);
 
         if (result is null)
         {

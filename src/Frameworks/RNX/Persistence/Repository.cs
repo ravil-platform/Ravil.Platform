@@ -55,6 +55,19 @@ namespace RNX.Persistence
             });
         }
 
+        public virtual async Task AttachAsync(T entity)
+        {
+            if (entity == null)
+            {
+                throw new ArgumentNullException(paramName: nameof(entity));
+            }
+
+            await Task.Run(() =>
+            {
+                DbSet.Attach(entity);
+            });
+        }
+
         public virtual async Task DeleteAsync(T entity)
         {
             if (entity == null)
@@ -102,7 +115,7 @@ namespace RNX.Persistence
                 }
             }
 
-            return await result.SingleOrDefaultAsync();
+            return await result.FirstOrDefaultAsync();
         }
 
         public virtual async Task<ICollection<T>> GetAllAsync(Expression<Func<T, bool>> predicate)
@@ -164,6 +177,42 @@ namespace RNX.Persistence
             await DeleteAsync(entity);
 
             return true;
+        }
+
+        public async Task InsertRangeAsync(IEnumerable<T> entity)
+        {
+            if (entity == null)
+            {
+                throw new ArgumentNullException(paramName: nameof(entity));
+            }
+
+            await DbSet.AddRangeAsync(entity);
+        }
+        
+        public async Task UpdateRangeAsync(IEnumerable<T> entity)
+        {
+            if (entity == null)
+            {
+                throw new ArgumentNullException(paramName: nameof(entity));
+            }
+
+            await Task.Run(() =>
+            {
+                DbSet.UpdateRange(entity);
+            });
+        }
+        
+        public async Task AttachRangeAsync(IEnumerable<T> entity)
+        {
+            if (entity == null)
+            {
+                throw new ArgumentNullException(paramName: nameof(entity));
+            }
+
+            await Task.Run(() =>
+            {
+                DbSet.AttachRange(entity);
+            });
         }
 
         public virtual void RemoveRange(IEnumerable<T> entity)

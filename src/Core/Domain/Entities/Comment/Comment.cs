@@ -1,4 +1,6 @@
-﻿namespace Domain.Entities.Comment
+﻿using System.Reflection.PortableExecutable;
+
+namespace Domain.Entities.Comment
 {
     public class Comment : Entity
     {
@@ -15,22 +17,33 @@
 
         public string FullName { get; set; } = null!;
 
-        public string? Avatar { get; set; } 
+        public string? Avatar { get; set; }
 
         public string UserIp { get; set; } = null!;
+
+        public byte? Rate { get; set; }
+
+        public int? UpVotesCount { get; set; }
+        public int? DownVotesCount { get; set; }
+        
+        public DateTime? UpVoteLastUpdate { get; set; }
+        public DateTime? DownVoteLastUpdate { get; set; }
+
         #endregion
 
         #region (Relations)
         public string? JobBranchId { get; set; }
-        public JobBranch JobBranch { get; set; }
+        public virtual JobBranch JobBranch { get; set; }
 
         public int? BlogId { get; set; }
-        public Blog.Blog Blog { get; set; }
+        public virtual Blog.Blog Blog { get; set; }
 
         public string UserId { get; set; }
         public virtual ApplicationUser ApplicationUser { get; set; }
 
         public virtual ICollection<AnswerComment> AnswerComments { get; set; }
+
+        public virtual ICollection<CommentInteraction> CommentInteractions { get; set; }
         #endregion
     }
 }

@@ -15,8 +15,9 @@
         public string? SmallPicture { get; set; }
 
         public string? MapUrl { get; set; }
-
+        
         public bool IsOffer { get; set; }
+        public bool IsAds { get; set; }
         public bool IsResizePicture { get; set; } = false;
         public JobTimeWorkType JobTimeWorkType { get; set; }
         public string? UserId { get; set; }
@@ -36,6 +37,7 @@
         public AddressViewModel Address { get; set; }
         public List<CategoryListViewModel> Categories { get; set; }
         public List<JobTimeWorkViewModel> TimeWorks { get; set; }
+        public List<KeywordViewModel> Keywords { get; set; }
         public List<JobBranchGalleryViewModel> Galleries { get; set; }
     }
 }

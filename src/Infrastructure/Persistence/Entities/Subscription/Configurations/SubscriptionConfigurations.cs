@@ -4,14 +4,20 @@
     {
         public void Configure(EntityTypeBuilder<Domain.Entities.Subscription.Subscription> builder)
         {
-            builder.ToTable("Subscription", DatabaseSchemas.Subscription);
+            builder.ToTable(nameof(Subscription), DatabaseSchemas.Subscription);
 
             builder.HasKey(t => t.Id);
-            builder.Property(t => t.Icon).IsRequired().HasMaxLength(MaxLength.Picture);
+
+            builder.Property(t => t.Icon).IsRequired().HasMaxLength(MaxLength.Icon);
             builder.Property(t => t.Title).IsRequired().HasMaxLength(MaxLength.Title);
             builder.Property(t => t.SubTitle).IsRequired().HasMaxLength(MaxLength.Title);
             builder.Property(t => t.DurationType).IsRequired();
             builder.Property(t => t.IsActive).IsRequired();
+            builder.Property(t => t.Type).IsRequired();
+
+            builder.Property(t => t.Discount).IsRequired(false);
+            builder.Property(t => t.DiscountAmount).IsRequired(false);
+
 
             //relations
             builder.HasMany(s => s.SubscriptionFeatures)
@@ -31,65 +37,84 @@
                     Icon = "empty.webp",
                     Title = "سه ماهه استاندارد",
                     SubTitle = "برای کسب‌وکارهای متوسط که رقیب‌های زیادی ندارند.",
-                    Price = 50000000,
-                    GiftCharge = 250000,
+                    Price = 2_900_000,
+                    GiftCharge = 150_000,
                     DurationTime = 90,
                     DurationType = SubscriptionDurationType.ThreeMonth,
+                    Type = SubscriptionType.Standard,
                     IsActive = true,
-                }, new Domain.Entities.Subscription.Subscription
+                },
+                new Domain.Entities.Subscription.Subscription
                 {
                     Id = 2,
                     Icon = "empty.webp",
                     Title = "شش ماهه استاندارد",
                     SubTitle = "برای کسب‌وکارهای متوسط که رقیب‌های زیادی ندارند.",
-                    Price = 100000000,
-                    GiftCharge = 500000,
+                    Price = 4_150_000,
+                    GiftCharge = 250_000,
+                    Discount = 20,
+                    DiscountAmount = 830_000,
                     DurationTime = 180,
                     DurationType = SubscriptionDurationType.SixMonth,
+                    Type = SubscriptionType.Standard,
                     IsActive = true,
-                }, new Domain.Entities.Subscription.Subscription
+                },
+                new Domain.Entities.Subscription.Subscription
                 {
                     Id = 3,
                     Icon = "empty.webp",
                     Title = "یک ساله استاندارد",
                     SubTitle = "برای کسب‌وکارهای متوسط که رقیب‌های زیادی ندارند.",
-                    Price = 200000000,
-                    GiftCharge = 1000000,
+                    Price = 8_600_000,
+                    GiftCharge = 400_000,
+                    Discount = 34,
+                    DiscountAmount = 2_924_000,
                     DurationTime = 365,
                     DurationType = SubscriptionDurationType.OneYear,
+                    Type = SubscriptionType.Standard,
                     IsActive = true,
-                }, new Domain.Entities.Subscription.Subscription
+                },
+                new Domain.Entities.Subscription.Subscription
                 {
                     Id = 4,
                     Icon = "empty.webp",
                     Title = "سه ماهه حرفه ای",
                     SubTitle = "برای کسب‌وکارهای که رقیب‌های زیادی دارند.",
-                    Price = 500000000,
-                    GiftCharge = 2500000,
+                    Price = 4_500_000,
+                    GiftCharge = 250_000,
                     DurationTime = 90,
                     DurationType = SubscriptionDurationType.ThreeMonth,
+                    Type = SubscriptionType.Premium,
                     IsActive = true,
-                }, new Domain.Entities.Subscription.Subscription
+                },
+                new Domain.Entities.Subscription.Subscription
                 {
                     Id = 5,
                     Icon = "empty.webp",
                     Title = "شش ماهه حرفه ای",
                     SubTitle = "برای کسب‌وکارهای که رقیب‌های زیادی دارند.",
-                    Price = 1000000000,
-                    GiftCharge = 5000000,
+                    Price = 7_500_000,
+                    GiftCharge = 400_000,
+                    Discount = 20,
+                    DiscountAmount = 1_500_000,
                     DurationTime = 180,
                     DurationType = SubscriptionDurationType.SixMonth,
+                    Type = SubscriptionType.Premium,
                     IsActive = true,
-                }, new Domain.Entities.Subscription.Subscription
+                },
+                new Domain.Entities.Subscription.Subscription
                 {
                     Id = 6,
                     Icon = "empty.webp",
                     Title = "یک ساله حرفه ای",
                     SubTitle = "برای کسب‌وکارهای که رقیب‌های زیادی دارند.",
-                    Price = 2000000000,
-                    GiftCharge = 10000000,
+                    Price = 15_600_000,
+                    GiftCharge = 900_000,
+                    Discount = 34,
+                    DiscountAmount = 5_304_000,
                     DurationTime = 365,
                     DurationType = SubscriptionDurationType.OneYear,
+                    Type = SubscriptionType.Premium,
                     IsActive = true,
                 });
         }

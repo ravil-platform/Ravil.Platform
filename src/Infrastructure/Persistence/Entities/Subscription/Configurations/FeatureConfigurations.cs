@@ -6,10 +6,11 @@ public class FeatureConfigurations : IEntityTypeConfiguration<Feature>
 {
     public void Configure(EntityTypeBuilder<Feature> builder)
     {
-        builder.ToTable("Feature", DatabaseSchemas.Subscription);
+        builder.ToTable(nameof(Feature), DatabaseSchemas.Subscription);
 
         builder.HasKey(t => t.Id);
         builder.Property(t => t.Title).IsRequired().HasMaxLength(MaxLength.Title);
+        builder.Property(t => t.Icon).IsRequired(false).HasMaxLength(MaxLength.Icon);
 
 
         //relations

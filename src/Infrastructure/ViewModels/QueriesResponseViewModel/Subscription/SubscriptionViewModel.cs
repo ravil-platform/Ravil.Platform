@@ -1,0 +1,21 @@
+﻿namespace ViewModels.QueriesResponseViewModel.Subscription;
+
+public class SubscriptionViewModel
+{
+    public int Id { get; set; }
+    public string Icon { get; set; } = null!;
+
+    public string Title { get; set; } = null!;
+    public string SubTitle { get; set; } = null!;
+
+    public int Price { get; set; }
+    public int GiftCharge { get; set; }
+
+    public int DurationTime { get; set; } // Ex:  30 Days
+    public SubscriptionDurationType DurationType { get; set; }
+    public SubscriptionType Type { get; set; }
+
+    public bool IsActive { get; set; }
+
+    public List<SubscriptionFeatureViewModel> Features { get; set; }
+}
