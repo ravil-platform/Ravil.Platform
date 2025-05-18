@@ -15,6 +15,9 @@
         /// </summary>
         public double AveragePosition { get; set; }
 
+        /// <summary>
+        /// تعداد کلیک
+        /// </summary>
         public int ClickCount { get; set; }
         #endregion
 

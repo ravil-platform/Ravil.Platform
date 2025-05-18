@@ -75,3 +75,5 @@ global using Domain.Entities.Payment;
 global using Domain.Entities.Subscription;
 global using Domain.Entities.Wallets;
 global using Persistence.Entities.Address.Configurations;
+global using Persistence.Entities.Comment.Repositories.Implementations;
+global using Persistence.Entities.Comment.Repositories.Interfaces;

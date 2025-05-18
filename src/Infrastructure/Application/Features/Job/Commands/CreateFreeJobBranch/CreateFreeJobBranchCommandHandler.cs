@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using AngleSharp.Common;
+using System.Collections;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Application.Features.Job.Commands.CreateFreeJobBranch;
@@ -33,12 +34,12 @@ public class CreateFreeJobBranchCommandHandler(IMapper mapper, IUnitOfWork unitO
 
             if (request.Job.SocialMediaInfos != null)
             {
-                var socialMediaInfos = JsonSerializer.Deserialize<List<SocialMediaInfosViewModel>>(request.Job.SocialMediaInfos.Replace(@"\", ""));
+                var socialMediaInfos = JsonSerializer.Deserialize<List<SocialMediaInfosViewModel>>(request.Job.SocialMediaInfos);
                 job.SocialMediaInfos = socialMediaInfos is not null ? System.Text.Json.JsonSerializer.Serialize(socialMediaInfos) : string.Empty;
             }
             if (request.Job.PhoneNumberInfos != null)
             {
-                var phoneNumberInfos = JsonSerializer.Deserialize<List<PhoneNumberInfosViewModel>>(request.Job.PhoneNumberInfos.Replace(@"\", ""));
+                var phoneNumberInfos = JsonSerializer.Deserialize<List<PhoneNumberInfosViewModel>>(request.Job.PhoneNumberInfos);
                 job.PhoneNumberInfos = phoneNumberInfos is not null ? System.Text.Json.JsonSerializer.Serialize(phoneNumberInfos) : string.Empty;
             }
 
@@ -52,6 +53,27 @@ public class CreateFreeJobBranchCommandHandler(IMapper mapper, IUnitOfWork unitO
 
             await UnitOfWork.JobRepository.InsertAsync(job);
             await UnitOfWork.SaveAsync();
+            #endregion
+
+            #region ( JobInfo )
+
+            var jobInfo = new JobInfo
+            {
+                Visit = 0,
+                ClickOnCard = 0,
+                ClickOnCall = 0,
+                ClickOnMap = 0,
+                ClickOnChat = 0,
+                ClickOnImages = 0,
+                ClickOnWebSite = 0,
+                AverageClickOnCall = 0,
+                JobId = job.Id,
+                CreateAt = DateTime.Now,
+            };
+
+            await UnitOfWork.JobInfoRepository.InsertAsync(jobInfo);
+            await UnitOfWork.SaveAsync();
+
             #endregion
 
             #region ( Job Categories )
@@ -279,6 +301,7 @@ public class CreateFreeJobBranchCommandHandler(IMapper mapper, IUnitOfWork unitO
         catch (Exception e)
         {
             await UnitOfWork.JobRepository.RollBackTransactionAsync();
+            Logger.LogError(message: e.InnerException?.Message ?? e.Message, parameters: new Hashtable(request.ToDictionary()));
             throw;
         }
 

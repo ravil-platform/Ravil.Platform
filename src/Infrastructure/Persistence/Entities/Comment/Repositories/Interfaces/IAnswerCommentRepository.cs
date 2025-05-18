@@ -1,4 +1,4 @@
-﻿namespace Persistence.Entities.Comment.Repositories;
+﻿namespace Persistence.Entities.Comment.Repositories.Interfaces;
 
 public interface IAnswerCommentRepository : IRepository<AnswerComment>
 {

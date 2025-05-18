@@ -11,7 +11,7 @@
         /// <summary>
         /// شناسه کاربر
         /// </summary>
-        public string UserId { get; set; } = null!;
+        public string UserId { get; set; }
 
         /// <summary>
         /// نام و نام خانوادگی کاربر
@@ -33,10 +33,14 @@
         /// آدرس مثلا : کرج
         /// </summary>
         public string Location { get; set; } = null!;
-
+        public string PageTitle { get; set; } = null!;
+        public string PageSlug { get; set; } = null!;
+        public string PageUrl { get; set; } = null!;
+        
         public string JobId { get; set; }
         public string JobTitle { get; set; }
-
+        public bool? JobIsActiveAds { get; set; }
+        
         /// <summary>
         /// نوع عملیات کاربر مثلا : لایک کردن
         /// </summary>

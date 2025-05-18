@@ -8,6 +8,6 @@
 
 
         public int JobId { get; set; }
-        public Job.Job Job { get; set; }
+        public virtual Job.Job Job { get; set; }
     }
 }

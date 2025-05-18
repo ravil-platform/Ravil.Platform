@@ -24,5 +24,7 @@
         public int? BlogId { get; set; }
 
         public string UserId { get; set; }
+
+        public byte? Rate { get; set; }
     }
 }

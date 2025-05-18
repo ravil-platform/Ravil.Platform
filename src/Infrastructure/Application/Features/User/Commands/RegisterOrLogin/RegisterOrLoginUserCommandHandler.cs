@@ -1,4 +1,6 @@
-﻿namespace Application.Features.User.Commands.RegisterOrLogin;
+﻿using Domain.Entities.Wallets;
+
+namespace Application.Features.User.Commands.RegisterOrLogin;
 
 public class RegisterOrLoginUserCommandHandler : IRequestHandler<RegisterOrLoginUserCommand, RegisterOrLoginUserResponseViewModel>
 {
@@ -125,13 +127,24 @@ public class RegisterOrLoginUserCommandHandler : IRequestHandler<RegisterOrLogin
 
                 user.UserName = request.PhoneNumber;
                 user.Firstname = "کاربر";
-                user.Lastname = "سایت";
+                user.Lastname = "راویل";
                 user.Gender = GenderPerson.Other;
                 user.LockoutEnabled = false;
 
                 await UserManager.CreateAsync(user);
                 await UnitOfWork.SaveAsync();
 
+                #region ( Create Wallet For User )
+
+                var userWallet = new Wallet
+                {
+                    Inventory = 0,
+                    ApplicationUserId = user.Id,
+                };
+                await UnitOfWork.WalletRepository.InsertAsync(userWallet);
+                await UnitOfWork.SaveAsync();
+
+                #endregion
 
                 result.WithValue(Mapper.Map<RegisterOrLoginUserResponseViewModel>(user));
 

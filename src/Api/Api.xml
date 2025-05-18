@@ -4,6 +4,16 @@
         <name>Api</name>
     </assembly>
     <members>
+        <member name="T:Api.Controllers.V1.ActionHistoriesController">
+            <inheritdoc />
+        </member>
+        <member name="M:Api.Controllers.V1.ActionHistoriesController.#ctor(MediatR.IMediator,Logging.Base.ILogger{Api.Controllers.V1.ActionHistoriesController})">
+            <summary>
+            ActionHistoriesController Constructor
+            </summary>
+            <param name="mediator"></param>
+            <param name="logger"></param>
+        </member>
         <member name="M:Api.Controllers.V1.ActionHistoriesController.Create(Application.Features.ActionHistories.Create.CreateActionHistoriesCommand)">
             <summary>
             Creates an Action History
@@ -136,6 +146,16 @@
             </summary>
             <param name="query"></param>
             <returns></returns>
+        </member>
+        <member name="T:Api.Controllers.V1.CitiesController">
+            <inheritdoc />
+        </member>
+        <member name="M:Api.Controllers.V1.CitiesController.#ctor(MediatR.IMediator,Logging.Base.ILogger{Api.Controllers.V1.CitiesController})">
+            <summary>
+            Cities Controller
+            </summary>
+            <param name="mediator"></param>
+            <param name="logger"></param>
         </member>
         <member name="M:Api.Controllers.V1.CitiesController.GetAll(Application.Features.City.Queries.GetAll.GetAllCitiesQuery)">
             <summary>
@@ -409,6 +429,13 @@
             <returns></returns>
         </member>
         <member name="M:Api.Controllers.V1.JobsController.UploadJobBranchGalleries(Application.Features.Job.Commands.UploadJobBranchGalleries.UploadJobBranchGalleriesCommand)">
+            <summary>
+            Upload job branch galleries
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Api.Controllers.V1.JobsController.RemoveJobBranchGallery(Application.Features.Job.Commands.RemoveJobBranchGalleries.RemoveJobBranchGalleriesCommand)">
             <summary>
             Upload job branch galleries
             </summary>
@@ -691,6 +718,232 @@
             Find user token by given refresh token id and gives you a new token
             </summary>
             <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Api.Controllers.V2.AnalyticsController">
+            <inheritdoc />
+        </member>
+        <member name="M:Api.Controllers.V2.AnalyticsController.#ctor(MediatR.IMediator,Logging.Base.ILogger{Api.Controllers.V2.AnalyticsController})">
+            <inheritdoc />
+        </member>
+        <member name="M:Api.Controllers.V2.AnalyticsController.OverView(Application.Features.Job.Queries.GetJobOverView.JobOverViewQuery)">
+            <summary>
+            Returns job overview by given jobId
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Api.Controllers.V2.AnalyticsController.GetViews(Application.Features.Job.Queries.GetJobViews.GetJobViewsQuery)">
+            <summary>
+            Returns job views by given jobId
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Api.Controllers.V2.AnalyticsController.GetReviewsSummery(Application.Features.Job.Queries.GetReviewsSummery.GetReviewsSummeryQuery)">
+            <summary>
+            Returns review summery by given jobId
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Api.Controllers.V2.AnalyticsController.GetTagsPotential(Application.Features.Job.Queries.GetTagsPotential.GetTagsPotentialQuery)">
+            <summary>
+            Returns tags potential by given jobId
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Api.Controllers.V2.AnalyticsController.GetContactRequests(Application.Features.Job.Queries.GetContactRequests.GetContactRequestsQuery)">
+            <summary>
+            Returns Contact Requests (phone, map, social media) by given jobId
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Api.Controllers.V2.AnalyticsController.GetJobStatisticsByFilter(Application.Features.Job.Queries.GetJobStatisticsByFilter.GetJobStatisticsByFilterQuery)">
+            <summary>
+            Returns job statistics by given filter
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Api.Controllers.V2.AnalyticsController.GetJobRankingsByFilter(Application.Features.Job.Queries.GetJobRankingsByFilter.GetJobRankingsByFilterQuery)">
+            <summary>
+            Returns all job rankings by given filter
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Api.Controllers.V2.AnalyticsController.AddJobRanking(Application.Features.Job.Commands.AddJobRanking.AddJobRankingCommand)">
+            <summary>
+            Add Job Ranking History command
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Api.Controllers.V2.GuideLinesController">
+            <inheritdoc />
+        </member>
+        <member name="M:Api.Controllers.V2.GuideLinesController.#ctor(MediatR.IMediator,Logging.Base.ILogger{Api.Controllers.V2.GuideLinesController})">
+            <inheritdoc />
+        </member>
+        <member name="M:Api.Controllers.V2.GuideLinesController.Get(Application.Features.GuideLine.Queries.GetGuideLines.GetGuideLinesQuery)">
+            <summary>
+            Returns all Guide Lines Status
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Api.Controllers.V2.GuideLinesController.GuideLineCompletion(Application.Features.GuideLine.Commands.GuideLineCompletion.GuideLineCompletionCommand)">
+            <summary>
+            Update Guide Line Status action
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Api.Controllers.V2.JobsController">
+            <inheritdoc />
+        </member>
+        <member name="M:Api.Controllers.V2.JobsController.#ctor(MediatR.IMediator,Logging.Base.ILogger{Api.Controllers.V2.JobsController})">
+            <inheritdoc />
+        </member>
+        <member name="M:Api.Controllers.V2.JobsController.Report(Application.Features.Job.Queries.Report.JobReportQuery)">
+            <summary>
+            Returns report job clicks information
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Api.Controllers.V2.JobsController.CreateFreeJobBranch(Application.Features.Job.Commands.CreateFreeJobBranch.CreateFreeJobBranchCommand)">
+            <summary>
+            Creates a job and also job branch ( add free job in ravil ) 
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Api.Controllers.V2.JobsController.UpdateBusiness(Application.Features.Job.Commands.UpdateBusiness.UpdateBusinessCommand)">
+            <summary>
+            Update a Business (job) 
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Api.Controllers.V2.JobsController.RemoveJobBranchGallery(Application.Features.Job.Commands.RemoveJobBranchGalleries.RemoveJobBranchGalleriesCommand)">
+            <summary>
+            Upload job branch galleries
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Api.Controllers.V2.JobsController.AdsClickActivity(Application.Features.Job.Commands.AdsClickActivity.AdsClickActivityCommand)">
+            <summary>
+            Ads Click action command
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Api.Controllers.V2.JobsController.SetAdsClickSetting(Application.Features.Job.Commands.SetAdsClickSetting.SetAdsClickSettingCommand)">
+            <summary>
+            Set Ads Click settings for each user command
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Api.Controllers.V2.JobsController.RechargeAdsClick(Application.Features.Job.Commands.RechargeAdsClick.RechargeAdsClickCommand)">
+            <summary>
+            Recharge Ads Click account command
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Api.Controllers.V2.JobsController.RechargeAdsClickVerification(Application.Features.Job.Commands.RechargeAdsClickVerification.RechargeAdsClickVerificationCommand)">
+            <summary>
+            Verify Recharge Ads Click command
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Api.Controllers.V2.MessageBoxController">
+            <inheritdoc />
+        </member>
+        <member name="M:Api.Controllers.V2.MessageBoxController.#ctor(MediatR.IMediator,Logging.Base.ILogger{Api.Controllers.V2.MessageBoxController})">
+            <inheritdoc />
+        </member>
+        <member name="M:Api.Controllers.V2.MessageBoxController.GetAllMessageBoxByFilter(Application.Features.MessageBox.Queries.GetAllMessageBoxByFilter.GetAllMessageBoxByFilterQuery)">
+            <summary>
+            Returns all messages box by given filter
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Api.Controllers.V2.MessageBoxController.ReadAllMessages(Application.Features.MessageBox.Commands.ReadAllMessages.ReadAllMessagesCommand)">
+            <summary>
+            Read All Messages command
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Api.Controllers.V2.PanelTutorialsController">
+            <inheritdoc />
+        </member>
+        <member name="M:Api.Controllers.V2.PanelTutorialsController.#ctor(MediatR.IMediator,Logging.Base.ILogger{Api.Controllers.V2.PanelTutorialsController})">
+            <inheritdoc />
+        </member>
+        <member name="M:Api.Controllers.V2.PanelTutorialsController.Get(Application.Features.PanelTutorial.Queries.Get.GetPanelTutorialsQuery)">
+            <summary>
+            Returns all Panel Tutorials Status
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Api.Controllers.V2.PaymentsController">
+            <inheritdoc />
+        </member>
+        <member name="M:Api.Controllers.V2.PaymentsController.#ctor(MediatR.IMediator,Logging.Base.ILogger{Api.Controllers.V2.PaymentsController})">
+            <inheritdoc />
+        </member>
+        <member name="M:Api.Controllers.V2.PaymentsController.Payment(Application.Features.Payments.Commands.Payment.PaymentCommand)">
+            <summary>
+            Payment Action Command
+            </summary>
+            <param name="command"></param>
+            <typeparam name="'PaymentCommand''PaymentCommand'">The type returned from this method</typeparam>
+            <returns>FluentResults.Result</returns>
+        </member>
+        <member name="M:Api.Controllers.V2.PaymentsController.Verification(Application.Features.Payments.Commands.PaymentVerification.PaymentVerificationCommand)">
+            <summary>
+            Payment Verification Action Command
+            </summary>
+            <param name="command"></param>
+            <typeparam name="'PaymentVerificationCommand''PaymentVerificationCommand'">The type returned from this method</typeparam>
+            <returns>FluentResults.Result</returns>
+        </member>
+        <member name="M:Api.Controllers.V2.PaymentsController.GetPortals(Application.Features.Payments.Queries.GetPaymentPortals.GetPaymentPortalsQuery)">
+            <summary>
+            Get Payment Portals
+            </summary>
+            <param name="query"></param>
+            <returns>FluentResults.Result</returns>
+        </member>
+        <member name="T:Api.Controllers.V2.SubscriptionController">
+            <inheritdoc />
+        </member>
+        <member name="M:Api.Controllers.V2.SubscriptionController.#ctor(MediatR.IMediator,Logging.Base.ILogger{Api.Controllers.V2.SubscriptionController})">
+            <inheritdoc />
+        </member>
+        <member name="M:Api.Controllers.V2.SubscriptionController.GetAll(Application.Features.Subscription.Queries.GetAll.GetAllSubscriptionPlanQuery)">
+            <summary>
+            Returns all subscription plans
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Api.Controllers.V2.SubscriptionController.GetByUserId(Application.Features.Subscription.Queries.GetByUserId.GetUserSubscriptionPlanQuery)">
+            <summary>
+            Return user(business owner) subscription plan
+            </summary>
+            <param name="query"></param>
             <returns></returns>
         </member>
     </members>

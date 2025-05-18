@@ -4,7 +4,7 @@
     {
         public void Configure(EntityTypeBuilder<ActionHistories> builder)
         {
-            builder.ToTable("ActionHistories", DatabaseSchemas.Shared);
+            builder.ToTable(nameof(ActionHistories), DatabaseSchemas.Shared);
 
             builder.HasKey(a => a.Id);
             builder.Property(p => p.FullName).IsRequired(false).HasMaxLength(MaxLength.FullName);

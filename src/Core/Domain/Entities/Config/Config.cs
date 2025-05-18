@@ -134,11 +134,12 @@
 
         public string? ShippingTimeRange { get; set; }
 
-        public string? ZarinpalUrl { get; set; }
-
+        #region ( Payments Information )
         public bool ZarinpalMode { get; set; }
-
+        public string? ZarinpalUrl { get; set; }
         public string? ZarinpalMerchant { get; set; }
+        public string? ZarinpalCallbackUrl { get; set; }
+        #endregion
 
         public bool IsMultipleCreate { get; set; } = false;
 

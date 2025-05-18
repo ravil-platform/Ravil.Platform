@@ -4,6 +4,6 @@ public class CreateAnswerCommentCommandValidator : AbstractValidator<CreateAnswe
 {
     public CreateAnswerCommentCommandValidator()
     {
-            
+        
     }
 }

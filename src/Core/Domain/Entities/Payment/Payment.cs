@@ -7,10 +7,13 @@ namespace Domain.Entities.Payment
     {
         #region ( Properties )
         public Guid Id { get; set; }
+        
+        public string Number { get; set; }
 
         public double Amount { get; set; }
 
         public DateTime PaymentDate { get; set; }
+        public DateTime? RenewalDate { get; set; }
 
         public PaymentMethod PaymentMethod { get; set; }
 

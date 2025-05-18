@@ -1,24 +1,23 @@
 ﻿namespace Application.Features.Job.Commands.UploadJobBranchGalleries;
 
-public class UploadJobBranchGalleriesCommandHandler : IRequestHandler<UploadJobBranchGalleriesCommand>
+public class UploadJobBranchGalleriesCommandHandler(IMapper mapper, IUnitOfWork unitOfWork, IFtpService ftpService)
+    : IRequestHandler<UploadJobBranchGalleriesCommand>
 {
-    protected IMapper Mapper { get; }
-    protected IUnitOfWork UnitOfWork { get; }
-    protected IFtpService FtpService { get; }
+    #region ( Constructor )
 
-    public UploadJobBranchGalleriesCommandHandler(IMapper mapper, IUnitOfWork unitOfWork, IFtpService ftpService)
-    {
-        Mapper = mapper;
-        UnitOfWork = unitOfWork;
-        FtpService = ftpService;
-    }
+    protected IMapper Mapper { get; } = mapper;
+    protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
+    protected IFtpService FtpService { get; } = ftpService;
+
+    #endregion
 
     public async Task<Result> Handle(UploadJobBranchGalleriesCommand request, CancellationToken cancellationToken)
     {
+        #region ( Upload JobBranch Galleries Command )
+
         var result = new Result();
 
         var jobBranch = await UnitOfWork.JobBranchRepository.GetByIdAsync(request.JobBranchId);
-
         if (jobBranch is null)
         {
             throw new BadRequestException();
@@ -26,22 +25,22 @@ public class UploadJobBranchGalleriesCommandHandler : IRequestHandler<UploadJobB
 
         foreach (var item in request.Images)
         {
-            //var imageName = item.SaveFileAndReturnName(Paths.JobBranchGalleryServer + request.JobBranchId, TypeFile.Image, null, null, null, jobBranch.SmallPicture);
+            var imageName = await FtpService.UploadFileToFtpServer(item, TypeFile.Gallery, Paths.JobBranchGallery + request.JobBranchId, item.FileName, 777, null, null, null, jobBranch.SmallPicture);
 
-            var imageName = await FtpService.UploadFileToFtpServer(item, TypeFile.Image, Paths.JobBranchGallery + request.JobBranchId, item.FileName, 777, null, null, null, jobBranch.SmallPicture);
-
-            var gallery = new JobBranchGallery()
+            if (!string.IsNullOrWhiteSpace(imageName))
             {
-                ImageName = imageName,
-                JobBranchId = request.JobBranchId,
-                Sort = 1,
-            };
+                var gallery = new JobBranchGallery()
+                {
+                    ImageName = imageName,
+                    JobBranchId = request.JobBranchId,
+                    Sort = 1,
+                };
 
-            await UnitOfWork.JobBranchGalleryRepository.InsertAsync(gallery);
+                await UnitOfWork.JobBranchGalleryRepository.InsertAsync(gallery);
+            }
         }
 
         jobBranch.LastUpdateDate = DateTime.Now;
-
         await UnitOfWork.JobBranchRepository.UpdateAsync(jobBranch);
 
         await UnitOfWork.SaveAsync();
@@ -49,5 +48,7 @@ public class UploadJobBranchGalleriesCommandHandler : IRequestHandler<UploadJobB
         result.WithSuccess(Resources.Messages.Successes.SuccessUploadFile);
 
         return result;
+
+        #endregion
     }
 }

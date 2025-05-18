@@ -12,11 +12,11 @@ public class GetAllCategoryByParentIdQueryHandler : IRequestHandler<GetAllCatego
 
     public async Task<Result<List<CategoryViewModel>>> Handle(GetAllCategoriesByParentIdQuery request, CancellationToken cancellationToken)
     {
-        var categories = await UnitOfWork.CategoryRepository.GetAllAsync(c => c.ParentId == request.ParentId);
+        var categories = await UnitOfWork.CategoryRepository.GetAllAsync(c => c.IsActive && c.ParentId == request.ParentId);
 
-        if (categories is null || categories.Count == 0)
+        if (categories.Count == 0)
         {
-            throw new NotFoundException();
+            return Result.Fail(Resources.Messages.Validations.NotFoundException);
         }
 
         var categoriesViewModel = Mapper.Map<List<CategoryViewModel>>(categories);

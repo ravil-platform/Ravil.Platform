@@ -8,6 +8,7 @@
 
         public string CoverName { get; set; } = null!;
         public string VideoName { get; set; } = null!;
+        public TimeSpan Time { get; set; }
 
         public int Sort { get; set; }
     }

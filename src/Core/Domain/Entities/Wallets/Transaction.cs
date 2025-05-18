@@ -5,6 +5,9 @@
         #region ( Properties )
         public Guid Id { get; set; }
 
+        public string Number { get; set; }
+        public string? Amount { get; set; }
+
         public string? RefId { get; set; }
         public string? AuthCode { get; set; }
         public string? TrackingCode { get; set; }

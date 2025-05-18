@@ -11,6 +11,14 @@
                    persianCalendar.GetMonth(value).ToString("00") + "/" +
                    persianCalendar.GetDayOfMonth(value).ToString("00");
         }
+        public static string ToShamsiDateDashFormat(this DateTime value)
+        {
+            PersianCalendar persianCalendar = new PersianCalendar();
+
+            return persianCalendar.GetYear(value) + "-" +
+                   persianCalendar.GetMonth(value).ToString("00") + "-" +
+                   persianCalendar.GetDayOfMonth(value).ToString("00");
+        }
         #endregion
 
         #region ( To Shamsi Date )
@@ -23,6 +31,7 @@
                    persianCalendar.GetDayOfMonth((DateTime)value).ToString("00");
         }
         #endregion
+
         #region ( To String Shamsi Date )
         public static string ToStringShamsiDate(this DateTime dt)
         {

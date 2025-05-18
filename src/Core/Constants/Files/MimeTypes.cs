@@ -25,6 +25,14 @@
         public static string[] DocumentsAndImages = Documents
             .Concat(Images)
             .ToArray();
+        
+        public static string[] VideosAndImages = Videos
+            .Concat(Images)
+            .ToArray();
+            
+        public static string[] Galleries = Videos
+            .Concat(Images)
+            .ToArray();
         #endregion
     }
 }

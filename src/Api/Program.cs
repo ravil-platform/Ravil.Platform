@@ -1,7 +1,9 @@
+﻿using Application.BackgroundServices;
 using Common.Utilities.ModelState;
 using Common.Utilities.Services.FTP;
 using Common.Utilities.Services.FTP.Models;
 using Constants.Security;
+using Hangfire;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
@@ -87,4 +89,13 @@ app.UseCors(CORS.DefaultName);
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseHangfireDashboard();
+// زمان‌بندی اجرای Job (هر روز ساعت 12 شب)
+RecurringJob.AddOrUpdate<UpdateSubscriptionClickService>(
+    service => service.UpdateSubscriptionClicks(),
+    "* * * * *", // Cron expression (هر روز ساعت 12 شب)
+    //"0 0 * * *", // Cron expression (هر روز ساعت 12 شب)
+    TimeZoneInfo.Local);
+
 app.Run();

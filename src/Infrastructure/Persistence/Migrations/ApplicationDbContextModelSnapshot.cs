@@ -61,7 +61,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("UpdateDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2025, 4, 28, 9, 57, 53, 138, DateTimeKind.Local).AddTicks(2742));
+                        .HasDefaultValue(new DateTime(2025, 5, 14, 16, 29, 43, 708, DateTimeKind.Local).AddTicks(9126));
 
                     b.HasKey("Id");
 
@@ -924,6 +924,14 @@ namespace Persistence.Migrations
                     b.Property<DateTime?>("CreateDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("DownVoteLastUpdate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("DownVotesCount")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
@@ -955,6 +963,18 @@ namespace Persistence.Migrations
                         .HasMaxLength(11)
                         .HasColumnType("nvarchar(11)");
 
+                    b.Property<byte?>("Rate")
+                        .HasMaxLength(5)
+                        .HasColumnType("tinyint");
+
+                    b.Property<DateTime?>("UpVoteLastUpdate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("UpVotesCount")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -972,6 +992,37 @@ namespace Persistence.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Comment", "Comment");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Comment.CommentInteraction", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<int>("CommentId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("DisLiked")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("IpAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Liked")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CommentId");
+
+                    b.ToTable("CommentInteraction", "Comment");
                 });
 
             modelBuilder.Entity("Domain.Entities.Config.Config", b =>
@@ -1240,6 +1291,9 @@ namespace Persistence.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Whatsapp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ZarinpalCallbackUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ZarinpalMerchant")
@@ -1531,6 +1585,9 @@ namespace Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool?>("JobIsActiveAds")
+                        .HasColumnType("bit");
+
                     b.Property<string>("JobTitle")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -1539,6 +1596,18 @@ namespace Persistence.Migrations
                         .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PageSlug")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PageTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Time")
                         .HasColumnType("datetime2");
@@ -2008,6 +2077,12 @@ namespace Persistence.Migrations
                     b.Property<int>("ClickOnWebSite")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("CreateAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActiveAds")
+                        .HasColumnType("bit");
+
                     b.Property<int>("JobId")
                         .HasColumnType("int");
 
@@ -2016,8 +2091,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("JobId")
-                        .IsUnique();
+                    b.HasIndex("JobId");
 
                     b.ToTable("JobInfo", "Job");
                 });
@@ -2029,9 +2103,6 @@ namespace Persistence.Migrations
                         .HasColumnType("bigint");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<int>("CostPerClick")
-                        .HasColumnType("int");
 
                     b.Property<string>("JobBranchId")
                         .IsRequired()
@@ -2077,6 +2148,34 @@ namespace Persistence.Migrations
                         .IsUnique();
 
                     b.ToTable("JobRanking", "Job");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Job.JobRankingHistory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWSEQUENTIALID()");
+
+                    b.Property<DateTime>("CreateAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("JobId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PageUrl")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<int>("Position")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("JobId");
+
+                    b.ToTable("JobRankingHistory", "Job");
                 });
 
             modelBuilder.Entity("Domain.Entities.Job.JobSelectionSlider", b =>
@@ -2192,11 +2291,43 @@ namespace Persistence.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasDefaultValueSql("NEWSEQUENTIALID()");
 
+                    b.Property<bool>("CanonicalMeta")
+                        .HasColumnType("bit");
+
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IndexMeta")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
+
+                    b.Property<bool?>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastDeleteBicycleDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("LastDeletePermanentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("LastUpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("MetaCanonicalUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MetaDesc")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("MetaTitle")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("Slug")
                         .IsRequired()
@@ -2211,6 +2342,9 @@ namespace Persistence.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("Slug")
+                        .HasFilter("[Slug] IS NOT NULL");
 
                     b.ToTable("Keyword", "Job");
                 });
@@ -2384,6 +2518,9 @@ namespace Persistence.Migrations
                     b.Property<int>("Sort")
                         .HasColumnType("int");
 
+                    b.Property<TimeSpan>("Time")
+                        .HasColumnType("time");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(350)
@@ -2408,6 +2545,11 @@ namespace Persistence.Migrations
                     b.Property<double>("Amount")
                         .HasColumnType("float");
 
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .IsUnicode(true)
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("PaymentDate")
                         .HasColumnType("datetime2");
 
@@ -2420,6 +2562,9 @@ namespace Persistence.Migrations
                     b.Property<int?>("PromotionCodeId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("RenewalDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("UserSubscriptionId")
                         .HasColumnType("int");
 
@@ -2429,7 +2574,8 @@ namespace Persistence.Migrations
 
                     b.HasIndex("PromotionCodeId");
 
-                    b.HasIndex("UserSubscriptionId");
+                    b.HasIndex("UserSubscriptionId")
+                        .IsUnique();
 
                     b.ToTable("Payment", "Payment");
                 });
@@ -2756,6 +2902,38 @@ namespace Persistence.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Domain.Entities.Subscription.ClickAdsSetting", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AdDisplayRange")
+                        .HasMaxLength(10)
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("MaxCostPerClick")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool>("Status")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("ClickAdsSetting", "Job");
+                });
+
             modelBuilder.Entity("Domain.Entities.Subscription.Feature", b =>
                 {
                     b.Property<int>("Id")
@@ -2763,6 +2941,10 @@ namespace Persistence.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Icon")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -2781,6 +2963,12 @@ namespace Persistence.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<short?>("Discount")
+                        .HasColumnType("smallint");
+
+                    b.Property<double?>("DiscountAmount")
+                        .HasColumnType("float");
 
                     b.Property<int>("DurationTime")
                         .HasColumnType("int");
@@ -2812,6 +3000,9 @@ namespace Persistence.Migrations
                         .HasMaxLength(350)
                         .HasColumnType("nvarchar(350)");
 
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("Subscription", "Subscription");
@@ -2822,72 +3013,86 @@ namespace Persistence.Migrations
                             Id = 1,
                             DurationTime = 90,
                             DurationType = 1,
-                            GiftCharge = 250000,
+                            GiftCharge = 150000,
                             Icon = "empty.webp",
                             IsActive = true,
-                            Price = 50000000,
+                            Price = 2900000,
                             SubTitle = "برای کسب‌وکارهای متوسط که رقیب‌های زیادی ندارند.",
-                            Title = "سه ماهه استاندارد"
+                            Title = "سه ماهه استاندارد",
+                            Type = 1
                         },
                         new
                         {
                             Id = 2,
+                            Discount = (short)20,
+                            DiscountAmount = 830000.0,
                             DurationTime = 180,
                             DurationType = 2,
-                            GiftCharge = 500000,
+                            GiftCharge = 250000,
                             Icon = "empty.webp",
                             IsActive = true,
-                            Price = 100000000,
+                            Price = 4150000,
                             SubTitle = "برای کسب‌وکارهای متوسط که رقیب‌های زیادی ندارند.",
-                            Title = "شش ماهه استاندارد"
+                            Title = "شش ماهه استاندارد",
+                            Type = 1
                         },
                         new
                         {
                             Id = 3,
+                            Discount = (short)34,
+                            DiscountAmount = 2924000.0,
                             DurationTime = 365,
                             DurationType = 3,
-                            GiftCharge = 1000000,
+                            GiftCharge = 400000,
                             Icon = "empty.webp",
                             IsActive = true,
-                            Price = 200000000,
+                            Price = 8600000,
                             SubTitle = "برای کسب‌وکارهای متوسط که رقیب‌های زیادی ندارند.",
-                            Title = "یک ساله استاندارد"
+                            Title = "یک ساله استاندارد",
+                            Type = 1
                         },
                         new
                         {
                             Id = 4,
                             DurationTime = 90,
                             DurationType = 1,
-                            GiftCharge = 2500000,
+                            GiftCharge = 250000,
                             Icon = "empty.webp",
                             IsActive = true,
-                            Price = 500000000,
+                            Price = 4500000,
                             SubTitle = "برای کسب‌وکارهای که رقیب‌های زیادی دارند.",
-                            Title = "سه ماهه حرفه ای"
+                            Title = "سه ماهه حرفه ای",
+                            Type = 2
                         },
                         new
                         {
                             Id = 5,
+                            Discount = (short)20,
+                            DiscountAmount = 1500000.0,
                             DurationTime = 180,
                             DurationType = 2,
-                            GiftCharge = 5000000,
+                            GiftCharge = 400000,
                             Icon = "empty.webp",
                             IsActive = true,
-                            Price = 1000000000,
+                            Price = 7500000,
                             SubTitle = "برای کسب‌وکارهای که رقیب‌های زیادی دارند.",
-                            Title = "شش ماهه حرفه ای"
+                            Title = "شش ماهه حرفه ای",
+                            Type = 2
                         },
                         new
                         {
                             Id = 6,
+                            Discount = (short)34,
+                            DiscountAmount = 5304000.0,
                             DurationTime = 365,
                             DurationType = 3,
-                            GiftCharge = 10000000,
+                            GiftCharge = 900000,
                             Icon = "empty.webp",
                             IsActive = true,
-                            Price = 2000000000,
+                            Price = 15600000,
                             SubTitle = "برای کسب‌وکارهای که رقیب‌های زیادی دارند.",
-                            Title = "یک ساله حرفه ای"
+                            Title = "یک ساله حرفه ای",
+                            Type = 2
                         });
                 });
 
@@ -2904,12 +3109,43 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("ClickedTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<decimal>("CostPerClick")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool>("IsDeposit")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<int>("JobId")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("KeywordId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("KeywordPageTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("KeywordPageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("KeywordSlug")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Position")
+                        .HasColumnType("int");
+
                     b.Property<int>("SubscriptionId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ClickId");
+
+                    b.HasIndex("JobId");
 
                     b.HasIndex("SubscriptionId");
 
@@ -2955,6 +3191,12 @@ namespace Persistence.Migrations
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
+
+                    b.Property<bool>("IsFinally")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("RenewalDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
@@ -3247,7 +3489,7 @@ namespace Persistence.Migrations
                             Id = "05446344-f9cc-4566-bd2c-36791b4e28ed",
                             AccessFailedCount = 0,
                             BlockedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "0eace3dd-45a1-47c0-a5c8-12fbbce2cccb",
+                            ConcurrencyStamp = "81a35f55-fc59-4214-a6a5-715d26d5eba4",
                             Email = "admin@localhost.com",
                             EmailConfirmed = true,
                             ExpireTimeSpanBlock = 0,
@@ -3259,10 +3501,10 @@ namespace Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "ADMIN@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEEcI+8Cg0MiG0m1thIwwBbH9RjZxOPCZrF7e+s1QtFgK9yHSP3W/T26w/mGH1BTHHQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEEY51mwlczbHiKwliaklasLjktiBx1OmYZkR7+dpoFXAP1VPpGQ+gz1B8aTY1AoFMg==",
                             PhoneNumberConfirmed = false,
-                            RegisterDate = new DateTime(2025, 4, 28, 9, 57, 53, 154, DateTimeKind.Local).AddTicks(6043),
-                            SecurityStamp = "dce27e4d-8d9b-4e32-8068-04bd5a7dcc8b",
+                            RegisterDate = new DateTime(2025, 5, 14, 16, 29, 43, 728, DateTimeKind.Local).AddTicks(4847),
+                            SecurityStamp = "fb9a3e3c-0cdf-4390-81ac-359c5a2cd28a",
                             TwoFactorEnabled = false,
                             UpdateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserIsBlocked = false,
@@ -3274,7 +3516,7 @@ namespace Persistence.Migrations
                             Id = "2ec9f480-7288-4d0f-a1cd-53cc89968b45",
                             AccessFailedCount = 0,
                             BlockedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "dc514388-75dc-422d-bb24-53d1cd4e1ab9",
+                            ConcurrencyStamp = "d54e590d-f5af-48ba-b6be-38a6df6c6a19",
                             Email = "user@localhost.com",
                             EmailConfirmed = true,
                             ExpireTimeSpanBlock = 0,
@@ -3286,10 +3528,10 @@ namespace Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "USER@LOCALHOST.COM",
                             NormalizedUserName = "USER@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAENhPtHCDRvsJYWCfvyNOfR6Pb5sw13Z2UHf7naz9zUdwqOHFFJPofrXkp+O3z6IwbA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAENBlYV2znJKFl8pE4YDYRzH1eKVYFMNLkuQELtLYMYK9Y46YMPO/n+KAooGxTwz4/A==",
                             PhoneNumberConfirmed = false,
-                            RegisterDate = new DateTime(2025, 4, 28, 9, 57, 53, 202, DateTimeKind.Local).AddTicks(7164),
-                            SecurityStamp = "05809709-a83c-4b34-8e2b-4d2051e5f53e",
+                            RegisterDate = new DateTime(2025, 5, 14, 16, 29, 43, 778, DateTimeKind.Local).AddTicks(84),
+                            SecurityStamp = "e9963471-3828-4416-b072-7e25987221ee",
                             TwoFactorEnabled = false,
                             UpdateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserIsBlocked = false,
@@ -3577,13 +3819,24 @@ namespace Persistence.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasDefaultValueSql("NEWSEQUENTIALID()");
 
+                    b.Property<string>("Amount")
+                        .IsUnicode(true)
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("AuthCode")
+                        .IsUnicode(true)
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .IsUnicode(true)
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("PaymentId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("RefId")
+                        .IsUnicode(true)
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Status")
@@ -3999,6 +4252,17 @@ namespace Persistence.Migrations
                     b.Navigation("JobBranch");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Comment.CommentInteraction", b =>
+                {
+                    b.HasOne("Domain.Entities.Comment.Comment", "Comment")
+                        .WithMany("CommentInteractions")
+                        .HasForeignKey("CommentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Comment");
+                });
+
             modelBuilder.Entity("Domain.Entities.Faq.Faq", b =>
                 {
                     b.HasOne("Domain.Entities.Faq.FaqCategory", "FaqCategory")
@@ -4120,8 +4384,8 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Entities.Job.JobInfo", b =>
                 {
                     b.HasOne("Domain.Entities.Job.Job", "Job")
-                        .WithOne("JobInfo")
-                        .HasForeignKey("Domain.Entities.Job.JobInfo", "JobId")
+                        .WithMany("JobInfos")
+                        .HasForeignKey("JobId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -4152,6 +4416,17 @@ namespace Persistence.Migrations
                     b.HasOne("Domain.Entities.Job.Job", "Job")
                         .WithOne("JobRanking")
                         .HasForeignKey("Domain.Entities.Job.JobRanking", "JobId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Job");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Job.JobRankingHistory", b =>
+                {
+                    b.HasOne("Domain.Entities.Job.Job", "Job")
+                        .WithMany("JobRankingHistories")
+                        .HasForeignKey("JobId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -4288,8 +4563,8 @@ namespace Persistence.Migrations
                         .HasForeignKey("PromotionCodeId");
 
                     b.HasOne("Domain.Entities.Subscription.UserSubscription", "UserSubscription")
-                        .WithMany("Payments")
-                        .HasForeignKey("UserSubscriptionId")
+                        .WithOne("Payment")
+                        .HasForeignKey("Domain.Entities.Payment.Payment", "UserSubscriptionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -4311,11 +4586,28 @@ namespace Persistence.Migrations
                     b.Navigation("StateBase");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Subscription.ClickAdsSetting", b =>
+                {
+                    b.HasOne("Domain.Entities.User.ApplicationUser", "User")
+                        .WithOne("ClickAdsSetting")
+                        .HasForeignKey("Domain.Entities.Subscription.ClickAdsSetting", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Domain.Entities.Subscription.SubscriptionClick", b =>
                 {
                     b.HasOne("Domain.Entities.Subscription.Click", "Click")
                         .WithMany("SubscriptionClicks")
                         .HasForeignKey("ClickId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Job.Job", "Job")
+                        .WithMany("JobSubscriptionClicks")
+                        .HasForeignKey("JobId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -4326,6 +4618,8 @@ namespace Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("Click");
+
+                    b.Navigation("Job");
 
                     b.Navigation("Subscription");
                 });
@@ -4652,6 +4946,8 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Entities.Comment.Comment", b =>
                 {
                     b.Navigation("AnswerComments");
+
+                    b.Navigation("CommentInteractions");
                 });
 
             modelBuilder.Entity("Domain.Entities.DayOfWeek.DayOfWeek", b =>
@@ -4675,11 +4971,14 @@ namespace Persistence.Migrations
 
                     b.Navigation("JobCategories");
 
-                    b.Navigation("JobInfo")
-                        .IsRequired();
+                    b.Navigation("JobInfos");
 
                     b.Navigation("JobRanking")
                         .IsRequired();
+
+                    b.Navigation("JobRankingHistories");
+
+                    b.Navigation("JobSubscriptionClicks");
 
                     b.Navigation("JobTags");
 
@@ -4791,7 +5090,8 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.Subscription.UserSubscription", b =>
                 {
-                    b.Navigation("Payments");
+                    b.Navigation("Payment")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Domain.Entities.Tag.Tag", b =>
@@ -4807,6 +5107,9 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.User.ApplicationUser", b =>
                 {
+                    b.Navigation("ClickAdsSetting")
+                        .IsRequired();
+
                     b.Navigation("Comments");
 
                     b.Navigation("JobBranches");

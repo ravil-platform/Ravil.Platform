@@ -4,11 +4,15 @@ public class TransactionConfigurations : IEntityTypeConfiguration<Domain.Entitie
 {
     public void Configure(EntityTypeBuilder<Domain.Entities.Wallets.Transaction> builder)
     {
-        builder.ToTable("Transaction", DatabaseSchemas.Wallet);
+        builder.ToTable(nameof(Transaction), DatabaseSchemas.Wallet);
 
         builder.HasKey(t => t.Id);
-        builder.Property(t => t.RefId).IsRequired(false);
-        builder.Property(t => t.AuthCode).IsRequired(false);
+
+        builder.Property(t => t.Amount).IsRequired(false).IsUnicode();
+        builder.Property(p => p.Number).IsRequired().IsUnicode();
+
+        builder.Property(t => t.RefId).IsRequired(false).IsUnicode();
+        builder.Property(t => t.AuthCode).IsRequired(false).IsUnicode();
         builder.Property(t => t.TrackingCode).IsRequired(false).HasMaxLength(MaxLength.RefCode);
         builder.Property(t => t.TransactionDate).IsRequired();
 
