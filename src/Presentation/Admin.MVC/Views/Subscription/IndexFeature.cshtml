@@ -1,6 +1,11 @@
 ﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.Extensions.Options
+@using Common.Utilities.Services.FTP.Models
+
 @model List<Domain.Entities.Subscription.Feature>
+@inject IOptions<FTPConnectionOptions> FtpConnectionOptions
 @{
+    string UrlBase = FtpConnectionOptions.Value.UrlBase;
 
 	ViewData["Title"] = "ویژگی ها";
 	ViewData["selected"] = "Features_Index";
@@ -16,6 +21,7 @@
 				<table class="table mb-0 table-striped table-hover no-footer">
 					<thead class="thead-dark">
 						<tr role="row">
+							<th>@(Resources.General.DisplayNames.Icon)</th>
 							<th>@(Resources.General.DisplayNames.Title)</th>
 							<th>@(Resources.General.DisplayNames.Actions)</th>
 						</tr>
@@ -26,7 +32,17 @@
 							@foreach (var item in Model)
 							{
 								<tr role="row" class="odd">
-									<td>@item.Title</td>
+                                    <td class="text-bold-700">
+                                        @if (!string.IsNullOrEmpty(item.Icon))
+                                        {
+                                            <img src="@UrlBase@Paths.SubscriptionFeature@item.Icon" class="rounded-circle mr-1" height="50" width="50">
+                                        }
+                                        else
+                                        {
+                                            <span class="text-danger">ندارد</span>
+                                        }
+                                    </td>
+                                    <td>@item.Title</td>
 									<td>
 										<a target="_blank" asp-controller="Subscription" asp-action="UpdateFeature" asp-route-id="@item.Id" data-toggle="tooltip" data-placement="top" data-original-title="ویرایش"><i class="bx bxs-edit-alt text-warning"></i></a>
 										<a asp-controller="Subscription" asp-action="DeleteFeature" asp-route-id="@item.Id" data-toggle="tooltip" data-placement="top" data-original-title="حذف کامل از دیتابیس"><i class='bx bx-trash text-danger'></i></a>

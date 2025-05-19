@@ -13,7 +13,7 @@ public class SubscriptionController(
     IUnitOfWork unitOfWork,
     IMapper mapper,
     IFtpService ftpService)
-    : BaseController
+: BaseController
 {
     #region ( DI )
     protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
@@ -22,13 +22,14 @@ public class SubscriptionController(
     #endregion
 
     #region ( Subscription )
+
     #region ( Index )
     [HttpGet]
     public async Task<IActionResult> Index()
     {
         var model = await UnitOfWork.SubscriptionRepository.GetAllAsync();
 
-        return View(model);
+        return View(model.ToList());
     }
     #endregion
 
@@ -67,6 +68,15 @@ public class SubscriptionController(
         var iconName = await FtpService.UploadFileToFtpServer(createSubscriptionViewModel.Icon, TypeFile.Image, Paths.Subscription, createSubscriptionViewModel.Icon.FileName);
 
         subscription.Icon = iconName;
+        #endregion
+
+        #region ( Discount )
+
+        if (subscription.Discount is > 0)
+        {
+            subscription.DiscountAmount = subscription.Price * (subscription.Discount.Value / 100);
+        }
+
         #endregion
 
         await UnitOfWork.SubscriptionRepository.InsertAsync(subscription);
@@ -141,6 +151,15 @@ public class SubscriptionController(
 
             return RedirectToAction("Index");
         }
+
+        #region ( Discount )
+
+        if (updateSubscriptionViewModel.Discount is > 0 && subscription.Discount != updateSubscriptionViewModel.Discount)
+        {
+            subscription.DiscountAmount = subscription.Price * (updateSubscriptionViewModel.Discount.Value / 100);
+        }
+
+        #endregion
 
         subscription = Mapper.Map(updateSubscriptionViewModel, subscription);
 
@@ -256,11 +275,22 @@ public class SubscriptionController(
             return RedirectToAction("Index");
         }
 
+        var iconFilename = subscription.Icon;
+
         await UnitOfWork.SubscriptionRepository.DeleteAsync(subscription);
 
         try
         {
             await UnitOfWork.SaveAsync();
+
+            #region ( Delete File )
+
+            if (!string.IsNullOrWhiteSpace(iconFilename))
+            {
+                await FtpService.DeleteFileToFtpServer(Paths.Subscription, iconFilename);
+            }
+
+            #endregion
 
             SuccessAlert();
         }
@@ -272,16 +302,18 @@ public class SubscriptionController(
         return RedirectToAction("Index");
     }
     #endregion
+
     #endregion
 
     #region ( Features )
+
     #region ( Index )
     [HttpGet]
     public async Task<IActionResult> IndexFeature()
     {
         var model = await UnitOfWork.FeatureRepository.GetAllAsync();
 
-        return View(model);
+        return View(model.ToList());
     }
     #endregion
 
@@ -309,6 +341,17 @@ public class SubscriptionController(
         }
 
         var feature = Mapper.Map<Feature>(createFeatureViewModel);
+
+        #region ( Icon )
+
+        if (createFeatureViewModel.Icon != null)
+        {
+            var iconName = await FtpService.UploadFileToFtpServer(createFeatureViewModel.Icon, TypeFile.Image, Paths.SubscriptionFeature, createFeatureViewModel.Icon.FileName);
+
+            feature.Icon = iconName;
+        }
+
+        #endregion
 
         await UnitOfWork.FeatureRepository.InsertAsync(feature);
 
@@ -348,17 +391,6 @@ public class SubscriptionController(
     [HttpPost]
     public async Task<IActionResult> UpdateFeature(UpdateFeatureViewModel updateFeatureViewModel)
     {
-        var feature = await UnitOfWork.FeatureRepository.GetByIdAsync(updateFeatureViewModel.Id);
-
-        if (feature == null)
-        {
-            ErrorAlert("چیزی یافت نشد!");
-
-            return RedirectToAction("Index");
-        }
-
-        feature = Mapper.Map(updateFeatureViewModel, feature);
-
         if (!ModelState.IsValid)
         {
             #region ( Client Side Error )
@@ -371,6 +403,34 @@ public class SubscriptionController(
 
             return View(updateFeatureViewModel);
         }
+
+        var feature = await UnitOfWork.FeatureRepository.GetByIdAsync(updateFeatureViewModel.Id);
+        if (feature == null)
+        {
+            ErrorAlert("چیزی یافت نشد!");
+
+            return RedirectToAction("Index");
+        }
+
+        feature = Mapper.Map(updateFeatureViewModel, feature);
+
+        #region ( Icon )
+        if (updateFeatureViewModel.IconFile != null)
+        {
+            var deletedFile = "";
+
+            if (feature.Icon != null)
+            {
+                deletedFile = feature.Icon;
+            }
+
+            var iconName = await FtpService.UploadFileToFtpServer(updateFeatureViewModel.IconFile, TypeFile.Image, Paths.SubscriptionFeature, updateFeatureViewModel.IconFile.FileName, 777, null, null, null, deletedFile);
+            if (!string.IsNullOrWhiteSpace(iconName))
+            {
+                feature.Icon = iconName;
+            }
+        }
+        #endregion
 
         await UnitOfWork.FeatureRepository.UpdateAsync(feature);
 
@@ -389,7 +449,6 @@ public class SubscriptionController(
     }
     #endregion
 
-
     #region ( Hard Delete )
     [HttpGet]
     public async Task<IActionResult> DeleteFeature(int id)
@@ -403,11 +462,22 @@ public class SubscriptionController(
             return RedirectToAction("Index");
         }
 
+        var iconFilename = feature.Icon;
+
         await UnitOfWork.FeatureRepository.DeleteAsync(feature);
 
         try
         {
             await UnitOfWork.SaveAsync();
+
+            #region ( Delete File )
+
+            if (!string.IsNullOrWhiteSpace(iconFilename))
+            {
+                await FtpService.DeleteFileToFtpServer(Paths.Subscription, iconFilename);
+            }
+
+            #endregion
 
             SuccessAlert();
         }
@@ -419,9 +489,11 @@ public class SubscriptionController(
         return RedirectToAction("Index");
     }
     #endregion
+
     #endregion
 
     #region ( User Subscription )
+
     #region ( Sell Subscription To User )
     [HttpGet]
     public async Task<IActionResult> SellSubscriptionToUser()
@@ -543,5 +615,6 @@ public class SubscriptionController(
         return View(UnitOfWork.UserSubscriptionRepository.GetByFilter(filter));
     }
     #endregion
+
     #endregion
 }

@@ -44,6 +44,11 @@ public class PaymentRepository : Repository<Domain.Entities.Payment.Payment>, IP
             query = query.Where(a => a.UserSubscription.User.Id == filter.UserId);
         }
 
+        if (filter.Number != null)
+        {
+            query = query.Where(a => a.Number == filter.Number);
+        }
+
         #region ( Date Time )
         try
         {
@@ -77,6 +82,7 @@ public class PaymentRepository : Repository<Domain.Entities.Payment.Payment>, IP
         {
         }
         #endregion
+
         #endregion
 
         filter.Build(query.Count()).SetEntities(query);

@@ -18,6 +18,9 @@ public class UpdateSubscriptionViewModel
     [Display(Name = "قیمت")]
     public int Price { get; set; }
 
+    [Display(Name = "تخفیف")]
+    public short? Discount { get; set; }
+
     [Display(Name = "شارژ هدیه")]
     public int GiftCharge { get; set; }
 
@@ -26,6 +29,9 @@ public class UpdateSubscriptionViewModel
 
     [Display(Name = "زمان")]
     public SubscriptionDurationType DurationType { get; set; }
+
+    [Display(Name = "نوع")]
+    public SubscriptionType Type { get; set; }
 
     [Display(Name = "وضعیت")]
     public bool IsActive { get; set; }

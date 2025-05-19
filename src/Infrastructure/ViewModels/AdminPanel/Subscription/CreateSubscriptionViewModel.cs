@@ -18,7 +18,11 @@ public class CreateSubscriptionViewModel
     [Display(Name = "قیمت")]
     public int Price { get; set; }
 
+    [Display(Name = "تخفیف")]
+    public short? Discount { get; set; }
+
     [Display(Name = "شارژ هدیه")]
+    [Required(ErrorMessage = "پر کردن {0} الزامی است.")]
     public int GiftCharge { get; set; }
 
     [Display(Name = "تعداد روز ")]
@@ -26,6 +30,10 @@ public class CreateSubscriptionViewModel
 
     [Display(Name = "زمان")]
     public SubscriptionDurationType DurationType { get; set; }
+
+    [Display(Name = "نوع")]
+    [Required(ErrorMessage = "پر کردن {0} الزامی است.")]
+    public SubscriptionType Type { get; set; }
 
     [Display(Name = "وضعیت")]
     public bool IsActive { get; set; }

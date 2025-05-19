@@ -1,8 +1,10 @@
 ﻿namespace Api.Controllers.V1
 {
+    /// <inheritdoc />
     [Route(Routes.Controller)]
     public class CommentsController : GenericBaseController<CommentsController>
     {
+        /// <inheritdoc />
         public CommentsController(IMediator mediator, Logging.Base.ILogger<CommentsController> logger) : base(mediator, logger)
         {
         }

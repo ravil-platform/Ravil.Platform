@@ -36,6 +36,11 @@ public class TransactionRepository : Repository<Domain.Entities.Wallets.Transact
                 .AsQueryable();
         }
 
+        if (filter.PaymentId != null)
+        {
+            query = query.Where(a => a.PaymentId.Equals(filter.PaymentId));
+        }
+
         if (filter.AuthCode != null)
         {
             query = query.Where(a => a.AuthCode.Equals(filter.AuthCode));

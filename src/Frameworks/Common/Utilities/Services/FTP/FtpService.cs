@@ -212,10 +212,9 @@ public class FtpService : object, IFtpService
 
                 if (FtpClient.FileExists(fullPath)) FtpClient.DeleteFile(fullPath);
 
-                var fullThumbPath = segmentSeperatorSingle + rootDirectory + thumbSavePath + deleteFileName;
-
                 if (!string.IsNullOrEmpty(thumbSavePath))
                 {
+                    var fullThumbPath = segmentSeperatorSingle + rootDirectory + thumbSavePath + deleteFileName;
                     if (FtpClient.FileExists(fullThumbPath)) FtpClient.DeleteFile(fullThumbPath);
                 }
             }

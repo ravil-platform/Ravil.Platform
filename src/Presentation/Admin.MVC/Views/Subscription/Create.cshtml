@@ -53,7 +53,7 @@
 
 
 
-								<div class="col-12 col-sm-6 col-lg-3">
+								<div class="col-12 col-sm-6">
 									<div class="form-group">
 										<div class="controls">
 											<span class="text-danger">*</span>
@@ -65,8 +65,7 @@
 										</div>
 									</div>
 								</div>
-
-								<div class="col-12 col-sm-6 col-lg-3">
+								<div class="col-12 col-sm-6">
 									<div class="form-group">
 										<div class="controls">
 											<span class="text-danger">*</span>
@@ -79,8 +78,7 @@
 									</div>
 								</div>
 
-
-								<div class="col-12 col-sm-6 col-lg-3">
+								<div class="col-12 col-sm-6 col-lg-4">
 									<div class="form-group">
 										<div class="controls">
 											<span class="text-danger">*</span>
@@ -93,7 +91,20 @@
 									</div>
 								</div>
 
-								<div class="col-12 col-sm-6 col-lg-3">
+                                <div class="col-12 col-sm-6 col-lg-4">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <span class="text-danger">*</span>
+                                            <label asp-for="Discount"></label>
+                                            <input asp-for="Discount" type="number" class="form-control text-right">
+                                            <div class="help-block">
+                                                <span asp-validation-for="Discount" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6 col-lg-4">
 									<div class="form-group">
 										<div class="controls">
 											<span class="text-danger">*</span>
@@ -105,38 +116,27 @@
 										</div>
 									</div>
 								</div>
+                                
+                                <div class="col-12"><hr /></div>
 
-								<div class="col-12 col-sm-6 col-lg-4">
+								<div class="col-12 col-sm-6 col-lg-6">
 									<div class="form-group">
 										<div class="controls">
 											<span class="text-danger">*</span>
-											<label asp-for="DurationTime"></label>
-											<input asp-for="DurationTime" type="number" class="form-control text-right">
-											<div class="help-block">
-												<span asp-validation-for="DurationTime" class="text-danger"></span>
-											</div>
+											<label asp-for="Type"></label>
+                                            <select asp-for="Type" class="form-control">
+                                                <option value="@SubscriptionType.Simple">@SubscriptionType.Simple.GetEnumDisplayName()</option>
+                                                <option value="@SubscriptionType.Standard">@SubscriptionType.Standard.GetEnumDisplayName()</option>
+                                                <option value="@SubscriptionType.Premium">@SubscriptionType.Premium.GetEnumDisplayName()</option>
+                                            </select>
+                                            <div class="help-block">
+                                                <span asp-validation-for="Type" class="text-danger"></span>
+                                            </div>
 										</div>
 									</div>
 								</div>
 
-								<div class="col-12 col-sm-6 col-lg-4">
-									<div class="form-group">
-										<div class="controls">
-											<label asp-for="Features"></label>
-											<select asp-for="Features" class="select2 form-control" multiple>
-												@if (features.Any() && features.Count > 1)
-												{
-													@foreach (var item in features)
-													{
-														<option value="@item.Id">@item.Title</option>
-													}
-												}
-											</select>
-										</div>
-									</div>
-								</div>
-
-								<div class="col-12 col-sm-6 col-lg-4">
+								<div class="col-12 col-sm-6 col-lg-6">
 									<div class="form-group">
 										<div class="controls">
 											<span class="text-danger">*</span>
@@ -150,6 +150,23 @@
 										</div>
 									</div>
 								</div>
+
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <label asp-for="Features"></label>
+                                            <select asp-for="Features" class="select2 form-control" multiple>
+                                                @if (features.Any() && features.Count > 1)
+                                                {
+                                                    @foreach (var item in features)
+                                                    {
+                                                        <option value="@item.Id">@item.Title</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
 							</div>
 
 							<div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">

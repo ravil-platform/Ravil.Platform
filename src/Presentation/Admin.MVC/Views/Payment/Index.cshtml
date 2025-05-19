@@ -14,20 +14,25 @@
 		<form method="get">
 			<input type="hidden" asp-for="FindAll" id="FindAll" value="false" />
 			<div class="row border rounded py-2 mb-2">
-				<div class="col-12 col-sm-6 col-lg-3">
-					<label>تعداد نمایش در هر صفحه</label>
-					<fieldset class="form-group">
-						<select asp-for="PageSize" class="form-control">
-							<option value="5">5</option>
-							<option value="10">10</option>
-							<option value="20">20</option>
-							<option value="50">50</option>
-							<option value="100">100</option>
-						</select>
-					</fieldset>
-				</div>
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <label>تعداد نمایش در هر صفحه</label>
+                    <fieldset class="form-group">
+                        <select asp-for="PageSize" class="form-control">
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                    </fieldset>
+                </div>
+				
+                <div class="col-12 col-sm-6 col-lg-3">
+                    <label>شماره پرداخت</label>
+                    <input asp-for="Number" type="text" class="form-control text-right" />
+                </div>
 
-				<div class="col-12 col-sm-6 col-lg-3">
+                <div class="col-12 col-sm-6 col-lg-3">
 					<label>درگاه</label>
 					<fieldset class="form-group">
 						<select asp-for="PaymentPortalId" class="form-control">
@@ -70,12 +75,14 @@
 			<div class="dataTables_wrapper no-footer">
 				<table class="table mb-0 table-striped table-hover no-footer">
 					<thead class="thead-dark">
-						<tr role="row">
+						<tr role="row" class="text-center">
 							<th>ردیف</th>
 							<th>@(Resources.General.DisplayNames.Id)</th>
+							<th>شماره پرداخت</th>
 							<th>@(Resources.General.DisplayNames.Amount)</th>
 							<th>روش پرداخت</th>
 							<th>@(Resources.General.DisplayNames.Date)</th>
+							<th>تاریخ آخرین تمدید</th>
 							<th>@(Resources.General.DisplayNames.Actions)</th>
 						</tr>
 					</thead>
@@ -84,14 +91,23 @@
 						{
 							@foreach (var item in Model.Entities)
 							{
-								<tr role="row" class="odd">
+								<tr role="row" class="odd text-center">
 									<td>@counter</td>
 									<td>@item.Id</td>
+									<td>@item.Number</td>
 									<td>@item.Amount</td>
 									<td>@item.PaymentMethod</td>
 									<td>@item.PaymentDate.ToStringShamsiDate()</td>
+									@if (item.RenewalDate.HasValue)
+                                    {
+										<td>@item.RenewalDate.Value.ToStringShamsiDate()</td>
+                                    }
+                                    else
+                                    {
+										<td>---</td>
+                                    }
 									<td>
-										<a onclick="update('@item.Id')" data-toggle="tooltip" data-placement="top" data-original-title="ویرایش"><i class="bx bxs-edit-alt text-warning"></i></a>
+										<a asp-controller="Payment" asp-action="Transaction" asp-route-id="@item.Id" target="_blank" data-toggle="tooltip" data-placement="top" data-original-title="تراکنش ها"><i class="bx bx-show-alt text-primary"></i></a>
 									</td>
 								</tr>
 							}
@@ -170,27 +186,6 @@
 	<script src="~/lib/ckeditor5/customckeditor.js"></script>
 
 	<script>
-		function update(id) {
-			var modalBody = $("#UpdateForm").find('.modal-body');
-			var modalFooter = $("#UpdateForm").find('.modal-footer');
-
-			if (modalBody && modalFooter) {
-				modalBody.remove();
-				modalFooter.remove();
-			}
-
-			$.ajax({
-				url: '@Url.Action("Update")',
-				data: { id: id },
-				success: function (result) {
-					$("#UpdateForm").find('.modal-content').append(result);
-					new bootstrap.Modal(document.getElementById('UpdateForm'), {
-						keyboard: false
-					}).show();
-				}
-			});
-		}
-
 		function changePage(Page) {
 			var url = new URL(window.location.href);
 			var SerachParams = url.searchParams;

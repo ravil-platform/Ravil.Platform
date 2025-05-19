@@ -1,6 +1,8 @@
 ﻿using Application.Services.SMS;
 using Common.Utilities.Services.FTP;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using Domain.Entities.Payment;
+using Microsoft.EntityFrameworkCore;
 using ViewModels.AdminPanel.Filter;
 using ViewModels.AdminPanel.Payment;
 
@@ -12,7 +14,7 @@ public class PaymentController(
     IFtpService ftpService,
     ISmsSender smsSender,
     UserManager<ApplicationUser> userManager)
-    : BaseController
+: BaseController
 {
     #region ( DI )
     protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
@@ -24,6 +26,7 @@ public class PaymentController(
 
 
     #region ( Payment )
+
     #region ( Index )
     public async Task<IActionResult> Index(PaymentFilterViewModel filter)
     {
@@ -39,65 +42,29 @@ public class PaymentController(
     }
     #endregion
 
-    #region ( Update )
+    #region ( Transaction )
+
     [HttpGet]
-    public async Task<IActionResult> Update(int id)
+    public async Task<IActionResult> Transaction(Guid id)
     {
-        var faq = await UnitOfWork.FaqRepository.GetByIdAsync(id);
+        ViewData["payment"] = await UnitOfWork.PaymentRepository.TableNoTracking.SingleOrDefaultAsync(a => a.Id == id);
 
-        var model = Mapper.Map<UpdateFaqViewModel>(faq);
-
-        #region ( Fill Faq Categories For Partial )
-        var categories = await UnitOfWork.FaqCategoryRepository.GetAllAsync();
-        var faqCategory = categories.First(c => c.Id == faq.CategoryId);
-
-        if (categories.Count == 0)
-        {
-            categories = new List<FaqCategory>();
-        }
-        else
-        {
-            categories.Remove(faqCategory);
-        }
-
-        model.FaqCategories = new SelectList(categories, "Id", "Title");
-        model.IconName = faq.IconPicture;
-        model.CategoryName = faqCategory.Title;
-        #endregion
-
-        return PartialView("_Update", model);
+        var model = UnitOfWork.TransactionRepository.GetByFilter(new TransactionFilterViewModel(){ PaymentId = id });
+        
+        return View(model);
     }
-
-    [HttpPost]
-    public async Task<IActionResult> Update(UpdateFaqViewModel updateFaqViewModel)
+    
+    [HttpGet("{id:guid}")]
+    public async Task<IActionResult> FilterTransaction(Guid id, TransactionFilterViewModel filter)
     {
-        var faq = await UnitOfWork.FaqRepository.GetByIdAsync(updateFaqViewModel.Id);
-        faq = Mapper.Map(updateFaqViewModel, faq);
+        ViewData["payment"] = await UnitOfWork.PaymentRepository.TableNoTracking.SingleOrDefaultAsync(a => a.Id == id);
 
-        var iconName = Guid.NewGuid().ToString("N") + Path.GetExtension(updateFaqViewModel.File.FileName);
+        var model = UnitOfWork.TransactionRepository.GetByFilter(filter);
 
-        updateFaqViewModel.File.AddImageToServer(iconName, Paths.FaqImageServer, TypeFile.Image, null, null, null, faq.IconPicture);
-
-        faq.IconPicture = iconName;
-        faq.Question = faq.Question.SanitizeText();
-
-        await UnitOfWork.FaqRepository.UpdateAsync(faq);
-
-
-        try
-        {
-            await UnitOfWork.SaveAsync();
-
-            SuccessAlert();
-        }
-        catch (Exception e)
-        {
-            ErrorAlert(e.Message);
-        }
-
-        return RedirectToAction("Index");
+        return View("Transaction", model);
     }
     #endregion
+
     #endregion
 
     #region ( Payment Portal )
@@ -106,7 +73,7 @@ public class PaymentController(
     {
         var model = await UnitOfWork.PaymentPortalRepository.GetAllAsync();
 
-        return View(model);
+        return View(model.ToList());
     }
     #endregion
 

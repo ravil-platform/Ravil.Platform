@@ -13,8 +13,8 @@
 	افزودن اشتراک جدید <i class="bx bx-plus"></i>
 </a>
 
-<a asp-controller="Subscription" asp-action="Create" class="btn btn-success mb-2">
-	فروش اشتراک به کاربر <i class="bx bx-plus"></i>
+<a asp-controller="Subscription" asp-action="SellSubscriptionToUser" class="btn btn-info mb-2">
+	فروش اشتراک به صاحبین کسب و کار <i class="bx bx-chevron-left"></i>
 </a>
 
 <section>
@@ -27,6 +27,8 @@
 							<th>@(Resources.General.DisplayNames.Icon)</th>
 							<th>@(Resources.General.DisplayNames.Title)</th>
 							<th>@(Resources.General.DisplayNames.SubTitle)</th>
+							<th>@(Resources.General.DisplayNames.Type)</th>
+							<th>@(Resources.General.DisplayNames.Discount)</th>
 							<th>@(Resources.General.DisplayNames.Price)</th>
 							<th>مدت زمان</th>
 							<th>وضعیت</th>
@@ -51,6 +53,18 @@
 									</td>
 									<td>@item.Title</td>
 									<td>@item.SubTitle</td>
+									<td>@item.Type.GetEnumDisplayName()</td>
+                                    <td class="text-center text-sm-center">
+                                        @if (item is { Discount: > 0, DiscountAmount: > 0 })
+                                        {
+                                            <span class="text-primary">@item.Discount %</span><br/>
+											<span>(@item.DiscountAmount.Value.ToString("#,0"))</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-danger">ندارد</span>
+                                        }
+                                    </td>
 									<td>@item.Price.ToString("#,0")</td>
 									<td>@item.DurationType.GetEnumDisplayName()</td>
 

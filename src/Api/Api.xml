@@ -192,6 +192,12 @@
             <param name="query"></param>
             <returns></returns>
         </member>
+        <member name="T:Api.Controllers.V1.CommentsController">
+            <inheritdoc />
+        </member>
+        <member name="M:Api.Controllers.V1.CommentsController.#ctor(MediatR.IMediator,Logging.Base.ILogger{Api.Controllers.V1.CommentsController})">
+            <inheritdoc />
+        </member>
         <member name="M:Api.Controllers.V1.CommentsController.GetAllCommentsByFilter(Application.Features.Comment.Queries.GetAll.GetCommentsByFilterQuery)">
             <summary>
             Returns all comments by given filter

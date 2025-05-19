@@ -1,9 +1,16 @@
 ﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.Extensions.Options
+@using Common.Utilities.Services.FTP.Models
+
 @model ViewModels.AdminPanel.Subscription.UpdateFeatureViewModel
+@inject IOptions<FTPConnectionOptions> FtpConnectionOptions
 @{
+    string UrlBase = FtpConnectionOptions.Value.UrlBase;
+
 	ViewData["Title"] = "ویرایش ویژگی";
 	ViewData["selected"] = "Features_Index";
 }
+
 <section>
 	<div class="card">
 		<div class="card-content">
@@ -19,8 +26,31 @@
 					<div class="tab-pane active">
 						<form method="post" enctype="multipart/form-data">
 							<input type="hidden" asp-for="Id" />
-
-							<div class="row">
+                            <div class="card-title-details d-flex align-items-center mb-1 ml-1">
+                                <div>
+                                    <div class="avatar bg-rgba-primary p-25 mr-2 ml-0">
+                                        <img id="selected-picture" class="img-fluid" src="@UrlBase@Paths.SubscriptionFeature@Model.IconFile" height="100" width="100">
+                                    </div>
+                                    <div class="mt-n25">
+                                        <h5>تصویر انتخاب شده</h5>
+                                        <p class="text-info">راهنمای سایز :W: x-px * H: x-px </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-md-12 mb-1">
+                                    <fieldset>
+                                        <div class="input-group">
+                                            <div class="custom-file">
+                                                <input asp-for="IconFile" type="file" class="custom-file-input" accept=".jpg,.png,.jpeg,.gif,.webp">
+                                                <label class="custom-file-label">انتخاب آیکن</label>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <div class="help-block">
+                                        <span asp-validation-for="IconFile" class="text-danger"></span>
+                                    </div>
+                                </div>
 								<div class="col-12 col-sm-12 col-lg-12">
 									<div class="form-group">
 										<div class="controls">

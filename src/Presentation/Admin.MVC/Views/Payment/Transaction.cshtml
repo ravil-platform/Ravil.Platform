@@ -1,18 +1,21 @@
-﻿@using ViewModels.AdminPanel.Wallet
+﻿@using Domain.Entities.Payment
 @model ViewModels.AdminPanel.Filter.TransactionFilterViewModel
 @{
-	ViewData["Title"] = "لیست تراکنش ها";
-	ViewData["selected"] = "Transaction_Index";
+	ViewData["selected"] = "Payments_Index";
 
-	var counter = ((Model.CurrentPage - 1) * Model.PageSize) + 1;
+    var payment = ViewData["payment"] as Payment;
+    var counter = ((Model.CurrentPage - 1) * Model.PageSize) + 1;
+
+    ViewData["Title"] = $"لیست تراکنش های پرداخت شماره {payment?.Number}";
 }
 
 <section>
 	<div class="users-list-filter px-1">
-		<form method="get" id="search-form">
+		<form asp-controller="Payment" asp-action="FilterTransaction" asp-route-id="@payment?.Id" method="get" id="search-form">
 			<input type="hidden" name="CurrentPage" value="@Model.CurrentPage" />
 			<input type="hidden" asp-for="FindAll" id="FindAll" value="false" />
 			<input type="hidden" asp-for="WalletId" value="@Model.WalletId" />
+			<input type="hidden" asp-for="PaymentId" value="@Model.PaymentId" />
 
 			<div class="row border rounded py-2 mb-2">
 				<div class="col-12 col-sm-6 col-lg-3">
@@ -29,18 +32,18 @@
 				</div>
 
 				<div class="col-12 col-sm-6 col-lg-3">
-					<label>RefId</label>
+					<label>شماره تراکنش</label>
+					<input asp-for="Number" type="text" class="form-control text-right" />
+				</div>
+
+				<div class="col-12 col-sm-6 col-lg-3">
+					<label>شناسه مرجع</label>
 					<input asp-for="RefId" type="text" class="form-control text-right" />
 				</div>
 
 				<div class="col-12 col-sm-6 col-lg-3">
-					<label>Auth Code</label>
+					<label>کد پیگیری</label>
 					<input asp-for="AuthCode" type="text" class="form-control text-right" />
-				</div>
-
-				<div class="col-12 col-sm-6 col-lg-3">
-					<label>Tracking Code</label>
-					<input asp-for="TrackingCode" type="text" class="form-control text-right" />
 				</div>
 
 				<div class="col-12 col-sm-6 col-lg-3">
@@ -75,19 +78,19 @@
 					<div class="table-responsive card card-body p-0">
 						<table class="table mb-0 table-striped table-hover no-footer">
 							<thead class="thead-dark">
-								<tr class="text-center">
-                                    <th>ردیف</th>
-                                    <th>شماره تراکنش</th>
-                                    <th>شناسه مرجع</th>
-                                    <th>کد پیگیری</th>
-                                    <th>وضعیت</th>
-                                    <th>تاریخ</th>
+								<tr>
+									<th>ردیف</th>
+									<th>شماره تراکنش</th>
+									<th>شناسه مرجع</th>
+									<th>کد پیگیری</th>
+									<th>وضعیت</th>
+									<th>تاریخ</th>
 								</tr>
 							</thead>
 							<tbody>
 								@foreach (var data in Model.Entities)
 								{
-									<tr class="text-center">
+									<tr>
 										<td>@counter</td>
 										<td>@data.Number</td>
 										<td>@data.RefId</td>
@@ -154,23 +157,6 @@
 		</div>
 	</div>
 
-	<div class="modal fade text-left" id="CreateForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h4 id="CreateFormTitle" class="modal-title">شارژ کیف پول</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-label="بستن">
-						<i class="bx bx-x"></i>
-					</button>
-				</div>
-				@{
-					var model = new CreateWalletViewModel();
-				}
-				<partial name="_ChargeWallet" model="model" />
-			</div>
-		</div>
-	</div>
-
 </section>
 @section Scripts
 {
@@ -194,9 +180,9 @@
 		$("#empty").click(function (event) {
 			$("#PageSize").val(20);
 			$("#ApplicationUserId").val('null');
-			$("#AuthCode").val(null);
-			$("#RefId").val(null);
-			$("#TrackingCode").val(null);
+            $("#AuthCode").val(null);
+            $("#Number").val(null);
+            $("#RefId").val(null);
 			$("#From").val(null);
 			$("#To").val(null);
 		});

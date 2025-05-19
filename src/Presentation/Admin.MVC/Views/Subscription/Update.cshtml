@@ -59,7 +59,7 @@
 
 
 
-								<div class="col-12 col-sm-6 col-lg-3">
+								<div class="col-12 col-sm-6 col-lg-6">
 									<div class="form-group">
 										<div class="controls">
 											<span class="text-danger">*</span>
@@ -72,7 +72,7 @@
 									</div>
 								</div>
 
-								<div class="col-12 col-sm-6 col-lg-3">
+								<div class="col-12 col-sm-6 col-lg-6">
 									<div class="form-group">
 										<div class="controls">
 											<span class="text-danger">*</span>
@@ -86,46 +86,77 @@
 								</div>
 
 
-								<div class="col-12 col-sm-6 col-lg-3">
-									<div class="form-group">
-										<div class="controls">
-											<span class="text-danger">*</span>
-											<label asp-for="Price"></label>
-											<input asp-for="Price" type="number" class="form-control text-right">
-											<div class="help-block">
-												<span asp-validation-for="Price" class="text-danger"></span>
-											</div>
-										</div>
-									</div>
-								</div>
+                                <div class="col-12 col-sm-6 col-lg-4">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <span class="text-danger">*</span>
+                                            <label asp-for="Price"></label>
+                                            <input asp-for="Price" type="number" class="form-control text-right">
+                                            <div class="help-block">
+                                                <span asp-validation-for="Price" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
-								<div class="col-12 col-sm-6 col-lg-3">
-									<div class="form-group">
-										<div class="controls">
-											<span class="text-danger">*</span>
-											<label asp-for="GiftCharge"></label>
-											<input asp-for="GiftCharge" type="number" class="form-control text-right">
-											<div class="help-block">
-												<span asp-validation-for="GiftCharge" class="text-danger"></span>
-											</div>
-										</div>
-									</div>
-								</div>
+                                <div class="col-12 col-sm-6 col-lg-4">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <span class="text-danger">*</span>
+                                            <label asp-for="Discount"></label>
+                                            <input asp-for="Discount" type="number" class="form-control text-right">
+                                            <div class="help-block">
+                                                <span asp-validation-for="Discount" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
-								<div class="col-12 col-sm-6 col-lg-3">
-									<div class="form-group">
-										<div class="controls">
-											<span class="text-danger">*</span>
-											<label asp-for="DurationTime"></label>
-											<input asp-for="DurationTime" type="number" class="form-control text-right">
-											<div class="help-block">
-												<span asp-validation-for="DurationTime" class="text-danger"></span>
-											</div>
-										</div>
-									</div>
-								</div>
+                                <div class="col-12 col-sm-6 col-lg-4">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <span class="text-danger">*</span>
+                                            <label asp-for="GiftCharge"></label>
+                                            <input asp-for="GiftCharge" type="number" class="form-control text-right">
+                                            <div class="help-block">
+                                                <span asp-validation-for="GiftCharge" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-12"><hr /></div>
 
-								<div class="col-12 col-sm-6 col-lg-3">
+                                <div class="col-12 col-sm-6 col-lg-6">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <span class="text-danger">*</span>
+                                            <label asp-for="Type"></label>
+                                            <select asp-for="Type" class="form-control">
+                                                <!option value="@SubscriptionType.Simple" @if (Model.Type == SubscriptionType.Simple) { <text>selected="selected"</text> }>@SubscriptionType.Simple.GetEnumDisplayName()</!option>
+                                                <!option value="@SubscriptionType.Standard" @if (Model.Type == SubscriptionType.Standard) { <text>selected="selected"</text> }>@SubscriptionType.Standard.GetEnumDisplayName()</!option>
+                                                <!option value="@SubscriptionType.Premium" @if (Model.Type == SubscriptionType.Premium) { <text>selected="selected"</text> }>@SubscriptionType.Premium.GetEnumDisplayName()</!option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-6 col-lg-6">
+                                    <div class="form-group">
+                                        <div class="controls">
+                                            <span class="text-danger">*</span>
+                                            <label asp-for="DurationType"></label>
+                                            <select asp-for="DurationType" class="form-control">
+                                                <!option value="@SubscriptionDurationType.OneMonth" @if (Model.DurationType == SubscriptionDurationType.OneMonth) { <text>selected="selected"</text> }>@SubscriptionDurationType.OneMonth.GetEnumDisplayName()</!option>
+                                                <!option value="@SubscriptionDurationType.ThreeMonth" @if (Model.DurationType == SubscriptionDurationType.ThreeMonth) { <text>selected="selected"</text> }>@SubscriptionDurationType.ThreeMonth.GetEnumDisplayName()</!option>
+                                                <!option value="@SubscriptionDurationType.SixMonth" @if (Model.DurationType == SubscriptionDurationType.SixMonth) { <text>selected="selected"</text> }>@SubscriptionDurationType.SixMonth.GetEnumDisplayName()</!option>
+                                                <!option value="@SubscriptionDurationType.OneYear" @if (Model.DurationType == SubscriptionDurationType.OneYear) { <text>selected="selected"</text> }>@SubscriptionDurationType.OneYear.GetEnumDisplayName()</!option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+								<div class="col-12">
 									<div class="form-group">
 										<div class="controls">
 											<label asp-for="Features"></label>
@@ -152,25 +183,10 @@
 								<div class="col-12 col-sm-6 col-lg-3">
 									<div class="form-group">
 										<div class="controls">
-											<span class="text-danger">*</span>
-											<label asp-for="DurationType"></label>
-											<select asp-for="DurationType" class="form-control">
-												<option value="@SubscriptionDurationType.OneMonth">@SubscriptionDurationType.OneMonth.GetEnumDisplayName()</option>
-												<option value="@SubscriptionDurationType.ThreeMonth">@SubscriptionDurationType.ThreeMonth.GetEnumDisplayName()</option>
-												<option value="@SubscriptionDurationType.SixMonth">@SubscriptionDurationType.SixMonth.GetEnumDisplayName()</option>
-												<option value="@SubscriptionDurationType.OneYear">@SubscriptionDurationType.OneYear.GetEnumDisplayName()</option>
-											</select>
-										</div>
-									</div>
-								</div>
-
-								<div class="col-12 col-sm-6 col-lg-3">
-									<div class="form-group">
-										<div class="controls">
 											<label asp-for="IsActive"></label>
 											<select asp-for="IsActive" class="form-control">
-												<option value="true">فعال</option>
-												<option value="false">غیرفعال</option>
+												<!option value="true" @if (Model.IsActive) { <text>selected="selected"</text> }>فعال</!option>
+												<!option value="false" @if (!Model.IsActive) { <text>selected="selected"</text> }>غیرفعال</!option>
 											</select>
 										</div>
 									</div>
