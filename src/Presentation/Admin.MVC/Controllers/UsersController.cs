@@ -1,17 +1,13 @@
 ﻿namespace Admin.MVC.Controllers
 {
-    public class UsersController : BaseController
+    public class UsersController(IUnitOfWork unitOfWork, IMapper mapper, UserManager<ApplicationUser> userManager)
+        : BaseController
     {
         #region ( DI )
-        protected UserManager<ApplicationUser> UserManager { get; }
-        protected IUnitOfWork UnitOfWork { get; }
-        protected IMapper Mapper { get; }
-        public UsersController(IUnitOfWork unitOfWork, IMapper mapper, UserManager<ApplicationUser> userManager)
-        {
-            UnitOfWork = unitOfWork;
-            Mapper = mapper;
-            UserManager = userManager;
-        }
+        protected UserManager<ApplicationUser> UserManager { get; } = userManager;
+        protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
+        protected IMapper Mapper { get; } = mapper;
+
         #endregion
 
         #region ( Index )

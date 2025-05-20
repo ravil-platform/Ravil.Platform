@@ -1,20 +1,13 @@
-﻿using System.Globalization;
-using Domain.Entities.Payment;
-using ViewModels.AdminPanel.Filter;
-using ViewModels.Discounts;
+﻿
 
 namespace Admin.MVC.Controllers
 {
-    public class DiscountsController : BaseController
+    public class DiscountsController(IUnitOfWork unitOfWork, IMapper mapper) : BaseController
     {
         #region ( DI )
-        public IUnitOfWork UnitOfWork { get; }
-        public IMapper Mapper { get; }
-        public DiscountsController(IUnitOfWork unitOfWork, IMapper mapper)
-        {
-            UnitOfWork = unitOfWork;
-            Mapper = mapper;
-        }
+        public IUnitOfWork UnitOfWork { get; } = unitOfWork;
+        public IMapper Mapper { get; } = mapper;
+
         #endregion
 
         #region ( Index )

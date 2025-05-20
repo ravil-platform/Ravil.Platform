@@ -14,3 +14,4 @@ global using ViewModels.QueriesResponseViewModel.Job;
 global using ViewModels.QueriesResponseViewModel.Tag;
 global using ViewModels.QueriesResponseViewModel.Address;
 global using ViewModels.QueriesResponseViewModel.Location;
+global using Domain.Entities.PanelTutorial;

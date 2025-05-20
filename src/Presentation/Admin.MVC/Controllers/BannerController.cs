@@ -1,23 +1,12 @@
-﻿using Common.Utilities.Services.FTP;
-using Domain.Entities.Banner;
-using Enums;
-using ViewModels.AdminPanel.Banner;
-using ViewModels.AdminPanel.Filter;
-
-namespace Admin.MVC.Controllers
+﻿namespace Admin.MVC.Controllers
 {
-    public class BannerController : BaseController
+    public class BannerController(IMapper mapper, IUnitOfWork unitOfWork, IFtpService ftpService)
+        : BaseController
     {
         #region ( DI )
-        protected IMapper Mapper { get; }
-        protected IUnitOfWork UnitOfWork { get; }
-        protected IFtpService FtpService { get; }
-        public BannerController(IMapper mapper, IUnitOfWork unitOfWork, IFtpService ftpService)
-        {
-            Mapper = mapper;
-            UnitOfWork = unitOfWork;
-            FtpService = ftpService;
-        }
+        protected IMapper Mapper { get; } = mapper;
+        protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
+        protected IFtpService FtpService { get; } = ftpService;
         #endregion
 
         #region ( Index )
@@ -62,7 +51,7 @@ namespace Admin.MVC.Controllers
             banner.LargePicture = pictureName;
             banner.SmallPicture = mobilePictureName;
             banner.CreateDate = DateTime.Now;
-            banner.ExpireDate = new DateTime(2045,1,1);
+            banner.ExpireDate = new DateTime(2045, 1, 1);
 
             await UnitOfWork.BannerRepository.InsertAsync(banner);
 

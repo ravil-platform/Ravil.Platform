@@ -1,4 +1,6 @@
-﻿namespace Application.Features.Job.Commands.UpdateJobBranch;
+﻿using UpdateJobBranchViewModel = ViewModels.QueriesResponseViewModel.Job.UpdateJobBranchViewModel;
+
+namespace Application.Features.Job.Commands.UpdateJobBranch;
 
 public class UpdateJobBranchCommandHandler : IRequestHandler<UpdateJobBranchCommand, UpdateJobBranchViewModel>
 {

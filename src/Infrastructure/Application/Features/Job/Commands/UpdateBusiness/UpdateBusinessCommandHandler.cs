@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using AngleSharp.Common;
 using Application.Features.GuideLine.Commands.GuideLineCompletion;
+using PhoneNumberInfosViewModel = ViewModels.QueriesResponseViewModel.Job.PhoneNumberInfosViewModel;
+using SocialMediaInfosViewModel = ViewModels.QueriesResponseViewModel.Job.SocialMediaInfosViewModel;
 
 namespace Application.Features.Job.Commands.UpdateBusiness;
 

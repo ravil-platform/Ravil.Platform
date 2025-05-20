@@ -1,15 +1,9 @@
-﻿using Enums;
-using Microsoft.EntityFrameworkCore;
-
+﻿
 namespace Admin.MVC.Controllers
 {
-    public class HomeController : BaseController
+    public class HomeController(IUnitOfWork unitOfWork) : BaseController
     {
-        protected IUnitOfWork UnitOfWork { get; }
-        public HomeController(IUnitOfWork unitOfWork)
-        {
-            UnitOfWork = unitOfWork;
-        }
+        protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
 
         public async Task<IActionResult> Index()
         {

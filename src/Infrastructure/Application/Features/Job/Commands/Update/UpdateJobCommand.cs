@@ -1,4 +1,7 @@
-﻿namespace Application.Features.Job.Commands.Update
+﻿using PhoneNumberInfosViewModel = ViewModels.QueriesResponseViewModel.Job.PhoneNumberInfosViewModel;
+using SocialMediaInfosViewModel = ViewModels.QueriesResponseViewModel.Job.SocialMediaInfosViewModel;
+
+namespace Application.Features.Job.Commands.Update
 {
     public class UpdateJobCommand : IRequest<JobViewModel>
     {

@@ -40,6 +40,11 @@
         public static string PaymentPortal = "/img/paymentPortal/";
         #endregion
 
+        #region ( Panel Tutorial )
+        public const string PanelTutorialImagePath = "/img/panelTutorial/";
+        public const string PanelTutorialVideoPath = "/video/panelTutorial/";
+        #endregion
+
         #region ( Subscription )
         public static string Subscription = "/img/subscription/";
         public static string SubscriptionFeature = "/img/subscription/feature/";

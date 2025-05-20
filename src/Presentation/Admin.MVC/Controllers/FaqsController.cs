@@ -1,17 +1,14 @@
-﻿using ViewModels.Filter.Faq;
+﻿
+using ViewModels.AdminPanel.Job;
 
 namespace Admin.MVC.Controllers
 {
-    public class FaqsController : BaseController
+    public class FaqsController(IUnitOfWork unitOfWork, IMapper mapper, IFtpService ftpService) : BaseController
     {
         #region ( DI )
-        public IUnitOfWork UnitOfWork { get; }
-        public IMapper Mapper { get; }
-        public FaqsController(IUnitOfWork unitOfWork, IMapper mapper)
-        {
-            UnitOfWork = unitOfWork;
-            Mapper = mapper;
-        }
+        protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
+        protected IMapper Mapper { get; } = mapper;
+        protected IFtpService FtpService { get; } = ftpService;
         #endregion
 
         #region ( Faq )
@@ -21,7 +18,7 @@ namespace Admin.MVC.Controllers
             var model = UnitOfWork.FaqRepository.GetByFilterAdmin(filter);
 
             #region ( Fill Faq Categories For Create Partial )
-            var categories = await UnitOfWork.FaqCategoryRepository.GetAllAsync(f=> f.ParentId == 0);
+            var categories = await UnitOfWork.FaqCategoryRepository.GetAllAsync(f => f.ParentId == 0);
 
             if (categories.Count == 0)
             {
@@ -41,6 +38,7 @@ namespace Admin.MVC.Controllers
         {
             if (!ModelState.IsValid)
             {
+                #region ( Client Error )
                 var errors = ModelState.Values.SelectMany(v => v.Errors)
                     .Select(e => e.ErrorMessage)
                     .ToList();
@@ -48,16 +46,24 @@ namespace Admin.MVC.Controllers
                 ErrorAlert($"{Errors.ModelStateIsNotValidForm} - ارور : {errors[0]}");
 
                 return RedirectToAction("Index");
+                #endregion
             }
 
+            #region ( Map )
             var faq = Mapper.Map<Faq>(createFaqViewModel);
+            #endregion
+
+            #region ( Sanitize Text )
             faq.Question = faq.Question.SanitizeText();
+            #endregion
 
-            var iconName = Guid.NewGuid().ToString("N") + Path.GetExtension(createFaqViewModel.File.FileName);
+            #region ( Icon )
 
-            createFaqViewModel.File.AddImageToServer(iconName, Paths.FaqImageServer, TypeFile.Image);
+            var iconName = await FtpService.UploadFileToFtpServer(createFaqViewModel.File, TypeFile.Image, Paths.Faq, createFaqViewModel.File.FileName);
 
             faq.IconPicture = iconName;
+
+            #endregion
 
             await UnitOfWork.FaqRepository.InsertAsync(faq);
 
@@ -109,17 +115,35 @@ namespace Admin.MVC.Controllers
         public async Task<IActionResult> Update(UpdateFaqViewModel updateFaqViewModel)
         {
             var faq = await UnitOfWork.FaqRepository.GetByIdAsync(updateFaqViewModel.Id);
+
+            if (faq == null)
+            {
+                ErrorAlert("چیزی یافت نشد!");
+
+                return RedirectToAction("Index");
+            }
+
             faq = Mapper.Map(updateFaqViewModel, faq);
 
-            var iconName = Guid.NewGuid().ToString("N") + Path.GetExtension(updateFaqViewModel.File.FileName);
+            #region ( Icon )
+            if (updateFaqViewModel.File != null)
+            {
+                var deletedFile = "";
 
-            updateFaqViewModel.File.AddImageToServer(iconName, Paths.FaqImageServer, TypeFile.Image, null, null, null, faq.IconPicture);
+                if (faq.IconPicture != null)
+                {
+                    deletedFile = faq.IconPicture;
+                }
 
-            faq.IconPicture = iconName;
+                var pictureName = await FtpService.UploadFileToFtpServer(updateFaqViewModel.File, TypeFile.Image, Paths.Job, updateFaqViewModel.File.FileName, 777, null, null, null, deletedFile);
+
+                faq.IconPicture = pictureName;
+            }
+            #endregion
+
             faq.Question = faq.Question.SanitizeText();
 
             await UnitOfWork.FaqRepository.UpdateAsync(faq);
-
 
             try
             {
@@ -176,7 +200,7 @@ namespace Admin.MVC.Controllers
 
             #region ( Fill Faq Categories For Create Partial )
             var categories = await UnitOfWork.FaqCategoryRepository.GetAllAsync();
-            
+
             ViewData["faqCategories"] = categories;
             #endregion
 

@@ -1,25 +1,12 @@
-﻿using Common.Utilities.Services.FTP;
-using Domain.Entities.Blog;
-using Domain.Entities.Tag;
-using Microsoft.EntityFrameworkCore;
-using ViewModels.AdminPanel.Cms;
-using ViewModels.AdminPanel.Cms.Blog;
-using ViewModels.AdminPanel.Filter.Blog;
-
-namespace Admin.MVC.Controllers
+﻿namespace Admin.MVC.Controllers
 {
-    public class BlogsController : BaseController
+    public class BlogsController(IMapper mapper, IUnitOfWork unitOfWork, IFtpService ftpService)
+        : BaseController
     {
         #region ( DI )
-        protected IMapper Mapper { get; }
-        protected IUnitOfWork UnitOfWork { get; }
-        protected IFtpService FtpService { get; }
-        public BlogsController(IMapper mapper, IUnitOfWork unitOfWork, IFtpService ftpService)
-        {
-            Mapper = mapper;
-            UnitOfWork = unitOfWork;
-            FtpService = ftpService;
-        }
+        protected IMapper Mapper { get; } = mapper;
+        protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
+        protected IFtpService FtpService { get; } = ftpService;
         #endregion
 
         #region ( Blog )

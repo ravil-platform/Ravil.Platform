@@ -1,27 +1,13 @@
-﻿using Common.Utilities.Services.FTP;
-using Domain.Entities.Blog;
-using Domain.Entities.MainSlider;
-using Enums;
-using Microsoft.EntityFrameworkCore;
-using ViewModels.AdminPanel.Cms.Blog;
-using ViewModels.AdminPanel.Filter;
-using ViewModels.AdminPanel.Filter.Blog;
-using ViewModels.AdminPanel.MainSlider;
-
-namespace Admin.MVC.Controllers
+﻿namespace Admin.MVC.Controllers
 {
-    public class MainSliderController : BaseController
+    public class MainSliderController(IMapper mapper, IUnitOfWork unitOfWork, IFtpService ftpService)
+        : BaseController
     {
         #region ( DI )
-        protected IMapper Mapper { get; }
-        protected IUnitOfWork UnitOfWork { get; }
-        protected IFtpService FtpService { get; }
-        public MainSliderController(IMapper mapper, IUnitOfWork unitOfWork, IFtpService ftpService)
-        {
-            Mapper = mapper;
-            UnitOfWork = unitOfWork;
-            FtpService = ftpService;
-        }
+        protected IMapper Mapper { get; } = mapper;
+        protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
+        protected IFtpService FtpService { get; } = ftpService;
+
         #endregion
 
         #region ( Index )
@@ -117,7 +103,7 @@ namespace Admin.MVC.Controllers
 
                 ErrorAlert($"{Errors.ModelStateIsNotValidForm} - ارور : {errors[0]}");
                 #endregion
-                
+
                 return View(updateMainSliderViewModel);
             }
 

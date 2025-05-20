@@ -1,22 +1,15 @@
-﻿using Common.Utilities.Services.FTP;
-using Domain.Entities.Tag;
-using ViewModels.AdminPanel.Cms;
-using ViewModels.AdminPanel.Filter.Blog;
+﻿
 
 namespace Admin.MVC.Controllers
 {
-    public class TagController : BaseController
+    public class TagController(IMapper mapper, IUnitOfWork unitOfWork, IFtpService ftpService)
+        : BaseController
     {
         #region ( DI )
-        protected IMapper Mapper { get; }
-        protected IUnitOfWork UnitOfWork { get; }
-        protected IFtpService FtpService { get; }
-        public TagController(IMapper mapper, IUnitOfWork unitOfWork, IFtpService ftpService)
-        {
-            Mapper = mapper;
-            UnitOfWork = unitOfWork;
-            FtpService = ftpService;
-        }
+        protected IMapper Mapper { get; } = mapper;
+        protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
+        protected IFtpService FtpService { get; } = ftpService;
+
         #endregion
 
         #region ( Tags )

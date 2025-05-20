@@ -92,25 +92,21 @@ function deleteCookie(cookieName) {
     document.cookie = `${cookieName}=;expires=Thu, 01 Jan 1970;path=/`;
 }
 
-$(document).ready(function () 
-{
+$(document).ready(function () {
 
     var result = getCookie("SystemAlert");
-    if (result){
+    if (result) {
         result = JSON.parse(result);
 
-        if (result.Type === 200) 
-           {
+        if (result.Type === 200) {
             Success(result.Title, result.Message, result.isReloadPage);
-           }
-        else if (result.Type === 10)
-           {
+        }
+        else if (result.Type === 10) {
             ErrorAlert(result.Title, result.Message);
-           }
-        else if (result.Type === 404) 
-           {
+        }
+        else if (result.Type === 404) {
             Warning(result.Title, result.Message);
-           }
+        }
         deleteCookie("SystemAlert");
     }
 });
@@ -153,4 +149,40 @@ function deleteItem(id, actionUrl) {
     });
 }
 
+
+function deleteConfirm(actionUrl) {
+    Swal.fire({
+        title: 'آیا مطمئن هستید؟',
+        text: "این عملیات قابل بازگشت نیست!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'بله، حذف کن!',
+        cancelButtonText: 'لغو'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: "GET",
+                url: actionUrl,
+                success: function (response) {
+                    Swal.fire(
+                        'عملیات انجام شد!',
+                        'عملیات مورد نظر انجام گردید.',
+                        'success'
+                    ).then(() => {
+                        location.reload();
+                    });
+                },
+                error: function () {
+                    Swal.fire(
+                        'خطا!',
+                        'مشکلی در عملیات به وجود آمده است.',
+                        'error'
+                    );
+                }
+            });
+        }
+    });
+}
 

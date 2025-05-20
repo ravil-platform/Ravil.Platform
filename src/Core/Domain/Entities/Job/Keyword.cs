@@ -10,6 +10,8 @@ public class Keyword : BaseMetaDataEntity
 
     public bool IsActive { get; set; }
 
+    public bool IsCategory { get; set; } = false;
+
     public int CategoryId { get; set; }
     public virtual Category.Category Category { get; set; }
 

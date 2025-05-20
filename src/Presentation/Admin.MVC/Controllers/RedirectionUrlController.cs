@@ -1,19 +1,13 @@
-﻿using Domain.Entities.RedirectionUrl;
-using ViewModels.AdminPanel.Filter;
-using ViewModels.AdminPanel.RedirectionUrl;
+﻿
 
 namespace Admin.MVC.Controllers
 {
-    public class RedirectionUrlController : BaseController
+    public class RedirectionUrlController(IUnitOfWork unitOfWork, IMapper mapper) : BaseController
     {
         #region ( DI )
-        public IUnitOfWork UnitOfWork { get; }
-        public IMapper Mapper { get; }
-        public RedirectionUrlController(IUnitOfWork unitOfWork, IMapper mapper)
-        {
-            UnitOfWork = unitOfWork;
-            Mapper = mapper;
-        }
+        public IUnitOfWork UnitOfWork { get; } = unitOfWork;
+        public IMapper Mapper { get; } = mapper;
+
         #endregion
 
         #region ( Index )

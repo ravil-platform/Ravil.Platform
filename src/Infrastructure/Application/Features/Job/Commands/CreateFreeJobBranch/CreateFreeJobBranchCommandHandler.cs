@@ -1,6 +1,8 @@
 ﻿using AngleSharp.Common;
 using System.Collections;
 using JsonSerializer = System.Text.Json.JsonSerializer;
+using PhoneNumberInfosViewModel = ViewModels.QueriesResponseViewModel.Job.PhoneNumberInfosViewModel;
+using SocialMediaInfosViewModel = ViewModels.QueriesResponseViewModel.Job.SocialMediaInfosViewModel;
 
 namespace Application.Features.Job.Commands.CreateFreeJobBranch;
 

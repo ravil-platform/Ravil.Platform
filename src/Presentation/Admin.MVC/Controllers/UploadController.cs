@@ -1,18 +1,12 @@
-﻿using Common.Utilities.Services.FTP;
-using Common.Utilities.Services.FTP.Models;
-using Microsoft.Extensions.Options;
+﻿
 namespace Admin.MVC.Controllers
 {
-    public class UploadController : Controller
+    public class UploadController(IFtpService ftpService, IOptions<FTPConnectionOptions> ftpConnectionOptions)
+        : Controller
     {
-        private IOptions<FTPConnectionOptions> FtpConnectionOptions { get; }
-        protected IFtpService FtpService { get; }
+        private IOptions<FTPConnectionOptions> FtpConnectionOptions { get; } = ftpConnectionOptions;
+        protected IFtpService FtpService { get; } = ftpService;
 
-        public UploadController(IFtpService ftpService, IOptions<FTPConnectionOptions> ftpConnectionOptions)
-        {
-            FtpService = ftpService;
-            FtpConnectionOptions = ftpConnectionOptions;
-        }
         [HttpPost]
         [Route("/UploadImage")]
         public async Task<IActionResult> UploadImage(IFormFile upload)

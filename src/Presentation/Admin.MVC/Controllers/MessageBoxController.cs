@@ -1,11 +1,4 @@
-﻿using Domain.Entities.Faq;
-using Domain.Entities.Job;
-using Domain.Entities.MessageBox;
-using Enums;
-using Microsoft.EntityFrameworkCore;
-using ViewModels.AdminPanel.Filter;
-using ViewModels.AdminPanel.Job;
-using ViewModels.AdminPanel.MessageBox;
+﻿
 
 namespace Admin.MVC.Controllers;
 

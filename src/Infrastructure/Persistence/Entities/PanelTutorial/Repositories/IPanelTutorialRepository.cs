@@ -2,5 +2,6 @@
 {
     public interface IPanelTutorialRepository : IRepository<Domain.Entities.PanelTutorial.PanelTutorial>
     {
+        PanelTutorialFilterViewModel GetByFilter(PanelTutorialFilterViewModel filter);
     }
 }

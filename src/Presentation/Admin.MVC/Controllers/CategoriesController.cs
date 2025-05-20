@@ -1,29 +1,13 @@
-﻿using Common.Utilities.Services.FTP;
-using Domain.Entities.Category;
-using Domain.Entities.Faq;
-using Domain.Entities.Tag;
-using Enums;
-using Microsoft.EntityFrameworkCore;
-using NLog.Filters;
-using ViewModels.AdminPanel.Category;
-using ViewModels.AdminPanel.Cms;
-using ViewModels.AdminPanel.Filter;
-using ViewModels.AdminPanel.Filter.Blog;
-
+﻿
 namespace Admin.MVC.Controllers
 {
-    public class CategoriesController : BaseController
+    public class CategoriesController(IUnitOfWork unitOfWork, IMapper mapper, IFtpService ftpService)
+        : BaseController
     {
         #region ( DI )
-        protected IUnitOfWork UnitOfWork { get; }
-        protected IMapper Mapper { get; }
-        protected IFtpService FtpService { get; }
-        public CategoriesController(IUnitOfWork unitOfWork, IMapper mapper, IFtpService ftpService)
-        {
-            UnitOfWork = unitOfWork;
-            Mapper = mapper;
-            FtpService = ftpService;
-        }
+        protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
+        protected IMapper Mapper { get; } = mapper;
+        protected IFtpService FtpService { get; } = ftpService;
         #endregion
 
         #region ( Index )

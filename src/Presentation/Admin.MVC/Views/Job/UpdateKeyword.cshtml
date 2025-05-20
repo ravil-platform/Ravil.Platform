@@ -93,6 +93,67 @@
 										</div>
 									</div>
 								</div>
+								
+								<div class="col-12 col-sm-12 col-lg-12">
+									<div class="form-group">
+										<div class="controls">
+											<label asp-for="MetaDesc"></label>
+											<textarea class="form-control" asp-for="MetaDesc" rows="3"></textarea>
+											<div class="help-block">
+												<span asp-validation-for="MetaDesc" class="text-danger"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-12 col-sm-6 col-lg-6">
+									<div class="form-group">
+										<div class="controls">
+											<label asp-for="MetaTitle"></label>
+											<input asp-for="MetaTitle" type="text" class="form-control text-left">
+											<div class="help-block">
+												<span asp-validation-for="MetaTitle" class="text-danger"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+
+
+								<div class="col-12 col-sm-6 col-lg-6">
+									<div class="form-group">
+										<div class="controls">
+											<label asp-for="MetaCanonicalUrl"></label>
+											<input asp-for="MetaCanonicalUrl" type="text" class="form-control text-right">
+											<div class="help-block">
+												<span asp-validation-for="MetaCanonicalUrl" class="text-danger"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-12 col-sm-12 col-lg-12">
+									<div class="form-group">
+										<div class="checkbox">
+											<input asp-for="IndexMeta" type="checkbox" class="checkbox-input">
+											<label asp-for="IndexMeta"></label>
+											<div class="help-block">
+												<span asp-validation-for="IndexMeta" class="text-danger"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-12 col-sm-12 col-lg-12">
+									<div class="form-group">
+										<div class="checkbox">
+											<input asp-for="CanonicalMeta" type="checkbox" class="checkbox-input">
+											<label asp-for="CanonicalMeta"></label>
+											<div class="help-block">
+												<span asp-validation-for="CanonicalMeta" class="text-danger"></span>
+											</div>
+										</div>
+									</div>
+								</div>
 							</div>
 
 							<div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">

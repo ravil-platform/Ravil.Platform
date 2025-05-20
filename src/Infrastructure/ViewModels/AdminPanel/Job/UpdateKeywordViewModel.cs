@@ -1,6 +1,6 @@
 ﻿namespace ViewModels.AdminPanel.Job;
 
-public class UpdateKeywordViewModel
+public class UpdateKeywordViewModel : BaseMetaViewModel
 {
     public Guid Id { get; set; }
 

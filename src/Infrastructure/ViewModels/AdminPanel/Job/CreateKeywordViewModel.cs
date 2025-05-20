@@ -1,6 +1,6 @@
 ﻿namespace ViewModels.AdminPanel.Job;
 
-public class CreateKeywordViewModel
+public class CreateKeywordViewModel : BaseMetaViewModel
 {
     [Display(Name = "عنوان")]
     [Required(ErrorMessage = "پر کردن {0} الزامی است.")]

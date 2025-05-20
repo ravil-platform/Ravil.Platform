@@ -1,19 +1,13 @@
-﻿using Domain.Entities.State;
-using ViewModels.AdminPanel.Filter;
-using ViewModels.AdminPanel.StateBase;
+﻿
 
 namespace Admin.MVC.Controllers;
 
-public class StateController : BaseController
+public class StateController(IMapper mapper, IUnitOfWork unitOfWork) : BaseController
 {
     #region ( DI )
-    protected IMapper Mapper { get; }
-    protected IUnitOfWork UnitOfWork { get; }
-    public StateController(IMapper mapper, IUnitOfWork unitOfWork)
-    {
-        Mapper = mapper;
-        UnitOfWork = unitOfWork;
-    }
+    protected IMapper Mapper { get; } = mapper;
+    protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
+
     #endregion
 
     #region ( Index )

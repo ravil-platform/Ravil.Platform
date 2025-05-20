@@ -1,4 +1,7 @@
-﻿namespace Application.Features.Job.Commands.CreateFreeJobBranch
+﻿using CreateJobBranchViewModel = ViewModels.QueriesResponseViewModel.Job.CreateJobBranchViewModel;
+using CreateJobViewModel = ViewModels.QueriesResponseViewModel.Job.CreateJobViewModel;
+
+namespace Application.Features.Job.Commands.CreateFreeJobBranch
 {
     public class CreateFreeJobBranchCommand : IRequest<JobBranchViewModel>
     {

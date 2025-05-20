@@ -1,6 +1,4 @@
-﻿using Persistence.Entities.Comment.Repositories.Interfaces;
-
-namespace Persistence.Contracts
+﻿namespace Persistence.Contracts
 {
     public interface IUnitOfWork : RNX.Persistence.IUnitOfWork
     {
@@ -37,7 +35,7 @@ namespace Persistence.Contracts
         public ICityCategoryRepository CityCategoryRepository { get; }
         public ICityRepository CityRepository { get; }
         #endregion
-        
+
         #region ( Comment )
         public ICommentInteractionRepository CommentInteractionRepository { get; }
         public IAnswerCommentRepository AnswerCommentRepository { get; }
@@ -81,7 +79,7 @@ namespace Persistence.Contracts
         public IJobBranchAdsRepository JobBranchAdsRepository { get; }
         public IJobKeywordRepository JobKeywordRepository { get; }
         public IKeywordRepository KeywordRepository { get; }
-        
+
         public IJobRankingRepository JobRankingRepository { get; }
         public IJobRankingHistoryRepository JobRankingHistoryRepository { get; }
         public IJobInfoRepository JobInfoRepository { get; }

@@ -1,20 +1,11 @@
-﻿using Domain.Entities.Job;
-using Enums;
-using Microsoft.EntityFrameworkCore;
-using ViewModels.AdminPanel.Filter;
-
-namespace Admin.MVC.Controllers
+﻿namespace Admin.MVC.Controllers
 {
-    public class AdsController : BaseController
+    public class AdsController(IUnitOfWork unitOfWork, IMapper mapper) : BaseController
     {
         #region ( DI )
-        protected IUnitOfWork UnitOfWork { get; }
-        protected IMapper Mapper { get; }
-        public AdsController(IUnitOfWork unitOfWork, IMapper mapper)
-        {
-            UnitOfWork = unitOfWork;
-            Mapper = mapper;
-        }
+        protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
+        protected IMapper Mapper { get; } = mapper;
+
         #endregion
 
         #region ( Job Branch Ads )

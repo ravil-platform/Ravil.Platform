@@ -1,4 +1,7 @@
-﻿namespace Application.Features.Job.Commands.Create
+﻿using PhoneNumberInfosViewModel = ViewModels.QueriesResponseViewModel.Job.PhoneNumberInfosViewModel;
+using SocialMediaInfosViewModel = ViewModels.QueriesResponseViewModel.Job.SocialMediaInfosViewModel;
+
+namespace Application.Features.Job.Commands.Create
 {
     public class CreateJobCommand : IRequest<JobViewModel>
     {

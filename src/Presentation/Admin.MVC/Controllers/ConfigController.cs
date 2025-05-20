@@ -1,20 +1,12 @@
-﻿using Common.Utilities.Services.FTP;
-using Domain.Entities.City;
-using Domain.Entities.State;
-using ViewModels.AdminPanel.Config;
-
+﻿
 namespace Admin.MVC.Controllers
 {
-    public class ConfigController : BaseController
+    public class ConfigController(IUnitOfWork unitOfWork, IMapper mapper) : BaseController
     {
         #region ( DI )
-        protected IUnitOfWork UnitOfWork { get; }
-        protected IMapper Mapper { get; }
-        public ConfigController(IUnitOfWork unitOfWork, IMapper mapper)
-        {
-            UnitOfWork = unitOfWork;
-            Mapper = mapper;
-        }
+        protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
+        protected IMapper Mapper { get; } = mapper;
+
         #endregion
 
         #region ( Config Crud )

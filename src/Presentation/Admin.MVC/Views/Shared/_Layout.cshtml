@@ -34,6 +34,10 @@
 			animation: spin 1s linear infinite;
 		}
 
+		.disabled-click {
+			pointer-events: none;
+		}
+
 		@@keyframes spin {
 			0% {
 				transform: rotate(0deg);
@@ -122,6 +126,97 @@
 		// 	}
 		// });
 
+
+				
+		$(function () {
+		  let $lastClickedSubmit = null;
+
+		  $(document).on('click', 'form button[type="submit"], form input[type="submit"]', function () {
+			$lastClickedSubmit = $(this);
+		  });
+
+		  $(document).on('submit', 'form', function (e) {
+			const $form = $(this);
+			const $submitBtn = $lastClickedSubmit || $form.find('button[type="submit"], input[type="submit"]').first();
+
+			if ($submitBtn.prop('disabled')) {
+			  e.preventDefault();
+			  return;
+			}
+
+			const originalText = $submitBtn.is('button') ? $submitBtn.html() : $submitBtn.val();
+
+			const loadingText = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> در حال انجام...';
+			if ($submitBtn.is('button')) {
+			  $submitBtn.html(loadingText);
+			} else {
+			  $submitBtn.val('در حال انجام...');
+			}
+
+			$submitBtn.prop('disabled', true);
+
+			if ($form.data('ajax') === true || $form.data('ajax') === "true") {
+			  e.preventDefault();
+
+			  $.ajax({
+				url: $form.attr('action'),
+				method: $form.attr('method') || 'POST',
+				data: new FormData(this),
+				processData: false,
+				contentType: false,
+				success: function (response) {
+				  console.log("Form submitted:", response);
+				},
+				error: function (xhr) {
+				  console.error("Error submitting form:", xhr);
+				},
+				complete: function () {
+				  if ($submitBtn.is('button')) {
+					$submitBtn.html(originalText);
+				  } else {
+					$submitBtn.val(originalText);
+				  }
+				  $submitBtn.prop('disabled', false);
+				  $lastClickedSubmit = null;
+				}
+			  });
+			} else {
+			  $lastClickedSubmit = null;
+			}
+		  });
+		});
+
+
+
+				$(function () {
+		  $(document).on('click', 'a.prevent-multi-click', function (e) {
+			const $btn = $(this);
+
+			if ($btn.hasClass('disabled-click')) {
+			  e.preventDefault();
+			  return;
+			}
+
+			$btn.addClass('disabled disabled-click');
+			const originalHtml = $btn.html();
+			$btn.html('<span class="spinner-border spinner-border-sm me-1"></span> لطفاً صبر کنید...');
+
+			if ($btn.data('ajax') === true || $btn.data('ajax') === "true") {
+			  e.preventDefault();
+
+			  $.get($btn.attr('href'))
+				.done(function (res) {
+				  console.log("Done", res);
+				})
+				.fail(function (err) {
+				  console.error("Error", err);
+				})
+				.always(function () {
+				  $btn.html(originalHtml).removeClass('disabled disabled-click');
+				});
+			}
+		  });
+		});
     </script>
 </body>
 </html>

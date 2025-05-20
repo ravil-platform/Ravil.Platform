@@ -1,6 +1,4 @@
-﻿using ViewModels.AdminPanel.Filter;
-
-namespace Persistence.Entities.Job.Repositories.Interfaces;
+﻿namespace Persistence.Entities.Job.Repositories.Interfaces;
 
 public interface IKeywordRepository : IRepository<Keyword>
 {

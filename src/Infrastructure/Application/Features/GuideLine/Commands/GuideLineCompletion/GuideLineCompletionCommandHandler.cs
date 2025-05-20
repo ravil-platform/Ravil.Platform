@@ -2,6 +2,8 @@
 using AngleSharp.Common;
 using ViewModels.QueriesResponseViewModel.Job.GuideLines;
 using JsonSerializer = System.Text.Json.JsonSerializer;
+using PhoneNumberInfosViewModel = ViewModels.QueriesResponseViewModel.Job.PhoneNumberInfosViewModel;
+using SocialMediaInfosViewModel = ViewModels.QueriesResponseViewModel.Job.SocialMediaInfosViewModel;
 
 namespace Application.Features.GuideLine.Commands.GuideLineCompletion;
 

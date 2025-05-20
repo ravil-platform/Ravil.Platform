@@ -1,23 +1,17 @@
-﻿using Common.Utilities.SweetAlert;
-using Newtonsoft.Json;
-
-namespace Admin.MVC.Controllers
+﻿namespace Admin.MVC.Controllers
 {
-    public class AuthController : Controller
+    public class AuthController(
+        UserManager<ApplicationUser> userManager,
+        IUnitOfWork unitOfWork,
+        IMapper mapper,
+        SignInManager<ApplicationUser> signInManager)
+        : Controller
     {
         #region ( DI )
-        protected UserManager<ApplicationUser> UserManager { get; }
-        protected SignInManager<ApplicationUser> SignInManager { get; }
-        protected IUnitOfWork UnitOfWork { get; }
-        protected IMapper Mapper { get; }
-
-        public AuthController(UserManager<ApplicationUser> userManager, IUnitOfWork unitOfWork, IMapper mapper, SignInManager<ApplicationUser> signInManager)
-        {
-            UserManager = userManager;
-            UnitOfWork = unitOfWork;
-            Mapper = mapper;
-            SignInManager = signInManager;
-        }
+        protected UserManager<ApplicationUser> UserManager { get; } = userManager;
+        protected SignInManager<ApplicationUser> SignInManager { get; } = signInManager;
+        protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
+        protected IMapper Mapper { get; } = mapper;
         #endregion
 
         #region ( Login )

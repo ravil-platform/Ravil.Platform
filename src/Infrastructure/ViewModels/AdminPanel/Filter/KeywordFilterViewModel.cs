@@ -7,6 +7,7 @@ public class KeywordFilterViewModel : Paging<Keyword>
     public int? CategoryId { get; set; }
     
     public bool? IsActive { get; set; }
+    public bool? IsCategory { get; set; }
 
 
     public bool FindAll { get; set; }

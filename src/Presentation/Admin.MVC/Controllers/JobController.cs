@@ -1,19 +1,7 @@
-﻿using System.Text;
-using System.Text.Json;
-using Application.Services.NehsanApi;
-using Application.Services.SMS;
-using Common.Utilities.Services.FTP;
-using DocumentFormat.OpenXml.Office2010.Excel;
-using Domain.Entities.Address;
-using Domain.Entities.Job;
-using Domain.Entities.Location;
-using Enums;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using ViewModels.AdminPanel.Filter;
-using ViewModels.AdminPanel.Job;
-using ViewModels.QueriesResponseViewModel.Job;
+﻿using System;
+using System.Collections;
 using CreateJobBranchViewModel = ViewModels.AdminPanel.Job.CreateJobBranchViewModel;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 using PhoneNumberInfosViewModel = ViewModels.AdminPanel.Job.PhoneNumberInfosViewModel;
 using SocialMediaInfosViewModel = ViewModels.AdminPanel.Job.SocialMediaInfosViewModel;
 using UpdateJobBranchViewModel = ViewModels.AdminPanel.Job.UpdateJobBranchViewModel;
@@ -26,7 +14,8 @@ namespace Admin.MVC.Controllers
         IFtpService ftpService,
         ISmsSender smsSender,
         UserManager<ApplicationUser> userManager,
-        NeshanApiService neshanApiService)
+        NeshanApiService neshanApiService,
+        Logging.Base.ILogger<JobController> logger)
         : BaseController
     {
         #region ( DI )
@@ -36,7 +25,7 @@ namespace Admin.MVC.Controllers
         protected ISmsSender SmsSender { get; } = smsSender;
         protected UserManager<ApplicationUser> UserManager { get; } = userManager;
         protected NeshanApiService NeshanApiService { get; } = neshanApiService;
-
+        protected Logging.Base.ILogger<JobController> Logger { get; } = logger;
         #endregion
 
         #region ( Job )
@@ -890,6 +879,37 @@ namespace Admin.MVC.Controllers
         }
         #endregion
 
+        #region ( Hard Delete All )
+        [HttpGet]
+        public async Task<IActionResult> DeleteKeywords()
+        {
+            await UnitOfWork.KeywordRepository.BeginTransactionAsync();
+
+            var allKeywords = await UnitOfWork.KeywordRepository.GetAllAsync();
+
+            try
+            {
+                if (allKeywords.Any() && allKeywords.Count >= 1)
+                {
+                    UnitOfWork.KeywordRepository.RemoveRange(allKeywords);
+
+                    await UnitOfWork.SaveAsync();
+                }
+            }
+            catch (Exception exception)
+            {
+                await UnitOfWork.JobRepository.RollBackTransactionAsync();
+                Logger.LogError(message: exception.InnerException?.Message ?? exception.Message);
+
+                return RedirectToAction("IndexKeyword");
+            }
+
+            await UnitOfWork.KeywordRepository.CommitTransactionAsync();
+
+            return RedirectToAction("IndexKeyword");
+        }
+        #endregion
+
         #region ( Create KeyWords From Category )
         [HttpGet]
         public async Task<IActionResult> CreateKeywordCategory()
@@ -908,6 +928,14 @@ namespace Admin.MVC.Controllers
                 {
                     Title = category.Name,
                     Slug = category.Route.ToSlug(),
+
+                    CanonicalMeta = category.CanonicalMeta,
+                    MetaCanonicalUrl = category.MetaCanonicalUrl,
+                    IndexMeta = category.IndexMeta,
+                    MetaDesc = category.MetaDesc,
+                    MetaTitle = category.MetaTitle,
+
+                    IsCategory = true,
                     IsActive = true,
                     CategoryId = category.Id,
                 };

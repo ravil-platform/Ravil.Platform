@@ -1,23 +1,15 @@
-﻿using Common.Utilities.Services.FTP;
-using Domain.Entities.City;
-using Domain.Entities.Job;
-using ViewModels.AdminPanel.City;
-using ViewModels.AdminPanel.Filter;
+﻿
 
 namespace Admin.MVC.Controllers;
 
-public class CityBaseController : BaseController
+public class CityBaseController(IMapper mapper, IUnitOfWork unitOfWork, IFtpService ftpService)
+    : BaseController
 {
     #region ( DI )
-    protected IMapper Mapper { get; }
-    protected IUnitOfWork UnitOfWork { get; }
-    protected IFtpService FtpService { get; }
-    public CityBaseController(IMapper mapper, IUnitOfWork unitOfWork, IFtpService ftpService)
-    {
-        Mapper = mapper;
-        UnitOfWork = unitOfWork;
-        FtpService = ftpService;
-    }
+    protected IMapper Mapper { get; } = mapper;
+    protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
+    protected IFtpService FtpService { get; } = ftpService;
+
     #endregion
 
     #region ( Index )

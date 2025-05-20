@@ -1,9 +1,4 @@
-﻿using Domain.Entities.Wallets;
-using Enums;
-using ViewModels.AdminPanel.Filter;
-using ViewModels.AdminPanel.Wallet;
-
-namespace Admin.MVC.Controllers;
+﻿namespace Admin.MVC.Controllers;
 
 public class WalletController(
     IUnitOfWork unitOfWork,

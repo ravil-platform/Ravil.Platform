@@ -12,9 +12,14 @@
 	افزودن کلمه کلیدی جدید <i class="bx bx-plus"></i>
 </a>
 
-<a asp-controller="Job" asp-action="CreateKeywordCategory" class="btn btn-info mb-2">
+<a asp-controller="Job" asp-action="CreateKeywordCategory" class="btn btn-info mb-2 prevent-multi-click">
 	تبدیل دسته بندی ها به کلمات کلیدی
 </a>
+
+<a onclick="deleteConfirm('@Url.Action("DeleteKeywords","Job")')" class="btn btn-danger mb-2 text-white prevent-multi-click">
+	حذف همه
+</a>
+
 
 <section>
 	<div class="users-list-filter px-1">
@@ -34,11 +39,13 @@
 						</select>
 					</fieldset>
 				</div>
-				
+
 				<div class="col-12 col-sm-6 col-lg-10">
 					<label>دسته بندی</label>
 					<fieldset class="form-group">
 						<select asp-for="CategoryId" class="form-control select2">
+							<option value="null">همه</option>
+
 							@foreach (var item in categories)
 							{
 								<option value="@item.Id">@item.Name</option>
@@ -55,7 +62,7 @@
 					<label>@Resources.General.DisplayNames.Slug</label>
 					<input type="text" class="form-control text-left" asp-for="Slug" />
 				</div>
-			
+
 				<div class="col-12 col-sm-12 col-lg-6 d-flex align-items-center">
 					<div class="col-4 col-sm-4 col-lg-4 d-flex align-items-center">
 						<button id="empty" type="button" class="btn btn-warning btn-block glow users-list-clear mb-0 mt-75">خالی </button>
@@ -83,6 +90,7 @@
 									<th>@(Resources.General.DisplayNames.Title)</th>
 									<th>@(Resources.General.DisplayNames.Slug)</th>
 									<th>دسته بندی</th>
+									<th>نوع دسته است؟</th>
 									<th>@(Resources.General.DisplayNames.Status)</th>
 									<th>@(Resources.General.DisplayNames.Actions)</th>
 								</tr>
@@ -95,6 +103,15 @@
 										<td>@item.Title</td>
 										<td>@item.Slug</td>
 										<td>@item.Category.Name</td>
+
+										@if (item.IsCategory)
+										{
+											<td class="text-success">بله</td>
+										}
+										else
+										{
+											<td class="text-danger">خیر</td>
+										}
 
 										@if (item.IsActive)
 										{
@@ -198,8 +215,8 @@
 
 		$("#empty").click(function (event) {
 			$("#PageSize").val(20);
-			$("#CategoryId").val('null');
 
+			$("#CategoryId").val('null');
 			$("#Title").val(null);
 			$("#Slug").val(null);
 		});

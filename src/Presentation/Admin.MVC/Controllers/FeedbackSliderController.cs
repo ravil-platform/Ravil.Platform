@@ -1,22 +1,14 @@
-﻿using Common.Utilities.Services.FTP;
-using Domain.Entities.FeedbackSlider;
-using ViewModels.AdminPanel.FeedbackSlider;
-using ViewModels.AdminPanel.Filter;
-
+﻿
 namespace Admin.MVC.Controllers
 {
-    public class FeedbackSliderController : BaseController
+    public class FeedbackSliderController(IMapper mapper, IUnitOfWork unitOfWork, IFtpService ftpService)
+        : BaseController
     {
         #region ( DI )
-        protected IMapper Mapper { get; }
-        protected IUnitOfWork UnitOfWork { get; }
-        protected IFtpService FtpService { get; }
-        public FeedbackSliderController(IMapper mapper, IUnitOfWork unitOfWork, IFtpService ftpService)
-        {
-            Mapper = mapper;
-            UnitOfWork = unitOfWork;
-            FtpService = ftpService;
-        }
+        protected IMapper Mapper { get; } = mapper;
+        protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
+        protected IFtpService FtpService { get; } = ftpService;
+
         #endregion
 
         #region ( Index )

@@ -21,8 +21,7 @@ public class UpdateFaqViewModel
 
 
     [Display(Name = nameof(DisplayNames.Icon), ResourceType = typeof(DisplayNames))]
-    [Required(ErrorMessageResourceName = nameof(Validations.Required), ErrorMessageResourceType = typeof(Validations))]
-    public IFormFile File { get; set; } = null!;
+    public IFormFile? File { get; set; }
 
 
     [Display(Name = nameof(DisplayNames.Category), ResourceType = typeof(DisplayNames))]

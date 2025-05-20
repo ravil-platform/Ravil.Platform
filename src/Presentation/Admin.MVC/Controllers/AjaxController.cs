@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace Admin.MVC.Controllers
+﻿namespace Admin.MVC.Controllers
 {
     public class AjaxController : Controller
     {
@@ -82,9 +80,10 @@ namespace Admin.MVC.Controllers
             var cityDetail = await UnitOfWork.CityBaseRepository.TableNoTracking.FirstOrDefaultAsync(a => a.Name.Equals(city) && a.StateId.Equals(stateBase.Id));
 
             return Json(new
-                {
-                    city = cityDetail.Id, state = cityDetail.StateId
-                });
+            {
+                city = cityDetail.Id,
+                state = cityDetail.StateId
+            });
         }
         #endregion
 

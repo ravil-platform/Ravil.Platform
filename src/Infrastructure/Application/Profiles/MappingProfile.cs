@@ -1,41 +1,6 @@
-﻿using System.Net;
-using Application.Features.ActionHistories.Create;
-using Application.Features.Blog.Queries.GetAllByFilter;
-using Application.Features.Category.Queries.GetAllByFilter;
-using Application.Features.GuideLine.Commands.GuideLineCompletion;
-using Application.Features.Job.Commands.AddJobRanking;
-using Application.Features.Job.Commands.AdsClickActivity;
-using Application.Features.Job.Commands.SetAdsClickSetting;
-using Application.Features.Job.Commands.UpdateBusiness;
-using Application.Features.Job.Queries.GetAllJobBranch;
-using Application.Features.Job.Queries.GetRelatedJobBranches;
-using Domain.Entities.FeedbackSlider;
-using Domain.Entities.MessageBox;
-using Domain.Entities.PanelTutorial;
-using Domain.Entities.Payment;
-using Domain.Entities.RedirectionUrl;
-using Domain.Entities.Subscription;
-using RNX.CustomResult;
-using ViewModels.AdminPanel.Banner;
-using ViewModels.AdminPanel.Category;
-using ViewModels.AdminPanel.City;
-using ViewModels.AdminPanel.Cms;
-using ViewModels.AdminPanel.Cms.Blog;
-using ViewModels.AdminPanel.Config;
-using ViewModels.AdminPanel.FeedbackSlider;
-using ViewModels.AdminPanel.Job;
-using ViewModels.AdminPanel.MainSlider;
-using ViewModels.AdminPanel.MessageBox;
-using ViewModels.AdminPanel.RedirectionUrl;
-using ViewModels.AdminPanel.Subscription;
-using ViewModels.Discounts;
+﻿using ViewModels.AdminPanel.PanelTutorial;
 using CreateJobBranchViewModel = ViewModels.QueriesResponseViewModel.Job.CreateJobBranchViewModel;
 using CreateJobViewModel = ViewModels.QueriesResponseViewModel.Job.CreateJobViewModel;
-using ViewModels.QueriesResponseViewModel.Analytics;
-using ViewModels.QueriesResponseViewModel.Job.GuideLines;
-using ViewModels.QueriesResponseViewModel.MessageBox;
-using ViewModels.QueriesResponseViewModel.PanelTutorial;
-using ViewModels.QueriesResponseViewModel.Subscription;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 using PhoneNumberInfosViewModel = ViewModels.QueriesResponseViewModel.Job.PhoneNumberInfosViewModel;
 using SocialMediaInfosViewModel = ViewModels.QueriesResponseViewModel.Job.SocialMediaInfosViewModel;
@@ -496,11 +461,12 @@ namespace Application.Profiles
             #endregion
 
             #region ( PanelTutorial )
-
             CreateMap<PanelTutorial, PanelTutorialViewModel>()
                 .ForMember(src => src.Time, expression => expression.MapFrom(a => string.Format("{0}:{1}", a.Time.Minutes, a.Time.Seconds)))
                 .ReverseMap();
 
+            CreateMap<UpdatePanelTutorialViewModel, PanelTutorial>().ReverseMap();
+            CreateMap<CreatePanelTutorialViewModel, PanelTutorial>().ReverseMap();
             #endregion
 
             #region ( Tag )

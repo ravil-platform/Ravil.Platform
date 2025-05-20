@@ -43,6 +43,11 @@ public class KeywordRepository : Repository<Keyword>, IKeywordRepository
         {
             query = query.Where(a => a.IsActive == filter.IsActive);
         }
+        
+        if (filter.IsCategory != null)
+        {
+            query = query.Where(a => a.IsCategory == filter.IsCategory);
+        }
         #endregion
 
         filter.Build(query.Count()).SetEntities(query);
