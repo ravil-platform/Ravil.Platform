@@ -1,5 +1,4 @@
-﻿
-namespace Admin.MVC.Controllers
+﻿namespace Admin.MVC.Controllers
 {
     public class ConfigController(IUnitOfWork unitOfWork, IMapper mapper) : BaseController
     {

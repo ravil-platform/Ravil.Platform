@@ -10,6 +10,7 @@
     ViewData["Title"] = "دیدگاه ها";
     ViewData["selected"] = "FeedbackSliders_Index";
     var categories = (List<Category>)ViewData["categories"]!;
+    var counter = ((Model.CurrentPage - 1) * Model.PageSize) + 1;
 }
 <a asp-controller="FeedbackSlider" asp-action="Create" class="btn btn-success mb-2">
     افزودن دیدگاه جدید <i class="bx bx-plus"></i>
@@ -17,58 +18,59 @@
 
 <section>
     <div class="users-list-filter px-1">
-        <form method="get">
-            <input type="hidden" asp-for="FindAll" id="FindAll" value="false" />
-            <div class="row border rounded py-2 mb-2">
-                <div class="col-12 col-sm-6 col-lg-3">
-                    <label>تعداد نمایش در هر صفحه</label>
-                    <fieldset class="form-group">
-                        <select asp-for="PageSize" class="form-control">
-                            <option value="5">5</option>
-                            <option value="10">10</option>
-                            <option value="20">20</option>
-                            <option value="50">50</option>
-                            <option value="100">100</option>
-                        </select>
-                    </fieldset>
-                </div>
+	    <form method="get">
+		    <input type="hidden" name="CurrentPage" value="@Model.CurrentPage" />
+		    <input type="hidden" asp-for="FindAll" id="FindAll" value="false"/>
+		    <div class="row border rounded py-2 mb-2">
+			    <div class="col-12 col-sm-6 col-lg-3">
+				    <label>تعداد نمایش در هر صفحه</label>
+				    <fieldset class="form-group">
+					    <select asp-for="PageSize" class="form-control">
+						    <option value="5">5</option>
+						    <option value="10">10</option>
+						    <option value="20">20</option>
+						    <option value="50">50</option>
+						    <option value="100">100</option>
+					    </select>
+				    </fieldset>
+			    </div>
 
-                <div class="col-12 col-sm-6 col-lg-3">
-                    <label>دسته بندی</label>
-                    <fieldset class="form-group">
-                        <select asp-for="CategoryId" class="select2 form-control">
-                            <option value="null">همه</option>
-                            @foreach (var item in categories)
-                            {
-                                <option value="@item.Id">@item.Name</option>
-                            }
-                        </select>
-                    </fieldset>
-                </div>
+			    <div class="col-12 col-sm-6 col-lg-3">
+				    <label>دسته بندی</label>
+				    <fieldset class="form-group">
+					    <select asp-for="CategoryId" class="select2 form-control">
+						    <option value="null">همه</option>
+						    @foreach (var item in categories)
+						    {
+							    <option value="@item.Id">@item.Name</option>
+						    }
+					    </select>
+				    </fieldset>
+			    </div>
 
-                <div class="col-12 col-sm-6 col-lg-3">
-                    <label>@Resources.General.DisplayNames.Name</label>
-                    <input type="text" class="form-control text-left" asp-for="UserName" />
-                </div>
+			    <div class="col-12 col-sm-6 col-lg-3">
+				    <label>@Resources.General.DisplayNames.Name</label>
+				    <input type="text" class="form-control text-left" asp-for="UserName"/>
+			    </div>
 
-                <div class="col-12 col-sm-6 col-lg-3">
-                    <label>@Resources.General.DisplayNames.Description</label>
-                    <input type="text" class="form-control text-left" asp-for="Description" />
-                </div>
+			    <div class="col-12 col-sm-6 col-lg-3">
+				    <label>@Resources.General.DisplayNames.Description</label>
+				    <input type="text" class="form-control text-left" asp-for="Description"/>
+			    </div>
 
-                <div class="col-12 col-sm-12 col-lg-6 d-flex align-items-center">
-                    <div class="col-4 col-sm-4 col-lg-4 d-flex align-items-center">
-                        <button id="empty" type="button" class="btn btn-warning btn-block glow users-list-clear mb-0 mt-75">خالی </button>
-                    </div>
-                    <div class="col-4 col-sm-4 col-lg-4 d-flex align-items-center">
-                        <button type="submit" id="SetFindAll" class="btn btn-info btn-block glow users-list-clear mb-0 mt-75">همه</button>
-                    </div>
-                    <div class="col-4 col-sm-4 col-lg-4 d-flex align-items-center">
-                        <button type="submit" class="btn btn-primary btn-block glow users-list-clear mb-0 mt-75">جستجو</button>
-                    </div>
-                </div>
-            </div>
-        </form>
+			    <div class="col-12 col-sm-12 col-lg-6 d-flex align-items-center">
+				    <div class="col-4 col-sm-4 col-lg-4 d-flex align-items-center">
+					    <button id="empty" type="button" class="btn btn-warning btn-block glow users-list-clear mb-0 mt-75">خالی </button>
+				    </div>
+				    <div class="col-4 col-sm-4 col-lg-4 d-flex align-items-center">
+					    <button type="submit" id="SetFindAll" class="btn btn-info btn-block glow users-list-clear mb-0 mt-75">همه</button>
+				    </div>
+				    <div class="col-4 col-sm-4 col-lg-4 d-flex align-items-center">
+					    <button type="submit" class="btn btn-primary btn-block glow users-list-clear mb-0 mt-75">جستجو</button>
+				    </div>
+			    </div>
+		    </div>
+	    </form>
     </div>
 
     <div class="card">
@@ -77,6 +79,7 @@
                 <table class="table mb-0 table-striped table-hover no-footer">
                     <thead class="thead-dark">
                         <tr role="row">
+                            <th>ردیف</th>
                             <th>@(Resources.General.DisplayNames.Icon)</th>
                             <th>@(Resources.General.DisplayNames.Name)</th>
                             <th>@(Resources.General.DisplayNames.UserRole)</th>
@@ -90,25 +93,27 @@
                         {
                             @foreach (var item in Model.Entities)
                             {
-                                <tr role="row" class="odd">
-                                    <td class="text-bold-700">
-                                        @if (!string.IsNullOrEmpty(item.Picture))
-                                        {
-                                            <img src="@UrlBase@Paths.FeedbackSlider@item.Picture" class="rounded-circle mr-1" height="70" width="70">
-                                        }
-                                        else
-                                        {
-                                            <span class="text-danger">ندارد</span>
-                                        }
-                                    </td>
-                                    <td>@item.UserName</td>
-                                    <td>@item.UserRole</td>
-                                    <td>@item.Description</td>
-                                    <td>@item.Sort</td>
-                                    <td>
-                                        <a asp-controller="FeedbackSlider" asp-action="Update" asp-route-id="@item.Id" data-toggle="tooltip" data-placement="top" data-original-title="ویرایش"><i class="bx bxs-edit-alt text-warning"></i></a>
-                                    </td>
-                                </tr>
+	                            <tr role="row" class="odd">
+		                            <td>@counter</td>
+		                            <td class="text-bold-700">
+			                            @if (!string.IsNullOrEmpty(item.Picture))
+			                            {
+				                            <img src="@UrlBase@Paths.FeedbackSlider@item.Picture" class="rounded-circle mr-1" height="70" width="70">
+			                            }
+			                            else
+			                            {
+				                            <span class="text-danger">ندارد</span>
+			                            }
+		                            </td>
+		                            <td>@item.UserName</td>
+		                            <td>@item.UserRole</td>
+		                            <td>@item.Description</td>
+		                            <td>@item.Sort</td>
+		                            <td>
+			                            <a onclick="deleteItem('@item.Id','@Url.Action("Delete", "FeedbackSlider")')" data-toggle="tooltip" data-placement="top" data-original-title="حذف"><i class="bx bxs-trash text-danger"></i></a>
+			                            <a asp-controller="FeedbackSlider" asp-action="Update" asp-route-id="@item.Id" data-toggle="tooltip" data-placement="top" data-original-title="ویرایش"><i class="bx bxs-edit-alt text-warning"></i></a>
+		                            </td>
+	                            </tr>
                             }
                         }
                         else

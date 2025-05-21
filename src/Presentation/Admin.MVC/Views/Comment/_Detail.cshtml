@@ -1,0 +1,81 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model Domain.Entities.Comment.Comment
+
+@{
+	ViewData["Title"] = "جزئیات نظر";
+	ViewData["selected"] = "Comments_Index";
+
+	int number = 1;
+}
+
+<form method="post" id="SetStatusAccepted" asp-controller="Comment" asp-action="SetStatus" asp-route-id="@Model.Id" asp-route-status="true"></form>
+<form method="post" id="SetStatusRejected" asp-controller="Comment" asp-action="SetStatus" asp-route-id="@Model.Id" asp-route-status="false"></form>
+
+<div class="modal-body">
+	<section>
+		<div class="row">
+			<div class="col-12 col-sm-12 col-lg-12  px-0 d-flex justify-content-end align-items-center px-1 mb-2 mt-2">
+				@if (Model.IsConfirmed)
+				{
+					<a onclick="SetStatusRejected(this)" title="رد نظر" class="btn btn-sm btn-danger mr-25 text-white"><i class="bx bx-block"></i></a>
+				}
+				else
+				{
+					<a onclick="SetStatusAccepted(this)" title="تایید نظر" class="btn btn-sm btn-success mr-25 text-white"><i class="bx bx-check-square"></i></a>
+				}
+
+				<a href="#" onclick="create('@Model.Id')" class="btn btn-sm btn-primary  mr-25" title="پاسخ به نظر"><i class='bx bxs-comment-add'></i></a>
+			</div>
+		</div>
+
+		<div class="card">
+			<div class="card-content">
+				<div class="card-body">
+					<div class="row">
+						<div class="col-12 col-md-12">
+							<table class="table table-borderless line-height-1">
+								<tbody>
+									<tr>
+										<td><i class='bx bx-user'></i></td>
+										<td class="users-view-name">@Model.FullName</td>
+									</tr>
+
+									@if (Model.UserIp != null)
+									{
+										<tr>
+											<td><i class='bx bx-wifi'></i></td>
+											<td class="users-view-username">
+												@Model.UserIp
+
+											</td>
+										</tr>
+									}
+
+									<tr>
+										<td><i class='bx bx-phone'></i></td>
+										<td class="users-view-username">
+											@Model.Phone
+										</td>
+									</tr>
+
+									<tr>
+										<td><i class='bx bx-comment'></i></td>
+										<td class="users-view-username lh-base">@Model.CommentText</td>
+									</tr>
+
+
+									<tr>
+										<td><i class='bx bx-time-five'></i></td>
+										<td class="users-view-username">@Model.CreateDate.ToShamsiDate()</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+</div>
+

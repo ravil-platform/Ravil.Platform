@@ -1,5 +1,4 @@
-﻿
-namespace Admin.MVC.Controllers
+﻿namespace Admin.MVC.Controllers
 {
     public class ContactController(IMapper mapper, IUnitOfWork unitOfWork, IFtpService ftpService)
         : BaseController

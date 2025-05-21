@@ -10,11 +10,11 @@ public class UpdatePanelTutorialViewModel
 
 
     [Display(Name = "کاور ویدیو")]
-    public IFormFile? CoverNameFile { get; set; }
+    public IFormFile? NewCoverNameFile { get; set; }
     public string? CurrentCoverName { get; set; }
 
     [Display(Name = "ویدیو")]
-    public IFormFile? VideoNameFile { get; set; }
+    public IFormFile? NewVideoNameFile { get; set; }
     public string? CurrentVideoName { get; set; }
 
 

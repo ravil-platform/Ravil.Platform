@@ -1,6 +1,4 @@
-﻿
-
-namespace Admin.MVC.Controllers
+﻿namespace Admin.MVC.Controllers
 {
     public class RedirectionUrlController(IUnitOfWork unitOfWork, IMapper mapper) : BaseController
     {

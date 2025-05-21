@@ -1,5 +1,4 @@
-﻿
-namespace Admin.MVC.Controllers;
+﻿namespace Admin.MVC.Controllers;
 
 public class PanelTutorialController(IMapper mapper, IUnitOfWork unitOfWork, IFtpService ftpService)
     : BaseController
@@ -96,7 +95,7 @@ public class PanelTutorialController(IMapper mapper, IUnitOfWork unitOfWork, IFt
         panelTutorial = Mapper.Map(updatePanelTutorialViewModel, panelTutorial);
 
         #region ( Cover )
-        if (updatePanelTutorialViewModel.CoverNameFile != null)
+        if (updatePanelTutorialViewModel.NewCoverNameFile != null)
         {
             var deletedFile = "";
 
@@ -105,9 +104,25 @@ public class PanelTutorialController(IMapper mapper, IUnitOfWork unitOfWork, IFt
                 deletedFile = panelTutorial.CoverName;
             }
 
-            var coverName = await FtpService.UploadFileToFtpServer(updatePanelTutorialViewModel.CoverNameFile, TypeFile.Image, Paths.PanelTutorialImagePath, updatePanelTutorialViewModel.CoverNameFile.FileName, 777, null, null, null, deletedFile);
+            var coverName = await FtpService.UploadFileToFtpServer(updatePanelTutorialViewModel.NewCoverNameFile, TypeFile.Image, Paths.PanelTutorialImagePath, updatePanelTutorialViewModel.NewCoverNameFile.FileName, 777, null, null, null, deletedFile);
 
             panelTutorial.CoverName = coverName;
+        }
+        #endregion
+
+        #region ( Video )
+        if (updatePanelTutorialViewModel.NewVideoNameFile != null)
+        {
+            var deletedFile = "";
+
+            if (panelTutorial.VideoName != null)
+            {
+                deletedFile = panelTutorial.VideoName;
+            }
+
+            var videoName = await FtpService.UploadFileToFtpServer(updatePanelTutorialViewModel.NewVideoNameFile, TypeFile.Video, Paths.PanelTutorialVideoPath, updatePanelTutorialViewModel.NewVideoNameFile.FileName, 777, null, null, null, deletedFile);
+
+            panelTutorial.VideoName = videoName;
         }
         #endregion
 
@@ -122,6 +137,38 @@ public class PanelTutorialController(IMapper mapper, IUnitOfWork unitOfWork, IFt
         catch (Exception e)
         {
             ErrorAlert(e.Message);
+        }
+
+        return RedirectToAction("Index");
+    }
+    #endregion
+
+    #region ( Delete )
+    [HttpGet]
+    public async Task<IActionResult> Delete(int id)
+    {
+        var panelTutorial = await UnitOfWork.PanelTutorialRepository.GetByIdAsync(id);
+
+        if (panelTutorial == null)
+        {
+            ErrorAlert("چیزی یافت نشد!");
+
+            return RedirectToAction("Index");
+        }
+
+        try
+        {
+            await UnitOfWork.PanelTutorialRepository.DeleteAsync(panelTutorial);
+            await UnitOfWork.SaveAsync();
+
+            #region ( Delete Cover And Video )
+            await FtpService.DeleteFileToFtpServer(Paths.PanelTutorialImagePath, panelTutorial.CoverName);
+            await FtpService.DeleteFileToFtpServer(Paths.PanelTutorialVideoPath, panelTutorial.VideoName);
+            #endregion
+        }
+        catch (Exception exception)
+        {
+            ErrorAlert(exception.Message);
         }
 
         return RedirectToAction("Index");

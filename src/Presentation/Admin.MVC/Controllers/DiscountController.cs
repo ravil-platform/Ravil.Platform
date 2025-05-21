@@ -1,4 +1,4 @@
-﻿
+﻿using ViewModels.AdminPanel.Discounts;
 
 namespace Admin.MVC.Controllers
 {

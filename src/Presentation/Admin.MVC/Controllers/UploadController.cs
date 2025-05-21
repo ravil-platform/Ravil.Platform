@@ -1,5 +1,4 @@
-﻿
-namespace Admin.MVC.Controllers
+﻿namespace Admin.MVC.Controllers
 {
     public class UploadController(IFtpService ftpService, IOptions<FTPConnectionOptions> ftpConnectionOptions)
         : Controller

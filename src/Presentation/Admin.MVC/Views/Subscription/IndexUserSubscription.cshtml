@@ -84,20 +84,21 @@
 									<th>تاریخ شروع</th>
 									<th>تاریخ پایان</th>
 									<th>وضعیت اشتراک</th>
+									<th>عملیات</th>
 								</tr>
 							</thead>
 							<tbody>
-								@foreach (var data in Model.Entities)
+								@foreach (var item in Model.Entities)
 								{
 									<tr>
 										<td>@counter</td>
-										<td>@data.UserId</td>
-										<td>@data.User.PhoneNumber</td>
-										<td>@data.Subscription.Title</td>
-										<td>@data.StartDate.ToStringShamsiDate()</td>
-										<td>@data.EndDate.ToStringShamsiDate()</td>
+										<td>@item.UserId</td>
+										<td>@item.User.PhoneNumber</td>
+										<td>@item.Subscription.Title</td>
+										<td>@item.StartDate.ToStringShamsiDate()</td>
+										<td>@item.EndDate.ToStringShamsiDate()</td>
 
-										@if (data.IsActive)
+										@if (item.IsActive)
 										{
 											<td class="text-success">فعال</td>
 										}
@@ -105,6 +106,9 @@
 										{
 											<td class="text-danger"></td>
 										}
+										<td>
+											<a onclick="deleteItem('@item.Id','@Url.Action("DeleteSubscriptionUser","Subscription")')" data-toggle="tooltip" data-placement="top" data-original-title="حذف کامل از دیتابیس"><i class='bx bx-trash text-danger'></i></a>
+										</td>
 									</tr>
 									counter++;
 								}

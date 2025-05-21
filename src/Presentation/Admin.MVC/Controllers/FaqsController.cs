@@ -1,7 +1,4 @@
-﻿
-using ViewModels.AdminPanel.Job;
-
-namespace Admin.MVC.Controllers
+﻿namespace Admin.MVC.Controllers
 {
     public class FaqsController(IUnitOfWork unitOfWork, IMapper mapper, IFtpService ftpService) : BaseController
     {

@@ -1,5 +1,4 @@
-﻿
-namespace Admin.MVC.Controllers;
+﻿namespace Admin.MVC.Controllers.Base;
 
 [Authorize(Roles = nameof(Roles.Admin))]
 public class BaseController : Controller

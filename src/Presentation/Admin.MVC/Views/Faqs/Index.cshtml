@@ -1,7 +1,10 @@
 ﻿@model ViewModels.Filter.Faq.FaqFilterViewModel
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using Constants.Files
+@inject IOptions<FTPConnectionOptions> FtpConnectionOptions
 @{
+    string UrlBase = FtpConnectionOptions.Value.UrlBase;
+
     ViewData["Title"] = "سوالات متداول";
     ViewData["selected"] = "Faqs_Index";
     var faqCategories = (List<FaqCategory>)ViewData["faqCategories"]!;
@@ -88,7 +91,7 @@
                                 <td class="text-bold-700">
                                     @if (!string.IsNullOrEmpty(item.IconPicture))
                                     {
-                                        <img src="@Paths.Faq@item.IconPicture" class="rounded-circle mr-1" height="70" width="70">
+	                                    <img src="@UrlBase@Paths.Faq@item.IconPicture" class="rounded-circle mr-1" height="70" width="70">
                                     }
                                     else
                                     {

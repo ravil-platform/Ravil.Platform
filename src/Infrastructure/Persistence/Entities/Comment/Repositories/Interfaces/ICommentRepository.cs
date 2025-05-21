@@ -2,5 +2,6 @@
 {
     public interface ICommentRepository : IRepository<Domain.Entities.Comment.Comment>
     {
+        CommentFilterViewModel GetByFilter(CommentFilterViewModel filter);
     }
 }

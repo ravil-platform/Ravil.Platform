@@ -1,17 +1,18 @@
-﻿
-
-namespace Admin.MVC.Controllers;
+﻿namespace Admin.MVC.Controllers;
 
 public class SubscriptionController(
     IUnitOfWork unitOfWork,
     IMapper mapper,
-    IFtpService ftpService)
+    IFtpService ftpService,
+    Logging.Base.ILogger<SubscriptionController> logger)
 : BaseController
 {
     #region ( DI )
     protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
     protected IMapper Mapper { get; } = mapper;
     protected IFtpService FtpService { get; } = ftpService;
+
+    protected Logging.Base.ILogger<SubscriptionController> Logger { get; } = logger;
     #endregion
 
     #region ( Subscription )
@@ -486,6 +487,18 @@ public class SubscriptionController(
     #endregion
 
     #region ( User Subscription )
+    #region ( Index User Subscription )
+    [HttpGet]
+    public async Task<IActionResult> IndexUserSubscription(UserSubscriptionFilterViewModel filter)
+    {
+        var subscription = await UnitOfWork.SubscriptionRepository.GetAllAsync();
+
+        ViewData["subscription"] = subscription;
+
+        return View(UnitOfWork.UserSubscriptionRepository.GetByFilter(filter));
+    }
+    #endregion
+
 
     #region ( Sell Subscription To User )
     [HttpGet]
@@ -517,6 +530,8 @@ public class SubscriptionController(
 
             return View(sellSubscriptionViewModel);
         }
+
+        await UnitOfWork.ApplicationUserRepository.BeginTransactionAsync();
 
         var user = await UnitOfWork.ApplicationUserRepository.GetByIdAsync(sellSubscriptionViewModel.UserId);
         var subscription =
@@ -569,6 +584,7 @@ public class SubscriptionController(
                 Amount = subscription.Price,
                 PaymentMethod = PaymentMethod.FromAdmin,
                 PaymentPortalId = paymentPortalId,
+                Number = Strings.CodeGenerator(),
                 UserSubscriptionId = userSubscription.SubscriptionId,
             };
 
@@ -579,6 +595,7 @@ public class SubscriptionController(
             {
                 TransactionDate = DateTime.Now,
                 Status = TransactionStatus.Success,
+                Number = Strings.CodeGenerator(),
                 PaymentId = payment.Id,
             };
 
@@ -590,23 +607,46 @@ public class SubscriptionController(
         }
         catch (Exception exception)
         {
+            await UnitOfWork.ApplicationUserRepository.RollBackTransactionAsync();
+
             ErrorAlert(exception.Message);
+
+            return RedirectToAction("IndexUserSubscription");
         }
+
+        await UnitOfWork.ApplicationUserRepository.CommitTransactionAsync();
 
         return RedirectToAction("IndexUserSubscription");
     }
     #endregion
 
-    #region ( Index User Subscription )
+    #region ( Delete User Subscription )
     [HttpGet]
-    public async Task<IActionResult> IndexUserSubscription(UserSubscriptionFilterViewModel filter)
+    public async Task<IActionResult> DeleteSubscriptionUser(int id)
     {
-        var subscription = await UnitOfWork.SubscriptionRepository.GetAllAsync();
+        var userSubscription = await UnitOfWork.UserSubscriptionRepository.GetByIdAsync(id);
 
-        ViewData["subscription"] = subscription;
+        if (userSubscription == null)
+        {
+            ErrorAlert("چیزی یافت نشد!");
 
-        return View(UnitOfWork.UserSubscriptionRepository.GetByFilter(filter));
+            return RedirectToAction("IndexUserSubscription");
+        }
+
+        try
+        {
+            await UnitOfWork.UserSubscriptionRepository.DeleteAsync(userSubscription);
+            await UnitOfWork.SaveAsync();
+        }
+        catch (Exception e)
+        {
+            Logger.LogError(message: e.InnerException?.Message ?? e.Message);
+        }
+
+        return RedirectToAction("IndexUserSubscription");
     }
+
+
     #endregion
 
     #endregion
