@@ -1,9 +1,11 @@
-﻿namespace Api.Controllers.V1
+﻿using AutoMapper;
+
+namespace Api.Controllers.V1
 {
     [Route(Routes.Controller)]
     public class ShortLinksController : GenericBaseController<ShortLinksController>
     {
-        public ShortLinksController(IMediator mediator, Logging.Base.ILogger<ShortLinksController> logger) : base(mediator, logger)
+        public ShortLinksController(IMediator mediator, Logging.Base.ILogger<ShortLinksController> logger, IMapper mapper) : base(mediator, logger, mapper)
         {
         }
 

@@ -2,6 +2,7 @@
 using Application.Features.GuideLine.Commands.GuideLineCompletion;
 using Application.Features.GuideLine.Queries.GetGuideLines;
 using Asp.Versioning;
+using AutoMapper;
 
 namespace Api.Controllers.V2
 {
@@ -14,7 +15,7 @@ namespace Api.Controllers.V2
     public class GuideLinesController : GenericBaseController<GuideLinesController>
     {
         /// <inheritdoc />
-        public GuideLinesController(IMediator mediator, Logging.Base.ILogger<GuideLinesController> logger) : base(mediator, logger)
+        public GuideLinesController(IMediator mediator, Logging.Base.ILogger<GuideLinesController> logger, IMapper mapper) : base(mediator, logger, mapper)
         {
         }
 

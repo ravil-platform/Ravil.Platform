@@ -1,9 +1,13 @@
-﻿namespace Api.Controllers.V1
+﻿using AutoMapper;
+
+namespace Api.Controllers.V1
 {
+    /// <inheritdoc />
     [Route(Routes.Controller)]
     public class TeamsController : GenericBaseController<TeamsController>
     {
-        public TeamsController(IMediator mediator, Logging.Base.ILogger<TeamsController> logger) : base(mediator, logger)
+        /// <inheritdoc />
+        public TeamsController(IMediator mediator, Logging.Base.ILogger<TeamsController> logger, IMapper mapper) : base(mediator, logger, mapper)
         {
         }
 

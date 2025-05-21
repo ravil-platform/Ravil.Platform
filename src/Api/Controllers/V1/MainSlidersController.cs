@@ -1,9 +1,11 @@
-﻿namespace Api.Controllers.V1
+﻿using AutoMapper;
+
+namespace Api.Controllers.V1
 {
     [Route(Routes.Controller)]
     public class MainSlidersController : GenericBaseController<MainSlidersController>
     {
-        public MainSlidersController(IMediator mediator, Logging.Base.ILogger<MainSlidersController> logger) : base(mediator, logger)
+        public MainSlidersController(IMediator mediator, Logging.Base.ILogger<MainSlidersController> logger, IMapper mapper) : base(mediator, logger, mapper)
         {
 
         }

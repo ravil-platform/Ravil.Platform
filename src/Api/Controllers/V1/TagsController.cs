@@ -1,11 +1,12 @@
 ﻿using Application.Features.Tag.Queries.GetTagsByCategoryId;
+using AutoMapper;
 
 namespace Api.Controllers.V1
 {
     [Route(Routes.Controller)]
     public class TagsController : GenericBaseController<TagsController>
     {
-        public TagsController(IMediator mediator, Logging.Base.ILogger<TagsController> logger) : base(mediator, logger)
+        public TagsController(IMediator mediator, Logging.Base.ILogger<TagsController> logger, IMapper mapper) : base(mediator, logger, mapper)
         {
         }
 

@@ -1,6 +1,7 @@
 ﻿using Application.Features.Category.Queries.GetChildCategories;
 using Application.Features.Category.Queries.GetMainCategories;
 using Application.Features.Category.Queries.GetRelatedRegion;
+using AutoMapper;
 using Domain.Entities.Category;
 
 namespace Api.Controllers.V1
@@ -8,7 +9,7 @@ namespace Api.Controllers.V1
     [Route(Routes.Controller)]
     public class CategoriesController : GenericBaseController<CategoriesController>
     {
-        public CategoriesController(IMediator mediator, Logging.Base.ILogger<CategoriesController> logger) : base(mediator, logger)
+        public CategoriesController(IMediator mediator, Logging.Base.ILogger<CategoriesController> logger, IMapper mapper) : base(mediator, logger, mapper)
         {
         }
 

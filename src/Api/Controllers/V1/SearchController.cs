@@ -1,4 +1,5 @@
 ﻿using Application.Features.Search.Queries;
+using AutoMapper;
 using ViewModels.QueriesResponseViewModel.Search;
 
 namespace Api.Controllers.V1
@@ -6,7 +7,7 @@ namespace Api.Controllers.V1
     [Route(Routes.Controller)]
     public class SearchController : GenericBaseController<SearchController>
     {
-        public SearchController(IMediator mediator, Logging.Base.ILogger<SearchController> logger) : base(mediator, logger)
+        public SearchController(IMediator mediator, Logging.Base.ILogger<SearchController> logger, IMapper mapper) : base(mediator, logger, mapper)
         {
         }
 

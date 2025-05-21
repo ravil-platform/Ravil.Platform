@@ -6,7 +6,7 @@ namespace Api.Controllers.V1
     [Route(Routes.Controller)]
     public class BrandsController : GenericBaseController<BrandsController>
     {
-        public BrandsController(IMediator mediator, Logging.Base.ILogger<BrandsController> logger) : base(mediator, logger)
+        public BrandsController(IMediator mediator, Logging.Base.ILogger<BrandsController> logger, IMapper mapper) : base(mediator, logger, mapper)
         {
         }
 

@@ -1,8 +1,11 @@
 ﻿using Application.Features.ActionHistories.Create;
+using Asp.Versioning;
+using AutoMapper;
 
 namespace Api.Controllers.V1
 {
     /// <inheritdoc />
+    [ApiVersion(ApiVersions.V1)]
     [Route(Routes.Controller)]
     public class ActionHistoriesController : GenericBaseController<ActionHistoriesController>
     {
@@ -11,7 +14,8 @@ namespace Api.Controllers.V1
         /// </summary>
         /// <param name="mediator"></param>
         /// <param name="logger"></param>
-        public ActionHistoriesController(IMediator mediator, Logging.Base.ILogger<ActionHistoriesController> logger) : base(mediator, logger)
+        /// <param name="mapper"></param>
+        public ActionHistoriesController(IMediator mediator, Logging.Base.ILogger<ActionHistoriesController> logger, IMapper mapper) : base(mediator, logger, mapper)
         {
 
         }

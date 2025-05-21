@@ -5,17 +5,19 @@ namespace Application.Api;
 public class BaseController : ControllerBase
 {
     protected MediatR.IMediator Mediator { get; }
+    protected AutoMapper.IMapper Mapper { get; }
 
-    public BaseController(IMediator mediator)
+    protected BaseController(IMediator mediator, IMapper mapper)
     {
         Mediator = mediator;
+        Mapper = mapper;
     }
 
     protected IActionResult FluentResult<T>(FluentResults.Result<T> result)
     {
         if (result.IsSuccess)
         {
-            return Ok(value: result);
+            return Ok(value: RNX.CustomResult.CustomResult<T>.ToCustomResult(result));
         }
         else
         {

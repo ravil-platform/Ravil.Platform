@@ -1,11 +1,13 @@
-﻿namespace Api.Controllers.V1
+﻿using AutoMapper;
+
+namespace Api.Controllers.V1
 {
     /// <inheritdoc />
     [Route(Routes.Controller)]
     public class CommentsController : GenericBaseController<CommentsController>
     {
         /// <inheritdoc />
-        public CommentsController(IMediator mediator, Logging.Base.ILogger<CommentsController> logger) : base(mediator, logger)
+        public CommentsController(IMediator mediator, Logging.Base.ILogger<CommentsController> logger, IMapper mapper) : base(mediator, logger, mapper)
         {
         }
 

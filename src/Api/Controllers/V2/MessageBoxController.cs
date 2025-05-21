@@ -2,6 +2,7 @@
 using Application.Features.MessageBox.Queries.GetAllMessageBoxByFilter;
 using ViewModels.QueriesResponseViewModel.MessageBox;
 using Asp.Versioning;
+using AutoMapper;
 
 namespace Api.Controllers.V2
 {
@@ -14,7 +15,7 @@ namespace Api.Controllers.V2
     public class MessageBoxController : GenericBaseController<MessageBoxController>
     {
         /// <inheritdoc />
-        public MessageBoxController(IMediator mediator, Logging.Base.ILogger<MessageBoxController> logger) : base(mediator, logger)
+        public MessageBoxController(IMediator mediator, Logging.Base.ILogger<MessageBoxController> logger, IMapper mapper) : base(mediator, logger, mapper)
         {
         }
 

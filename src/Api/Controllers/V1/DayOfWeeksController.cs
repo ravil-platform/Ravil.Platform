@@ -1,9 +1,11 @@
-﻿namespace Api.Controllers.V1
+﻿using AutoMapper;
+
+namespace Api.Controllers.V1
 {
     [Route(Routes.Controller)]
     public class DayOfWeeksController : GenericBaseController<DayOfWeeksController>
     {
-        public DayOfWeeksController(IMediator mediator, Logging.Base.ILogger<DayOfWeeksController> logger) : base(mediator, logger)
+        public DayOfWeeksController(IMediator mediator, Logging.Base.ILogger<DayOfWeeksController> logger, IMapper mapper) : base(mediator, logger, mapper)
         {
         }
 

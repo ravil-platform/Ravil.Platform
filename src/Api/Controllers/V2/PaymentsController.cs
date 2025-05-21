@@ -3,6 +3,7 @@ using Application.Features.Payments.Commands.PaymentVerification;
 using Application.Features.Payments.Queries.GetPaymentPortals;
 using ViewModels.QueriesResponseViewModel.Payments;
 using Asp.Versioning;
+using AutoMapper;
 
 
 namespace Api.Controllers.V2
@@ -16,8 +17,7 @@ namespace Api.Controllers.V2
     public class PaymentsController : GenericBaseController<PaymentsController>
     {
         /// <inheritdoc />
-        public PaymentsController(IMediator mediator, Logging.Base.ILogger<PaymentsController> logger)
-            : base(mediator, logger)
+        public PaymentsController(IMediator mediator, Logging.Base.ILogger<PaymentsController> logger, IMapper mapper) : base(mediator, logger, mapper)
         {
         }
 
