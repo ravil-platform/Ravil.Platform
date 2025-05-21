@@ -1,5 +1,4 @@
-﻿
-namespace Admin.MVC.Controllers
+﻿namespace Admin.MVC.Controllers
 {
     public class FeedbackSliderController(IMapper mapper, IUnitOfWork unitOfWork, IFtpService ftpService)
         : BaseController
@@ -149,6 +148,33 @@ namespace Admin.MVC.Controllers
             catch (Exception e)
             {
                 ErrorAlert(e.Message);
+            }
+
+            return RedirectToAction("Index");
+        }
+        #endregion
+
+        #region ( Delete )
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var feedbackSlider = await UnitOfWork.FeedbackSliderRepository.GetByIdAsync(id);
+
+            if (feedbackSlider == null)
+            {
+                ErrorAlert("چیزی یافت نشد!");
+
+                return RedirectToAction("Index");
+            }
+
+            try
+            {
+                await UnitOfWork.FeedbackSliderRepository.DeleteAsync(feedbackSlider);
+                await UnitOfWork.SaveAsync();
+            }
+            catch (Exception exception)
+            {
+                ErrorAlert(exception.Message);
             }
 
             return RedirectToAction("Index");

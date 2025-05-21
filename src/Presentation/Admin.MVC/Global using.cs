@@ -59,9 +59,10 @@ global using ViewModels.AdminPanel.StateBase;
 global using ViewModels.AdminPanel.Subscription;
 global using ViewModels.AdminPanel.User;
 global using ViewModels.AdminPanel.Wallet;
-global using ViewModels.Discounts;
+global using ViewModels.AdminPanel.Discounts;
 global using ViewModels.Filter.Faq;
 global using ViewModels.Filter.User;
 global using Domain.Entities.PanelTutorial;
 global using ViewModels.AdminPanel.PanelTutorial;
+global using Admin.MVC.Controllers.Base;
 

@@ -19,6 +19,7 @@ public class UserSubscriptionRepository : Repository<UserSubscription>, IUserSub
         var query =
          ApplicationDbContext.UserSubscription.Include(u => u.User)
              .Include(u => u.Subscription)
+             .OrderByDescending(u=> u.StartDate)
              .AsQueryable();
 
         if (filter.FindAll)

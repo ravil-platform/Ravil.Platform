@@ -1,0 +1,100 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Constants.Files
+@model CreatePanelTutorialViewModel
+
+<form asp-controller="PanelTutorial" asp-action="Create" method="post" enctype="multipart/form-data">
+	<div class="modal-body">
+		<div class="card-title-details d-flex align-items-center mb-1 ml-1">
+			<div class="avatar bg-rgba-primary p-25 mr-2 ml-0">
+				<img id="createSelectImage" class="img-fluid" src="@Paths.DefaultIconPath" height="70" width="70">
+			</div>
+			<div class="mt-n25">
+				<h5>کاور ویدیو انتخاب شده</h5>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="controls">
+				<fieldset>
+					<div class="input-group">
+						<div class="custom-file">
+							<input id="createFile" asp-for="CoverNameFile" type="file" class="custom-file-input" accept="@MimeTypes.Images.ArrayToString()">
+							<label class="custom-file-label">انتخاب کاور ویدیو</label>
+						</div>
+					</div>
+				</fieldset>
+				<div class="help-block">
+					<span asp-validation-for="CoverNameFile" class="text-danger"></span>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="card-title-details d-flex align-items-center mb-1 ml-1">
+			<div class="mr-2 ml-0">
+				<video id="createSelectVideo" class="img-fluid" src="@Paths.DefaultIconPath" height="70" width="70"></video>
+			</div>
+			<div class="mt-n25">
+				<h5> ویدیو انتخاب شده</h5>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="controls">
+				<fieldset>
+					<div class="input-group">
+						<div class="custom-file">
+							<input id="videoFile" asp-for="VideoNameFile" type="file" class="custom-file-input" accept="@MimeTypes.Videos.ArrayToString()">
+							<label class="custom-file-label">انتخاب ویدیو</label>
+						</div>
+					</div>
+				</fieldset>
+				<div class="help-block">
+					<span asp-validation-for="VideoNameFile" class="text-danger"></span>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="controls">
+				<label asp-for="Title"></label>
+				<input asp-for="Title" type="text" class="form-control text-left">
+				<div class="help-block">
+					<span asp-validation-for="Title" class="text-danger"></span>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="form-group">
+			<div class="controls">
+				<label asp-for="Time"></label>
+				<input asp-for="Time" placeholder="00:00:00" class="form-control">
+				<div class="help-block">
+					<span asp-validation-for="Time" class="text-danger"></span>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="controls">
+				<label asp-for="Sort"></label>
+				<input asp-for="Sort" type="text" dir="ltr" class="form-control">
+				<div class="help-block">
+					<span asp-validation-for="Sort" class="text-danger"></span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal-footer">
+		<button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+			<i class="bx bx-x d-block d-sm-none"></i>
+			<span class="d-none d-sm-block">بستن</span>
+		</button>
+		<button type="submit" class="btn btn-primary ml-1">
+			<i class="bx bx-check d-block d-sm-none"></i>
+			<span class="d-none d-sm-block">تایید</span>
+		</button>
+	</div>
+</form>

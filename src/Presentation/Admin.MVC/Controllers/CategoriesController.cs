@@ -1,5 +1,4 @@
-﻿
-namespace Admin.MVC.Controllers
+﻿namespace Admin.MVC.Controllers
 {
     public class CategoriesController(IUnitOfWork unitOfWork, IMapper mapper, IFtpService ftpService)
         : BaseController

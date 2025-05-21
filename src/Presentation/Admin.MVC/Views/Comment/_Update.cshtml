@@ -1,0 +1,49 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+
+@model ViewModels.AdminPanel.Comment.UpdateCommentViewModel
+
+<form asp-controller="Comment" asp-action="Update" method="post">
+	<input type="hidden" asp-for="Id" value="@Model.Id" />
+	<div class="modal-body">
+		<div class="form-group">
+			<div class="controls">
+				<label asp-for="FullName"></label>
+				<input asp-for="FullName" type="text" class="form-control text-left">
+				<div class="help-block">
+					<span asp-validation-for="FullName" class="text-danger"></span>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="controls">
+				<label asp-for="Phone"></label>
+				<input asp-for="Phone" type="text" maxlength="11" class="form-control text-left">
+				<div class="help-block">
+					<span asp-validation-for="Phone" class="text-danger"></span>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="controls">
+				<label asp-for="CommentText"></label>
+				<input asp-for="CommentText" type="text" class="form-control text-left">
+				<div class="help-block">
+					<span asp-validation-for="CommentText" class="text-danger"></span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal-footer">
+		<button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+			<i class="bx bx-x d-block d-sm-none"></i>
+			<span class="d-none d-sm-block">بستن</span>
+		</button>
+		<button type="submit" class="btn btn-primary ml-1">
+			<i class="bx bx-check d-block d-sm-none"></i>
+			<span class="d-none d-sm-block">تایید</span>
+		</button>
+	</div>
+</form>

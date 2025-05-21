@@ -14,7 +14,8 @@ public class FeedbackSliderRepository : Repository<Domain.Entities.FeedbackSlide
     public FeedbackSliderFilterViewModel GetByFilterAdmin(FeedbackSliderFilterViewModel filter)
     {
         var query =
-            ApplicationDbContext.FeedbackSlider.OrderByDescending(b => b.Sort).AsQueryable();
+            ApplicationDbContext.FeedbackSlider
+                .OrderByDescending(b => b.Id).AsQueryable();
 
         if (filter.FindAll)
         {

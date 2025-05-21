@@ -1,6 +1,4 @@
-﻿
-
-namespace Admin.MVC.Controllers;
+﻿namespace Admin.MVC.Controllers;
 
 public class PaymentController(
     IUnitOfWork unitOfWork,

@@ -213,6 +213,7 @@
 					<li class="@(selected == "BlogCategories_Create" ? "active" : "null")">
 						<a asp-controller="Blogs" asp-action="CreateBlogCategories"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">افزودن دسته</span></a>
 					</li>
+
 				</ul>
 			</li>
 
@@ -239,6 +240,17 @@
 					</li>
 				</ul>
 			</li>
+
+
+			<li class="nav-item">
+				<a><i class="menu-livicon" data-icon="user"></i><span class="menu-title" data-i18n="Invoice">مدیریت نظرات</span></a>
+				<ul class="menu-content">
+					<li class="@(selected == "Comments_Index" ? "active" : "null")">
+						<a asp-controller="Comment" asp-action="Index"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">نظرات</span></a>
+					</li>
+				</ul>
+			</li>
+
 
 			<li class="navigation-header">
 				<span>اسلایدر و بنر ها</span>
@@ -289,6 +301,8 @@
 					</li>
 				</ul>
 			</li>
+
+
 
 			<li class="navigation-header">
 				<span>اشتراک و ویژگی ها | درگاه ها | کد تخفیف</span>
@@ -351,6 +365,14 @@
 						<a asp-controller="Categories" asp-action="IndexCustomizeCategoriesCityContent"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">داینامیک سازی محتوای دسته</span></a>
 					</li>
 				</ul>
+			</li>
+
+			<li class="navigation-header">
+				<span>ویدیو آموزش پنل</span>
+			</li>
+
+			<li class="nav-item  @(selected == "PanelTutorials_Index" ? "active" : "null")">
+				<a asp-controller="PanelTutorial" asp-action="Index"><i class="menu-livicon" data-icon="image"></i><span class="menu-title" data-i18n="Disabled Menu">لیست ویدیو ها</span></a>
 			</li>
 
 			<li class="navigation-header">

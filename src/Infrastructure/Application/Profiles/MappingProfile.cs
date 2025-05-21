@@ -1,4 +1,5 @@
-﻿using ViewModels.AdminPanel.PanelTutorial;
+﻿using ViewModels.AdminPanel.Comment;
+using ViewModels.AdminPanel.PanelTutorial;
 using CreateJobBranchViewModel = ViewModels.QueriesResponseViewModel.Job.CreateJobBranchViewModel;
 using CreateJobViewModel = ViewModels.QueriesResponseViewModel.Job.CreateJobViewModel;
 using JsonSerializer = System.Text.Json.JsonSerializer;
@@ -306,7 +307,7 @@ namespace Application.Profiles
                 //.ForMember(src => src.Id, expression => expression.MapFrom(a => Guid.NewGuid()))
                 .ForMember(src => src.PageUrl, expression => expression.MapFrom(a => WebUtility.UrlDecode(a.PageUrl)))
                 .ForMember(src => src.CreateAt, expression => expression.MapFrom(a => DateTime.UtcNow));
-            
+
             CreateMap<JobInfo, JobStatisticsViewModel>().ReverseMap();
 
             #endregion
@@ -394,7 +395,7 @@ namespace Application.Profiles
 
             CreateMap<Keyword, CreateKeywordViewModel>().ReverseMap();
             CreateMap<Keyword, UpdateKeywordViewModel>().ReverseMap();
-            
+
             CreateMap<SubscriptionClick, AdsClickActivityCommand>().ReverseMap();
             CreateMap<ClickAdsSetting, SetAdsClickSettingCommand>().ReverseMap();
             CreateMap<ClickAdsSetting, ClickAdsSettingViewModel>().ReverseMap();
@@ -438,7 +439,7 @@ namespace Application.Profiles
 
             CreateMap<UpdateFeatureViewModel, Feature>().ReverseMap();
             CreateMap<CreateFeatureViewModel, Feature>().ReverseMap();
-            
+
 
             CreateMap<Subscription, SubscriptionViewModel>().ReverseMap();
             CreateMap<UserSubscription, UserSubscriptionViewModel>()
@@ -515,9 +516,12 @@ namespace Application.Profiles
             #region ( Comment )
             CreateMap<Comment, CommentViewModel>().ReverseMap();
             CreateMap<Comment, CreateCommentCommand>().ReverseMap();
+            CreateMap<Comment, UpdateCommentViewModel>().ReverseMap();
 
+            CreateMap<AnswerComment, CreateAnswerCommentViewModel>().ReverseMap();
             CreateMap<AnswerComment, CreateAnswerCommentCommand>().ReverseMap();
             CreateMap<AnswerComment, AnswerCommentViewModel>().ReverseMap();
+            CreateMap<AnswerComment, UpdateAnswerCommentViewModel>().ReverseMap();
             #endregion
 
             #region ( Config )

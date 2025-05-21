@@ -1,6 +1,4 @@
-﻿using System.Reflection.PortableExecutable;
-
-namespace Domain.Entities.Comment
+﻿namespace Domain.Entities.Comment
 {
     public class Comment : Entity
     {

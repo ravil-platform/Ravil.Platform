@@ -1,0 +1,74 @@
+﻿@model List<Domain.Entities.Comment.AnswerComment>
+
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+	int number = 1;
+}
+<div class="modal-body">
+	<section>
+		@if (Model.Any())
+		{
+			@foreach (var item in Model)
+			{
+				<div class="row">
+					<div class="col-12 col-sm-12 col-lg-12  px-0 d-flex justify-content-end align-items-center px-1 mb-2 mt-2">
+						<a href="#" onclick="deleteItem('@item.Id', '@Url.Action("DeleteAnswer","Comment")')" class="btn btn-sm btn-danger  mr-25" title="حذف"><i class='bx bxs-trash'></i></a>
+						<a href="#" onclick="updateAnswer('@item.Id')" class="btn btn-sm btn-warning  mr-25" title="ویرایش"><i class="bx bxs-edit-alt text-white"></i></a>
+					</div>
+				</div>
+
+				<div class="card">
+					<div class="card-content">
+						<div class="card-body">
+							<div class="row">
+								<div class="col-12 col-md-12">
+									<table class="table table-borderless line-height-1">
+										<tbody>
+											@if (item.UserId != null)
+											{
+												<tr>
+													<td><i class='bx bx-user'></i></td>
+													<td class="users-view-name"> @UserManager.FindByIdAsync(item.UserId.ToString()).Result.UserName </td>
+												</tr>
+											}
+											<tr>
+												<td><i class='bx bx-check-double'></i></td>
+												<td class="users-view-username">پاسخ شماره @number</td>
+											</tr>
+
+											<tr>
+												<td><i class='bx bx-comment'></i></td>
+												<td class="users-view-username">@item.AnswerCommentText</td>
+											</tr>
+
+
+											<tr>
+												<td><i class='bx bx-time-five'></i></td>
+												<td class="users-view-username">تاریخ : @item.AnswerCommentDate.ToShamsiDate()</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				number++;
+			}
+		}
+		else
+		{
+			<div class="alert bg-rgba-danger alert-dismissible mb-2" role="alert">
+				<div class="d-flex align-items-center">
+					<i class="bx bx-error"></i>
+					<span>
+						هنوز پاسخی ثبت نشده است!
+					</span>
+				</div>
+			</div>
+		}
+	</section>
+
+</div>

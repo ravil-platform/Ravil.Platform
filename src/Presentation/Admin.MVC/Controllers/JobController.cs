@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using CreateJobBranchViewModel = ViewModels.AdminPanel.Job.CreateJobBranchViewModel;
+﻿using CreateJobBranchViewModel = ViewModels.AdminPanel.Job.CreateJobBranchViewModel;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 using PhoneNumberInfosViewModel = ViewModels.AdminPanel.Job.PhoneNumberInfosViewModel;
 using SocialMediaInfosViewModel = ViewModels.AdminPanel.Job.SocialMediaInfosViewModel;

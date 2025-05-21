@@ -1,4 +1,4 @@
-﻿namespace ViewModels.Discounts
+﻿namespace ViewModels.AdminPanel.Discounts
 {
     public class CreateDiscountViewModel
     {

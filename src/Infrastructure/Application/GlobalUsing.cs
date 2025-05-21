@@ -123,7 +123,7 @@ global using ViewModels.AdminPanel.MainSlider;
 global using ViewModels.AdminPanel.MessageBox;
 global using ViewModels.AdminPanel.RedirectionUrl;
 global using ViewModels.AdminPanel.Subscription;
-global using ViewModels.Discounts;
+global using ViewModels.AdminPanel.Discounts;
 global using ViewModels.QueriesResponseViewModel.Analytics;
 global using ViewModels.QueriesResponseViewModel.Job.GuideLines;
 global using ViewModels.QueriesResponseViewModel.MessageBox;
