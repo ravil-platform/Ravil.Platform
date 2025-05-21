@@ -1,13 +1,9 @@
 ﻿namespace Application.Api
 {
     [ApiController]
-    public class GenericBaseController<T> : BaseController where T : class
+    public class GenericBaseController<T>(MediatR.IMediator mediator, Logging.Base.ILogger<T> logger, IMapper mapper)
+        : BaseController(mediator, mapper) where T : class
     {
-        protected Logging.Base.ILogger<T> Logger { get; }
-     
-        public GenericBaseController(MediatR.IMediator mediator, Logging.Base.ILogger<T> logger) : base(mediator)
-        {
-            Logger = logger;
-      }
+        protected Logging.Base.ILogger<T> Logger { get; } = logger;
     }
 }

@@ -1,12 +1,19 @@
-﻿namespace Api.Controllers.V1
-{
-    [Route(Routes.Controller)]
-    public class BannersController : GenericBaseController<BannersController>
-    {
-        public BannersController(IMediator mediator, Logging.Base.ILogger<BannersController> logger) : base(mediator, logger)
-        {
-        }
+﻿using Asp.Versioning;
+using AutoMapper;
 
+namespace Api.Controllers.V1
+{
+    /// <summary>
+    /// BannersController
+    /// </summary>
+    /// <param name="mediator"></param>
+    /// <param name="logger"></param>
+    /// <param name="mapper"></param>
+    [ApiVersion(ApiVersions.V1)]
+    [Route(Routes.Controller)]
+    public class BannersController(IMediator mediator, Logging.Base.ILogger<BannersController> logger, IMapper mapper)
+        : GenericBaseController<BannersController>(mediator, logger, mapper)
+    {
         #region ( Queries )
         /// <summary>
         /// Returns all banners

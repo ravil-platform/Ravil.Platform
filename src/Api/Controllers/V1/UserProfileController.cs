@@ -2,6 +2,7 @@
 using Application.Features.User.Queries.CheckIsBlogLiked;
 using Application.Features.User.Queries.CheckIsJobBookMarked;
 using Application.Features.User.Queries.GetJobBookMarks;
+using AutoMapper;
 
 namespace Api.Controllers.V1
 {
@@ -13,7 +14,7 @@ namespace Api.Controllers.V1
     public class UserProfileController : GenericBaseController<UserProfileController>
     {
         /// <inheritdoc />
-        public UserProfileController(IMediator mediator, Logging.Base.ILogger<UserProfileController> logger) : base(mediator, logger)
+        public UserProfileController(IMediator mediator, Logging.Base.ILogger<UserProfileController> logger, IMapper mapper) : base(mediator, logger, mapper)
         {
         }
 

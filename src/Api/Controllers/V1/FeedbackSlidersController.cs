@@ -1,4 +1,5 @@
 ﻿using Application.Features.FeedbackSlider.Queries.GetAllByFilter;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ViewModels.QueriesResponseViewModel.FeedbackSlider;
 
@@ -7,7 +8,7 @@ namespace Api.Controllers.V1
     [Route(Routes.Controller)]
     public class FeedbackSlidersController : GenericBaseController<FeedbackSlidersController>
     {
-        public FeedbackSlidersController(IMediator mediator, Logging.Base.ILogger<FeedbackSlidersController> logger) : base(mediator, logger)
+        public FeedbackSlidersController(IMediator mediator, Logging.Base.ILogger<FeedbackSlidersController> logger, IMapper mapper) : base(mediator, logger, mapper)
         {
 
         }

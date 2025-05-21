@@ -2,6 +2,7 @@
 using Application.Features.Subscription.Queries.GetByUserId;
 using ViewModels.QueriesResponseViewModel.Subscription;
 using Asp.Versioning;
+using AutoMapper;
 
 namespace Api.Controllers.V2
 {
@@ -14,7 +15,7 @@ namespace Api.Controllers.V2
     public class SubscriptionController : GenericBaseController<SubscriptionController>
     {
         /// <inheritdoc />
-        public SubscriptionController(IMediator mediator, Logging.Base.ILogger<SubscriptionController> logger) : base(mediator, logger)
+        public SubscriptionController(IMediator mediator, Logging.Base.ILogger<SubscriptionController> logger, IMapper mapper) : base(mediator, logger, mapper)
         {
         }
 

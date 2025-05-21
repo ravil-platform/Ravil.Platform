@@ -1,6 +1,7 @@
 ﻿using Application.Features.PanelTutorial.Queries.Get;
 using ViewModels.QueriesResponseViewModel.PanelTutorial;
 using Asp.Versioning;
+using AutoMapper;
 
 namespace Api.Controllers.V2
 {
@@ -12,7 +13,7 @@ namespace Api.Controllers.V2
     public class PanelTutorialsController : GenericBaseController<PanelTutorialsController>
     {
         /// <inheritdoc />
-        public PanelTutorialsController(IMediator mediator, Logging.Base.ILogger<PanelTutorialsController> logger) : base(mediator, logger)
+        public PanelTutorialsController(IMediator mediator, Logging.Base.ILogger<PanelTutorialsController> logger, IMapper mapper) : base(mediator, logger, mapper)
         {
         }
 

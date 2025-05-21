@@ -9,6 +9,7 @@ using Application.Features.Job.Queries.GetTagsPotential;
 using ViewModels.QueriesResponseViewModel.Analytics;
 using Asp.Versioning;
 using Application.Features.Job.Commands.AdsClickActivity;
+using AutoMapper;
 
 namespace Api.Controllers.V2
 {
@@ -21,7 +22,7 @@ namespace Api.Controllers.V2
     public class AnalyticsController : GenericBaseController<AnalyticsController>
     {
         /// <inheritdoc />
-        public AnalyticsController(IMediator mediator, Logging.Base.ILogger<AnalyticsController> logger) : base(mediator, logger)
+        public AnalyticsController(IMediator mediator, Logging.Base.ILogger<AnalyticsController> logger, IMapper mapper) : base(mediator, logger, mapper)
         {
         }
         

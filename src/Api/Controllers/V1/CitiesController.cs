@@ -1,4 +1,5 @@
 ﻿using Application.Features.City.Queries.GetCityBaseByLocation;
+using AutoMapper;
 
 namespace Api.Controllers.V1
 {
@@ -11,7 +12,7 @@ namespace Api.Controllers.V1
         /// </summary>
         /// <param name="mediator"></param>
         /// <param name="logger"></param>
-        public CitiesController(IMediator mediator, Logging.Base.ILogger<CitiesController> logger) : base(mediator, logger)
+        public CitiesController(IMediator mediator, Logging.Base.ILogger<CitiesController> logger, IMapper mapper) : base(mediator, logger, mapper)
         {
         }
 

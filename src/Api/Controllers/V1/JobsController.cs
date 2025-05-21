@@ -3,16 +3,18 @@ using Application.Features.Job.Commands.RemoveJobBranchGalleries;
 using Application.Features.Job.Queries.GetAll;
 using Application.Features.Job.Queries.GetJobBranchByRoute;
 using Asp.Versioning;
+using AutoMapper;
 
 namespace Api.Controllers.V1
 {
     /// <inheritdoc />
-    [ApiVersion(1.0)]
+    [ApiVersion(ApiVersions.V1)]
     [Route(Routes.Controller)]
     public class JobsController : GenericBaseController<JobsController>
     {
         /// <inheritdoc />
-        public JobsController(IMediator mediator, Logging.Base.ILogger<JobsController> logger) : base(mediator, logger)
+        public JobsController(IMediator mediator, Logging.Base.ILogger<JobsController> logger, IMapper mapper)
+            : base(mediator, logger, mapper)
         {
 
         }

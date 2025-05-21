@@ -1,11 +1,13 @@
-﻿namespace Api.Controllers.V1
+﻿using AutoMapper;
+
+namespace Api.Controllers.V1
 {
     /// <inheritdoc />
     [Route(Routes.Controller)]
     public class FaqsController : GenericBaseController<FaqsController>
     {
         /// <inheritdoc />
-        public FaqsController(IMediator mediator, Logging.Base.ILogger<FaqsController> logger) : base(mediator, logger)
+        public FaqsController(IMediator mediator, Logging.Base.ILogger<FaqsController> logger, IMapper mapper) : base(mediator, logger, mapper)
         {
         }
 

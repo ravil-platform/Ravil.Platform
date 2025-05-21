@@ -1,17 +1,20 @@
 ﻿using Application.Features.Blog.Queries.GetAll;
 using Application.Features.Blog.Queries.GetById;
 using Application.Features.Job.Queries.GetAll;
+using AutoMapper;
 
 namespace Api.Controllers.V1
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="mediator"></param>
+    /// <param name="logger"></param>
+    /// <param name="mapper"></param>
     [Route(Routes.Controller)]
-    public class BlogsController : GenericBaseController<BlogsController>
+    public class BlogsController(IMediator mediator, Logging.Base.ILogger<BlogsController> logger, IMapper mapper)
+        : GenericBaseController<BlogsController>(mediator, logger, mapper)
     {
-        public BlogsController(IMediator mediator, Logging.Base.ILogger<BlogsController> logger)
-            : base(mediator, logger)
-        {
-        }
-
         #region ( Queries )
         /// <summary>
         /// Returns all blogs (using for seo)

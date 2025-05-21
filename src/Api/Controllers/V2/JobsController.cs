@@ -6,6 +6,7 @@ using Application.Features.Job.Commands.SetAdsClickSetting;
 using Application.Features.Job.Commands.UpdateBusiness;
 using Application.Features.Job.Queries.Report;
 using Asp.Versioning;
+using AutoMapper;
 using ViewModels.QueriesResponseViewModel.Subscription;
 
 namespace Api.Controllers.V2
@@ -16,7 +17,8 @@ namespace Api.Controllers.V2
     public class JobsController : GenericBaseController<JobsController>
     {
         /// <inheritdoc />
-        public JobsController(IMediator mediator, Logging.Base.ILogger<JobsController> logger) : base(mediator, logger)
+        public JobsController(IMediator mediator, Logging.Base.ILogger<JobsController> logger, IMapper mapper) 
+            : base(mediator, logger, mapper)
         {
 
         }

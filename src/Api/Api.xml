@@ -7,12 +7,13 @@
         <member name="T:Api.Controllers.V1.ActionHistoriesController">
             <inheritdoc />
         </member>
-        <member name="M:Api.Controllers.V1.ActionHistoriesController.#ctor(MediatR.IMediator,Logging.Base.ILogger{Api.Controllers.V1.ActionHistoriesController})">
+        <member name="M:Api.Controllers.V1.ActionHistoriesController.#ctor(MediatR.IMediator,Logging.Base.ILogger{Api.Controllers.V1.ActionHistoriesController},AutoMapper.IMapper)">
             <summary>
             ActionHistoriesController Constructor
             </summary>
             <param name="mediator"></param>
             <param name="logger"></param>
+            <param name="mapper"></param>
         </member>
         <member name="M:Api.Controllers.V1.ActionHistoriesController.Create(Application.Features.ActionHistories.Create.CreateActionHistoriesCommand)">
             <summary>
@@ -20,6 +21,22 @@
             </summary>
             <param name="command"></param>
             <returns></returns>
+        </member>
+        <member name="T:Api.Controllers.V1.BannersController">
+            <summary>
+            BannersController
+            </summary>
+            <param name="mediator"></param>
+            <param name="logger"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:Api.Controllers.V1.BannersController.#ctor(MediatR.IMediator,Logging.Base.ILogger{Api.Controllers.V1.BannersController},AutoMapper.IMapper)">
+            <summary>
+            BannersController
+            </summary>
+            <param name="mediator"></param>
+            <param name="logger"></param>
+            <param name="mapper"></param>
         </member>
         <member name="M:Api.Controllers.V1.BannersController.GetAll(Application.Features.Banner.GetAll.GetAllBannersQuery)">
             <summary>
@@ -41,6 +58,22 @@
             </summary>
             <param name="query"></param>
             <returns></returns>
+        </member>
+        <member name="T:Api.Controllers.V1.BlogsController">
+            <summary>
+            
+            </summary>
+            <param name="mediator"></param>
+            <param name="logger"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:Api.Controllers.V1.BlogsController.#ctor(MediatR.IMediator,Logging.Base.ILogger{Api.Controllers.V1.BlogsController},AutoMapper.IMapper)">
+            <summary>
+            
+            </summary>
+            <param name="mediator"></param>
+            <param name="logger"></param>
+            <param name="mapper"></param>
         </member>
         <member name="M:Api.Controllers.V1.BlogsController.GetAll(Application.Features.Blog.Queries.GetAll.GetAllBlogsQuery)">
             <summary>
@@ -150,7 +183,7 @@
         <member name="T:Api.Controllers.V1.CitiesController">
             <inheritdoc />
         </member>
-        <member name="M:Api.Controllers.V1.CitiesController.#ctor(MediatR.IMediator,Logging.Base.ILogger{Api.Controllers.V1.CitiesController})">
+        <member name="M:Api.Controllers.V1.CitiesController.#ctor(MediatR.IMediator,Logging.Base.ILogger{Api.Controllers.V1.CitiesController},AutoMapper.IMapper)">
             <summary>
             Cities Controller
             </summary>
@@ -195,7 +228,7 @@
         <member name="T:Api.Controllers.V1.CommentsController">
             <inheritdoc />
         </member>
-        <member name="M:Api.Controllers.V1.CommentsController.#ctor(MediatR.IMediator,Logging.Base.ILogger{Api.Controllers.V1.CommentsController})">
+        <member name="M:Api.Controllers.V1.CommentsController.#ctor(MediatR.IMediator,Logging.Base.ILogger{Api.Controllers.V1.CommentsController},AutoMapper.IMapper)">
             <inheritdoc />
         </member>
         <member name="M:Api.Controllers.V1.CommentsController.GetAllCommentsByFilter(Application.Features.Comment.Queries.GetAll.GetCommentsByFilterQuery)">
@@ -243,7 +276,7 @@
         <member name="T:Api.Controllers.V1.FaqsController">
             <inheritdoc />
         </member>
-        <member name="M:Api.Controllers.V1.FaqsController.#ctor(MediatR.IMediator,Logging.Base.ILogger{Api.Controllers.V1.FaqsController})">
+        <member name="M:Api.Controllers.V1.FaqsController.#ctor(MediatR.IMediator,Logging.Base.ILogger{Api.Controllers.V1.FaqsController},AutoMapper.IMapper)">
             <inheritdoc />
         </member>
         <member name="M:Api.Controllers.V1.FaqsController.GetAll(Application.Features.Faq.Queries.GetAll.GetAllFaqsQuery)">
@@ -277,7 +310,7 @@
         <member name="T:Api.Controllers.V1.JobsController">
             <inheritdoc />
         </member>
-        <member name="M:Api.Controllers.V1.JobsController.#ctor(MediatR.IMediator,Logging.Base.ILogger{Api.Controllers.V1.JobsController})">
+        <member name="M:Api.Controllers.V1.JobsController.#ctor(MediatR.IMediator,Logging.Base.ILogger{Api.Controllers.V1.JobsController},AutoMapper.IMapper)">
             <inheritdoc />
         </member>
         <member name="M:Api.Controllers.V1.JobsController.GetAll(Application.Features.Job.Queries.GetAll.GetAllJobsQuery)">
@@ -595,6 +628,12 @@
             <param name="query"></param>
             <returns></returns>
         </member>
+        <member name="T:Api.Controllers.V1.TeamsController">
+            <inheritdoc />
+        </member>
+        <member name="M:Api.Controllers.V1.TeamsController.#ctor(MediatR.IMediator,Logging.Base.ILogger{Api.Controllers.V1.TeamsController},AutoMapper.IMapper)">
+            <inheritdoc />
+        </member>
         <member name="M:Api.Controllers.V1.TeamsController.GetAll(Application.Features.Team.Queries.GetAll.GetAllTeamsQuery)">
             <summary>
             Returns all teams
@@ -605,7 +644,7 @@
         <member name="T:Api.Controllers.V1.UserProfileController">
             <inheritdoc />
         </member>
-        <member name="M:Api.Controllers.V1.UserProfileController.#ctor(MediatR.IMediator,Logging.Base.ILogger{Api.Controllers.V1.UserProfileController})">
+        <member name="M:Api.Controllers.V1.UserProfileController.#ctor(MediatR.IMediator,Logging.Base.ILogger{Api.Controllers.V1.UserProfileController},AutoMapper.IMapper)">
             <inheritdoc />
         </member>
         <member name="M:Api.Controllers.V1.UserProfileController.GetUserJobBranches(Application.Features.User.Queries.GetUserJobBranches.GetUserJobBranchesQuery)">
@@ -681,7 +720,7 @@
         <member name="T:Api.Controllers.V1.UsersController">
             <inheritdoc />
         </member>
-        <member name="M:Api.Controllers.V1.UsersController.#ctor(MediatR.IMediator,Logging.Base.ILogger{Api.Controllers.V1.UsersController})">
+        <member name="M:Api.Controllers.V1.UsersController.#ctor(MediatR.IMediator,Logging.Base.ILogger{Api.Controllers.V1.UsersController},AutoMapper.IMapper)">
             <inheritdoc />
         </member>
         <member name="M:Api.Controllers.V1.UsersController.GetById(Application.Features.User.Queries.GetById.GetUserByIdQuery)">
@@ -729,7 +768,7 @@
         <member name="T:Api.Controllers.V2.AnalyticsController">
             <inheritdoc />
         </member>
-        <member name="M:Api.Controllers.V2.AnalyticsController.#ctor(MediatR.IMediator,Logging.Base.ILogger{Api.Controllers.V2.AnalyticsController})">
+        <member name="M:Api.Controllers.V2.AnalyticsController.#ctor(MediatR.IMediator,Logging.Base.ILogger{Api.Controllers.V2.AnalyticsController},AutoMapper.IMapper)">
             <inheritdoc />
         </member>
         <member name="M:Api.Controllers.V2.AnalyticsController.OverView(Application.Features.Job.Queries.GetJobOverView.JobOverViewQuery)">
@@ -791,7 +830,7 @@
         <member name="T:Api.Controllers.V2.GuideLinesController">
             <inheritdoc />
         </member>
-        <member name="M:Api.Controllers.V2.GuideLinesController.#ctor(MediatR.IMediator,Logging.Base.ILogger{Api.Controllers.V2.GuideLinesController})">
+        <member name="M:Api.Controllers.V2.GuideLinesController.#ctor(MediatR.IMediator,Logging.Base.ILogger{Api.Controllers.V2.GuideLinesController},AutoMapper.IMapper)">
             <inheritdoc />
         </member>
         <member name="M:Api.Controllers.V2.GuideLinesController.Get(Application.Features.GuideLine.Queries.GetGuideLines.GetGuideLinesQuery)">
@@ -811,7 +850,7 @@
         <member name="T:Api.Controllers.V2.JobsController">
             <inheritdoc />
         </member>
-        <member name="M:Api.Controllers.V2.JobsController.#ctor(MediatR.IMediator,Logging.Base.ILogger{Api.Controllers.V2.JobsController})">
+        <member name="M:Api.Controllers.V2.JobsController.#ctor(MediatR.IMediator,Logging.Base.ILogger{Api.Controllers.V2.JobsController},AutoMapper.IMapper)">
             <inheritdoc />
         </member>
         <member name="M:Api.Controllers.V2.JobsController.Report(Application.Features.Job.Queries.Report.JobReportQuery)">
@@ -873,7 +912,7 @@
         <member name="T:Api.Controllers.V2.MessageBoxController">
             <inheritdoc />
         </member>
-        <member name="M:Api.Controllers.V2.MessageBoxController.#ctor(MediatR.IMediator,Logging.Base.ILogger{Api.Controllers.V2.MessageBoxController})">
+        <member name="M:Api.Controllers.V2.MessageBoxController.#ctor(MediatR.IMediator,Logging.Base.ILogger{Api.Controllers.V2.MessageBoxController},AutoMapper.IMapper)">
             <inheritdoc />
         </member>
         <member name="M:Api.Controllers.V2.MessageBoxController.GetAllMessageBoxByFilter(Application.Features.MessageBox.Queries.GetAllMessageBoxByFilter.GetAllMessageBoxByFilterQuery)">
@@ -893,7 +932,7 @@
         <member name="T:Api.Controllers.V2.PanelTutorialsController">
             <inheritdoc />
         </member>
-        <member name="M:Api.Controllers.V2.PanelTutorialsController.#ctor(MediatR.IMediator,Logging.Base.ILogger{Api.Controllers.V2.PanelTutorialsController})">
+        <member name="M:Api.Controllers.V2.PanelTutorialsController.#ctor(MediatR.IMediator,Logging.Base.ILogger{Api.Controllers.V2.PanelTutorialsController},AutoMapper.IMapper)">
             <inheritdoc />
         </member>
         <member name="M:Api.Controllers.V2.PanelTutorialsController.Get(Application.Features.PanelTutorial.Queries.Get.GetPanelTutorialsQuery)">
@@ -906,7 +945,7 @@
         <member name="T:Api.Controllers.V2.PaymentsController">
             <inheritdoc />
         </member>
-        <member name="M:Api.Controllers.V2.PaymentsController.#ctor(MediatR.IMediator,Logging.Base.ILogger{Api.Controllers.V2.PaymentsController})">
+        <member name="M:Api.Controllers.V2.PaymentsController.#ctor(MediatR.IMediator,Logging.Base.ILogger{Api.Controllers.V2.PaymentsController},AutoMapper.IMapper)">
             <inheritdoc />
         </member>
         <member name="M:Api.Controllers.V2.PaymentsController.Payment(Application.Features.Payments.Commands.Payment.PaymentCommand)">
@@ -935,7 +974,7 @@
         <member name="T:Api.Controllers.V2.SubscriptionController">
             <inheritdoc />
         </member>
-        <member name="M:Api.Controllers.V2.SubscriptionController.#ctor(MediatR.IMediator,Logging.Base.ILogger{Api.Controllers.V2.SubscriptionController})">
+        <member name="M:Api.Controllers.V2.SubscriptionController.#ctor(MediatR.IMediator,Logging.Base.ILogger{Api.Controllers.V2.SubscriptionController},AutoMapper.IMapper)">
             <inheritdoc />
         </member>
         <member name="M:Api.Controllers.V2.SubscriptionController.GetAll(Application.Features.Subscription.Queries.GetAll.GetAllSubscriptionPlanQuery)">
