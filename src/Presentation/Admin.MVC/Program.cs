@@ -148,17 +148,18 @@ if (app.Environment.IsDevelopment())
 }
 else
 {
-    //app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
 
+// Configure the HTTP request pipeline
 app.UseDeveloperExceptionPage();
 app.UseCustomExceptionMvcHandler();
-//app.UseStatusCodePagesWithReExecute("/ErrorHandler/{0}");
 
-app.UseHttpsRedirection();
+// Add these lines before UseRouting
+app.UseDefaultFiles();
 app.UseStaticFiles();
 
+app.UseHttpsRedirection();
 app.UseRouting();
 
 app.UseCors(CORS.DefaultName);
