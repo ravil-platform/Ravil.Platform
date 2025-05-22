@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using AngleSharp.Common;
 using AutoMapper.QueryableExtensions;
-using ViewModels.QueriesResponseViewModel.Subscription;
 
 namespace Application.Features.Subscription.Queries.GetAll;
 
@@ -24,6 +23,7 @@ public class GetAllSubscriptionPlanQueryHandler(IMapper mapper, IUnitOfWork unit
         try
         {
             var query = UnitOfWork.SubscriptionRepository.TableNoTracking
+                .Include(s => s.SubscriptionFeatures)
                 .Where(a => a.IsActive).AsQueryable();
 
             if (request.DurationType.HasValue)

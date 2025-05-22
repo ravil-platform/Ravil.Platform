@@ -13,17 +13,35 @@ public class GetCategoryByRouteQueryHandler(IUnitOfWork unitOfWork, IMapper mapp
         var category = await UnitOfWork.CategoryRepository.GetByPredicate(c => c.IsActive 
             && c.Route == request.Route.SlugToText() || c.Route == request.Route.ToSlug() || c.Route == request.Route);
 
-        if (category is null)
+        if (category is not null)
         {
-            return Result.Fail(Resources.Messages.Validations.NotFoundException);
+            category.PageContent =
+                (await UnitOfWork.CategoryRepository.ReplaceCategoryContent(category, request.CityId))!;
+            category.Picture = await UnitOfWork.CategoryRepository.SetCategoryPicture(category);
+
+            var categoryViewModel = Mapper.Map<CategoryViewModel>(category);
+
+            return categoryViewModel;
         }
+        else
+        {
+            var keyword = await UnitOfWork.KeywordRepository.TableNoTracking.Include(a => a.Category)
+                .Where(c => c.IsActive && c.Slug == request.Route.SlugToText() || c.Slug == request.Route.ToSlug() || c.Slug == request.Route)
+                .SingleOrDefaultAsync(cancellationToken: cancellationToken);
 
-        category.PageContent = (await UnitOfWork.CategoryRepository.ReplaceCategoryContent(category, request.CityId))!;
-        category.Picture = await UnitOfWork.CategoryRepository.SetCategoryPicture(category);
+            if (keyword is null)
+            {
+                return Result.Fail(Resources.Messages.Validations.NotFoundException);
+            }
 
-        var categoryViewModel = Mapper.Map<CategoryViewModel>(category);
+            keyword.Category.PageContent = (await UnitOfWork.CategoryRepository.ReplaceCategoryContent(keyword.Category, request.CityId))!;
+            keyword.Category.Picture = await UnitOfWork.CategoryRepository.SetCategoryPicture(keyword.Category);
+            
+            //var keywordViewModel = Mapper.Map<KeywordViewModel>(keyword);
+            var categoryViewModel = Mapper.Map<CategoryViewModel>(keyword.Category);
 
-        return categoryViewModel;
+            return categoryViewModel;
+        }
 
         #endregion
     }

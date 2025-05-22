@@ -7,7 +7,6 @@ public class JobKeywordConfigurations : IEntityTypeConfiguration<JobKeyword>
         builder.ToTable(nameof(JobKeyword), DatabaseSchemas.Jobs);
 
         builder.HasKey(j => j.Id);
-        //builder.Property(j => j.CostPerClick).IsRequired();
         builder.Property(j => j.KeywordId).IsRequired();
         builder.Property(j => j.JobBranchId).IsRequired();
 

@@ -27,7 +27,8 @@ public class GetAllCategoryQueryHandler : IRequestHandler<GetAllCategoriesQuery,
             options: new MemoryCacheEntryOptions 
             {
                 Priority = CacheItemPriority.High,
-                SlidingExpiration = TimeSpan.FromMinutes(4200)
+                SlidingExpiration = TimeSpan.FromMinutes(4200),
+                AbsoluteExpiration = DateTimeOffset.UtcNow.AddMinutes(1)
             });
 
             return categoriesViewModel;

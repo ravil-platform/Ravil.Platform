@@ -1,8 +1,4 @@
-﻿using Domain.Entities.City;
-using Microsoft.EntityFrameworkCore;
-using ViewModels.AdminPanel.Filter;
-using ViewModels.Filter.Category;
-using ViewModels.QueriesResponseViewModel.Category;
+﻿using ViewModels.QueriesResponseViewModel.Category;
 
 namespace Persistence.Entities.Category.Repositories;
 
@@ -17,8 +13,7 @@ public class CategoryRepository : Repository<Domain.Entities.Category.Category>,
     public async Task<List<Domain.Entities.Category.Category>> GetMainCategories()
     {
         var categories =
-            await ApplicationDbContext.Category.Where(c =>
-                c.ParentId == 0 && c.NodeLevel == 1 && c.IsActive).ToListAsync();
+            await ApplicationDbContext.Category.Where(c => c.ParentId == 0 && c.NodeLevel == 1 && c.IsActive).ToListAsync();
 
         return categories;
     }
@@ -122,7 +117,7 @@ public class CategoryRepository : Repository<Domain.Entities.Category.Category>,
             while (node > 1)
             {
                 var c = await ApplicationDbContext.Category
-                    .FromSqlInterpolated($"select * from dbo.Category where Id={parent} and IsActive=1")
+                    .FromSqlInterpolated($"select * from Category.Category where Id={parent} and IsActive=1")
                     .AsNoTracking().SingleAsync();
 
                 parents.Add(c);

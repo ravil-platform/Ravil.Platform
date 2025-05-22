@@ -14,7 +14,7 @@ namespace Admin.MVC.Controllers
         UserManager<ApplicationUser> userManager,
         NeshanApiService neshanApiService,
         Logging.Base.ILogger<JobController> logger)
-        : BaseController
+    : BaseController
     {
         #region ( DI )
         protected IUnitOfWork UnitOfWork { get; } = unitOfWork;

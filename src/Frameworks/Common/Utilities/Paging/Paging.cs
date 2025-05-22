@@ -107,14 +107,23 @@ namespace Common.Utilities.Paging
         }
         #endregion
 
-        #region (Set Entities)
-        public Paging<T, TDto> SetEntities(IQueryable<T> queryable, IMapper mapper)
+        #region ( Set Entities )
+        public Paging<T, TDto> SetEntities(IQueryable<T> queryable, IMapper mapper, bool? hasNoPagination = null)
         {
-            DtoEntities = queryable
-                .Skip(StartPosition)
-                .Take(PageSize)
-                .ProjectTo<TDto>(mapper.ConfigurationProvider)
-                .ToList();
+            if (!hasNoPagination.HasValue)
+            {
+                DtoEntities = queryable
+                    .Skip(StartPosition)
+                    .Take(PageSize)
+                    .ProjectTo<TDto>(mapper.ConfigurationProvider)
+                    .ToList();
+            }
+            else
+            {
+                DtoEntities = queryable
+                    .ProjectTo<TDto>(mapper.ConfigurationProvider)
+                    .ToList();
+            }
 
             return this;
         }

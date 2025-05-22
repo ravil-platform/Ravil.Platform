@@ -4,6 +4,7 @@ using Application.Features.Job.Commands.RechargeAdsClickVerification;
 using Application.Features.Job.Commands.RemoveJobBranchGalleries;
 using Application.Features.Job.Commands.SetAdsClickSetting;
 using Application.Features.Job.Commands.UpdateBusiness;
+using Application.Features.Job.Queries.GetAllKeywords;
 using Application.Features.Job.Queries.Report;
 using Asp.Versioning;
 using AutoMapper;
@@ -35,6 +36,23 @@ namespace Api.Controllers.V2
         [ProducesResponseType(type: typeof(Result<List<SubscriptionClickViewModel>>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Report([FromQuery] JobReportQuery query)
+        {
+            var result = await Mediator.Send(query);
+
+            return FluentResult(result);
+        }
+        
+
+        /// <summary>
+        /// Returns all keywords tag list
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        [Authorize]
+        [HttpGet(Routes.Action)]
+        [ProducesResponseType(type: typeof(Result<List<KeywordViewModel>>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetAllKeywords([FromQuery] GetAllKeywordsQuery query)
         {
             var result = await Mediator.Send(query);
 

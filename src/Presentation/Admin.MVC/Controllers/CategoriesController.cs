@@ -1,4 +1,5 @@
-﻿namespace Admin.MVC.Controllers
+﻿
+namespace Admin.MVC.Controllers
 {
     public class CategoriesController(IUnitOfWork unitOfWork, IMapper mapper, IFtpService ftpService)
         : BaseController
@@ -92,6 +93,8 @@
             {
                 await UnitOfWork.SaveAsync();
 
+                #region ( Faq Job Category )
+
                 if (createCategoryViewModel.Faqs != null)
                 {
                     foreach (var faqId in createCategoryViewModel.Faqs)
@@ -107,6 +110,21 @@
 
                     await UnitOfWork.SaveAsync();
                 }
+
+                #endregion
+
+                #region ( Category Keyword )
+
+                bool slugExist = await UnitOfWork.KeywordRepository.SlugExist(category.Route);
+                if (!slugExist)
+                {
+                    var keyword = Mapper.Map<Keyword>(category);
+
+                    await UnitOfWork.KeywordRepository.InsertAsync(keyword);
+                    await UnitOfWork.SaveAsync();
+                }
+
+                #endregion
 
                 SuccessAlert();
             }

@@ -11,9 +11,9 @@ public class GetCommentsByFilterQueryHandler(IMapper mapper, IUnitOfWork unitOfW
         var query = UnitOfWork.CommentRepository.TableNoTracking;
 
         #region ( Filters )
-        if (request.IsConfirmed)
+        if (request.IsConfirmed.HasValue)
         {
-            query = query.Where(c => c.IsConfirmed);
+            query = query.Where(c => c.IsConfirmed == request.IsConfirmed.Value);
         }
 
         if (request.HasAnswered.HasValue)

@@ -1,5 +1,6 @@
 ﻿using ViewModels.AdminPanel.Comment;
 using ViewModels.AdminPanel.PanelTutorial;
+using ViewModels.QueriesResponseViewModel.Payments;
 using CreateJobBranchViewModel = ViewModels.QueriesResponseViewModel.Job.CreateJobBranchViewModel;
 using CreateJobViewModel = ViewModels.QueriesResponseViewModel.Job.CreateJobViewModel;
 using JsonSerializer = System.Text.Json.JsonSerializer;
@@ -290,6 +291,13 @@ namespace Application.Profiles
 
             #region ( Keyword )
 
+            CreateMap<Category, Keyword>()
+                .ForMember(src => src.Id, expression => expression.Ignore())
+                .ForMember(src => src.Slug, expression => expression.MapFrom(a => a.Route))
+                .ForMember(src => src.Title, expression => expression.MapFrom(a => a.Name))
+                .ForMember(src => src.CategoryId, expression => expression.MapFrom(a => a.Id))
+                .ReverseMap();
+
             CreateMap<Keyword, JobTagsViewModel>().ReverseMap();
             CreateMap<Keyword, KeywordViewModel>()
                 .ForMember(src => src.Category, expression =>
@@ -334,6 +342,16 @@ namespace Application.Profiles
                 {
                     expression.Condition(a => a.JobTimeWorks != null && a.JobKeywords.Any());
                     expression.MapFrom(dest => dest.JobKeywords.Select(a => a.Keyword));
+                })
+                .ForMember(src => src.IsAds, expression =>
+                {
+                    expression.Condition(a => a.ApplicationUser?.UserSubscriptions.Where(s => s is { IsActive: true, IsFinally: true } && s.EndDate.Day >= DateTime.UtcNow.Day) != null);
+                    expression.MapFrom(dest => dest.ApplicationUser.UserSubscriptions.SingleOrDefault(s => s.IsActive && s.IsFinally && s.EndDate.Day >= DateTime.UtcNow.Day) != null);
+                })
+                .ForMember(src => src.SubscriptionType, expression =>
+                {
+                    expression.Condition(a => a.ApplicationUser?.UserSubscriptions.Where(s => s is { IsActive: true, IsFinally: true } && s.EndDate.Day >= DateTime.UtcNow.Day) != null);
+                    expression.MapFrom(dest => dest.ApplicationUser.UserSubscriptions.Where(s => s.IsActive && s.IsFinally && s.EndDate.Day >= DateTime.UtcNow.Day && s.Subscription != null).Select(a => a.Subscription.Type).SingleOrDefault());
                 })
                 .ForMember(src => src.Categories, expression =>
                 {
@@ -441,7 +459,14 @@ namespace Application.Profiles
             CreateMap<CreateFeatureViewModel, Feature>().ReverseMap();
 
 
-            CreateMap<Subscription, SubscriptionViewModel>().ReverseMap();
+            CreateMap<SubscriptionFeature, SubscriptionFeatureViewModel>().ReverseMap();
+            CreateMap<Subscription, SubscriptionViewModel>()
+            .ForMember(src => src.Features, expression =>
+            {
+                expression.MapFrom(a => a.SubscriptionFeatures);
+            })
+            .ReverseMap();
+
             CreateMap<UserSubscription, UserSubscriptionViewModel>()
             .ForMember(src => src.Subscription, expression =>
             {
@@ -468,6 +493,11 @@ namespace Application.Profiles
 
             CreateMap<UpdatePanelTutorialViewModel, PanelTutorial>().ReverseMap();
             CreateMap<CreatePanelTutorialViewModel, PanelTutorial>().ReverseMap();
+            #endregion
+
+            #region ( PaymentPortal )
+
+            CreateMap<PaymentPortal, PaymentPortalViewModel>();
             #endregion
 
             #region ( Tag )

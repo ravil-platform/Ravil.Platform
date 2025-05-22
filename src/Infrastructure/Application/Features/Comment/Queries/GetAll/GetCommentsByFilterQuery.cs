@@ -12,7 +12,7 @@
         
         public string? BusinessOwnerId { get; set; }
 
-        public bool IsConfirmed { get; set; }
+        public bool? IsConfirmed { get; set; }
         
         public bool? HasAnswered { get; set; }
 
