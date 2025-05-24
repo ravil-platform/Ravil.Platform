@@ -19,7 +19,7 @@ public class GetAllCategoryQueryHandler : IRequestHandler<GetAllCategoriesQuery,
     {
         if (!MemoryCache.TryGetValue(nameof(GetAllCategoriesQuery), out List<CategoryListViewModel>? categoriesViewModel))
         {
-            var categories = await UnitOfWork.CategoryRepository.GetAllAsync(a => a.IsActive && a.IndexMeta);
+            var categories = await UnitOfWork.CategoryRepository.GetAllAsync(a => a.IsActive);
 
             categoriesViewModel = Mapper.Map<List<CategoryListViewModel>>(categories);
 
@@ -33,7 +33,7 @@ public class GetAllCategoryQueryHandler : IRequestHandler<GetAllCategoriesQuery,
 
             return categoriesViewModel;
         }
-        
+
         return categoriesViewModel!;
     }
 }
