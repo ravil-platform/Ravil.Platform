@@ -2,7 +2,7 @@ name: Deployment Workflow
 on:
   push:
     branches:
-      - main
+      - master
 jobs:
   build-backend:
     runs-on: self-hosted
