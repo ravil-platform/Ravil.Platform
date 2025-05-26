@@ -2,10 +2,10 @@ version: 2.1
 workflows:
   deployment:
     jobs:
+      - build-api
       - build-backend
-      - build-api:
           requires:
-            - build-backend
+            - build-api
 jobs:
   build-api:
     machine: true
