@@ -33,7 +33,7 @@ jobs:
 
   build-backend:
     machine: true
-    resource_class: ravil/cd
+    resource_class: ravil/pipeline
     parallelism: 2
     steps:
       - checkout
