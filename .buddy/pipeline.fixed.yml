@@ -13,6 +13,7 @@
       image_name: "api"
     - action: "Run API Docker Container"
       type: "BUILD"
+      docker_image_tag: "latest"
       execute_commands:
         - >
           docker run -d \
@@ -36,6 +37,7 @@
       image_name: "backend"
     - action: "Run Backend Docker Container"
       type: "BUILD"
+      docker_image_tag: "latest"
       execute_commands:
         - >
           docker run -d \
