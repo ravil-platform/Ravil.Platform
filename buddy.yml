@@ -1,0 +1,47 @@
+pipelines:
+- pipeline: "Build and Run API"
+  on: "push"
+  refs:
+    - "refs/heads/main"
+  actions:
+  - action: "Cleanup Old API Container"
+    type: "CLI"
+    execute:
+      - "docker rm -f API || true"
+  - action: "Build API Docker Image"
+    type: "BUILD_DOCKER_IMAGE"
+    dockerfile_path: "./Dockerfile-api"
+    image_name: "api"
+  - action: "Run API Docker Container"
+    type: "CLI"
+    execute:
+      - >
+        docker run -d \
+          --name API \
+          -p 9090:8080 \
+          --network bridge \
+          --restart unless-stopped \
+          api
+- pipeline: "Build and Run Backend"
+  on: "push"
+  refs:
+    - "refs/heads/main"
+  actions:
+  - action: "Cleanup Old Backend Container"
+    type: "CLI"
+    execute:
+      - "docker rm -f Backend || true"
+  - action: "Build Backend Docker Image"
+    type: "BUILD_DOCKER_IMAGE"
+    dockerfile_path: "./Dockerfile"
+    image_name: "backend"
+  - action: "Run Backend Docker Container"
+    type: "CLI"
+    execute:
+      - >
+        docker run -d \
+          --name Backend \
+          -p 8080:8080 \
+          --network bridge \
+          --restart unless-stopped \
+          backend
