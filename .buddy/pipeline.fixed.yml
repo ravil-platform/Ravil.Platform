@@ -17,11 +17,6 @@
             --network bridge \
             --restart unless-stopped \
             api
-- pipeline: "Build and Run Backend"
-  on: "push"
-  refs:
-    - "refs/heads/main"
-  actions:
     - action: "Run Backend Docker Container"
       type: "BUILD"
       dockerfile_path: "./Dockerfile"
