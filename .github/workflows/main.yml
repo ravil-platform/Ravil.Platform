@@ -24,7 +24,6 @@ jobs:
             backend
 
   build-api:
-    needs: build-backend
     runs-on: [self-hosted, srv1]
     steps:
       - name: Checkout code
