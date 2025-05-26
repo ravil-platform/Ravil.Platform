@@ -14,9 +14,9 @@ public class GetAllBlogsQueryHandler(IUnitOfWork unitOfWork, IMapper mapper, IMe
     {
         if (!MemoryCache.TryGetValue(nameof(GetAllBlogsQuery), out List<BlogViewModel>? blogs))
         {
-            blogs = await UnitOfWork.BlogRepository.TableNoTracking
-                .ProjectTo<BlogViewModel>(Mapper.ConfigurationProvider)
-                .ToListAsync(cancellationToken: cancellationToken);
+            var blogEntities = await UnitOfWork.BlogRepository.GetAllAsync();
+
+            blogs = Mapper.Map<List<BlogViewModel>>(blogEntities);
 
             MemoryCache.Set(nameof(GetAllBlogsQuery), blogs, options: new MemoryCacheEntryOptions
             {
