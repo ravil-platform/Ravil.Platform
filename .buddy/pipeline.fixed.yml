@@ -30,7 +30,7 @@
       type: "DOCKERFILE"
       integration: "NONE"
       docker_image_tag: "latest"
-      dockerfile_path: "dir/Dockerfile"
+      dockerfile_path: "./Dockerfile"
       build_args:
       - "key=value"
       do_not_prune_images: true
