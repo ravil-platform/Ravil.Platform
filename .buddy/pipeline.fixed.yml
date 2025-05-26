@@ -18,3 +18,20 @@
       docker_image_tag: "latest"
       dockerfile_path: "./Dockerfile"
       do_not_prune_images: true
+      targets:
+        - target: plesk_linux
+          type: SSH
+          name: plesk-linux
+          host: jxtedg0b.eu-1.24h.sh
+          port: 10042
+          auth:
+            username: ppbmFrr7X5sXGl54Bl1K
+            password: '!encrypted +8qO/WrULvbCp8sPP0z5e4zlsjYvpwGc6d/I3iBYdxs=.h87ily2HO9mPjGqYP83u4A=='
+        - target: vm_163519
+          type: SSH
+          name: vm-163518
+          host: awb-okp.eu-1.24h.sh
+          port: 10046
+          auth:
+            username: UHpaRIjrXaS9yU48QHqu
+            password: '!encrypted oCdLo0khEU17217BTKXQzXbQaQFg3yx1TIFOReg0lhE=.IXy3bjDIyDwa6DCmK+C5Cw=='
