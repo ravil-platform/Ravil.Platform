@@ -4,7 +4,7 @@
     - "refs/heads/main"
   actions:
     - action: "Cleanup Old API Container"
-      type: "LOCAL_CLI"
+      type: "SH"
       execute:
         - "docker rm -f API || true"
     - action: "Build API Docker Image"
@@ -12,7 +12,7 @@
       dockerfile_path: "./Dockerfile-api"
       image_name: "api"
     - action: "Run API Docker Container"
-      type: "LOCAL_CLI"
+      type: "SH"
       execute:
         - >
           docker run -d \
@@ -27,7 +27,7 @@
     - "refs/heads/main"
   actions:
     - action: "Cleanup Old Backend Container"
-      type: "LOCAL_CLI"
+      type: "SH"
       execute:
         - "docker rm -f Backend || true"
     - action: "Build Backend Docker Image"
@@ -35,7 +35,7 @@
       dockerfile_path: "./Dockerfile"
       image_name: "backend"
     - action: "Run Backend Docker Container"
-      type: "LOCAL_CLI"
+      type: "SH"
       execute:
         - >
           docker run -d \
