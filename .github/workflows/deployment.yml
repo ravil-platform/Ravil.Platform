@@ -1,0 +1,64 @@
+name: Deployment Workflow
+
+on:
+  push:
+    branches:
+      - main # Or whichever branch you want to trigger this workflow on
+
+jobs:
+  build-backend:
+    # Using 'self-hosted' as a placeholder for 'ravil/pipeline' resource class.
+    # You might need to replace 'self-hosted' with a specific runner label
+    # if your GitHub Actions runners have custom labels (e.g., 'linux-ravil-pipeline').
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4 # Action to checkout your repository code
+
+      - name: Cleanup Old Backend Container
+        # The 'always()' condition ensures this step runs even if previous steps fail,
+        # similar to CircleCI's 'when: always'.
+        run: docker rm -f Backend || true
+        if: always()
+
+      - name: Build Backend Docker Image
+        run: docker build -t backend .
+
+      - name: Run Backend Docker Container
+        run: |
+          docker run -d \
+            --name Backend \
+            -p 8080:8080 \
+            --network bridge \
+            --restart unless-stopped \
+            backend
+
+  build-api:
+    # This job requires 'build-backend' to complete successfully before it starts,
+    # similar to CircleCI's 'requires'.
+    needs: build-backend
+    
+    # Using 'self-hosted' as a placeholder for 'ravil/pipeline' resource class.
+    # Adjust as per your GitHub Actions runner setup.
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Cleanup Old API Container
+        run: docker rm -f API || true
+        if: always()
+
+      - name: Build API Docker Image
+        run: docker build -f ./Dockerfile-api -t api .
+
+      - name: Run API Docker Container
+        run: |
+          docker run -d \
+            --name API \
+            -p 9090:8080 \
+            --network bridge \
+            --restart unless-stopped \
+            api
