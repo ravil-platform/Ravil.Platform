@@ -5,7 +5,7 @@
   actions:
     - action: "Cleanup Old API Container"
       type: "BUILD"
-      execute:
+      execute_commands:
         - "docker rm -f API || true"
     - action: "Build API Docker Image"
       type: "BUILD"
@@ -13,7 +13,7 @@
       image_name: "api"
     - action: "Run API Docker Container"
       type: "BUILD"
-      execute:
+      execute_commands:
         - >
           docker run -d \
             --name API \
@@ -28,7 +28,7 @@
   actions:
     - action: "Cleanup Old Backend Container"
       type: "BUILD"
-      execute:
+      execute_commands:
         - "docker rm -f Backend || true"
     - action: "Build Backend Docker Image"
       type: "BUILD"
@@ -36,7 +36,7 @@
       image_name: "backend"
     - action: "Run Backend Docker Container"
       type: "BUILD"
-      execute:
+      execute_commands:
         - >
           docker run -d \
             --name Backend \
