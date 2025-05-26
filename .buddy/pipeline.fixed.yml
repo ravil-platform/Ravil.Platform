@@ -3,19 +3,13 @@
   refs:
     - "refs/heads/main"
   actions:
-    - action: "Cleanup Old API Container"
-      type: "BUILD"
-      execute_commands:
-        - "docker rm -f API || true"
     - action: "Build API Docker Image"
       type: "BUILD"
       dockerfile_path: "./Dockerfile-api"
-      image_name: "api"
-    - action: "Run API Docker Container"
-      type: "BUILD"
       docker_image_name: "api"
       docker_image_tag: "latest"
       execute_commands:
+        - "docker rm -f API || true"
         - >
           docker run -d \
             --name API \
@@ -28,19 +22,13 @@
   refs:
     - "refs/heads/main"
   actions:
-    - action: "Cleanup Old Backend Container"
-      type: "BUILD"
-      execute_commands:
-        - "docker rm -f Backend || true"
-    - action: "Build Backend Docker Image"
-      type: "BUILD"
-      dockerfile_path: "./Dockerfile"
-      image_name: "backend"
     - action: "Run Backend Docker Container"
       type: "BUILD"
+      dockerfile_path: "./Dockerfile"
       docker_image_name: "backend"
       docker_image_tag: "latest"
       execute_commands:
+        - "docker rm -f Backend || true"
         - >
           docker run -d \
             --name Backend \
