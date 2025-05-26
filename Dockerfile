@@ -12,3 +12,4 @@ RUN adduser --disabled-password --home /app --gecos '' appuser \
     && chown -R appuser:appuser /app
 USER appuser
 ENTRYPOINT ["dotnet", "/app/admin/Admin.MVC.dll"]
+# test
