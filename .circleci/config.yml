@@ -3,7 +3,7 @@ workflows:
   deployment:
     jobs:
       - build-backend
-      - build-api
+      - build-api:
           requires:
             - build-backend
 jobs:
