@@ -8,7 +8,7 @@
       execute:
         - "docker rm -f API || true"
     - action: "Build API Docker Image"
-      type: "BUILD_DOCKER_IMAGE"
+      type: "BUILD"
       dockerfile_path: "./Dockerfile-api"
       image_name: "api"
     - action: "Run API Docker Container"
@@ -31,7 +31,7 @@
       execute:
         - "docker rm -f Backend || true"
     - action: "Build Backend Docker Image"
-      type: "BUILD_DOCKER_IMAGE"
+      type: "BUILD"
       dockerfile_path: "./Dockerfile"
       image_name: "backend"
     - action: "Run Backend Docker Container"
