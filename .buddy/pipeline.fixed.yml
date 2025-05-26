@@ -1,33 +1,47 @@
-- pipeline: "Build and Run API"
+- pipeline: "Build and Run API and Backend"
   on: "push"
   refs:
     - "refs/heads/main"
   actions:
-    - action: "Build API Docker Image"
-      type: "BUILD"
-      dockerfile_path: "./Dockerfile-api"
-      docker_image_name: "api"
-      docker_image_tag: "latest"
-      execute_commands:
+    - action: "Cleanup Old API Container (if exists)"
+      type: "LOCAL_CLI"
+      execute:
         - "docker rm -f API || true"
+
+    - action: "Build API Docker Image"
+      type: "BUILD_DOCKER_IMAGE"
+      dockerfile_path: "./Dockerfile-api"
+      image_name: "api"
+      image_tag: "latest"
+
+    - action: "Run API Docker Container"
+      type: "LOCAL_CLI"
+      execute:
         - >
           docker run -d \
             --name API \
             -p 9090:8080 \
             --network bridge \
             --restart unless-stopped \
-            api
-    - action: "Run Backend Docker Container"
-      type: "BUILD"
-      dockerfile_path: "./Dockerfile"
-      docker_image_name: "backend"
-      docker_image_tag: "latest"
-      execute_commands:
+            api:latest # Refer to the built image by its name and tag
+    - action: "Cleanup Old Backend Container (if exists)"
+      type: "LOCAL_CLI"
+      execute:
         - "docker rm -f Backend || true"
+
+    - action: "Build Backend Docker Image"
+      type: "BUILD_DOCKER_IMAGE"
+      dockerfile_path: "./Dockerfile"
+      image_name: "backend"
+      image_tag: "latest"
+
+    - action: "Run Backend Docker Container"
+      type: "LOCAL_CLI"
+      execute:
         - >
           docker run -d \
             --name Backend \
             -p 8080:8080 \
             --network bridge \
             --restart unless-stopped \
-            backend
+            backend:latest # Refer to the built image by its name and tag
