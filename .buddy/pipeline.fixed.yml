@@ -3,34 +3,18 @@
   refs:
     - "refs/heads/main"
   actions:
-    # - action: "Cleanup Old API Container"
-    #   type: "COMMAND"
-    #   commands:
-    #     - "docker rm -f API || true"
-    # - action: "Build API Docker Image"
-    #   type: "DOCKER_BUILD"
-    #   dockerfile_path: "./Dockerfile-api"
-    #   image_name: "api"
-    #   image_tag: "latest"
-    # - action: "Run API Docker Container"
-    #   type: "BUILD_DOCKER_IMAGE"
-    #   commands:
-    #     - >
-    #       docker run -d \
-    #         --name API \
-    #         -p 9090:8080 \
-    #         --network bridge \
-    #         --restart unless-stopped \
-    #         api:latest
-    # - action: "Cleanup Old Backend Container"
-    #   type: "COMMAND"
-    #   commands:
-    #     - "docker rm -f Backend || true"
-    - action: "Build dockerfile"
+    - action: "Build API Image"
       type: "DOCKERFILE"
       integration: "NONE"
+      docker_image_name: "api"
+      docker_image_tag: "latest"
+      dockerfile_path: "./Dockerfile-api"
+      do_not_prune_images: true
+
+    - action: "Build Backend Image"
+      type: "DOCKERFILE"
+      integration: "NONE"
+      docker_image_name: "backend"
       docker_image_tag: "latest"
       dockerfile_path: "./Dockerfile"
-      build_args:
-      - "key=value"
       do_not_prune_images: true
