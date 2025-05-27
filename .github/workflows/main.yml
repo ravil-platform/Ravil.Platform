@@ -9,11 +9,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      - name: Build Backend Docker Image
+        run: docker build -t backend .
       - name: Cleanup Old Backend Container
         run: docker rm -f Backend || true
         if: always()
-      - name: Build Backend Docker Image
-        run: docker build -t backend .
       - name: Run Backend Docker Container
         run: |
           docker run -d \
@@ -32,6 +32,9 @@ jobs:
         if: always()
       - name: Build Backend Docker Image
         run: docker build -t backend .
+      - name: Cleanup Old Backend Container
+        run: docker rm -f Backend || true
+        if: always()
       - name: Run Backend Docker Container
         run: |
           docker run -d \
@@ -46,11 +49,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      - name: Build API Docker Image
+        run: docker build -f ./Dockerfile-api -t api .
       - name: Cleanup Old API Container
         run: docker rm -f API || true
         if: always()
-      - name: Build API Docker Image
-        run: docker build -f ./Dockerfile-api -t api .
       - name: Run API Docker Container 
         run: |
           docker run -d \
@@ -64,11 +67,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      - name: Build API Docker Image
+        run: docker build -f ./Dockerfile-api -t api .
       - name: Cleanup Old API Container
         run: docker rm -f API || true
         if: always()
-      - name: Build API Docker Image
-        run: docker build -f ./Dockerfile-api -t api .
       - name: Run API Docker Container 
         run: |
           docker run -d \
