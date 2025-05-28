@@ -1,8 +1,12 @@
-﻿namespace Admin.MVC.Controllers
+﻿using Constants.Caching;
+using Microsoft.Extensions.Caching.Distributed;
+
+namespace Admin.MVC.Controllers
 {
-    public class ConfigController(IUnitOfWork unitOfWork, IMapper mapper) : BaseController
+    public class ConfigController(IUnitOfWork unitOfWork, IMapper mapper, IDistributedCache distributedCache) : BaseController
     {
         #region ( DI )
+        protected IDistributedCache DistributedCache { get; } = distributedCache;
         protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
         protected IMapper Mapper { get; } = mapper;
 
@@ -33,6 +37,12 @@
                 await UnitOfWork.SaveAsync();
 
                 SuccessAlert();
+
+                #region ( Remove Cache Data )
+
+                await DistributedCache.RemoveAsync(key: CacheKeys.GetConfigQuery());
+
+                #endregion
             }
             catch
             {
@@ -224,6 +234,12 @@
                 await UnitOfWork.SaveAsync();
 
                 SuccessAlert();
+
+                #region ( Remove Cache Data )
+
+                await DistributedCache.RemoveAsync(key: CacheKeys.GetConfigQuery());
+
+                #endregion
             }
             catch
             {

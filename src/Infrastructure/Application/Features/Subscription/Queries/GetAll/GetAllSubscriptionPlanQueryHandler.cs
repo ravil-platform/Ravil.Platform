@@ -1,17 +1,21 @@
-﻿using System.Collections;
-using AngleSharp.Common;
+﻿using AngleSharp.Common;
+using Constants.Caching;
+using System.Collections;
 using AutoMapper.QueryableExtensions;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace Application.Features.Subscription.Queries.GetAll;
 
-public class GetAllSubscriptionPlanQueryHandler(IMapper mapper, IUnitOfWork unitOfWork,
+public class GetAllSubscriptionPlanQueryHandler(IMapper mapper,
+    IUnitOfWork unitOfWork, IDistributedCache distributedCache,
     Logging.Base.ILogger<GetAllSubscriptionPlanQueryHandler> logger)
-    : IRequestHandler<GetAllSubscriptionPlanQuery, List<SubscriptionViewModel>>
+: IRequestHandler<GetAllSubscriptionPlanQuery, List<SubscriptionViewModel>>
 {
-    #region ( Properties )
+    #region ( Dependencies )
 
     protected IMapper Mapper { get; } = mapper;
     protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
+    protected IDistributedCache DistributedCache { get; } = distributedCache;
     protected Logging.Base.ILogger<GetAllSubscriptionPlanQueryHandler> Logger { get; } = logger;
 
     #endregion
@@ -22,23 +26,33 @@ public class GetAllSubscriptionPlanQueryHandler(IMapper mapper, IUnitOfWork unit
 
         try
         {
-            var query = UnitOfWork.SubscriptionRepository.TableNoTracking
-                .Include(s => s.SubscriptionFeatures)
-                .Where(a => a.IsActive).AsQueryable();
+            var subscriptionPlans = await DistributedCache.GetOrSet(CacheKeys.GetAllSubscriptionPlanQuery(),
+                func: async () =>
+                {
+                    return await UnitOfWork.SubscriptionRepository.TableNoTracking
+                        .Include(s => s.SubscriptionFeatures)
+                        .Where(a => a.IsActive)
+                        .ProjectTo<SubscriptionViewModel>(Mapper.ConfigurationProvider)
+                        .ToListAsync(cancellationToken: cancellationToken);
+                },
+                options: new DistributedCache.CacheOptions
+                {
+                    ExpireSlidingCacheFromMinutes = 4 * 60,
+                    AbsoluteExpirationCacheFromMinutes = 24 * 60
+                });
+
+            if (subscriptionPlans == null || !subscriptionPlans.Any()) 
+                return Result.Ok();
 
             if (request.DurationType.HasValue)
             {
-                query = query.Where(a => a.DurationType == request.DurationType);
+                subscriptionPlans = subscriptionPlans.Where(a => a.DurationType == request.DurationType).ToList();
             }
 
             if (request.SubscriptionType.HasValue)
             {
-                query = query.Where(a => a.Type == request.SubscriptionType);
+                subscriptionPlans = subscriptionPlans.Where(a => a.Type == request.SubscriptionType).ToList();
             }
-            
-            var subscriptionPlans = await query
-                .ProjectTo<SubscriptionViewModel>(Mapper.ConfigurationProvider)
-                .ToListAsync(cancellationToken: cancellationToken);
 
             return subscriptionPlans;
         }

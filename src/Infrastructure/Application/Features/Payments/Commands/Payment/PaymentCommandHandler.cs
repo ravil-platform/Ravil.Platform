@@ -1,9 +1,8 @@
 ﻿using System.Collections;
-using System.Security.Cryptography;
-using Domain.Entities.Subscription;
-using Domain.Entities.Wallets;
-using Microsoft.AspNetCore.Routing;
 using Resources.Messages;
+using Domain.Entities.Wallets;
+using System.Security.Cryptography;
+using Microsoft.AspNetCore.Routing;
 using ViewModels.QueriesResponseViewModel.Payments;
 using ZarinPalDriver;
 using ZarinPalDriver.Models;
@@ -15,7 +14,7 @@ public class PaymentCommandHandler(IMapper mapper, IUnitOfWork unitOfWork, ISmsS
     Logging.Base.ILogger<PaymentCommandHandler> logger)
     : IRequestHandler<PaymentCommand, PaymentActionResponseViewModel>
 {
-    #region ( Properties )
+    #region ( Dependencies )
 
     protected IMapper Mapper { get; } = mapper;
     protected ISmsSender SmsSender { get; } = smsSender;
@@ -85,8 +84,8 @@ public class PaymentCommandHandler(IMapper mapper, IUnitOfWork unitOfWork, ISmsS
                 {
                     SubscriptionId = request.SubscriptionId,
                     UserId = businessOwner!.Id,
-                    StartDate = DateTime.Now,
-                    EndDate = DateTime.Now.AddDays(subscription.DurationTime),
+                    StartDate = DateTime.UtcNow,
+                    EndDate = DateTime.UtcNow.AddDays(subscription.DurationTime),
                     BuyCount = 1,
                     IsActive = true,
                     IsFinally = false,
@@ -99,7 +98,7 @@ public class PaymentCommandHandler(IMapper mapper, IUnitOfWork unitOfWork, ISmsS
                 {
                     Amount = totalAmount,
                     Number = paymentNumber,
-                    PaymentDate = DateTime.Now,
+                    PaymentDate = DateTime.UtcNow,
                     PaymentPortalId = paymentPortal.Id,
                     PaymentMethod = PaymentMethod.OnlinePortal,
                     UserSubscriptionId = newSubscriptionPlan.Id,
@@ -121,7 +120,7 @@ public class PaymentCommandHandler(IMapper mapper, IUnitOfWork unitOfWork, ISmsS
                     #region ( Renewal Subscription )
 
                     currentUserSubscription.UserId = businessOwner!.Id;
-                    currentUserSubscription.EndDate = DateTime.Now.AddDays(subscription.DurationTime);
+                    currentUserSubscription.EndDate = DateTime.UtcNow.AddDays(subscription.DurationTime);
 
                     await UnitOfWork.UserSubscriptionRepository.UpdateAsync(currentUserSubscription);
                     await UnitOfWork.SaveAsync();
@@ -139,8 +138,8 @@ public class PaymentCommandHandler(IMapper mapper, IUnitOfWork unitOfWork, ISmsS
                     {
                         SubscriptionId = request.SubscriptionId,
                         UserId = businessOwner!.Id,
-                        StartDate = DateTime.Now,
-                        EndDate = DateTime.Now.AddDays(subscription.DurationTime),
+                        StartDate = DateTime.UtcNow,
+                        EndDate = DateTime.UtcNow.AddDays(subscription.DurationTime),
                         BuyCount = 1,
                         IsActive = true,
                         IsFinally = false,
@@ -154,7 +153,7 @@ public class PaymentCommandHandler(IMapper mapper, IUnitOfWork unitOfWork, ISmsS
                     {
                         Amount = totalAmount,
                         Number = paymentNumber,
-                        PaymentDate = DateTime.Now,
+                        PaymentDate = DateTime.UtcNow,
                         PaymentPortalId = paymentPortal.Id,
                         PaymentMethod = PaymentMethod.OnlinePortal,
                         UserSubscriptionId = newSubscriptionPlan.Id,
@@ -260,7 +259,7 @@ public class PaymentCommandHandler(IMapper mapper, IUnitOfWork unitOfWork, ISmsS
                             Amount = Convert.ToDecimal(totalAmount * 10),
                             Email = conf.Email,
                             Mobile = conf.Tel,
-                            Description = "خرید اشتراک عضویت ویژه پلتفرم راویل",
+                            Description = "خرید اشتراک عضویت ویژه راویل",
                             CallbackUrl = conf.ZarinpalCallbackUrl,
                             Mode = mode
                         };

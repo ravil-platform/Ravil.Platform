@@ -1,8 +1,11 @@
-﻿using CreateJobBranchViewModel = ViewModels.AdminPanel.Job.CreateJobBranchViewModel;
+﻿using Constants.Caching;
+using Microsoft.Extensions.Caching.Distributed;
 using JsonSerializer = System.Text.Json.JsonSerializer;
+using CreateJobBranchViewModel = ViewModels.AdminPanel.Job.CreateJobBranchViewModel;
 using PhoneNumberInfosViewModel = ViewModels.AdminPanel.Job.PhoneNumberInfosViewModel;
 using SocialMediaInfosViewModel = ViewModels.AdminPanel.Job.SocialMediaInfosViewModel;
 using UpdateJobBranchViewModel = ViewModels.AdminPanel.Job.UpdateJobBranchViewModel;
+using Domain.Entities.Job;
 
 namespace Admin.MVC.Controllers
 {
@@ -13,7 +16,8 @@ namespace Admin.MVC.Controllers
         ISmsSender smsSender,
         UserManager<ApplicationUser> userManager,
         NeshanApiService neshanApiService,
-        Logging.Base.ILogger<JobController> logger)
+        Logging.Base.ILogger<JobController> logger,
+        IDistributedCache distributedCache)
     : BaseController
     {
         #region ( DI )
@@ -21,6 +25,7 @@ namespace Admin.MVC.Controllers
         protected IMapper Mapper { get; } = mapper;
         protected IFtpService FtpService { get; } = ftpService;
         protected ISmsSender SmsSender { get; } = smsSender;
+        protected IDistributedCache DistributedCache { get; } = distributedCache;
         protected UserManager<ApplicationUser> UserManager { get; } = userManager;
         protected NeshanApiService NeshanApiService { get; } = neshanApiService;
         protected Logging.Base.ILogger<JobController> Logger { get; } = logger;
@@ -409,6 +414,16 @@ namespace Admin.MVC.Controllers
 
                 await UnitOfWork.SaveAsync();
 
+                #region ( Remove Cache Data )
+
+                foreach (var jobBranch in jobBranches)
+                {
+                    await DistributedCache.RemoveAsync(key: CacheKeys.GetJobBranchByIdQuery(jobBranch.Id));
+                    await DistributedCache.RemoveAsync(key: CacheKeys.GetJobBranchByRouteQuery(updateJobViewModel.Route!));
+                }
+
+                #endregion
+
                 SuccessAlert();
 
                 if (updateJobViewModel.SendSms)
@@ -468,6 +483,7 @@ namespace Admin.MVC.Controllers
             try
             {
                 await UnitOfWork.JobRepository.BeginTransactionAsync();
+
                 #region ( Entities )
                 //Todo : Remove photos
                 var job = await UnitOfWork.JobRepository.Table.Where(j => j.Id == id).SingleOrDefaultAsync();
@@ -584,7 +600,28 @@ namespace Admin.MVC.Controllers
                 await UnitOfWork.SaveAsync();
                 // Save Finish
                 #endregion
+                
                 await UnitOfWork.JobRepository.CommitTransactionAsync();
+
+                #region ( Remove Cache Data )
+
+                await DistributedCache.RemoveAsync(key: CacheKeys.JobReportQuery(id));
+                await DistributedCache.RemoveAsync(key: CacheKeys.GetJobViewsQuery(id));
+                await DistributedCache.RemoveAsync(key: CacheKeys.JobOverViewQuery(id));
+                await DistributedCache.RemoveAsync(key: CacheKeys.GetRelatedJobsQuery(id));
+                await DistributedCache.RemoveAsync(key: CacheKeys.GetTagsPotentialQuery(id));
+                await DistributedCache.RemoveAsync(key: CacheKeys.GetContactRequestsQuery(id));
+                await DistributedCache.RemoveAsync(key: CacheKeys.GetJobRankingsByFilterQuery(id));
+                await DistributedCache.RemoveAsync(key: CacheKeys.GetJobStatisticsByFilterQuery(id));
+
+                foreach (var jobBranch in jobBranches)
+                {
+                    await DistributedCache.RemoveAsync(key: CacheKeys.GetJobBranchByIdQuery(jobBranch.Id));
+                    await DistributedCache.RemoveAsync(key: CacheKeys.GetReviewsSummeryQuery(jobBranch.Id));
+                    await DistributedCache.RemoveAsync(key: CacheKeys.GetJobBranchByRouteQuery(jobBranch.Route!));
+                }
+
+                #endregion
 
                 SuccessAlert("حذف فیزیکی به طور کامل انجام شد");
             }
@@ -840,6 +877,12 @@ namespace Admin.MVC.Controllers
                 await UnitOfWork.SaveAsync();
 
                 SuccessAlert();
+
+                #region ( Remove Cache Data )
+
+                await DistributedCache.RemoveAsync(key: CacheKeys.GetAllKeywordsQuery());
+
+                #endregion
             }
             catch (Exception exception)
             {
@@ -867,6 +910,12 @@ namespace Admin.MVC.Controllers
             {
                 await UnitOfWork.KeywordRepository.DeleteAsync(keyword);
                 await UnitOfWork.SaveAsync();
+
+                #region ( Remove Cache Data )
+
+                await DistributedCache.RemoveAsync(key: CacheKeys.GetAllKeywordsQuery());
+
+                #endregion
             }
             catch (Exception exception)
             {
@@ -903,6 +952,12 @@ namespace Admin.MVC.Controllers
             }
 
             await UnitOfWork.KeywordRepository.CommitTransactionAsync();
+
+            #region ( Remove Cache Data )
+
+            await DistributedCache.RemoveAsync(key: CacheKeys.GetAllKeywordsQuery());
+
+            #endregion
 
             return RedirectToAction("IndexKeyword");
         }
@@ -1286,6 +1341,13 @@ namespace Admin.MVC.Controllers
                 await UnitOfWork.JobBranchRepository.DeleteAsync(jobBranch);
                 await UnitOfWork.SaveAsync();
 
+                #region ( Remove Cache Data )
+
+                await DistributedCache.RemoveAsync(key: CacheKeys.GetJobBranchByIdQuery(jobBranch.Id));
+                await DistributedCache.RemoveAsync(key: CacheKeys.GetJobBranchByRouteQuery(jobBranch.Route!));
+
+                #endregion
+
                 return RedirectToAction("IndexJobBranch", new { jobId = jobId });
             }
 
@@ -1356,6 +1418,17 @@ namespace Admin.MVC.Controllers
                 await UnitOfWork.SaveAsync();
 
                 await FtpService.DeleteFileToFtpServer(Paths.JobBranch, imageGallery.ImageName);
+
+                #region ( Remove Cache Data )
+
+                var jobBranch = await UnitOfWork.JobBranchRepository.GetJobBranchById(imageGallery.JobBranchId, CancellationToken.None);
+                if (jobBranch is not null)
+                {
+                    await DistributedCache.RemoveAsync(key: CacheKeys.GetJobBranchByIdQuery(jobBranch.Id));
+                    await DistributedCache.RemoveAsync(key: CacheKeys.GetJobBranchByRouteQuery(jobBranch.Route!));
+                }
+
+                #endregion
             }
             catch (Exception exception)
             {

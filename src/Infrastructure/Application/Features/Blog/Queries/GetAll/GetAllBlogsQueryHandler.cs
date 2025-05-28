@@ -1,31 +1,36 @@
-﻿using AutoMapper.QueryableExtensions;
-using Microsoft.Extensions.Caching.Memory;
+﻿using Constants.Caching;
+using AutoMapper.QueryableExtensions;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace Application.Features.Blog.Queries.GetAll;
 
-public class GetAllBlogsQueryHandler(IUnitOfWork unitOfWork, IMapper mapper, IMemoryCache memoryCache)
+public class GetAllBlogsQueryHandler(IUnitOfWork unitOfWork, IMapper mapper, IDistributedCache distributedCache)
     : IRequestHandler<GetAllBlogsQuery, List<BlogViewModel>>
 {
-    protected IMemoryCache MemoryCache { get; } = memoryCache;
+    #region ( Dependencies )
+
+    protected IDistributedCache DistributedCache { get; } = distributedCache;
     protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
     protected IMapper Mapper { get; } = mapper;
 
+    #endregion
+
     public async Task<Result<List<BlogViewModel>>> Handle(GetAllBlogsQuery request, CancellationToken cancellationToken)
     {
-        if (!MemoryCache.TryGetValue(nameof(GetAllBlogsQuery), out List<BlogViewModel>? blogs))
+        #region ( Get All Blogs Query )
+
+        var blogs = await DistributedCache.GetOrSet(CacheKeys.GetAllBlogsQuery(),
+        async () => await UnitOfWork.BlogRepository.TableNoTracking
+            .ProjectTo<BlogViewModel>(Mapper.ConfigurationProvider)
+            .ToListAsync(cancellationToken: cancellationToken));
+
+        if (blogs is null)
         {
-            var blogEntities = await UnitOfWork.BlogRepository.GetAllAsync();
-
-            blogs = Mapper.Map<List<BlogViewModel>>(blogEntities);
-
-            MemoryCache.Set(nameof(GetAllBlogsQuery), blogs, options: new MemoryCacheEntryOptions
-            {
-                Priority = CacheItemPriority.High,
-                SlidingExpiration = TimeSpan.FromDays(7),
-                AbsoluteExpirationRelativeToNow = TimeSpan.FromDays(7),
-            });
+            return Result.Ok(new List<BlogViewModel>());
         }
 
         return blogs!;
+
+        #endregion
     }
 }

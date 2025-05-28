@@ -1,16 +1,9 @@
-using Application.Profiles;
-using Application.Services.NehsanApi;
-using Application.Services.SMS;
 using Common.Options;
-using Common.Utilities.Services.FTP;
-using Common.Utilities.Services.FTP.Models;
 using Logging.Adapters;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using Persistence.Context;
 using System.Reflection;
+using Persistence.Context;
+using Application.Profiles;
 using Application.Middlewares;
-using Constants.Security;
 
 #region ( Services )
 
@@ -26,6 +19,21 @@ services.Configure<SiteSettings>(configuration.GetSection(nameof(SiteSettings)))
 services.AddControllersWithViews();
 
 #region ( Application Service In API )
+
+#region ( Caching Services )
+
+//services.AddMemoryCache();
+//services.AddDistributedMemoryCache();
+services.AddDistributedRedisCache(options =>
+{
+    options.Configuration = environment.IsDevelopment() ? "localhost:6379" : "";
+});
+
+//services.AddSingleton<IConnectionMultiplexer>(sp =>
+//    ConnectionMultiplexer.Connect(environment.IsDevelopment() ? "localhost:6379" : "")
+//);
+
+#endregion
 
 #region ( CORS Service )
 

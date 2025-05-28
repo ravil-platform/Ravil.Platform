@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using AngleSharp.Common;
-using Application.Features.GuideLine.Commands.GuideLineCompletion;
+using Constants.Caching;
+using Microsoft.Extensions.Caching.Distributed;
 using PhoneNumberInfosViewModel = ViewModels.QueriesResponseViewModel.Job.PhoneNumberInfosViewModel;
 using SocialMediaInfosViewModel = ViewModels.QueriesResponseViewModel.Job.SocialMediaInfosViewModel;
 
@@ -11,10 +12,11 @@ public class UpdateBusinessCommandHandler(
     ISmsSender smsSender,
     IUnitOfWork unitOfWork,
     IFtpService ftpService,
+    IDistributedCache distributedCache,
     UserManager<ApplicationUser> userManager,
     IHttpContextAccessor httpContextAccessor,
-    Logging.Base.ILogger<GuideLineCompletionCommandHandler> logger)
-    : IRequestHandler<UpdateBusinessCommand, JobBranchViewModel>
+    Logging.Base.ILogger<UpdateBusinessCommandHandler> logger)
+: IRequestHandler<UpdateBusinessCommand, JobBranchViewModel>
 {
     #region ( Dependencies )
 
@@ -22,9 +24,10 @@ public class UpdateBusinessCommandHandler(
     protected ISmsSender SmsSender { get; } = smsSender;
     protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
     protected IFtpService FtpService { get; } = ftpService;
+    protected IDistributedCache DistributedCache { get; } = distributedCache;
     protected UserManager<ApplicationUser> UserManager { get; } = userManager;
     protected IHttpContextAccessor HttpContextAccessor { get; } = httpContextAccessor;
-    protected Logging.Base.ILogger<GuideLineCompletionCommandHandler> Logger { get; } = logger;
+    protected Logging.Base.ILogger<UpdateBusinessCommandHandler> Logger { get; } = logger;
 
     #endregion
 
@@ -34,7 +37,7 @@ public class UpdateBusinessCommandHandler(
 
         try
         {
-            await UnitOfWork.JobRepository.BeginTransactionAsync();
+            await UnitOfWork.BeginTransactionAsync(cancellationToken: cancellationToken);
 
             var itemJobBranch = await UnitOfWork.JobBranchRepository.GetByIdAsync(request.JobBranchId!);
             if (itemJobBranch is null)
@@ -280,14 +283,21 @@ public class UpdateBusinessCommandHandler(
 
             #endregion
 
-            await UnitOfWork.JobRepository.CommitTransactionAsync();
+            await UnitOfWork.CommitTransactionAsync(cancellationToken: cancellationToken);
+
+            #region ( Remove Cache Data )
+
+            await DistributedCache.RemoveAsync(key: CacheKeys.GetJobBranchByIdQuery(request.JobBranchId!), cancellationToken);
+            await DistributedCache.RemoveAsync(key: CacheKeys.GetJobBranchByRouteQuery(itemJobBranch.Route!), cancellationToken);
+
+            #endregion
 
             var result = Mapper.Map<JobBranchViewModel>(itemJobBranch);
             return result;
         }
         catch (Exception e)
         {
-            await UnitOfWork.JobRepository.RollBackTransactionAsync();
+            await UnitOfWork.RollbackTransactionAsync(cancellationToken: cancellationToken);
             Logger.LogError(message: e.InnerException?.Message ?? e.Message, parameters: new Hashtable(request.ToDictionary()));
             throw;
         }

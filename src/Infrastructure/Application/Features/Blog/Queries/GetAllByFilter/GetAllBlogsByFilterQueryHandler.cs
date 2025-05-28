@@ -1,16 +1,19 @@
-﻿namespace Application.Features.Blog.Queries.GetAllByFilter;
+﻿using Microsoft.Extensions.Caching.Distributed;
 
-public class GetAllBlogsByFilterQueryHandler : IRequestHandler<GetAllBlogsByFilterQuery, BlogFilterViewModel>
+namespace Application.Features.Blog.Queries.GetAllByFilter;
+
+public class GetAllBlogsByFilterQueryHandler(IDistributedCache distributedCache, IUnitOfWork unitOfWork, IMapper mapper)
+    : IRequestHandler<GetAllBlogsByFilterQuery, BlogFilterViewModel>
 {
-    protected BlogFilterViewModel BlogFilterViewModel { get; set; }
-    protected IUnitOfWork UnitOfWork { get; }
-    protected IMapper Mapper { get; }
+    #region ( Dependencies )
 
-    public GetAllBlogsByFilterQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
-    {
-        UnitOfWork = unitOfWork;
-        Mapper = mapper;
-    }
+    protected BlogFilterViewModel BlogFilterViewModel { get; set; }
+
+    protected IDistributedCache DistributedCache { get; } = distributedCache;
+    protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
+    protected IMapper Mapper { get; } = mapper;
+
+    #endregion
 
     public async Task<Result<BlogFilterViewModel>> Handle(GetAllBlogsByFilterQuery request, CancellationToken cancellationToken)
     {

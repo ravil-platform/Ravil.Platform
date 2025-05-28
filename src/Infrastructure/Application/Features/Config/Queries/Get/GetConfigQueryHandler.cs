@@ -1,18 +1,23 @@
-﻿namespace Application.Features.Config.Queries.Get;
+﻿using Constants.Caching;
+using Microsoft.Extensions.Caching.Distributed;
 
-public class GetConfigQueryHandler : IRequestHandler<GetConfigQuery, ConfigViewModel>
+namespace Application.Features.Config.Queries.Get;
+
+public class GetConfigQueryHandler(IMapper mapper, IUnitOfWork unitOfWork, IDistributedCache distributedCache)
+    : IRequestHandler<GetConfigQuery, ConfigViewModel>
 {
-    protected IMapper Mapper { get; }
-    protected IUnitOfWork UnitOfWork { get; }
-    public GetConfigQueryHandler(IMapper mapper, IUnitOfWork unitOfWork)
-    {
-        Mapper = mapper;
-        UnitOfWork = unitOfWork;
-    }
+    #region ( Dependencies )
+
+    protected IMapper Mapper { get; } = mapper;
+    protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
+    protected IDistributedCache DistributedCache { get; } = distributedCache;
+
+    #endregion
 
     public async Task<Result<ConfigViewModel>> Handle(GetConfigQuery request, CancellationToken cancellationToken)
     {
-        var result = await UnitOfWork.ConfigRepository.GetFirstAsync();
+        var result = await DistributedCache.GetOrSet(CacheKeys.GetConfigQuery(),
+            async () => await UnitOfWork.ConfigRepository.GetFirstAsync());
 
         var configViewModel = Mapper.Map<ConfigViewModel>(result);
 

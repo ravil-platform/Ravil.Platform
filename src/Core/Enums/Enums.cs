@@ -4,6 +4,16 @@ using Resources.General;
 
 namespace Enums
 {
+    public enum DateRange
+    {
+        WeeklyDays = 7,
+        MonthlyDays = 30,
+        ThirdMonthDays = 90,
+        SixMonthDays = 180,
+        NineMonthDays = 270,
+        OneYearDays = 365
+    }
+
     public enum FaqType
     {
         [Display(ResourceType = typeof(DisplayNames), Name = nameof(DisplayNames.Home))]

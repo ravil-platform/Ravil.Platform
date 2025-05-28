@@ -1,32 +1,42 @@
-﻿namespace Application.Features.Job.Queries.GetJobBranchByRoute;
+﻿using Constants.Caching;
+using Resources.Messages;
+using Microsoft.Extensions.Caching.Distributed;
 
-public class GetJobBranchByRouteQueryHandler : IRequestHandler<GetJobBranchByRouteQuery, JobBranchViewModel>
+namespace Application.Features.Job.Queries.GetJobBranchByRoute;
+
+public class GetJobBranchByRouteQueryHandler(IMapper mapper,
+    IUnitOfWork unitOfWork, IDistributedCache distributedCache)
+    : IRequestHandler<GetJobBranchByRouteQuery, JobBranchViewModel>
 {
-    protected IMapper Mapper { get; }
-    protected IUnitOfWork UnitOfWork { get; }
+    #region ( Dependencies )
 
-    public GetJobBranchByRouteQueryHandler(IMapper mapper, IUnitOfWork unitOfWork)
-    {
-        Mapper = mapper;
-        UnitOfWork = unitOfWork;
-    }
+    protected IMapper Mapper { get; } = mapper;
+    protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
+    protected IDistributedCache DistributedCache { get; } = distributedCache;
 
+    #endregion
 
     public async Task<Result<JobBranchViewModel>> Handle(GetJobBranchByRouteQuery request, CancellationToken cancellationToken)
     {
-        var result = await UnitOfWork.JobBranchRepository.TableNoTracking.Include(a => a.JobTimeWorks).Include(a => a.Address.City)
-            .Include(a => a.Address).ThenInclude(a => a.Location).Include(a => a.JobBranchGalleries)
-            .Include(a => a.Job).ThenInclude(a => a.JobCategories).ThenInclude(a => a.Category)
-            .Where(a => a.IsDeleted != null && !a.IsDeleted.Value).Where(a => a.Job.Status == JobBranchStatus.Accepted)
-            .FirstOrDefaultAsync(current => current.Route!.Equals(request.Route) || current.Title!.Equals(request.Route.SlugToText()), cancellationToken: cancellationToken);
+        #region ( Get JobBranch By Route Query )
+
+        var result = await DistributedCache.GetOrSet(CacheKeys.GetJobBranchByRouteQuery(request.Route),
+            async () => await UnitOfWork.JobBranchRepository.GetJobBranchByRoute(request.Route, cancellationToken),
+            options: new DistributedCache.CacheOptions
+            {
+                ExpireSlidingCacheFromMinutes = 4 * 60,
+                AbsoluteExpirationCacheFromMinutes = 12 * 60
+            });
 
         if (result is null)
         {
-            return Result.Fail(Resources.Messages.Validations.NotFound);
+            return Result.Fail(Validations.NotFound);
         }
 
         var jobBranchViewModel = Mapper.Map<JobBranchViewModel>(result);
 
         return jobBranchViewModel;
+
+        #endregion
     }
 }

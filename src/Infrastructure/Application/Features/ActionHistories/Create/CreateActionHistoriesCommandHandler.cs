@@ -1,16 +1,20 @@
 ﻿using AngleSharp.Common;
+using Constants.Caching;
 using System.Collections;
 using Domain.Entities.Histories.Enums;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace Application.Features.ActionHistories.Create;
 
-public class CreateActionHistoriesCommandHandler(IUnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor,
+public class CreateActionHistoriesCommandHandler(IUnitOfWork unitOfWork,
+    IDistributedCache distributedCache, IHttpContextAccessor httpContextAccessor,
     Logging.Base.ILogger<CreateActionHistoriesCommandHandler> logger)
-    : IRequestHandler<CreateActionHistoriesCommand>
+: IRequestHandler<CreateActionHistoriesCommand>
 {
-    #region ( Properties )
+    #region ( Dependencies )
 
     protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
+    protected IDistributedCache DistributedCache { get; } = distributedCache;
     protected IHttpContextAccessor HttpContextAccessor { get; } = httpContextAccessor;
     protected Logging.Base.ILogger<CreateActionHistoriesCommandHandler> Logger { get; } = logger;
 
@@ -18,7 +22,7 @@ public class CreateActionHistoriesCommandHandler(IUnitOfWork unitOfWork, IHttpCo
 
     public async Task<Result> Handle(CreateActionHistoriesCommand request, CancellationToken cancellationToken)
     {
-        #region ( Create Action Histories Command)
+        #region ( Create Action Histories Command )
 
         var result = new Result();
         var userIp = HttpContextAccessor.HttpContext?.Connection.RemoteIpAddress?.ToString();
@@ -129,6 +133,17 @@ public class CreateActionHistoriesCommandHandler(IUnitOfWork unitOfWork, IHttpCo
                 }
 
                 await UnitOfWork.JobInfoRepository.InsertAsync(jobInfo);
+
+                #endregion
+
+                #region ( Remove Cache Data )
+
+                await DistributedCache.RemoveAsync(key: CacheKeys.GetJobViewsQuery(Convert.ToInt32(actionHistory.JobId)), cancellationToken);
+                await DistributedCache.RemoveAsync(key: CacheKeys.JobOverViewQuery(Convert.ToInt32(actionHistory.JobId)), cancellationToken);
+                await DistributedCache.RemoveAsync(key: CacheKeys.GetTagsPotentialQuery(Convert.ToInt32(actionHistory.JobId)), cancellationToken);
+                await DistributedCache.RemoveAsync(key: CacheKeys.GetJobRankingsByFilterQuery(Convert.ToInt32(actionHistory.JobId)), cancellationToken);
+                await DistributedCache.RemoveAsync(key: CacheKeys.GetContactRequestsQuery(Convert.ToInt32(actionHistory.JobId)), cancellationToken);
+                await DistributedCache.RemoveAsync(key: CacheKeys.GetJobStatisticsByFilterQuery(Convert.ToInt32(actionHistory.JobId)), cancellationToken);
 
                 #endregion
 
