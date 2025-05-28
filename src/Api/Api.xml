@@ -124,6 +124,17 @@
             <param name="query"></param>
             <returns></returns>
         </member>
+        <member name="T:Api.Controllers.V1.CategoriesController">
+            <inheritdoc />
+        </member>
+        <member name="M:Api.Controllers.V1.CategoriesController.#ctor(MediatR.IMediator,Logging.Base.ILogger{Api.Controllers.V1.CategoriesController},AutoMapper.IMapper)">
+            <summary>
+            Categories Controller
+            </summary>
+            <param name="mediator"></param>
+            <param name="logger"></param>
+            <param name="mapper"></param>
+        </member>
         <member name="M:Api.Controllers.V1.CategoriesController.GetAll(Application.Features.Category.Queries.GetAll.GetAllCategoriesQuery)">
             <summary>
             Returns all categories
