@@ -7,6 +7,7 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
 COPY --from=build /app/publish/admin ./admin
 COPY --from=build /app/publish/admin/wwwroot ./wwwroot
+COPY --from=build /app/publish/admin/appsettings.json ./admin/appsettings.json
 EXPOSE 8080
 RUN adduser --disabled-password --home /app --gecos '' appuser \
     && chown -R appuser:appuser /app
