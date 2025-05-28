@@ -20,7 +20,9 @@ public class GetAllBlogsByFilterQueryHandler(IDistributedCache distributedCache,
         BlogFilterViewModel = Mapper.Map<BlogFilterViewModel>(request);
 
         var query = UnitOfWork.BlogRepository.TableNoTracking
-            .Include(a => a.BlogUserLikes).AsQueryable();
+            .Include(a => a.BlogUserLikes)
+            .AsQueryable();
+
 
         //TODO where....
 

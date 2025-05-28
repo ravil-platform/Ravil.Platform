@@ -112,17 +112,18 @@ namespace Common.Utilities.Paging
         {
             if (!hasNoPagination.HasValue)
             {
-                DtoEntities = queryable
+                var query = queryable
                     .Skip(StartPosition)
                     .Take(PageSize)
-                    .ProjectTo<TDto>(mapper.ConfigurationProvider)
                     .ToList();
+
+                DtoEntities = mapper.Map<List<TDto>>(query);
             }
             else
             {
-                DtoEntities = queryable
-                    .ProjectTo<TDto>(mapper.ConfigurationProvider)
-                    .ToList();
+                var query = queryable.ToList();
+
+                DtoEntities = mapper.Map<List<TDto>>(query);
             }
 
             return this;

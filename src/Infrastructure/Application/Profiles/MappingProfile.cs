@@ -23,7 +23,10 @@ namespace Application.Profiles
             CreateMap<ApplicationUser, UpdateUserViewModel>().ReverseMap();
             CreateMap<ApplicationUser, UpdateUserInfoCommand>().ReverseMap();
 
-            CreateMap<ApplicationUser, RegisterOrLoginUserCommand>().ReverseMap();
+            CreateMap<ApplicationUser, RegisterOrLoginUserCommand>()
+                .ForMember(dest => dest.SmsCode, opt => opt.Ignore())
+                .ReverseMap();
+
             CreateMap<ApplicationUser, RegisterOrLoginUserResponseViewModel>().ReverseMap();
 
             CreateMap<ApplicationUser, ApplicationUserViewModel>()

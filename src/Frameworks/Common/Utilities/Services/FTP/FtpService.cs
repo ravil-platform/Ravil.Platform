@@ -1,5 +1,4 @@
-﻿using System.Net;
-using Common.Utilities.Extensions;
+﻿using Common.Utilities.Extensions;
 using Common.Utilities.Services.FTP.Models;
 using FluentFTP;
 using FluentFTP.Exceptions;
@@ -14,7 +13,7 @@ namespace Common.Utilities.Services.FTP;
 
 public class FtpService : object, IFtpService
 {
-    #region ( Feildes )
+    #region ( Fields )
 
     public int DefaultPermission = 777;
     public const string segmentSeperator = "\\";
@@ -73,6 +72,33 @@ public class FtpService : object, IFtpService
 
     #endregion
 
+    #region ( EnsureFtpConnection )
+    /// <summary>
+    /// بررسی اتصال و تلاش برای اتصال مجدد در صورت نیاز (sync)
+    /// </summary>
+    private void EnsureFtpConnection()
+    {
+        try
+        {
+            if (FtpClient == null)
+                throw new InvalidOperationException("FtpClient is not initialized");
+
+            if (!FtpClient.IsConnected || !FtpClient.IsAuthenticated)
+            {
+                if (FtpClient.IsConnected)
+                    FtpClient.Disconnect();
+
+                FtpClient.Connect();
+            }
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, $"خطا در اتصال به FTP: {ex.Message}");
+            throw;
+        }
+    }
+    #endregion
+
     #region ( Set Ftp Connection )
     /// <summary>
     /// تنظیم و اتصال به سرور FTP
@@ -80,50 +106,37 @@ public class FtpService : object, IFtpService
     /// <param name="path"> مسیر ریشه اصلی</param>
     /// <returns>موفقیت و یا عدم موفقیت عملیات را بازگشست میدهد</returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public Task<bool> SetFtpConnection(string path)
+    public async Task<bool> SetFtpConnection(string path)
     {
         if (string.IsNullOrWhiteSpace(path))
-        {
-            return Task.FromResult(false);
-        }
-
-        FtpClient.Encoding = Encoding.UTF8;
-        FtpClient.Credentials = new NetworkCredential(FTPConnectionOptions.UserName,
-            FTPConnectionOptions.Password, FTPConnectionOptions.Server);
+            return false;
 
         try
         {
-            FtpClient.Connect();
+            EnsureFtpConnection();
 
-            if (FtpClient.IsConnected)
+            string basePath = $"{rootDirectory.TrimEnd('/')}/{path.TrimStart('/')}";
+
+            if (!FtpClient.DirectoryExists(rootDirectory))
             {
-                //var workingDirectory = FtpClient.GetWorkingDirectory();
-
-                if (!FtpClient.DirectoryExists(rootDirectory))
-                {
-                    FtpClient.CreateDirectory(rootDirectory);
-                    FtpClient.SetFilePermissions(rootDirectory, DefaultPermission);
-                }
-
-                if (!FtpClient.DirectoryExists(Path.Combine(rootDirectory, path)))
-                {
-                    FtpClient.CreateDirectory(Path.Combine(rootDirectory, path));
-                    FtpClient.SetFilePermissions(Path.Combine(rootDirectory, path), DefaultPermission);
-                }
-
-                return Task.FromResult(true);
+                FtpClient.CreateDirectory(rootDirectory);
+                FtpClient.SetFilePermissions(rootDirectory, DefaultPermission);
             }
+
+            if (!FtpClient.DirectoryExists(basePath))
+            {
+                FtpClient.CreateDirectory(basePath);
+                FtpClient.SetFilePermissions(basePath, DefaultPermission);
+            }
+
+            return true;
         }
-        catch (FtpException exception)
+        catch (FtpException ex)
         {
             FtpClient.Disconnect();
-
-            Logger.LogError(exception, exception.InnerException?.Message ?? exception.Message);
-
-            return Task.FromResult(false);
+            Logger.LogError(ex, $"FTP Error: {ex.Message} - {ex.InnerException?.Message}");
+            return false;
         }
-
-        return Task.FromResult(false);
     }
     #endregion
 
@@ -313,7 +326,7 @@ public class FtpService : object, IFtpService
             }
             #endregion
         }
-        catch(FtpCommandException ex)
+        catch (FtpCommandException ex)
         {
             Logger.LogError(ex, ex.InnerException?.Message ?? ex.Message,
             new Hashtable
@@ -325,7 +338,7 @@ public class FtpService : object, IFtpService
 
             return false;
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Logger.LogError(ex, ex.InnerException?.Message ?? ex.Message,
             new Hashtable
@@ -342,6 +355,7 @@ public class FtpService : object, IFtpService
     }
 
     #endregion
+
 
     #region ( Download File From FtpServer )
 
