@@ -1,4 +1,8 @@
-﻿namespace ViewModels.QueriesResponseViewModel.User
+﻿using ViewModels.AdminPanel.Filter;
+using ViewModels.QueriesResponseViewModel.Subscription;
+using ViewModels.QueriesResponseViewModel.Wallet;
+
+namespace ViewModels.QueriesResponseViewModel.User
 {
     public class ApplicationUserViewModel
     {
@@ -40,5 +44,9 @@
         public UserNameType UserNameType { get; set; } = UserNameType.PhoneNumber;
 
         public GenderPerson Gender { get; set; }
+        
+        public WalletViewModel? Wallet { get; set; }
+
+        public UserSubscriptionViewModel? UserSubscriptionPlan { get; set; }
     }
 }

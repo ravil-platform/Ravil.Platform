@@ -98,4 +98,24 @@ public class JobBranchRepository : Repository<JobBranch>, IJobBranchRepository
 
         return jobBranches;
     }
+    
+    public async Task<JobBranch?> GetJobBranchByRoute(string route, CancellationToken cancellationToken)
+    {
+        return await ApplicationDbContext.JobBranch.AsNoTracking().Include(a => a.JobKeywords)!.ThenInclude(a => a.Keyword)
+            .Include(a => a.JobTimeWorks).Include(a => a.Address.City)
+            .Include(a => a.Address).ThenInclude(a => a.Location).Include(a => a.JobBranchGalleries)
+            .Include(a => a.Job).ThenInclude(a => a.JobCategories).ThenInclude(a => a.Category)
+            .Where(a => a.IsDeleted != null && !a.IsDeleted.Value).Where(a => a.Status == JobBranchStatus.Accepted || a.Job.Status == JobBranchStatus.Accepted)
+            .FirstOrDefaultAsync(current => current.Route!.Equals(route) || current.Title!.Equals(route.SlugToText()), cancellationToken: cancellationToken);
+    }
+    
+    public async Task<JobBranch?> GetJobBranchById(string id, CancellationToken cancellationToken)
+    {
+        return await ApplicationDbContext.JobBranch.AsNoTracking().Include(a => a.JobTimeWorks)
+            .Include(a => a.Address).ThenInclude(a => a.Location).Include(a => a.JobBranchGalleries)
+            .Include(a => a.Job).ThenInclude(a => a.JobCategories).ThenInclude(a => a.Category)
+            .Where(a => a.Job.Status == JobBranchStatus.Accepted || a.Status == JobBranchStatus.Accepted)
+            .Where(a => a.IsDeleted != null && !a.IsDeleted.Value && a.Id.Equals(id))
+            .SingleOrDefaultAsync(cancellationToken: cancellationToken);
+    }
 }

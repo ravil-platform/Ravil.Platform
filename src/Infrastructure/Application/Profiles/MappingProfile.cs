@@ -1,6 +1,8 @@
-﻿using ViewModels.AdminPanel.Comment;
+﻿using Domain.Entities.Wallets;
+using ViewModels.AdminPanel.Comment;
 using ViewModels.AdminPanel.PanelTutorial;
 using ViewModels.QueriesResponseViewModel.Payments;
+using ViewModels.QueriesResponseViewModel.Wallet;
 using CreateJobBranchViewModel = ViewModels.QueriesResponseViewModel.Job.CreateJobBranchViewModel;
 using CreateJobViewModel = ViewModels.QueriesResponseViewModel.Job.CreateJobViewModel;
 using JsonSerializer = System.Text.Json.JsonSerializer;
@@ -24,7 +26,18 @@ namespace Application.Profiles
             CreateMap<ApplicationUser, RegisterOrLoginUserCommand>().ReverseMap();
             CreateMap<ApplicationUser, RegisterOrLoginUserResponseViewModel>().ReverseMap();
 
-            CreateMap<ApplicationUser, ApplicationUserViewModel>().ReverseMap();
+            CreateMap<ApplicationUser, ApplicationUserViewModel>()
+                .ForMember(dest => dest.UserSubscriptionPlan, expression =>
+                {
+                    expression.Condition(a => a.UserSubscriptions != null);
+                    expression.MapFrom(a => a.UserSubscriptions.FirstOrDefault(s => s.IsActive && s.IsFinally && s.EndDate.Day >= DateTime.UtcNow.Day));
+                })
+                .ForMember(dest => dest.Wallet, expression =>
+                {
+                    expression.Condition(a => a.Wallet != null);
+                    expression.MapFrom(a => a.Wallet);
+                })
+                .ReverseMap();
 
             CreateMap<AddToBookMarkCommand, UserBookMark>().ReverseMap();
             CreateMap<AddBlogLikeCommand, UserBlogLike>().ReverseMap();
@@ -298,6 +311,20 @@ namespace Application.Profiles
                 .ForMember(src => src.CategoryId, expression => expression.MapFrom(a => a.Id))
                 .ReverseMap();
 
+            CreateMap<Keyword, JobKeywordViewModel>().ReverseMap();
+            CreateMap<JobKeyword, KeywordViewModel>()
+                .ForMember(src => src.Id, expression => expression.MapFrom(a => a.Keyword.Id))
+                .ForMember(src => src.Slug, expression => expression.MapFrom(a => a.Keyword.Slug))
+                .ForMember(src => src.Title, expression => expression.MapFrom(a => a.Keyword.Title))
+                .ForMember(src => src.IsActive, expression => expression.MapFrom(a => a.Keyword.IsActive))
+                .ForMember(src => src.IsCategory, expression => expression.MapFrom(a => a.Keyword.IsCategory))
+                .ForMember(src => src.CategoryId, expression => expression.MapFrom(a => a.Keyword.CategoryId))
+                .ReverseMap()
+                .ForMember(src => src.Keyword, expression =>
+                {
+                    expression.MapFrom(a => a);
+                });
+
             CreateMap<Keyword, JobTagsViewModel>().ReverseMap();
             CreateMap<Keyword, KeywordViewModel>()
                 .ForMember(src => src.Category, expression =>
@@ -340,8 +367,8 @@ namespace Application.Profiles
                 })
                 .ForMember(src => src.Keywords, expression =>
                 {
-                    expression.Condition(a => a.JobTimeWorks != null && a.JobKeywords.Any());
-                    expression.MapFrom(dest => dest.JobKeywords.Select(a => a.Keyword));
+                    expression.Condition(a => a.JobKeywords != null && a.JobKeywords.Any());
+                    expression.MapFrom(a => a.JobKeywords.Select(s => s.Keyword));
                 })
                 .ForMember(src => src.IsAds, expression =>
                 {
@@ -622,6 +649,12 @@ namespace Application.Profiles
             #region ( Discount )
             CreateMap<PromotionCode, CreateDiscountViewModel>().ReverseMap();
             CreateMap<PromotionCode, UpdateDiscountViewModel>().ReverseMap();
+            #endregion
+
+            #region ( Wallet )
+
+            CreateMap<Wallet, WalletViewModel>().ReverseMap();
+
             #endregion
 
             CreateMap(typeof(CustomResult<>), typeof(Result<>)).ReverseMap();

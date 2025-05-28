@@ -1,20 +1,23 @@
 ﻿using System.Collections;
 using AngleSharp.Common;
+using Constants.Caching;
 using Resources.Messages;
-using ViewModels.QueriesResponseViewModel.Analytics;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace Application.Features.Job.Queries.GetJobOverView;
 
 public class JobOverViewQueryHandler(IMapper mapper, IUnitOfWork unitOfWork,
     Logging.Base.ILogger<JobOverViewQueryHandler> logger,
     UserManager<ApplicationUser> userManager,
-    IHttpContextAccessor httpContextAccessor)
-    : IRequestHandler<JobOverViewQuery, JobOverViewViewModel>
+    IHttpContextAccessor httpContextAccessor,
+    IDistributedCache distributedCache)
+: IRequestHandler<JobOverViewQuery, JobOverViewViewModel>
 {
-    #region ( Properties )
-
+    #region ( Dependencies )
+    
     protected IMapper Mapper { get; } = mapper;
     protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
+    protected IDistributedCache DistributedCache { get; } = distributedCache;
     protected UserManager<ApplicationUser> UserManager { get; } = userManager;
     protected IHttpContextAccessor HttpContextAccessor { get; } = httpContextAccessor;
     protected HttpContext? HttpContext { get; } = httpContextAccessor.HttpContext;
@@ -38,24 +41,41 @@ public class JobOverViewQueryHandler(IMapper mapper, IUnitOfWork unitOfWork,
             }
 
             var businessOwnerId = UserManager.GetUserId(HttpContext!.User);
-            var businessOwner = await UnitOfWork.ApplicationUserRepository.TableNoTracking
-                .SingleOrDefaultAsync(a => a.Id.Equals(businessOwnerId), cancellationToken: cancellationToken);
+            var businessOwner = await DistributedCache.GetOrSet(CacheKeys.GetUserByIdQuery(businessOwnerId!),
+                async () => await UserManager.FindByIdAsync(businessOwnerId!),
+                options: new DistributedCache.CacheOptions
+                {
+                    ExpireSlidingCacheFromMinutes = 4 * 60,
+                    AbsoluteExpirationCacheFromMinutes = 24 * 60
+                });
 
             if (businessOwner is null)
                 return Result.Fail(Validations.BadRequestException);
 
             #endregion
+            
+            var jobInfos = await DistributedCache.GetOrSet(key: CacheKeys.JobOverViewQuery(request.JobId),
+                func: async () =>
+                {
+                    return await UnitOfWork.JobInfoRepository.TableNoTracking
+                        .Where(a => a.JobId == request.JobId)
+                        .ToListAsync(cancellationToken: cancellationToken);
+                },
+                options: new DistributedCache.CacheOptions
+                {
+                    ExpireSlidingCacheFromMinutes = 4 * 60,
+                    AbsoluteExpirationCacheFromMinutes = 24 * 60
+                });
 
-            var jobInfos = await UnitOfWork.JobInfoRepository.TableNoTracking
-                .Where(a => a.JobId == request.JobId)
-                .ToListAsync(cancellationToken: cancellationToken);
+            if (jobInfos is null) return result;
 
             var info = new JobOverViewViewModel();
             info.TotalViewCount = jobInfos.Sum(a => a.Visit);
-            info.TotalContactRequestCount = jobInfos.Sum(a => a.ClickOnCall) +
-                jobInfos.Sum(a => a.ClickOnMap) + jobInfos.Sum(a => a.ClickOnChat);
+            info.TotalContactRequestCount = jobInfos.Sum(a => a.ClickOnCall)
+                + jobInfos.Sum(a => a.ClickOnMap)
+                + jobInfos.Sum(a => a.ClickOnChat);
 
-
+            
             result.WithValue(info);
             return result;
         }

@@ -1,20 +1,24 @@
-﻿using System.Collections;
-using AngleSharp.Common;
-using AutoMapper.QueryableExtensions;
+﻿using AngleSharp.Common;
+using Constants.Caching;
+using System.Collections;
 using Resources.Messages;
+using AutoMapper.QueryableExtensions;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace Application.Features.Job.Queries.GetJobStatisticsByFilter;
 
 public class GetJobStatisticsByFilterQueryHandler(IMapper mapper, IUnitOfWork unitOfWork,
     Logging.Base.ILogger<GetJobStatisticsByFilterQueryHandler> logger,
     UserManager<ApplicationUser> userManager,
-    IHttpContextAccessor httpContextAccessor)
-    : IRequestHandler<GetJobStatisticsByFilterQuery, List<JobStatisticsViewModel>>
+    IHttpContextAccessor httpContextAccessor,
+    IDistributedCache distributedCache)
+: IRequestHandler<GetJobStatisticsByFilterQuery, List<JobStatisticsViewModel>>
 {
-    #region ( Properties )
+    #region ( Dependencies )
 
     protected IMapper Mapper { get; } = mapper;
     protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
+    protected IDistributedCache DistributedCache { get; } = distributedCache;
     protected UserManager<ApplicationUser> UserManager { get; } = userManager;
     protected IHttpContextAccessor HttpContextAccessor { get; } = httpContextAccessor;
     protected HttpContext? HttpContext { get; } = httpContextAccessor.HttpContext;
@@ -38,35 +42,54 @@ public class GetJobStatisticsByFilterQueryHandler(IMapper mapper, IUnitOfWork un
             }
 
             var businessOwnerId = UserManager.GetUserId(HttpContext!.User);
-            var businessOwner = await UnitOfWork.ApplicationUserRepository.TableNoTracking
-                .SingleOrDefaultAsync(a => a.Id.Equals(businessOwnerId), cancellationToken: cancellationToken);
+            var businessOwner = await DistributedCache.GetOrSet(CacheKeys.GetUserByIdQuery(businessOwnerId!),
+                async () => await UserManager.FindByIdAsync(businessOwnerId!),
+                options: new DistributedCache.CacheOptions
+                {
+                    ExpireSlidingCacheFromMinutes = 4 * 60,
+                    AbsoluteExpirationCacheFromMinutes = 24 * 60
+                });
 
             if (businessOwner is null)
                 return Result.Fail(Validations.BadRequestException);
 
             #endregion
-            
-            var query = UnitOfWork.JobInfoRepository.TableNoTracking
-                .Where(a => a.JobId == request.JobId)
-                .AsQueryable();
 
-            if (request is { FromDate: not null, ToDate: not null })
+            var fromDate = request.FromDate.HasValue ? DateTimeOffset.FromUnixTimeSeconds(request.FromDate.Value).DateTime : DateTime.UtcNow;
+            var toDate = request.ToDate.HasValue ? DateTimeOffset.FromUnixTimeSeconds(request.ToDate.Value).DateTime : DateTime.UtcNow.AddDays(-14);
+
+            var jobStatisticsCache = await DistributedCache.GetAsync<List<JobStatisticsViewModel>>(CacheKeys.GetJobStatisticsByFilterQuery(request.JobId));
+            if (jobStatisticsCache != null)
             {
-                var fromDate = DateTimeOffset.FromUnixTimeSeconds(request.FromDate.Value);
-                var toDate = DateTimeOffset.FromUnixTimeSeconds(request.ToDate.Value);
-
-                query = query.Where(a => a.CreateAt.Day >= fromDate.Day && a.CreateAt.Day <= toDate.Day);
+                jobStatisticsCache = jobStatisticsCache.Where(a => a.CreateAt >= fromDate && a.CreateAt <= toDate).ToList();
+                result.WithValue(jobStatisticsCache);
             }
             else
             {
-                query = query.Where(a => a.CreateAt.Day <= DateTime.UtcNow.Day && a.CreateAt.Day >= DateTime.UtcNow.AddDays(-14).Day);
+                var jobStatistics = await UnitOfWork.JobInfoRepository.TableNoTracking
+                    .Where(a => a.JobId == request.JobId).OrderBy(a => a.CreateAt)
+                    .ProjectTo<JobStatisticsViewModel>(Mapper.ConfigurationProvider)
+                    .ToListAsync(cancellationToken: cancellationToken);
+
+                if (!jobStatistics.Any())
+                {
+                    #region ( Set Cache )
+
+                    await DistributedCache.SetCache(key: CacheKeys.GetJobStatisticsByFilterQuery(request.JobId),
+                        value: jobStatistics,
+                        options: new DistributedCache.CacheOptions
+                        {
+                            ExpireSlidingCacheFromMinutes = 4 * 60,
+                            AbsoluteExpirationCacheFromMinutes = 24 * 60
+                        });
+
+                    #endregion
+
+                    jobStatistics = jobStatistics.Where(a => a.CreateAt >= fromDate && a.CreateAt <= toDate).ToList();
+                    result.WithValue(jobStatistics);
+                }
             }
 
-            var jobStatistics = await query.OrderBy(a => a.CreateAt)
-                .ProjectTo<JobStatisticsViewModel>(Mapper.ConfigurationProvider)
-                .ToListAsync(cancellationToken: cancellationToken);
-
-            result.WithValue(jobStatistics);
             return result;
         }
         catch (Exception e)

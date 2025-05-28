@@ -1,32 +1,41 @@
-﻿using AutoMapper.QueryableExtensions;
-using Microsoft.Extensions.Caching.Memory;
+﻿using Constants.Caching;
+using AutoMapper.QueryableExtensions;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace Application.Features.Job.Queries.GetAll;
 
-public class GetAllJobsQueryHandler(IUnitOfWork unitOfWork, IMapper mapper, IMemoryCache memoryCache)
+public class GetAllJobsQueryHandler(IUnitOfWork unitOfWork, IMapper mapper, IDistributedCache distributedCache)
     : IRequestHandler<GetAllJobsQuery, List<JobBranchViewModel>>
 {
-    protected IMemoryCache MemoryCache { get; } = memoryCache;
+    #region ( Dependencies )
+
+    protected IDistributedCache DistributedCache { get; } = distributedCache;
     protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
     protected IMapper Mapper { get; } = mapper;
 
+    #endregion
+
     public async Task<Result<List<JobBranchViewModel>>> Handle(GetAllJobsQuery request, CancellationToken cancellationToken)
     {
-        if (!MemoryCache.TryGetValue(nameof(GetAllJobsQuery), out List<JobBranchViewModel>? jobBranchViewModels))
-        {
-            jobBranchViewModels = await UnitOfWork.JobBranchRepository.TableNoTracking
-                .Include(a => a.Job)
-                .ProjectTo<JobBranchViewModel>(Mapper.ConfigurationProvider)
-                .ToListAsync(cancellationToken: cancellationToken);
-
-            MemoryCache.Set(nameof(GetAllJobsQuery), jobBranchViewModels, options: new MemoryCacheEntryOptions
+        var jobBranchViewModels = await DistributedCache.GetOrSet(CacheKeys.GetAllJobsQuery(),
+            async () =>
             {
-                Priority = CacheItemPriority.High,
-                SlidingExpiration = TimeSpan.FromDays(7),
-                AbsoluteExpirationRelativeToNow = TimeSpan.FromDays(7),
+                return await UnitOfWork.JobBranchRepository.TableNoTracking
+                    .Include(a => a.Job)
+                    .ProjectTo<JobBranchViewModel>(Mapper.ConfigurationProvider)
+                    .ToListAsync(cancellationToken: cancellationToken);
+            },
+            options: new DistributedCache.CacheOptions
+            {
+                ExpireSlidingCacheFromMinutes = 24 * 60,
+                AbsoluteExpirationCacheFromMinutes = 7 * 24 * 60
             });
+
+        if (jobBranchViewModels is null)
+        {
+            return Result.Ok();
         }
-        
-        return jobBranchViewModels!;
+
+        return jobBranchViewModels;
     }
 }

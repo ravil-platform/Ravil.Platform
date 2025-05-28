@@ -3,11 +3,17 @@
 public class GetCommentsByFilterQueryHandler(IMapper mapper, IUnitOfWork unitOfWork)
     : IRequestHandler<GetCommentsByFilterQuery, List<CommentViewModel>>
 {
+    #region ( Dependencies )
+
     protected IMapper Mapper { get; } = mapper;
     protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
 
+    #endregion
+
     public async Task<Result<List<CommentViewModel>>> Handle(GetCommentsByFilterQuery request, CancellationToken cancellationToken)
     {
+        #region ( Get Comments By Filter Query )
+
         var query = UnitOfWork.CommentRepository.TableNoTracking;
 
         #region ( Filters )
@@ -69,5 +75,7 @@ public class GetCommentsByFilterQueryHandler(IMapper mapper, IUnitOfWork unitOfW
         var commentViewModels = Mapper.Map<List<CommentViewModel>>(result);
 
         return commentViewModels;
+
+        #endregion
     }
 }

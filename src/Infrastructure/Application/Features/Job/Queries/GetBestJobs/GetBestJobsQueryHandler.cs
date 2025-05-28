@@ -1,19 +1,28 @@
-﻿namespace Application.Features.Job.Queries.GetBestJobs;
+﻿using Constants.Caching;
+using Microsoft.Extensions.Caching.Distributed;
 
-public class GetBestJobsQueryHandler : IRequestHandler<GetBestJobsQuery, List<JobViewModel>>
+namespace Application.Features.Job.Queries.GetBestJobs;
+
+public class GetBestJobsQueryHandler(IMapper mapper, IUnitOfWork unitOfWork, IDistributedCache distributedCache)
+    : IRequestHandler<GetBestJobsQuery, List<JobViewModel>>
 {
-    protected IMapper Mapper { get; }
-    protected IUnitOfWork UnitOfWork { get; }
+    #region ( Dependencies )
 
-    public GetBestJobsQueryHandler(IMapper mapper, IUnitOfWork unitOfWork)
-    {
-        Mapper = mapper;
-        UnitOfWork = unitOfWork;
-    }
+    protected IMapper Mapper { get; } = mapper;
+    protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
+    protected IDistributedCache DistributedCache { get; } = distributedCache;
+
+    #endregion
 
     public async Task<Result<List<JobViewModel>>> Handle(GetBestJobsQuery request, CancellationToken cancellationToken)
     {
-        var jobs = await UnitOfWork.JobRepository.GetBestJobs(request.Take);
+        var jobs = await DistributedCache.GetOrSet(CacheKeys.GetBestJobsQuery(),
+            async () => await UnitOfWork.JobRepository.GetBestJobs(request.Take),
+            options: new DistributedCache.CacheOptions
+            {
+                ExpireSlidingCacheFromMinutes = 12 * 60,
+                AbsoluteExpirationCacheFromMinutes = 72 * 60
+            });
 
         var jobViewModel = Mapper.Map<List<JobViewModel>>(jobs);
 

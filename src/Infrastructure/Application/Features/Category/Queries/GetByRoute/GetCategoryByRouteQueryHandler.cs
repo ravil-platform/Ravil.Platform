@@ -3,8 +3,12 @@
 public class GetCategoryByRouteQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
     : IRequestHandler<GetCategoryByRouteQuery, CategoryViewModel>
 {
+    #region ( Dependencies )
+
     protected IMapper Mapper { get; } = mapper;
     protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
+
+    #endregion
 
     public async Task<Result<CategoryViewModel>> Handle(GetCategoryByRouteQuery request, CancellationToken cancellationToken)
     {

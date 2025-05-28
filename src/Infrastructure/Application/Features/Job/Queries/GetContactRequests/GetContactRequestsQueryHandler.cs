@@ -1,20 +1,23 @@
-﻿using System.Collections;
-using AngleSharp.Common;
+﻿using AngleSharp.Common;
+using Constants.Caching;
+using System.Collections;
 using Resources.Messages;
-using ViewModels.QueriesResponseViewModel.Analytics;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace Application.Features.Job.Queries.GetContactRequests;
 
 public class GetContactRequestsQueryHandler(IMapper mapper, IUnitOfWork unitOfWork,
     Logging.Base.ILogger<GetContactRequestsQueryHandler> logger,
     UserManager<ApplicationUser> userManager,
-    IHttpContextAccessor httpContextAccessor)
-    : IRequestHandler<GetContactRequestsQuery, ContactRequestViewModel>
+    IHttpContextAccessor httpContextAccessor,
+    IDistributedCache distributedCache)
+: IRequestHandler<GetContactRequestsQuery, ContactRequestViewModel>
 {
-    #region ( Properties )
+    #region ( Dependencies )
 
     protected IMapper Mapper { get; } = mapper;
     protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
+    protected IDistributedCache DistributedCache { get; } = distributedCache;
     protected UserManager<ApplicationUser> UserManager { get; } = userManager;
     protected IHttpContextAccessor HttpContextAccessor { get; } = httpContextAccessor;
     protected HttpContext? HttpContext { get; } = httpContextAccessor.HttpContext;
@@ -38,30 +41,48 @@ public class GetContactRequestsQueryHandler(IMapper mapper, IUnitOfWork unitOfWo
             }
 
             var businessOwnerId = UserManager.GetUserId(HttpContext!.User);
-            var businessOwner = await UnitOfWork.ApplicationUserRepository.TableNoTracking
-                .SingleOrDefaultAsync(a => a.Id.Equals(businessOwnerId), cancellationToken: cancellationToken);
+            var businessOwner = await DistributedCache.GetOrSet(CacheKeys.GetUserByIdQuery(businessOwnerId!),
+                async () => await UserManager.FindByIdAsync(businessOwnerId!),
+                options: new DistributedCache.CacheOptions
+                {
+                    ExpireSlidingCacheFromMinutes = 4 * 60,
+                    AbsoluteExpirationCacheFromMinutes = 24 * 60
+                });
 
             if (businessOwner is null)
                 return Result.Fail(Validations.BadRequestException);
 
             #endregion
 
-            var latestWeekContactsInfo = await UnitOfWork.JobInfoRepository.TableNoTracking
-                .Where(a => a.CreateAt.Day <= DateTime.UtcNow.Day && a.CreateAt.Day >= DateTime.UtcNow.AddDays(-7).Day)
-                .Where(a => a.JobId == request.JobId && (a.ClickOnCall > 0 || a.ClickOnChat > 0 || a.ClickOnMap > 0))
-                .ToListAsync(cancellationToken: cancellationToken);
+            var latestWeekContactsInfo = await DistributedCache.GetOrSet(key: CacheKeys.GetContactRequestsQuery(request.JobId),
+            func: async () =>
+            {
+                return await UnitOfWork.JobInfoRepository.TableNoTracking.Where(a => a.JobId == request.JobId)
+                    //.Where(a => a.CreateAt.Day <= DateTime.UtcNow.Day && a.CreateAt.Day >= DateTime.UtcNow.AddDays(-(int)request.DateRange).Day)
+                    .Where(a => (a.ClickOnCall > 0 || a.ClickOnChat > 0 || a.ClickOnMap > 0))
+                    .ToListAsync(cancellationToken: cancellationToken);
+            },
+            options: new DistributedCache.CacheOptions
+            {
+                ExpireSlidingCacheFromMinutes = 4 * 60,
+                AbsoluteExpirationCacheFromMinutes = 24 * 60
+            });
             
             var contactRequest = new ContactRequestViewModel();
-            contactRequest.TotalContactCount = latestWeekContactsInfo.Sum(a => a.ClickOnCall) + 
-                latestWeekContactsInfo.Sum(a => a.ClickOnMap) + latestWeekContactsInfo.Sum(a => a.ClickOnChat);
+            if (latestWeekContactsInfo != null)
+            {
+                contactRequest.TotalContactCount = 
+                    latestWeekContactsInfo.Sum(a => a.ClickOnCall)
+                    + latestWeekContactsInfo.Sum(a => a.ClickOnMap)
+                    + latestWeekContactsInfo.Sum(a => a.ClickOnChat);
 
-            contactRequest.Data = latestWeekContactsInfo.GroupBy(a => a.CreateAt)
-                .Select(group => new ContactRequestDataViewModel
-                {
-                    Date = group.Key.ToShamsiDateDashFormat(),
-                    EventCount = group.Sum(s => s.ClickOnCall) + group.Sum(s => s.ClickOnMap) + group.Sum(s => s.ClickOnMap)
-                }).ToList();
-
+                contactRequest.Data = latestWeekContactsInfo.GroupBy(a => a.CreateAt)
+                    .Select(group => new ContactRequestDataViewModel
+                    {
+                        Date = group.Key.ToShamsiDateDashFormat(),
+                        EventCount = group.Sum(s => s.ClickOnCall) + group.Sum(s => s.ClickOnMap) + group.Sum(s => s.ClickOnMap)
+                    }).ToList();
+            }
 
             result.WithValue(contactRequest);
             return result;

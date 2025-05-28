@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Application.Services.NehsanApi;
+using Application.BackgroundServices;
 using ZarinPalDriver;
 using Hangfire;
-using Application.BackgroundServices;
 
 namespace Application
 {
@@ -11,7 +11,21 @@ namespace Application
         
         public static void AddApplicationServices(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment environment, JwtSettings jwtSettings = null)
         {
-            services.AddMemoryCache();
+            #region ( Caching Services )
+
+            //services.AddMemoryCache();
+            services.AddDistributedMemoryCache();
+            //services.AddDistributedRedisCache(options =>
+            //{
+            //    options.Configuration = environment.IsDevelopment() ? "localhost:6379" : "";
+            //});
+
+            //services.AddSingleton<IConnectionMultiplexer>(sp =>
+            //    ConnectionMultiplexer.Connect(environment.IsDevelopment() ? "localhost:6379" : "")
+            //);
+
+            #endregion
+
             services.AddHttpContextAccessor();
             services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
 

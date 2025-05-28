@@ -1,24 +1,27 @@
-﻿using System.Collections;
-using System.Security.Cryptography;
-using Domain.Entities.Wallets;
-using Microsoft.AspNetCore.Routing;
-using ViewModels.QueriesResponseViewModel.Payments;
-using ZarinPalDriver;
+﻿using ZarinPalDriver;
+using Constants.Caching;
+using System.Collections;
 using ZarinPalDriver.Models;
+using Domain.Entities.Wallets;
+using System.Security.Cryptography;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.Caching.Distributed;
+using ViewModels.QueriesResponseViewModel.Payments;
 
 namespace Application.Features.Payments.Commands.PaymentVerification;
 
 public class PaymentVerificationCommandHandler(IMapper mapper, IUnitOfWork unitOfWork, ISmsSender smsSender, [FromServices] IZarinPalClient client,
     UserManager<ApplicationUser> userManager, IHttpContextAccessor httpContextAccessor, LinkGenerator linkGenerator,
-    Logging.Base.ILogger<PaymentVerificationCommandHandler> logger)
-    : IRequestHandler<PaymentVerificationCommand, PaymentVerificationResponseViewModel>
+    Logging.Base.ILogger<PaymentVerificationCommandHandler> logger, IDistributedCache distributedCache)
+: IRequestHandler<PaymentVerificationCommand, PaymentVerificationResponseViewModel>
 {
-    #region ( Properties )
+    #region ( Dependencies )
 
     protected IMapper Mapper { get; } = mapper;
     protected ISmsSender SmsSender { get; } = smsSender;
     protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
     protected LinkGenerator LinkGenerator { get; } = linkGenerator;
+    protected IDistributedCache DistributedCache { get; } = distributedCache;
     protected UserManager<ApplicationUser> UserManager { get; } = userManager;
     protected HttpContext? HttpContext { get; } = httpContextAccessor.HttpContext;
     protected IHttpContextAccessor HttpContextAccessor { get; } = httpContextAccessor;
@@ -187,6 +190,23 @@ public class PaymentVerificationCommandHandler(IMapper mapper, IUnitOfWork unitO
                                 {
                                     await UnitOfWork.SaveAsync();
 
+                                    #region ( Set Cache UserSubscription Plan )
+
+                                    var userSubscriptionViewModel = Mapper.Map<UserSubscriptionViewModel>(currentUserSubscription ?? payment.UserSubscription);
+
+                                    await DistributedCache.RemoveAsync(CacheKeys.GetUserSubscriptionPlanQuery(payment.UserSubscription.UserId), cancellationToken);
+
+                                    var expirationDays = (userSubscriptionViewModel.EndDate - DateTime.UtcNow).Days;
+                                    await DistributedCache.SetCache(key: CacheKeys.GetUserSubscriptionPlanQuery(payment.UserSubscription.UserId),
+                                        value: userSubscriptionViewModel,
+                                        options: new DistributedCache.CacheOptions
+                                        {
+                                            ExpireSlidingCacheFromMinutes = 24 * 60,
+                                            AbsoluteExpirationCacheFromMinutes = expirationDays * 24 * 60
+                                        });
+
+                                    #endregion
+
                                     #region ( Send SMS For Completed Order )
 
                                     var r = await SmsSender.SendPattern(businessOwner.PhoneNumber ?? businessOwner.UserName!, $"{payment.Number}|{businessOwner.Firstname} {businessOwner.Lastname}", SmsPatterns.OrderPayment);
@@ -318,8 +338,8 @@ public class PaymentVerificationCommandHandler(IMapper mapper, IUnitOfWork unitO
             throw;
         }
 
-        #endregion
-
         return result;
+
+        #endregion
     }
 }

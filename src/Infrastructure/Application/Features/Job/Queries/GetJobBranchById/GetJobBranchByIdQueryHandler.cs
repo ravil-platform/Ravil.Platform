@@ -1,33 +1,42 @@
-﻿namespace Application.Features.Job.Queries.GetJobBranchById;
+﻿using Constants.Caching;
+using Microsoft.Extensions.Caching.Distributed;
+using Resources.Messages;
 
-public class GetJobBranchByIdQueryHandler : IRequestHandler<GetJobBranchByIdQuery, JobBranchViewModel>
+namespace Application.Features.Job.Queries.GetJobBranchById;
+
+public class GetJobBranchByIdQueryHandler(IMapper mapper,
+    IUnitOfWork unitOfWork, IDistributedCache distributedCache)
+    : IRequestHandler<GetJobBranchByIdQuery, JobBranchViewModel>
 {
-    protected IMapper Mapper { get; }
-    protected IUnitOfWork UnitOfWork { get; }
+    #region ( Dependencies )
 
-    public GetJobBranchByIdQueryHandler(IMapper mapper, IUnitOfWork unitOfWork)
-    {
-        Mapper = mapper;
-        UnitOfWork = unitOfWork;
-    }
+    protected IMapper Mapper { get; } = mapper;
+    protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
+    protected IDistributedCache DistributedCache { get; } = distributedCache;
 
+    #endregion
 
     public async Task<Result<JobBranchViewModel>> Handle(GetJobBranchByIdQuery request, CancellationToken cancellationToken)
     {
-        var result = await UnitOfWork.JobBranchRepository.TableNoTracking.Include(a => a.JobTimeWorks)
-            .Include(a => a.Address).ThenInclude(a => a.Location).Include(a => a.JobBranchGalleries)
-            .Include(a => a.Job).ThenInclude(a => a.JobCategories).ThenInclude(a => a.Category)
-            .Where(a => a.Job.Status == JobBranchStatus.Accepted || a.Status == JobBranchStatus.Accepted)
-            .Where(a => a.IsDeleted != null && !a.IsDeleted.Value && a.Id.Equals(request.Id))
-            .SingleOrDefaultAsync(cancellationToken: cancellationToken);
+        #region ( Get JobBranch By Id Query )
+
+        var result = await DistributedCache.GetOrSet(CacheKeys.GetJobBranchByIdQuery(request.Id),
+            func: async () => await UnitOfWork.JobBranchRepository.GetJobBranchById(request.Id, cancellationToken),
+            new DistributedCache.CacheOptions
+            {
+                ExpireSlidingCacheFromMinutes = 4 * 60,
+                AbsoluteExpirationCacheFromMinutes = 12 * 60
+            });
 
         if (result is null)
         {
-            return Result.Fail(Resources.Messages.Validations.NotFoundException);
+            return Result.Fail(Validations.NotFoundException);
         }
 
         var jobBranchViewModel = Mapper.Map<JobBranchViewModel>(result);
 
         return jobBranchViewModel;
+
+        #endregion
     }
 }

@@ -6,12 +6,24 @@ using Domain.Entities.Category;
 
 namespace Api.Controllers.V1
 {
+    /// <inheritdoc />
     [Route(Routes.Controller)]
     public class CategoriesController : GenericBaseController<CategoriesController>
     {
-        public CategoriesController(IMediator mediator, Logging.Base.ILogger<CategoriesController> logger, IMapper mapper) : base(mediator, logger, mapper)
+        #region ( Constructors )
+
+        /// <summary>
+        /// Categories Controller
+        /// </summary>
+        /// <param name="mediator"></param>
+        /// <param name="logger"></param>
+        /// <param name="mapper"></param>
+        public CategoriesController(IMediator mediator, Logging.Base.ILogger<CategoriesController> logger, IMapper mapper) 
+            : base(mediator, logger, mapper)
         {
         }
+
+        #endregion
 
         #region ( Queries )
         /// <summary>
