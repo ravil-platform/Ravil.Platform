@@ -10,7 +10,7 @@
                 <label asp-for="ParentId"></label>
                 <fieldset class="form-group">
                     <select asp-for="ParentId" class="form-control select2">
-                        <option value="null">بدون والد</option>
+                        <option value="0">بدون والد</option>
                         @foreach (var item in faqCategories)
                         {
                             <option value="@item.Id">@item.Title</option>
