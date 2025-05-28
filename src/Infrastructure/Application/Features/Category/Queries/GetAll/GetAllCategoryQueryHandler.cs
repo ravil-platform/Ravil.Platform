@@ -1,39 +1,36 @@
-﻿using Microsoft.Extensions.Caching.Memory;
+﻿using Constants.Caching;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace Application.Features.Category.Queries.GetAll;
 
-public class GetAllCategoryQueryHandler : IRequestHandler<GetAllCategoriesQuery, List<CategoryListViewModel>>
+public class GetAllCategoryQueryHandler(IMapper mapper,
+    IUnitOfWork unitOfWork, IDistributedCache distributedCache)
+: IRequestHandler<GetAllCategoriesQuery, List<CategoryListViewModel>>
 {
-    protected IMapper Mapper { get; }
-    protected IUnitOfWork UnitOfWork { get; }
-    protected IMemoryCache MemoryCache { get; }
+    #region ( Dependencies )
 
-    public GetAllCategoryQueryHandler(IMapper mapper, IUnitOfWork unitOfWork, IMemoryCache memoryCache)
-    {
-        Mapper = mapper;
-        UnitOfWork = unitOfWork;
-        MemoryCache = memoryCache;
-    }
+    protected IMapper Mapper { get; } = mapper;
+    protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
+    protected IDistributedCache DistributedCache { get; } = distributedCache;
+
+    #endregion
 
     public async Task<Result<List<CategoryListViewModel>>> Handle(GetAllCategoriesQuery request, CancellationToken cancellationToken)
     {
-        if (!MemoryCache.TryGetValue(nameof(GetAllCategoriesQuery), out List<CategoryListViewModel>? categoriesViewModel))
-        {
-            var categories = await UnitOfWork.CategoryRepository.GetAllAsync(a => a.IsActive);
+        #region ( Get All Categories Query )
 
-            categoriesViewModel = Mapper.Map<List<CategoryListViewModel>>(categories);
-
-            MemoryCache.Set(nameof(GetAllCategoriesQuery), categoriesViewModel,
-            options: new MemoryCacheEntryOptions 
+        var categories = await DistributedCache.GetOrSet(CacheKeys.GetAllCategoriesQuery(),
+        async () => await UnitOfWork.CategoryRepository.GetAllAsync(a => a.IsActive), 
+            options: new DistributedCache.CacheOptions()
             {
-                Priority = CacheItemPriority.High,
-                SlidingExpiration = TimeSpan.FromMinutes(4200),
-                AbsoluteExpiration = DateTimeOffset.UtcNow.AddMinutes(1)
+                ExpireSlidingCacheFromMinutes = 4 * 60,
+                AbsoluteExpirationCacheFromMinutes = 48 * 60
             });
+        
+        var categoriesViewModel = Mapper.Map<List<CategoryListViewModel>>(categories);
 
-            return categoriesViewModel;
-        }
+        return categoriesViewModel;
 
-        return categoriesViewModel!;
+        #endregion
     }
 }

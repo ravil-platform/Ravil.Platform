@@ -1,18 +1,22 @@
 ﻿using System.Collections;
 using AngleSharp.Common;
+using Constants.Caching;
 using Resources.Messages;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace Application.Features.Job.Queries.GetAllKeywords;
 
 public class GetAllKeywordsQueryHandler(IMapper mapper, IUnitOfWork unitOfWork,
     Logging.Base.ILogger<GetAllKeywordsQueryHandler> logger,
-    IHttpContextAccessor httpContextAccessor)
-    : IRequestHandler<GetAllKeywordsQuery, List<KeywordViewModel>>
+    IHttpContextAccessor httpContextAccessor,
+    IDistributedCache distributedCache)
+: IRequestHandler<GetAllKeywordsQuery, List<KeywordViewModel>>
 {
-    #region ( Properties )
+    #region ( Dependencies )
 
     protected IMapper Mapper { get; } = mapper;
     protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
+    protected IDistributedCache DistributedCache { get; } = distributedCache;
     protected IHttpContextAccessor HttpContextAccessor { get; } = httpContextAccessor;
     protected Logging.Base.ILogger<GetAllKeywordsQueryHandler> Logger { get; } = logger;
 
@@ -33,22 +37,44 @@ public class GetAllKeywordsQueryHandler(IMapper mapper, IUnitOfWork unitOfWork,
 
         try
         {
-            var query = UnitOfWork.KeywordRepository.TableNoTracking
-                //.Include(a => a.Category)
-                .Where(a => a.IsActive)
-                .AsQueryable();
-
-            if (request.CategoryId.HasValue)
+            var keywordsCache = await DistributedCache.GetAsync<List<KeywordViewModel>>(CacheKeys.GetAllKeywordsQuery());
+            if (keywordsCache != null)
             {
-                query = query.Where(a => a.CategoryId == request.CategoryId.Value);
+                if (request.CategoryId.HasValue)
+                {
+                    keywordsCache = keywordsCache.Where(a => a.CategoryId == request.CategoryId.Value).ToList();
+                }
+
+                return keywordsCache;
             }
-            
-            var keywords = await query
-                .ToListAsync(cancellationToken: cancellationToken);
+            else
+            {
+                var keywords = await UnitOfWork.KeywordRepository.TableNoTracking
+                    .Where(a => a.IsActive)
+                    .ToListAsync(cancellationToken: cancellationToken);
 
-            var result = Mapper.Map<List<KeywordViewModel>>(keywords);
+                if (!keywords.Any()) return Result.Ok();
 
-            return result;
+                if (request.CategoryId.HasValue)
+                {
+                    keywords = keywords.Where(a => a.CategoryId == request.CategoryId.Value).ToList();
+                }
+
+                var result = Mapper.Map<List<KeywordViewModel>>(keywords);
+
+                #region ( Set Cache )
+
+                await DistributedCache.SetCache(key: CacheKeys.GetAllKeywordsQuery(), value: result,
+                    options: new DistributedCache.CacheOptions
+                    {
+                        ExpireSlidingCacheFromMinutes = 4 * 60,
+                        AbsoluteExpirationCacheFromMinutes = 24 * 60
+                    });
+
+                #endregion
+
+                return result;
+            }
         }
         catch (Exception e)
         {

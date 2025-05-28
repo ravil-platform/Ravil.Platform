@@ -38,7 +38,7 @@
         public AddressViewModel Address { get; set; }
         public List<CategoryListViewModel> Categories { get; set; }
         public List<JobTimeWorkViewModel> TimeWorks { get; set; }
-        public List<KeywordViewModel> Keywords { get; set; }
+        public List<JobKeywordViewModel>? Keywords { get; set; }
         public List<JobBranchGalleryViewModel> Galleries { get; set; }
     }
 }

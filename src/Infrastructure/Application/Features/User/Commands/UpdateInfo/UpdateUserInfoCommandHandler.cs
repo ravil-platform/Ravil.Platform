@@ -1,20 +1,25 @@
-﻿namespace Application.Features.User.Commands.UpdateInfo;
+﻿using Constants.Caching;
+using Microsoft.Extensions.Caching.Distributed;
 
-public class UpdateUserInfoCommandHandler : IRequestHandler<UpdateUserInfoCommand>
+namespace Application.Features.User.Commands.UpdateInfo;
+
+public class UpdateUserInfoCommandHandler(IMapper mapper, IUnitOfWork unitOfWork,
+    IDistributedCache distributedCache, UserManager<ApplicationUser> userManager)
+: IRequestHandler<UpdateUserInfoCommand>
 {
-    protected IMapper Mapper { get; }
-    protected IUnitOfWork UnitOfWork { get; }
-    protected UserManager<ApplicationUser> UserManager { get; }
+    #region ( Dependencies )
 
-    public UpdateUserInfoCommandHandler(IMapper mapper, IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager)
-    {
-        Mapper = mapper;
-        UnitOfWork = unitOfWork;
-        UserManager = userManager;
-    }
+    protected IMapper Mapper { get; } = mapper;
+    protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
+    protected IDistributedCache DistributedCache { get; } = distributedCache;
+    protected UserManager<ApplicationUser> UserManager { get; } = userManager;
+
+    #endregion
 
     public async Task<Result> Handle(UpdateUserInfoCommand request, CancellationToken cancellationToken)
     {
+        #region ( Update User Info Command )
+
         var user = await UserManager.FindByIdAsync(request.Id);
 
         if (user is null)
@@ -34,6 +39,14 @@ public class UpdateUserInfoCommandHandler : IRequestHandler<UpdateUserInfoComman
         await UserManager.UpdateAsync(user);
         await UnitOfWork.SaveAsync();
 
+        #region ( Remove Cache Data )
+
+        await DistributedCache.RemoveAsync(key: CacheKeys.GetUserByIdQuery(request.Id), cancellationToken);
+
+        #endregion
+
         return Result.Ok();
+
+        #endregion
     }
 }

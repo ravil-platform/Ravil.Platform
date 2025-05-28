@@ -1,13 +1,20 @@
 ﻿
+using Constants.Caching;
+using Microsoft.Extensions.Caching.Distributed;
+
 namespace Admin.MVC.Controllers
 {
-    public class CategoriesController(IUnitOfWork unitOfWork, IMapper mapper, IFtpService ftpService)
-        : BaseController
+    public class CategoriesController(IUnitOfWork unitOfWork, IMapper mapper, 
+        IFtpService ftpService, IDistributedCache distributedCache)
+    : BaseController
     {
         #region ( DI )
-        protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
+
         protected IMapper Mapper { get; } = mapper;
+        protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
         protected IFtpService FtpService { get; } = ftpService;
+        protected IDistributedCache DistributedCache { get; } = distributedCache;
+
         #endregion
 
         #region ( Index )
@@ -127,6 +134,13 @@ namespace Admin.MVC.Controllers
                 #endregion
 
                 SuccessAlert();
+
+                #region ( Remove Cache Data )
+
+                await DistributedCache.RemoveAsync(key: CacheKeys.GetAllKeywordsQuery());
+                await DistributedCache.RemoveAsync(key: CacheKeys.GetAllCategoriesQuery());
+
+                #endregion
             }
             catch (Exception e)
             {
@@ -267,6 +281,26 @@ namespace Admin.MVC.Controllers
 
                     await UnitOfWork.SaveAsync();
                 }
+
+                #region ( Category Keyword )
+
+                var categoryKeyword = await UnitOfWork.KeywordRepository.Table.SingleOrDefaultAsync(a => a.CategoryId.Equals(category.Id) && a.IsCategory);
+                if (categoryKeyword != null)
+                {
+                    var keyword = Mapper.Map(category, categoryKeyword);
+
+                    await UnitOfWork.KeywordRepository.UpdateAsync(keyword);
+                    await UnitOfWork.SaveAsync();
+                }
+
+                #endregion
+
+                #region ( Remove Cache Data )
+
+                await DistributedCache.RemoveAsync(key: CacheKeys.GetAllKeywordsQuery());
+                await DistributedCache.RemoveAsync(key: CacheKeys.GetAllCategoriesQuery());
+
+                #endregion
 
                 SuccessAlert();
             }

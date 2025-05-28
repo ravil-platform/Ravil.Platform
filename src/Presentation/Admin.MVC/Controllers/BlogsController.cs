@@ -1,12 +1,18 @@
-﻿namespace Admin.MVC.Controllers
+﻿using Constants.Caching;
+using Microsoft.Extensions.Caching.Distributed;
+
+namespace Admin.MVC.Controllers
 {
-    public class BlogsController(IMapper mapper, IUnitOfWork unitOfWork, IFtpService ftpService)
-        : BaseController
+    public class BlogsController(IMapper mapper, IUnitOfWork unitOfWork,
+        IFtpService ftpService, IDistributedCache distributedCache)
+    : BaseController
     {
         #region ( DI )
         protected IMapper Mapper { get; } = mapper;
         protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
         protected IFtpService FtpService { get; } = ftpService;
+        protected IDistributedCache DistributedCache { get; } = distributedCache;
+
         #endregion
 
         #region ( Blog )
@@ -162,6 +168,12 @@
                 await UnitOfWork.SaveAsync();
 
                 SuccessAlert();
+
+                #region ( Remove Cache Data )
+
+                await DistributedCache.RemoveAsync(key: CacheKeys.GetAllBlogsQuery());
+
+                #endregion
             }
             catch (Exception e)
             {

@@ -1,19 +1,28 @@
-﻿namespace Application.Features.Job.Queries.GetNewestJobs;
+﻿using Constants.Caching;
+using Microsoft.Extensions.Caching.Distributed;
 
-public class GetNewestJobsQueryHandler : IRequestHandler<GetNewestJobsQuery, List<JobViewModel>>
+namespace Application.Features.Job.Queries.GetNewestJobs;
+
+public class GetNewestJobsQueryHandler(IMapper mapper, IUnitOfWork unitOfWork, IDistributedCache distributedCache)
+    : IRequestHandler<GetNewestJobsQuery, List<JobViewModel>>
 {
-    protected IMapper Mapper { get; }
-    protected IUnitOfWork UnitOfWork { get; }
+    #region ( Dependencies )
 
-    public GetNewestJobsQueryHandler(IMapper mapper, IUnitOfWork unitOfWork)
-    {
-        Mapper = mapper;
-        UnitOfWork = unitOfWork;
-    }
+    protected IMapper Mapper { get; } = mapper;
+    protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
+    protected IDistributedCache DistributedCache { get; } = distributedCache;
+
+    #endregion
 
     public async Task<Result<List<JobViewModel>>> Handle(GetNewestJobsQuery request, CancellationToken cancellationToken)
     {
-        var jobs = await UnitOfWork.JobRepository.GetNewestJobs(request.Take);
+        var jobs = await DistributedCache.GetOrSet(CacheKeys.GetNewestJobsQuery(),
+            async () => await UnitOfWork.JobRepository.GetNewestJobs(request.Take),
+            options: new DistributedCache.CacheOptions
+            {
+                ExpireSlidingCacheFromMinutes = 4 * 60,
+                AbsoluteExpirationCacheFromMinutes = 24 * 60
+            });
 
         var jobViewModel = Mapper.Map<List<JobViewModel>>(jobs);
 

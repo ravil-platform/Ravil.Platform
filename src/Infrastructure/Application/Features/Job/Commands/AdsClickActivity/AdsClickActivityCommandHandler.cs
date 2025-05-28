@@ -1,6 +1,8 @@
 ﻿using AngleSharp.Common;
 using System.Collections;
 using Domain.Entities.Subscription;
+using Constants.Caching;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace Application.Features.Job.Commands.AdsClickActivity;
 
@@ -8,13 +10,15 @@ public class AdsClickActivityCommandHandler(
     IMapper mapper,
     IUnitOfWork unitOfWork,
     IHttpContextAccessor httpContextAccessor, 
-    Logging.Base.ILogger<AdsClickActivityCommandHandler> logger)
+    Logging.Base.ILogger<AdsClickActivityCommandHandler> logger,
+    IDistributedCache distributedCache)
 : IRequestHandler<AdsClickActivityCommand>
 {
     #region ( Properties )
 
     protected IMapper Mapper { get; } = mapper;
     protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
+    protected IDistributedCache DistributedCache { get; } = distributedCache;
     protected IHttpContextAccessor HttpContextAccessor { get; } = httpContextAccessor;
     protected Logging.Base.ILogger<AdsClickActivityCommandHandler> Logger { get; } = logger;
 
@@ -82,6 +86,12 @@ public class AdsClickActivityCommandHandler(
             await UnitOfWork.SaveAsync();
 
             await UnitOfWork.CommitTransactionAsync(cancellationToken: cancellationToken);
+
+            #region ( Remove Cache Data )
+
+            await DistributedCache.RemoveAsync(key: CacheKeys.JobReportQuery(Convert.ToInt32(subscriptionClick.JobId)), cancellationToken);
+
+            #endregion
 
             result.WithSuccess("عملیات با موفقیت انجام شد");
             Logger.LogInformation("user activity is done!", new Hashtable(subscriptionClick.ToDictionary()));

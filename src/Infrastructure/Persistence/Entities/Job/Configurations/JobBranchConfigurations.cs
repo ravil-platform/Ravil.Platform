@@ -4,9 +4,10 @@
     {
         public void Configure(EntityTypeBuilder<JobBranch> builder)
         {
-            builder.ToTable("JobBranch", DatabaseSchemas.Jobs);
+            builder.ToTable(nameof(JobBranch), DatabaseSchemas.Jobs);
 
             builder.HasKey(j => j.Id);
+
             builder.Property(j => j.Route).IsRequired(false).HasMaxLength(MaxLength.Slug);
             builder.Property(j => j.JobTimeWorkType).IsRequired();
             builder.Property(j => j.Title).IsRequired().HasMaxLength(MaxLength.Title);
