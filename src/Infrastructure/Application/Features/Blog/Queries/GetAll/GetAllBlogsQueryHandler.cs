@@ -4,8 +4,9 @@ using Microsoft.Extensions.Caching.Distributed;
 
 namespace Application.Features.Blog.Queries.GetAll;
 
-public class GetAllBlogsQueryHandler(IUnitOfWork unitOfWork, IMapper mapper, IDistributedCache distributedCache)
-    : IRequestHandler<GetAllBlogsQuery, List<BlogViewModel>>
+public class GetAllBlogsQueryHandler(IUnitOfWork unitOfWork,
+    IMapper mapper, IDistributedCache distributedCache)
+: IRequestHandler<GetAllBlogsQuery, List<BlogViewModel>>
 {
     #region ( Dependencies )
 
