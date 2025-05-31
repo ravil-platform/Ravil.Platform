@@ -12,5 +12,6 @@ EXPOSE 8080
 RUN adduser --disabled-password --home /app --gecos '' appuser \
     && chown -R appuser:appuser /app
 USER appuser
+RUN rm ./appsettings.json ./appsettings.Development.json
 ENTRYPOINT ["dotnet", "/app/admin/Admin.MVC.dll"]
 # test
