@@ -7,7 +7,7 @@ using FluentAssertions;
 using NSubstitute;
 using ViewModels.QueriesResponseViewModel.Blog;
 
-namespace Application.UnitTest.Features.Blog.GetBlogCategoriesByParentId;
+namespace Application.UnitTest.Features.Blog.Queries.GetBlogCategoriesByParentId;
 
 [Collection(CollectionDefinition.SharedFixture)]
 public class GetBlogCategoriesByParentIdQueryHandlerTests

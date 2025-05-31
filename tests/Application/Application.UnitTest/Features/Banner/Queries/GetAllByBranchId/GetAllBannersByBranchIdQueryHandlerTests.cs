@@ -1,46 +1,44 @@
 ﻿using System.Linq.Expressions;
-using Application.Features.Banner.GetAllByType;
+using Application.Features.Banner.GetAllByBranchId;
 using Application.UnitTest.Constans;
 using Application.UnitTest.Fixtures.Shared;
 using Common.Exceptions;
-using Enums;
 using FluentAssertions;
 using NSubstitute;
 using ViewModels.QueriesResponseViewModel.Banner;
 
-namespace Application.UnitTest.Features.Banner.GetAllByType;
+namespace Application.UnitTest.Features.Banner.Queries.GetAllByBranchId;
 
 [Collection(CollectionDefinition.SharedFixture)]
-public class GetAllBannersByTypeQueryHandlerTests
+public class GetAllBannersByBranchIdQueryHandlerTests
 {
     private readonly SharedFixture _sharedFixture;
-    private readonly GetAllBannersByTypeQueryHandler _handler;
+    private readonly GetAllBannersByBranchIdQueryHandler _handler;
 
-    public GetAllBannersByTypeQueryHandlerTests(SharedFixture fixture)
+    public GetAllBannersByBranchIdQueryHandlerTests(SharedFixture fixture)
     {
         _sharedFixture = fixture;
-        _handler = new GetAllBannersByTypeQueryHandler(_sharedFixture.Mapper, _sharedFixture.UnitOfWork);
-
+        _handler = new GetAllBannersByBranchIdQueryHandler(_sharedFixture.Mapper, _sharedFixture.UnitOfWork);
         _sharedFixture.UnitOfWork.BannerRepository.ClearReceivedCalls();
         _sharedFixture.Mapper.ClearReceivedCalls();
     }
 
     [Fact]
-    public async Task Should_ReturnMappedBannerViewModelListByType_WhenBannersExist()
+    public async Task Should_ReturnMappedBannerViewModelList_WhenBannersExist()
     {
         // Arrange
-        var bannerType = BannerType.Blog;
+        var branchId = "branch123";
 
         var bannersFromRepo = new List<Domain.Entities.Banner.Banner>
         {
-            new Domain.Entities.Banner.Banner { Title = "Banner1", BannerType = bannerType },
-            new Domain.Entities.Banner.Banner { Title = "Banner2", BannerType = bannerType }
+            new Domain.Entities.Banner.Banner { Title = "Banner1", JobBranchId = branchId },
+            new Domain.Entities.Banner.Banner { Title = "Banner2", JobBranchId = branchId }
         };
 
         var bannersViewModel = new List<BannerViewModel>
         {
-            new BannerViewModel { Title = "Banner1", BannerType = bannerType },
-            new BannerViewModel { Title = "Banner2", BannerType = bannerType }
+            new BannerViewModel { Title = "Banner1", JobBranchId = branchId },
+            new BannerViewModel { Title = "Banner2", JobBranchId = branchId }
         };
 
         _sharedFixture.UnitOfWork.BannerRepository
@@ -49,7 +47,7 @@ public class GetAllBannersByTypeQueryHandlerTests
 
         _sharedFixture.Mapper.Map<List<BannerViewModel>>(bannersFromRepo).Returns(bannersViewModel);
 
-        var query = new GetAllBannersByTypeQuery { BannerType = bannerType };
+        var query = new GetAllBannersByBranchIdQuery { JobBranchId = branchId };
 
         // Act
         var result = await _handler.Handle(query, CancellationToken.None);
@@ -68,15 +66,15 @@ public class GetAllBannersByTypeQueryHandlerTests
     public async Task Should_ThrowNotFoundException_WhenNoBannersFound()
     {
         // Arrange
-        var bannerType = BannerType.Blog;
+        var branchId = "branch123";
 
         var emptyList = new List<Domain.Entities.Banner.Banner>();
 
         _sharedFixture.UnitOfWork.BannerRepository
             .GetAllAsync(Arg.Any<Expression<Func<Domain.Entities.Banner.Banner, bool>>>())
-            .Returns(Task.FromResult((IList<Domain.Entities.Banner.Banner>)emptyList));
+            .Returns(Task.FromResult((ICollection<Domain.Entities.Banner.Banner>)emptyList));
 
-        var query = new GetAllBannersByTypeQuery { BannerType = bannerType };
+        var query = new GetAllBannersByBranchIdQuery { JobBranchId = branchId };
 
         // Act & Assert
         await FluentActions.Invoking(() => _handler.Handle(query, CancellationToken.None))
@@ -85,6 +83,7 @@ public class GetAllBannersByTypeQueryHandlerTests
         await _sharedFixture.UnitOfWork.BannerRepository.Received(1)
             .GetAllAsync(Arg.Any<Expression<Func<Domain.Entities.Banner.Banner, bool>>>());
 
+        // never call this mapper 
         _sharedFixture.Mapper.DidNotReceive().Map<List<BannerViewModel>>(Arg.Any<List<Domain.Entities.Banner.Banner>>());
     }
 }
