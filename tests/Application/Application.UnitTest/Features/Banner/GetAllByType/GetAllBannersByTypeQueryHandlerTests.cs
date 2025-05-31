@@ -8,7 +8,7 @@ using FluentAssertions;
 using NSubstitute;
 using ViewModels.QueriesResponseViewModel.Banner;
 
-namespace Application.UnitTest.Features.Banner.Queries.GetAllByType;
+namespace Application.UnitTest.Features.Banner.GetAllByType;
 
 [Collection(CollectionDefinition.SharedFixture)]
 public class GetAllBannersByTypeQueryHandlerTests

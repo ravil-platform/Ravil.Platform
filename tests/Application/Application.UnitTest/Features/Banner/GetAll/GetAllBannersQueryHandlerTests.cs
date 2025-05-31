@@ -5,7 +5,7 @@ using FluentAssertions;
 using NSubstitute;
 using ViewModels.QueriesResponseViewModel.Banner;
 
-namespace Application.UnitTest.Features.Banner.Queries.GetAll;
+namespace Application.UnitTest.Features.Banner.GetAll;
 
 [Collection(CollectionDefinition.SharedFixture)]
 public class GetAllBannersQueryHandlerTests

@@ -7,7 +7,7 @@ using FluentAssertions;
 using NSubstitute;
 using ViewModels.Filter.Blog;
 
-namespace Application.UnitTest.Features.Blog.Queries.GetAllByFilter;
+namespace Application.UnitTest.Features.Blog.GetAllByFilter;
 
 [Collection(CollectionDefinition.SharedFixture)]
 public class GetAllBlogsByFilterQueryHandlerTests

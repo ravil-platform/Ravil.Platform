@@ -6,7 +6,7 @@ using FluentAssertions;
 using NSubstitute;
 using ViewModels.QueriesResponseViewModel.Blog;
 
-namespace Application.UnitTest.Features.Blog.Queries.GetBlogCategories;
+namespace Application.UnitTest.Features.Blog.GetBlogCategories;
 
 [Collection(CollectionDefinition.SharedFixture)]
 public class GetBlogCategoriesQueryHandlerTests
@@ -25,7 +25,7 @@ public class GetBlogCategoriesQueryHandlerTests
     {
         // Arrange
         _sharedFixture.UnitOfWork.BlogCategoryRepository.GetAllAsync()!
-            .Returns(Task.FromResult<ICollection<Domain.Entities.Blog.BlogCategory>>(new List<Domain.Entities.Blog.BlogCategory>()));
+            .Returns(Task.FromResult<IList<Domain.Entities.Blog.BlogCategory>>(new List<Domain.Entities.Blog.BlogCategory>()));
 
         var query = new GetBlogCategoriesQuery();
 
