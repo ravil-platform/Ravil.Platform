@@ -1,4 +1,6 @@
-﻿namespace Admin.MVC.Controllers;
+﻿using Domain.Entities.Payment;
+
+namespace Admin.MVC.Controllers;
 
 public class SubscriptionController(
     IUnitOfWork unitOfWork,
@@ -556,9 +558,11 @@ public class SubscriptionController(
                 IsActive = true,
             };
 
+            int userSubscriptionId = 0;
+
             var existUserSubscription =
                 await UnitOfWork.UserSubscriptionRepository
-                    .TableNoTracking.FirstOrDefaultAsync(u => u.UserId == user.Id && u.SubscriptionId == u.SubscriptionId);
+                    .TableNoTracking.FirstOrDefaultAsync(u => u.UserId == user.Id && u.SubscriptionId == sellSubscriptionViewModel.SubscriptionId);
 
             if (existUserSubscription == null)
             {
@@ -571,32 +575,57 @@ public class SubscriptionController(
 
             await UnitOfWork.UserSubscriptionRepository.InsertAsync(userSubscription);
             await UnitOfWork.SaveAsync();
+
+            //For Find Payment
+            userSubscriptionId = existUserSubscription != null ? existUserSubscription.Id : userSubscription.Id;
             #endregion
 
             #region ( Payment And Transaction )
-
             int paymentPortalId =
-                await UnitOfWork.PaymentPortalRepository.TableNoTracking.Select(p => p.Id).FirstOrDefaultAsync();
+                    await UnitOfWork.PaymentPortalRepository.TableNoTracking.Select(p => p.Id).FirstOrDefaultAsync();
 
-            var payment = new Payment()
+            #region ( Find Payment )
+            var currentPayment =
+                await UnitOfWork.PaymentRepository.GetByPredicate(p => p.UserSubscriptionId == userSubscriptionId);
+            #endregion
+
+            Guid paymentId = Guid.Empty;
+
+            if (currentPayment == null)
             {
-                PaymentDate = DateTime.Now,
-                Amount = subscription.Price,
-                PaymentMethod = PaymentMethod.FromAdmin,
-                PaymentPortalId = paymentPortalId,
-                Number = Strings.CodeGenerator(),
-                UserSubscriptionId = userSubscription.SubscriptionId,
-            };
+                #region ( Create New Payment )
+                var payment = new Payment()
+                {
+                    PaymentDate = DateTime.Now,
+                    Amount = subscription.Price,
+                    PaymentMethod = PaymentMethod.FromAdmin,
+                    PaymentPortalId = paymentPortalId,
+                    Number = Strings.CodeGenerator(),
+                    UserSubscriptionId = userSubscription.SubscriptionId,
+                };
 
-            await UnitOfWork.PaymentRepository.InsertAsync(payment);
-            await UnitOfWork.SaveAsync();
+                await UnitOfWork.PaymentRepository.InsertAsync(payment);
+                await UnitOfWork.SaveAsync();
+
+                paymentId = payment.Id;
+                #endregion
+            }
+            else
+            {
+                paymentId = currentPayment.Id;
+
+                currentPayment.RenewalDate = DateTime.Now;
+
+                await UnitOfWork.PaymentRepository.UpdateAsync(currentPayment);
+                await UnitOfWork.SaveAsync();
+            }
 
             var transaction = new Transaction()
             {
                 TransactionDate = DateTime.Now,
                 Status = TransactionStatus.Success,
                 Number = Strings.CodeGenerator(),
-                PaymentId = payment.Id,
+                PaymentId = paymentId,
             };
 
             await UnitOfWork.TransactionRepository.InsertAsync(transaction);

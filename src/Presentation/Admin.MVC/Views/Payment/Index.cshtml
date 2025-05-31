@@ -96,7 +96,7 @@
 									<td>@item.Id</td>
 									<td>@item.Number</td>
 									<td>@item.Amount</td>
-									<td>@item.PaymentMethod</td>
+									<td>@item.PaymentMethod.GetEnumDisplayName()</td>
 									<td>@item.PaymentDate.ToStringShamsiDate()</td>
 									@if (item.RenewalDate.HasValue)
                                     {
