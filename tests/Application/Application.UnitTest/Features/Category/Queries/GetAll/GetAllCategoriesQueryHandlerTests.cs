@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿#region ( namespaces )
+using System.Linq.Expressions;
 using System.Text;
 using System.Text.Json;
 using Application.Features.Category.Queries.GetAll;
@@ -9,6 +10,7 @@ using FluentAssertions;
 using Microsoft.Extensions.Caching.Distributed;
 using NSubstitute;
 using ViewModels.QueriesResponseViewModel.Category;
+#endregion
 
 namespace Application.UnitTest.Features.Category.Queries.GetAll
 {

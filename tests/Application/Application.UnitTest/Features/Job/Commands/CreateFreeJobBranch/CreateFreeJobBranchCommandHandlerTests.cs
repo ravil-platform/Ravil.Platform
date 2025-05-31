@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿#region ( namespaces )
+using System.Linq.Expressions;
 using System.Security.Claims;
 using System.Text.Json;
 using Application.Features.Job.Commands.CreateFreeJobBranch;
@@ -21,6 +22,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using NSubstitute;
 using ViewModels.QueriesResponseViewModel.Job;
+#endregion
 
 namespace Application.UnitTest.Features.Job.Commands.CreateFreeJobBranch;
 
