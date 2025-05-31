@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
@@ -8,6 +8,15 @@
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Features\MessageBox\Queries\NewFolder1\**" />
+    <Compile Remove="Features\MessageBox\Queries\NewFolder\**" />
+    <EmbeddedResource Remove="Features\MessageBox\Queries\NewFolder1\**" />
+    <EmbeddedResource Remove="Features\MessageBox\Queries\NewFolder\**" />
+    <None Remove="Features\MessageBox\Queries\NewFolder1\**" />
+    <None Remove="Features\MessageBox\Queries\NewFolder\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="coverlet.collector" Version="6.0.0" />
@@ -29,6 +38,73 @@
 
   <ItemGroup>
     <Folder Include="Constans\" />
+    <Folder Include="Features\Category\Queries\GetAllByParentId\" />
+    <Folder Include="Features\Job\Commands\AddJobRanking\" />
+    <Folder Include="Features\Job\Commands\AdsClickActivity\" />
+    <Folder Include="Features\Job\Commands\CreateFreeJobBranch\" />
+    <Folder Include="Features\Job\Commands\Create\" />
+    <Folder Include="Features\Job\Commands\CreateJobBranch\" />
+    <Folder Include="Features\Job\Commands\CreateJobCategory\" />
+    <Folder Include="Features\Job\Commands\UploadJobBranchVideo\" />
+    <Folder Include="Features\Job\Commands\UploadJobBranchImage\" />
+    <Folder Include="Features\Job\Commands\UploadJobBranchGalleries\" />
+    <Folder Include="Features\Job\Commands\UpdateJobCategory\" />
+    <Folder Include="Features\Job\Commands\UpdateJobBranchLocation\" />
+    <Folder Include="Features\Job\Commands\UpdateJobBranch\" />
+    <Folder Include="Features\Job\Commands\UpdateBusiness\" />
+    <Folder Include="Features\Job\Commands\Update\" />
+    <Folder Include="Features\Job\Commands\SetAdsClickSetting\" />
+    <Folder Include="Features\Job\Commands\RemoveJobBranchGalleries\" />
+    <Folder Include="Features\Job\Commands\RechargeAdsClickVerification\" />
+    <Folder Include="Features\Job\Commands\RechargeAdsClick\" />
+    <Folder Include="Features\Job\Queries\GetAll\" />
+    <Folder Include="Features\Job\Queries\GetAllByCategoryId\" />
+    <Folder Include="Features\Job\Queries\GetAllJobBranch\" />
+    <Folder Include="Features\Job\Queries\GetAllJobBranchByJobId\" />
+    <Folder Include="Features\Job\Queries\GetAllJobService\" />
+    <Folder Include="Features\Job\Queries\GetAllKeywords\" />
+    <Folder Include="Features\Job\Queries\GetBestJobs\" />
+    <Folder Include="Features\Job\Queries\GetByRoute\" />
+    <Folder Include="Features\Job\Queries\GetContactRequests\" />
+    <Folder Include="Features\Job\Queries\GetJobBranchAds\" />
+    <Folder Include="Features\Job\Queries\GetJobBranchById\" />
+    <Folder Include="Features\Job\Queries\GetJobBranchByRoute\" />
+    <Folder Include="Features\Job\Queries\GetJobBranchGalleries\" />
+    <Folder Include="Features\Job\Queries\GetJobBranchShortLinks\" />
+    <Folder Include="Features\Job\Queries\GetJobBranchTags\" />
+    <Folder Include="Features\Job\Queries\GetJobOverView\" />
+    <Folder Include="Features\Job\Queries\GetJobRankingsByFilter\" />
+    <Folder Include="Features\Job\Queries\GetJobSelectionSlider\" />
+    <Folder Include="Features\Job\Queries\GetJobStatisticsByFilter\" />
+    <Folder Include="Features\Job\Queries\GetJobTimeWork\" />
+    <Folder Include="Features\Job\Queries\GetJobViews\" />
+    <Folder Include="Features\Job\Queries\GetNewestJobs\" />
+    <Folder Include="Features\Job\Queries\GetRelatedJobBranches\" />
+    <Folder Include="Features\Job\Queries\GetRelatedJobs\" />
+    <Folder Include="Features\Job\Queries\GetReviewsSummery\" />
+    <Folder Include="Features\Job\Queries\GetTags\" />
+    <Folder Include="Features\Job\Queries\GetTagsPotential\" />
+    <Folder Include="Features\Job\Queries\Report\" />
+    <Folder Include="Features\Subscription\Queries\GetByUserId\" />
+    <Folder Include="Features\Subscription\Queries\GetAll\" />
+    <Folder Include="Features\Tag\Queries\GetTagsByCategoryId\" />
+    <Folder Include="Features\Tag\Queries\GetAllByType\" />
+    <Folder Include="Features\Tag\Queries\GetAll\" />
+    <Folder Include="Features\Team\Queries\NewFolder\" />
+    <Folder Include="Features\User\Commands\AddBlogLike\" />
+    <Folder Include="Features\User\Commands\AddToBookMark\" />
+    <Folder Include="Features\User\Commands\Create\" />
+    <Folder Include="Features\User\Commands\GenerateToken\" />
+    <Folder Include="Features\User\Commands\NewFolder\" />
+    <Folder Include="Features\User\Commands\RemoveToken\" />
+    <Folder Include="Features\User\Commands\RemoveBookMark\" />
+    <Folder Include="Features\User\Commands\RegisterOrLogin\" />
+    <Folder Include="Features\User\Commands\RefreshToken\" />
+    <Folder Include="Features\User\Queries\GetUserJobBranches\" />
+    <Folder Include="Features\User\Queries\GetJobBookMarks\" />
+    <Folder Include="Features\User\Queries\GetById\" />
+    <Folder Include="Features\User\Queries\CheckIsJobBookMarked\" />
+    <Folder Include="Features\User\Queries\CheckIsBlogLiked\" />
     <Folder Include="Fixtures\ClassFixtures\" />
   </ItemGroup>
 
