@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Application.Services.NehsanApi;
 using Application.BackgroundServices;
+using Application.Services.NehsanApi;
+using StackExchange.Redis;
 using ZarinPalDriver;
 using Hangfire;
 
@@ -13,15 +14,19 @@ namespace Application
         {
             #region ( Caching Services )
 
-            services.AddMemoryCache();
-            services.AddDistributedMemoryCache();
-            //services.AddDistributedRedisCache(options =>
-            //{
-            //    options.Configuration = environment.IsDevelopment() ? "localhost:6379" : "";
-            //});
+            //services.AddMemoryCache();
+            //services.AddDistributedMemoryCache();
+            services.AddStackExchangeRedisCache(options =>
+            {
+                // تنظیمات Redis
+                var configurationRedisCache = ConfigurationOptions.Parse("62.60.210.251:6379");
+                configurationRedisCache.Password = "qwe123$$QWE";  // وارد کردن پسورد Redis
+
+                options.ConfigurationOptions = configurationRedisCache;
+            });
 
             //services.AddSingleton<IConnectionMultiplexer>(sp =>
-            //    ConnectionMultiplexer.Connect(environment.IsDevelopment() ? "localhost:6379" : "")
+            //    ConnectionMultiplexer.Connect("62.60.210.251")
             //);
 
             #endregion
