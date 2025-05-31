@@ -51,7 +51,7 @@ public class GetBlogCategoriesQueryHandlerTests
         };
 
         _sharedFixture.UnitOfWork.BlogCategoryRepository.GetAllAsync()!
-            .Returns(Task.FromResult<ICollection<Domain.Entities.Blog.BlogCategory>>(blogCategories));
+            .Returns(Task.FromResult<IList<Domain.Entities.Blog.BlogCategory>>(blogCategories));
 
         _sharedFixture.Mapper.Map<List<BlogCategoryViewModel>>(blogCategories)
             .Returns(blogCategoryViewModels);

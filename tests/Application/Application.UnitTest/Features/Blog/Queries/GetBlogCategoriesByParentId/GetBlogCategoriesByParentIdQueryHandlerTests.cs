@@ -28,7 +28,7 @@ public class GetBlogCategoriesByParentIdQueryHandlerTests
         var parentId = 123;
         _sharedFixture.UnitOfWork.BlogCategoryRepository
             .GetAllAsync(p => p.ParentId == parentId)
-            .Returns(Task.FromResult<ICollection<Domain.Entities.Blog.BlogCategory>>(new List<Domain.Entities.Blog.BlogCategory>()));
+            .Returns(Task.FromResult<IList<Domain.Entities.Blog.BlogCategory>>(new List<Domain.Entities.Blog.BlogCategory>()));
 
         var query = new GetBlogCategoriesByParentIdQuery { ParentId = parentId };
 

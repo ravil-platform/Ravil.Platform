@@ -39,7 +39,7 @@ public class GetAllBannersQueryHandlerTests
 
         _sharedFixture.UnitOfWork.BannerRepository
             .GetAllAsync()!
-            .Returns(Task.FromResult((ICollection<Domain.Entities.Banner.Banner>)bannersFromRepo));
+            .Returns(Task.FromResult((IList<Domain.Entities.Banner.Banner>)bannersFromRepo));
 
         _sharedFixture.Mapper.Map<List<BannerViewModel>>(bannersFromRepo).Returns(bannersViewModel);
 
@@ -65,7 +65,7 @@ public class GetAllBannersQueryHandlerTests
 
         _sharedFixture.UnitOfWork.BannerRepository
             .GetAllAsync()!
-            .Returns(Task.FromResult((ICollection<Domain.Entities.Banner.Banner>)emptyBanners));
+            .Returns(Task.FromResult((IList<Domain.Entities.Banner.Banner>)emptyBanners));
 
         _sharedFixture.Mapper.Map<List<BannerViewModel>>(emptyBanners).Returns(emptyViewModelList);
 
