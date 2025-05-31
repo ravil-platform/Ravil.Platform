@@ -72,7 +72,7 @@ public class GetAllBannersByBranchIdQueryHandlerTests
 
         _sharedFixture.UnitOfWork.BannerRepository
             .GetAllAsync(Arg.Any<Expression<Func<Domain.Entities.Banner.Banner, bool>>>())
-            .Returns(Task.FromResult((ICollection<Domain.Entities.Banner.Banner>)emptyList));
+            .Returns(Task.FromResult((IList<Domain.Entities.Banner.Banner>)emptyList));
 
         var query = new GetAllBannersByBranchIdQuery { JobBranchId = branchId };
 

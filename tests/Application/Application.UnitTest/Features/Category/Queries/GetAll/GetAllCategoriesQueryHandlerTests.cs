@@ -61,7 +61,7 @@ namespace Application.UnitTest.Features.Category.Queries.GetAll
 
             _sharedFixture.UnitOfWork.CategoryRepository
                 .GetAllAsync(Arg.Any<Expression<Func<Domain.Entities.Category.Category, bool>>>())
-                .Returns(Task.FromResult((ICollection<Domain.Entities.Category.Category>)categories)!);
+                .Returns(Task.FromResult((IList<Domain.Entities.Category.Category>)categories)!);
 
             _sharedFixture.Mapper
                 .Map<List<CategoryListViewModel>>(categories)
@@ -150,7 +150,7 @@ namespace Application.UnitTest.Features.Category.Queries.GetAll
 
             _sharedFixture.UnitOfWork.CategoryRepository
                 .GetAllAsync(Arg.Any<Expression<Func<Domain.Entities.Category.Category, bool>>>())
-                .Returns(Task.FromResult((ICollection<Domain.Entities.Category.Category>)emptyCategories)!);
+                .Returns(Task.FromResult((IList<Domain.Entities.Category.Category>)emptyCategories)!);
 
             _sharedFixture.Mapper
                 .Map<List<CategoryListViewModel>>(emptyCategories)
@@ -188,7 +188,7 @@ namespace Application.UnitTest.Features.Category.Queries.GetAll
 
             _sharedFixture.UnitOfWork.CategoryRepository
                 .GetAllAsync(Arg.Any<Expression<Func<Domain.Entities.Category.Category, bool>>>())
-                .Returns((ICollection<Domain.Entities.Category.Category>)null!);
+                .Returns((IList<Domain.Entities.Category.Category>)null!);
 
             // Act
             var result = await _handler.Handle(new GetAllCategoriesQuery(), CancellationToken.None);

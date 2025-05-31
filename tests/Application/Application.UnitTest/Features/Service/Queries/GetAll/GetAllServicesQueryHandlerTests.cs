@@ -41,7 +41,7 @@ public class GetAllServicesQueryHandlerTests
 
         _sharedFixture.UnitOfWork.ServiceRepository
             .GetAllAsync(Arg.Any<Expression<Func<Domain.Entities.Service.Service, bool>>>())!
-            .Returns(Task.FromResult((ICollection<Domain.Entities.Service.Service>)services));
+            .Returns(Task.FromResult((IList<Domain.Entities.Service.Service>)services));
 
         _sharedFixture.Mapper
             .Map<List<ServiceViewModel>>(services)
@@ -74,7 +74,7 @@ public class GetAllServicesQueryHandlerTests
 
         _sharedFixture.UnitOfWork.ServiceRepository
             .GetAllAsync(Arg.Any<Expression<Func<Domain.Entities.Service.Service, bool>>>())!
-            .Returns(Task.FromResult((ICollection<Domain.Entities.Service.Service>)services));
+            .Returns(Task.FromResult((IList<Domain.Entities.Service.Service>)services));
 
         _sharedFixture.Mapper
             .Map<List<ServiceViewModel>>(services)

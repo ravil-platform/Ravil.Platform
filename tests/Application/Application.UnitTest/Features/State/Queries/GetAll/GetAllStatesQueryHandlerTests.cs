@@ -68,7 +68,7 @@ public class GetAllStatesQueryHandlerTests
 
         _sharedFixture.UnitOfWork.StateBaseRepository
             .GetAllAsync()
-            .Returns(Task.FromResult((ICollection<StateBase>)states));
+            .Returns(Task.FromResult((IList<StateBase>)states));
 
         _sharedFixture.Mapper
             .Map<List<StateViewModel>>(states)

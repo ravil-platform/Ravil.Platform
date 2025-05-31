@@ -43,7 +43,7 @@ public class GetAllFaqCategoriesQueryHandlerTests
         };
 
         _sharedFixture.UnitOfWork.FaqCategoryRepository.GetAllAsync()
-            .Returns(Task.FromResult((ICollection<FaqCategory>)data));
+            .Returns(Task.FromResult((IList<FaqCategory>)data));
 
         _sharedFixture.Mapper.Map<List<FaqCategoryViewModel>>(data)
             .Returns(viewModels);
