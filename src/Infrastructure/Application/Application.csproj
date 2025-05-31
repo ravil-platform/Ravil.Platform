@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
@@ -13,9 +13,8 @@
 		<PackageReference Include="AutoMapper" Version="13.0.1" />
 		<PackageReference Include="FluentResults" Version="3.16.0" />
 		<PackageReference Include="FluentValidation" Version="11.10.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.8" />
-		<PackageReference Include="Microsoft.Extensions.Caching.Redis" Version="2.3.0" />
-		<PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="9.0.5" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.5" />
+		<PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="9.0.5" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="UAParser" Version="3.1.47" />
 		<PackageReference Include="ZarinPalDriver" Version="1.2.0" />

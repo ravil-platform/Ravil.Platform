@@ -23,11 +23,11 @@ services.AddControllersWithViews();
 #region ( Caching Services )
 
 //services.AddMemoryCache();
-//services.AddDistributedMemoryCache();
-services.AddDistributedRedisCache(options =>
-{
-    options.Configuration = environment.IsDevelopment() ? "localhost:6379" : "";
-});
+services.AddDistributedMemoryCache();
+//services.AddDistributedRedisCache(options =>
+//{
+//    options.Configuration = environment.IsDevelopment() ? "localhost:6379" : "";
+//});
 
 //services.AddSingleton<IConnectionMultiplexer>(sp =>
 //    ConnectionMultiplexer.Connect(environment.IsDevelopment() ? "localhost:6379" : "")

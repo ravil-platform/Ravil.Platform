@@ -45,7 +45,7 @@ public class GetAllBannersByTypeQueryHandlerTests
 
         _sharedFixture.UnitOfWork.BannerRepository
             .GetAllAsync(Arg.Any<Expression<Func<Domain.Entities.Banner.Banner, bool>>>())
-            .Returns(Task.FromResult((ICollection<Domain.Entities.Banner.Banner>)bannersFromRepo));
+            .Returns(Task.FromResult((IList<Domain.Entities.Banner.Banner>)bannersFromRepo));
 
         _sharedFixture.Mapper.Map<List<BannerViewModel>>(bannersFromRepo).Returns(bannersViewModel);
 
@@ -74,7 +74,7 @@ public class GetAllBannersByTypeQueryHandlerTests
 
         _sharedFixture.UnitOfWork.BannerRepository
             .GetAllAsync(Arg.Any<Expression<Func<Domain.Entities.Banner.Banner, bool>>>())
-            .Returns(Task.FromResult((ICollection<Domain.Entities.Banner.Banner>)emptyList));
+            .Returns(Task.FromResult((IList<Domain.Entities.Banner.Banner>)emptyList));
 
         var query = new GetAllBannersByTypeQuery { BannerType = bannerType };
 

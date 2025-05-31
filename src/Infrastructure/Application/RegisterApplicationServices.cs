@@ -13,7 +13,7 @@ namespace Application
         {
             #region ( Caching Services )
 
-            //services.AddMemoryCache();
+            services.AddMemoryCache();
             services.AddDistributedMemoryCache();
             //services.AddDistributedRedisCache(options =>
             //{

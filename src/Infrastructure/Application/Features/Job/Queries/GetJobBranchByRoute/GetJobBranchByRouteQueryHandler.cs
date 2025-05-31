@@ -30,7 +30,7 @@ public class GetJobBranchByRouteQueryHandler(IMapper mapper,
 
         if (result is null)
         {
-            return Result.Fail(Validations.NotFound);
+            return Result.Fail(Validations.NotFoundException);
         }
 
         var jobBranchViewModel = Mapper.Map<JobBranchViewModel>(result);

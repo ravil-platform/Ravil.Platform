@@ -58,14 +58,14 @@ namespace RNX.Persistence
             return await result.SingleOrDefaultAsync();
         }
 
-        public virtual async Task<ICollection<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate)
+        public virtual async Task<IList<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate)
         {
             var result = await DbSet.AsNoTracking().Where(predicate).ToListAsync();
 
             return result;
         }
 
-        public virtual async Task<ICollection<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includes = "", int? takeEntities = null)
+        public virtual async Task<IList<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includes = "", int? takeEntities = null)
         {
             var query = DbSet.AsNoTracking();
 
@@ -98,14 +98,14 @@ namespace RNX.Persistence
             }
         }
 
-        public virtual async Task<ICollection<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate, int takeEntities)
+        public virtual async Task<IList<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate, int takeEntities)
         {
             var result = await DbSet.AsNoTracking().Where(predicate).Take(takeEntities).ToListAsync();
 
             return result;
         }
 
-        public virtual async Task<ICollection<TEntity?>> GetAllAsync()
+        public virtual async Task<IList<TEntity?>> GetAllAsync()
         {
             // ToListAsync -> Extension Method -> using Microsoft.EntityFrameworkCore;
 

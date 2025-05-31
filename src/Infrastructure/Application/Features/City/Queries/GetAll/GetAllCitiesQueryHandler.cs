@@ -10,7 +10,7 @@ public class GetAllCitiesQueryHandler(IMapper mapper, IUnitOfWork unitOfWork, ID
 
     protected IMapper Mapper { get; } = mapper;
     protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
-    protected IMemoryCache MemoryCache { get; } = memoryCache;
+    protected IDistributedCache DistributedCache { get; } = distributedCache;
 
     #endregion
 

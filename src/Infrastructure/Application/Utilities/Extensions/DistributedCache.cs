@@ -1,7 +1,9 @@
-﻿using System.Text.Json;
-using Microsoft.Extensions.Caching.Distributed;
+﻿using Microsoft.Extensions.Caching.Distributed;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
-namespace Common.Utilities.Extensions;
+namespace Application.Utilities.Extensions;
 
 public static class DistributedCache
 {
@@ -17,7 +19,13 @@ public static class DistributedCache
             await SetCache(cache, key, res, options);
             return res;
         }
-        var data = JsonSerializer.Deserialize<T>(val);
+
+        var jsonSerializerOptions = new JsonSerializerOptions
+        {
+            ReferenceHandler = ReferenceHandler.IgnoreCycles,
+            WriteIndented = true
+        };
+        var data = JsonSerializer.Deserialize<T>(val, jsonSerializerOptions);
         return data;
     }
 
@@ -33,7 +41,13 @@ public static class DistributedCache
             await SetCache(cache, key, res);
             return res;
         }
-        var data = JsonSerializer.Deserialize<T>(val);
+
+        var jsonSerializerOptions = new JsonSerializerOptions
+        {
+            ReferenceHandler = ReferenceHandler.IgnoreCycles,
+            WriteIndented = true
+        };
+        var data = JsonSerializer.Deserialize<T>(val, jsonSerializerOptions);
         return data;
     }
 
@@ -44,7 +58,12 @@ public static class DistributedCache
 
     public static async Task SetCache<T>(this IDistributedCache cache, string key, T value, CacheOptions options)
     {
-        var json = JsonSerializer.Serialize(value);
+        var jsonSerializerOptions = new JsonSerializerOptions
+        {
+            ReferenceHandler = ReferenceHandler.IgnoreCycles,
+            WriteIndented = true
+        };
+        var json = JsonSerializer.Serialize(value, jsonSerializerOptions);
         var bytes = Encoding.UTF8.GetBytes(json);
 
         await cache.SetAsync(key, bytes, new DistributedCacheEntryOptions()
@@ -60,7 +79,12 @@ public static class DistributedCache
         if (val == null)
             return default;
 
-        var value = JsonSerializer.Deserialize<T>(val);
+        var jsonSerializerOptions = new JsonSerializerOptions
+        {
+            ReferenceHandler = ReferenceHandler.IgnoreCycles,
+            WriteIndented = true
+        };
+        var value = JsonSerializer.Deserialize<T>(val, jsonSerializerOptions);
         return value;
     }
 

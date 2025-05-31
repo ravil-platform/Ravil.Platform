@@ -13,9 +13,9 @@ namespace RNX.Persistence
         Task<T?> GetByPredicate(Expression<Func<T, bool>> predicate);
         Task<T?> GetByPredicate(Expression<Func<T, bool>> predicate, string includes = "");
 
-        Task<ICollection<T>> GetAllAsync(Expression<Func<T, bool>> predicate);
-        Task<ICollection<T>> GetAllAsync(Expression<Func<T, bool>> predicate = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includes = "", int? takeEntities = null);
-        Task<ICollection<T>> GetAllAsync(Expression<Func<T, bool>> predicate, int takeEntities);
-        Task<ICollection<T?>> GetAllAsync();
+        Task<IList<T>> GetAllAsync(Expression<Func<T, bool>> predicate);
+        Task<IList<T>> GetAllAsync(Expression<Func<T, bool>> predicate = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includes = "", int? takeEntities = null);
+        Task<IList<T>> GetAllAsync(Expression<Func<T, bool>> predicate, int takeEntities);
+        Task<IList<T?>> GetAllAsync();
     }
 }

@@ -118,14 +118,14 @@ namespace RNX.Persistence
             return await result.FirstOrDefaultAsync();
         }
 
-        public virtual async Task<ICollection<T>> GetAllAsync(Expression<Func<T, bool>> predicate)
+        public virtual async Task<IList<T>> GetAllAsync(Expression<Func<T, bool>> predicate)
         {
             var result = await DbSet.AsNoTracking().Where(predicate).ToListAsync();
 
             return result;
         }
 
-        public virtual async Task<ICollection<T>> GetAllAsync(Expression<Func<T, bool>> predicate = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includes = "", int? takeEntities = null)
+        public virtual async Task<IList<T>> GetAllAsync(Expression<Func<T, bool>> predicate = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includes = "", int? takeEntities = null)
         {
             var query = DbSet.AsNoTracking();
 
@@ -158,7 +158,7 @@ namespace RNX.Persistence
             }
         }
 
-        public virtual async Task<ICollection<T>> GetAllAsync(Expression<Func<T, bool>> predicate, int takeEntities)
+        public virtual async Task<IList<T>> GetAllAsync(Expression<Func<T, bool>> predicate, int takeEntities)
         {
             var result = await DbSet.AsNoTracking().Where(predicate).Take(takeEntities).ToListAsync();
 
@@ -235,7 +235,7 @@ namespace RNX.Persistence
             await DatabaseContext.Database.RollbackTransactionAsync();
         }
 
-        public virtual async Task<ICollection<T?>> GetAllAsync()
+        public virtual async Task<IList<T?>> GetAllAsync()
         {
             var result = await DbSet.AsNoTracking().ToListAsync();
 

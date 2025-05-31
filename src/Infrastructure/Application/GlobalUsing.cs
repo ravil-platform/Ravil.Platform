@@ -1,6 +1,7 @@
 ﻿global using AngleSharp.Io;
 global using Application.Api;
 global using Application.Contracts.Identity;
+global using Application.Utilities.Extensions;
 global using Application.Features.Comment.Commands.Create;
 global using Application.Features.Comment.Commands.CreateAnswer;
 global using Application.Features.Job.Commands.Create;
