@@ -6,7 +6,7 @@ using FluentAssertions;
 using NSubstitute;
 using ViewModels.QueriesResponseViewModel.Blog;
 
-namespace Application.UnitTest.Features.Blog.GetBlogCategories;
+namespace Application.UnitTest.Features.Blog.Queries.GetBlogCategories;
 
 [Collection(CollectionDefinition.SharedFixture)]
 public class GetBlogCategoriesQueryHandlerTests
