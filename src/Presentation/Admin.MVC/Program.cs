@@ -1,9 +1,10 @@
+﻿using Application.Middlewares;
+using Application.Profiles;
 using Common.Options;
 using Logging.Adapters;
-using System.Reflection;
 using Persistence.Context;
-using Application.Profiles;
-using Application.Middlewares;
+using StackExchange.Redis;
+using System.Reflection;
 
 #region ( Services )
 
@@ -23,14 +24,18 @@ services.AddControllersWithViews();
 #region ( Caching Services )
 
 //services.AddMemoryCache();
-services.AddDistributedMemoryCache();
-//services.AddDistributedRedisCache(options =>
-//{
-//    options.Configuration = environment.IsDevelopment() ? "localhost:6379" : "";
-//});
+//services.AddDistributedMemoryCache();
+services.AddStackExchangeRedisCache(options =>
+{
+    // تنظیمات Redis
+    var configurationRedisCache = ConfigurationOptions.Parse("62.60.210.251:6379");
+    configurationRedisCache.Password = "qwe123$$QWE";  // وارد کردن پسورد Redis
+
+    options.ConfigurationOptions = configurationRedisCache;
+});
 
 //services.AddSingleton<IConnectionMultiplexer>(sp =>
-//    ConnectionMultiplexer.Connect(environment.IsDevelopment() ? "localhost:6379" : "")
+//    ConnectionMultiplexer.Connect("62.60.210.251")
 //);
 
 #endregion
