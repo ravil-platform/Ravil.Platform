@@ -26,10 +26,10 @@ public class SearchByCategoryAndJobQueryHandlerTests
     public async Task Should_ReturnMappedJobsList_WhenJobsExist()
     {
         // Arrange
-        var jobs = new List<Job>
+        var jobs = new List<Domain.Entities.Job.Job>
         {
-            new Job { Id = 1, Title = "Doctor" },
-            new Job { Id = 2, Title = "Lawyer" }
+            new Domain.Entities.Job.Job { Id = 1, Title = "Doctor" },
+            new Domain.Entities.Job.Job { Id = 2, Title = "Lawyer" }
         };
 
         var jobViewModels = new List<JobSearchResultViewModel>
@@ -64,7 +64,7 @@ public class SearchByCategoryAndJobQueryHandlerTests
     public async Task Should_ReturnEmptyJobsList_WhenNoJobsFound()
     {
         // Arrange
-        var jobs = new List<Job>();
+        var jobs = new List<Domain.Entities.Job.Job>();
         var jobViewModels = new List<JobSearchResultViewModel>();
 
         _sharedFixture.UnitOfWork.JobRepository

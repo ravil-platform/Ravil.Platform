@@ -41,7 +41,6 @@
     <Folder Include="Features\Category\Queries\GetAllByParentId\" />
     <Folder Include="Features\Job\Commands\AddJobRanking\" />
     <Folder Include="Features\Job\Commands\AdsClickActivity\" />
-    <Folder Include="Features\Job\Commands\CreateFreeJobBranch\" />
     <Folder Include="Features\Job\Commands\Create\" />
     <Folder Include="Features\Job\Commands\CreateJobBranch\" />
     <Folder Include="Features\Job\Commands\CreateJobCategory\" />

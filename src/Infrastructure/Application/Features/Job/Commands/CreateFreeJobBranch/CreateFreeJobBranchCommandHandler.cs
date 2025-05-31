@@ -29,6 +29,9 @@ public class CreateFreeJobBranchCommandHandler(IMapper mapper, IUnitOfWork unitO
 
         try
         {
+            if (request.Job is null)
+                throw new BadRequestException();
+
             await UnitOfWork.JobRepository.BeginTransactionAsync();
 
             #region ( Job )
@@ -79,7 +82,7 @@ public class CreateFreeJobBranchCommandHandler(IMapper mapper, IUnitOfWork unitO
             #endregion
 
             #region ( Job Categories )
-            if (request.Categories.Length > 0)
+            if (request.Categories?.Length > 0)
             {
                 foreach (var item in request.Categories)
                 {
