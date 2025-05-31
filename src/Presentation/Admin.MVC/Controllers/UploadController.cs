@@ -6,19 +6,24 @@
         private IOptions<FTPConnectionOptions> FtpConnectionOptions { get; } = ftpConnectionOptions;
         protected IFtpService FtpService { get; } = ftpService;
 
-        [HttpPost]
-        [Route("/UploadImage")]
-        public async Task<IActionResult> UploadImage(IFormFile upload)
-        {
-            if (upload == null)
-            {
-                return BadRequest();
-            }
+        //ckeditor 5
 
-            string imageName = await FtpService.UploadFileToFtpServer(upload, TypeFile.Image, Paths.CkeditorContent, upload.FileName);
-            string url = FtpConnectionOptions.Value.UrlBase + Paths.CkeditorContent;
+        //[HttpPost]
+        //[Route("/UploadImage")]
+        //public async Task<IActionResult> UploadImage(IFormFile upload)
+        //{
+        //    if (upload == null)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            return Json(new { Uploaded = true, url = url + imageName });
-        }
+        //    string imageName = await FtpService.UploadFileToFtpServer(upload, TypeFile.Image, Paths.CkeditorContent, upload.FileName);
+        //    string url = FtpConnectionOptions.Value.UrlBase + Paths.CkeditorContent;
+
+        //    return Json(new { Uploaded = true, url = url + imageName });
+        //}
+
+
+        //ckeditor 5
     }
 }

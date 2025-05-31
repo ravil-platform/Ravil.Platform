@@ -1,11 +1,11 @@
 ﻿using Constants.Caching;
+using Domain.Entities.Job;
 using Microsoft.Extensions.Caching.Distributed;
-using JsonSerializer = System.Text.Json.JsonSerializer;
 using CreateJobBranchViewModel = ViewModels.AdminPanel.Job.CreateJobBranchViewModel;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 using PhoneNumberInfosViewModel = ViewModels.AdminPanel.Job.PhoneNumberInfosViewModel;
 using SocialMediaInfosViewModel = ViewModels.AdminPanel.Job.SocialMediaInfosViewModel;
 using UpdateJobBranchViewModel = ViewModels.AdminPanel.Job.UpdateJobBranchViewModel;
-using Domain.Entities.Job;
 
 namespace Admin.MVC.Controllers
 {
@@ -600,7 +600,7 @@ namespace Admin.MVC.Controllers
                 await UnitOfWork.SaveAsync();
                 // Save Finish
                 #endregion
-                
+
                 await UnitOfWork.JobRepository.CommitTransactionAsync();
 
                 #region ( Remove Cache Data )
@@ -2011,5 +2011,6 @@ namespace Admin.MVC.Controllers
             return RedirectToAction("IndexJob");
         }
         #endregion
+
     }
 }

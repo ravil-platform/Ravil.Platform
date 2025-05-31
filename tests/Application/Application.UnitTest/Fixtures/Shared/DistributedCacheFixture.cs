@@ -14,6 +14,6 @@ public class DistributedCacheFixture : IDisposable
 
     public void Dispose()
     {
-        // اگه کاری برای پاک‌سازی نیاز باشه اینجا انجام می‌دیم
+       
     }
 }

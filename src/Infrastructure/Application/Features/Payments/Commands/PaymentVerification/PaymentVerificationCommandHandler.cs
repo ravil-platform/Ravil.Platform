@@ -60,7 +60,6 @@ public class PaymentVerificationCommandHandler(IMapper mapper, IUnitOfWork unitO
 
             switch (request.PortalId)
             {
-                //TODO Zarinpal
                 case 1:
                     {
                         #region ( Handle Zarinpal Gateway Payment )

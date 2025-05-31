@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿#region ( namespaces )
+using System.Linq.Expressions;
 using System.Security.Claims;
 using Application.Features.Payments.Commands.PaymentVerification;
 using Application.Services.SMS;
@@ -13,6 +14,7 @@ using Microsoft.AspNetCore.Routing;
 using MockQueryable;
 using NSubstitute;
 using ZarinPalDriver;
+#endregion
 
 namespace Application.UnitTest.Features.Payments.Commands.PaymentVerification;
 
