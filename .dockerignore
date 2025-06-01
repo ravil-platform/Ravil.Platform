@@ -1,6 +1,6 @@
 
 # .NET Core appsettings
-src/Api/appsettings.Production.json
+src/Api/appsettings.json
 src/Api/appsettings.Development.json
-src/Presentation/Admin.MVC/appsettings.Production.json
+src/Presentation/Admin.MVC/appsettings.json
 src/Presentation/Admin.MVC/appsettings.Development.json
