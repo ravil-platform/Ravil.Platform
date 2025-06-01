@@ -1,10 +1,10 @@
-﻿using Application.Middlewares;
-using Application.Profiles;
-using Common.Options;
+﻿using Common.Options;
 using Logging.Adapters;
-using Persistence.Context;
-using StackExchange.Redis;
 using System.Reflection;
+using StackExchange.Redis;
+using Persistence.Context;
+using Application.Profiles;
+using Application.Middlewares;
 
 #region ( Services )
 
@@ -14,6 +14,10 @@ var configuration = builder.Configuration;
 var environment = builder.Environment;
 
 services.Configure<FTPConnectionOptions>(configuration.GetSection(nameof(FTPConnectionOptions)));
+
+var redisCacheOptions = configuration.GetSection(nameof(RedisCacheOptions)).Get<RedisCacheOptions>();
+services.Configure<RedisCacheOptions>(configuration.GetSection(nameof(RedisCacheOptions)));
+
 var siteSetting = configuration.GetSection(nameof(SiteSettings)).Get<SiteSettings>();
 services.Configure<SiteSettings>(configuration.GetSection(nameof(SiteSettings)));
 
@@ -27,11 +31,21 @@ services.AddControllersWithViews();
 //services.AddDistributedMemoryCache();
 services.AddStackExchangeRedisCache(options =>
 {
-    // تنظیمات Redis
-    var configurationRedisCache = ConfigurationOptions.Parse("62.60.210.251:6379");
-    configurationRedisCache.Password = "qwe123$$QWE";  // وارد کردن پسورد Redis
+    if (redisCacheOptions != null)
+    {
+        var configurationRedisCache = ConfigurationOptions.Parse(redisCacheOptions.ConnectionString 
+            ?? $"{redisCacheOptions.IpAddress}:{redisCacheOptions.Port}");
+        
+        configurationRedisCache.Password = redisCacheOptions.Password;
+        options.ConfigurationOptions = configurationRedisCache;
+    }
+    else
+    {
+        var configurationRedisCache = ConfigurationOptions.Parse("62.60.164.61:6379");
+        configurationRedisCache.Password = "qwe123$$QWE";  // وارد کردن پسورد Redis
 
-    options.ConfigurationOptions = configurationRedisCache;
+        options.ConfigurationOptions = configurationRedisCache;
+    }
 });
 
 //services.AddSingleton<IConnectionMultiplexer>(sp =>

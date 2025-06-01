@@ -10,7 +10,7 @@ namespace Application
     public static class RegisterApplicationServices
     {
         
-        public static void AddApplicationServices(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment environment, JwtSettings jwtSettings = null)
+        public static void AddApplicationServices(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment environment, JwtSettings? jwtSettings = null, RedisCacheOptions? redisCacheOptions = null)
         {
             #region ( Caching Services )
 
@@ -18,11 +18,20 @@ namespace Application
             //services.AddDistributedMemoryCache();
             services.AddStackExchangeRedisCache(options =>
             {
-                // تنظیمات Redis
-                var configurationRedisCache = ConfigurationOptions.Parse("62.60.210.251:6379");
-                configurationRedisCache.Password = "qwe123$$QWE";  // وارد کردن پسورد Redis
+                if (redisCacheOptions != null)
+                {
+                    var configurationRedisCache = ConfigurationOptions.Parse(redisCacheOptions.ConnectionString ?? $"{redisCacheOptions.IpAddress}:{redisCacheOptions.Port}");
+                    configurationRedisCache.Password = redisCacheOptions.Password;
 
-                options.ConfigurationOptions = configurationRedisCache;
+                    options.ConfigurationOptions = configurationRedisCache;
+                }
+                else
+                {
+                    var configurationRedisCache = ConfigurationOptions.Parse("62.60.164.61:6379");
+                    configurationRedisCache.Password = "qwe123$$QWE";  // وارد کردن پسورد Redis
+
+                    options.ConfigurationOptions = configurationRedisCache;
+                }
             });
 
             //services.AddSingleton<IConnectionMultiplexer>(sp =>

@@ -11,6 +11,10 @@ var configuration = builder.Configuration;
 var environment = builder.Environment;
 
 services.Configure<FTPConnectionOptions>(configuration.GetSection(nameof(FTPConnectionOptions)));
+
+var _redisCacheOptions = configuration.GetSection(nameof(RedisCacheOptions)).Get<RedisCacheOptions>();
+services.Configure<RedisCacheOptions>(configuration.GetSection(nameof(RedisCacheOptions)));
+
 var _siteSetting = configuration.GetSection(nameof(SiteSettings)).Get<SiteSettings>();
 services.Configure<SiteSettings>(configuration.GetSection(nameof(SiteSettings)));
 
@@ -26,7 +30,7 @@ services.AddControllers().ConfigureApiBehaviorOptions(option =>
     });
 });
 services.AddEndpointsApiExplorer();
-services.AddApplicationServices(configuration, environment, _siteSetting.JwtSettings);
+services.AddApplicationServices(configuration, environment, _siteSetting?.JwtSettings, _redisCacheOptions);
 services.AddPersistenceServices(configuration);
 services.AddSingleton<IFtpService, FtpService>();
 
