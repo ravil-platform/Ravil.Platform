@@ -32,7 +32,8 @@ public class GetUserSubscriptionPlanQueryHandler(IMapper mapper, IUnitOfWork uni
                     return await UnitOfWork.UserSubscriptionRepository.TableNoTracking
                         .Where(a => a.IsActive && a.IsFinally && a.UserId == request.UserId && a.EndDate.Day >= DateTime.UtcNow.Day)
                         .ProjectTo<UserSubscriptionViewModel>(Mapper.ConfigurationProvider)
-                        .SingleOrDefaultAsync(cancellationToken: cancellationToken);
+                        .OrderByDescending(us => us.StartDate)
+                        .FirstOrDefaultAsync(cancellationToken: cancellationToken);
                 },
                 options: new DistributedCache.CacheOptions
                 {

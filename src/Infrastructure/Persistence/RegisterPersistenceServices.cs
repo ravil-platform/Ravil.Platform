@@ -8,7 +8,7 @@
 
             services.AddDbContext<ApplicationDbContext>(option =>
             {
-                option.UseLazyLoadingProxies(false);
+                option.UseLazyLoadingProxies();
                 option.EnableSensitiveDataLogging();
                 option.EnableDetailedErrors();
                 option.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),

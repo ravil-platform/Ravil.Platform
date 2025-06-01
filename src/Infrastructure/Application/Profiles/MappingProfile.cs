@@ -373,16 +373,16 @@ namespace Application.Profiles
                     expression.Condition(a => a.JobKeywords != null && a.JobKeywords.Any());
                     expression.MapFrom(a => a.JobKeywords.Select(s => s.Keyword));
                 })
-                .ForMember(src => src.IsAds, expression =>
+                /*.ForMember(src => src.IsAds, expression =>
                 {
                     expression.Condition(a => a.ApplicationUser?.UserSubscriptions.Where(s => s is { IsActive: true, IsFinally: true } && s.EndDate.Day >= DateTime.UtcNow.Day) != null);
                     expression.MapFrom(dest => dest.ApplicationUser.UserSubscriptions.SingleOrDefault(s => s.IsActive && s.IsFinally && s.EndDate.Day >= DateTime.UtcNow.Day) != null);
-                })
-                .ForMember(src => src.SubscriptionType, expression =>
+                })*/
+                /*.ForMember(src => src.SubscriptionType, expression =>
                 {
-                    expression.Condition(a => a.ApplicationUser?.UserSubscriptions.Where(s => s is { IsActive: true, IsFinally: true } && s.EndDate.Day >= DateTime.UtcNow.Day) != null);
+                    expression.Condition(a => a.ApplicationUser?.UserSubscriptions.Where(s => s is { IsActive: true, IsFinally: true } && s.EndDate.Day >= DateTime.UtcNow.Day && s.Subscription != null) != null);
                     expression.MapFrom(dest => dest.ApplicationUser.UserSubscriptions.Where(s => s.IsActive && s.IsFinally && s.EndDate.Day >= DateTime.UtcNow.Day && s.Subscription != null).Select(a => a.Subscription.Type).SingleOrDefault());
-                })
+                })*/
                 .ForMember(src => src.Categories, expression =>
                 {
                     expression.PreCondition(a => a.Job is { JobCategories: not null } && a.Job.JobCategories.Any(a => a.Category != null));
@@ -421,6 +421,7 @@ namespace Application.Profiles
                     expression.MapFrom(a => a.Job.JobCategories);
                 })
                 .ReverseMap();
+
 
             CreateMap<JobBranch, CreateJobBranchViewModel>().ReverseMap();
             CreateMap<JobBranch, CreateJobBranchCommand>().ReverseMap();
