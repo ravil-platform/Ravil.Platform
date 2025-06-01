@@ -77,4 +77,16 @@ jobs:
             --network ravil-network \
             --restart unless-stopped \
             api
+  restart-nginx-srv1:
+    runs-on: [self-hosted, srv1]
+    needs: [build-backend-srv1, build-api-srv1]
+    steps:
+      - name: Restart Nginx
+        run: docker restart Nginx
+  restart-nginx-srv2:
+    runs-on: [self-hosted, srv2]
+    needs: [build-backend-srv2, build-api-srv2]
+    steps:
+      - name: Restart Nginx
+        run: docker restart Nginx
   
