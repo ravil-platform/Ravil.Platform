@@ -11,5 +11,6 @@ EXPOSE 8080
 #RUN adduser --disabled-password --home /app --gecos '' appuser \
  #   && chown -R appuser:appuser /app
 #USER appuser
+ENV ASPNETCORE_ENVIRONMENT=Production
 ENTRYPOINT ["dotnet", "/app/admin/Admin.MVC.dll"]
 # test
