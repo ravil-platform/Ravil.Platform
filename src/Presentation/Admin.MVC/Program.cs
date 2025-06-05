@@ -67,13 +67,11 @@ builder.Services.AddCors(options =>
 
         if (builder.Environment.IsProduction())
         {
-            productionOrigins.AddRange(developmentOrigins);
-            allAllowedOrigins = productionOrigins;
+            allAllowedOrigins = productionOrigins.Concat(developmentOrigins).ToArray();
         }
         else
         {
-            productionOrigins.AddRange(developmentOrigins);
-            allAllowedOrigins = productionOrigins;
+            allAllowedOrigins = productionOrigins.Concat(developmentOrigins).ToArray();
         }
 
         policyBuilder.SetIsOriginAllowedToAllowWildcardSubdomains()
