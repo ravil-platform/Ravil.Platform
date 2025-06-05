@@ -38,11 +38,11 @@ public class GuideLineCompletionCommandHandlerTests
 
         _handler = new GuideLineCompletionCommandHandler(
             _sharedFixture.Mapper,
-            _sharedFixture.UnitOfWork,
             _smsSender,
-            _httpContextAccessor,
-            _userManager,
+            _sharedFixture.UnitOfWork,
             _ftpService,
+            _userManager,
+            _httpContextAccessor,
             _logger);
 
         _sharedFixture.UnitOfWork.ClearReceivedCalls();
