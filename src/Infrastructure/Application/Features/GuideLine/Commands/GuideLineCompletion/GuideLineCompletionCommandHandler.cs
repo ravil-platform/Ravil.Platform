@@ -6,9 +6,9 @@ using SocialMediaInfosViewModel = ViewModels.QueriesResponseViewModel.Job.Social
 
 namespace Application.Features.GuideLine.Commands.GuideLineCompletion;
 
-public class GuideLineCompletionCommandHandler(IMapper mapper, IUnitOfWork unitOfWork,
-    IHttpContextAccessor httpContextAccessor, IFtpService ftpService,
-    UserManager<ApplicationUser> userManager, ISmsSender smsSender,
+public class GuideLineCompletionCommandHandler(IMapper mapper, 
+    ISmsSender smsSender, IUnitOfWork unitOfWork, IFtpService ftpService,
+    UserManager<ApplicationUser> userManager, IHttpContextAccessor httpContextAccessor,
     Logging.Base.ILogger<GuideLineCompletionCommandHandler> logger)
 : IRequestHandler<GuideLineCompletionCommand, GuideLineCompletionViewModel>
 {
