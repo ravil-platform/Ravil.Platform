@@ -5,6 +5,7 @@ using StackExchange.Redis;
 using Persistence.Context;
 using Application.Profiles;
 using Application.Middlewares;
+using NuGet.Packaging;
 
 #region ( Services )
 
@@ -60,13 +61,19 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy(CORS.DefaultName, policyBuilder =>
     {
-        string[] productionOrigins = ["https://api.ravil.ir", "https://dl.newtan.academy", "https://ravil.liara.run"];
-        string[] developmentOrigins = ["https://localhost:7206", "https://localhost:7214", "http://127.0.0.1:3000", "http://localhost:3000"];
+        string[] productionOrigins = ["https://api.ravil.ir", "https://admin.ravil.ir", "https://dl.newtan.academy", "https://ravil.liara.run"];
+        string[] developmentOrigins = ["https://localhost:7206", "https://localhost:7214", "http://127.0.0.1:3000", "http://localhost:3000", "https://localhost:3000"];
         string[] allAllowedOrigins = developmentOrigins;
 
         if (builder.Environment.IsProduction())
         {
-            allAllowedOrigins = productionOrigins.Append("http://localhost:3000").ToArray();
+            productionOrigins.AddRange(developmentOrigins);
+            allAllowedOrigins = productionOrigins;
+        }
+        else
+        {
+            productionOrigins.AddRange(developmentOrigins);
+            allAllowedOrigins = productionOrigins;
         }
 
         policyBuilder.SetIsOriginAllowedToAllowWildcardSubdomains()
@@ -126,7 +133,7 @@ services.AddHttpClient();
 var assembly = typeof(ApplicationDbContext).GetTypeInfo().Assembly.GetName();
 services.AddDbContext<ApplicationDbContext>(option =>
 {
-    option.UseLazyLoadingProxies(false);
+    option.UseLazyLoadingProxies();
     option.EnableSensitiveDataLogging();
     option.EnableDetailedErrors();
     option.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
@@ -190,6 +197,7 @@ app.UseHttpsRedirection();
 app.UseRouting();
 
 app.UseCors(CORS.DefaultName);
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

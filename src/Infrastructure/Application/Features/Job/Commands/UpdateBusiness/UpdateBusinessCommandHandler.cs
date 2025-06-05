@@ -7,14 +7,9 @@ using SocialMediaInfosViewModel = ViewModels.QueriesResponseViewModel.Job.Social
 
 namespace Application.Features.Job.Commands.UpdateBusiness;
 
-public class UpdateBusinessCommandHandler(
-    IMapper mapper,
-    ISmsSender smsSender,
-    IUnitOfWork unitOfWork,
-    IFtpService ftpService,
-    IDistributedCache distributedCache,
-    UserManager<ApplicationUser> userManager,
-    IHttpContextAccessor httpContextAccessor,
+public class UpdateBusinessCommandHandler(IMapper mapper, ISmsSender smsSender, IUnitOfWork unitOfWork,
+    IDistributedCache distributedCache, IHttpContextAccessor httpContextAccessor,
+    IFtpService ftpService, UserManager<ApplicationUser> userManager,
     Logging.Base.ILogger<UpdateBusinessCommandHandler> logger)
 : IRequestHandler<UpdateBusinessCommand, JobBranchViewModel>
 {

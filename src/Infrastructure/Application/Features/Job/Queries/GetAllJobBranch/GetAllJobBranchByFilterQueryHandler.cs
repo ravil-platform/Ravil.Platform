@@ -36,7 +36,7 @@ public class GetAllJobBranchByFilterQueryHandler(IMapper mapper,
                     .Where(j => j.Id == request.CategoryId)
                     .SingleOrDefaultAsync(cancellationToken: cancellationToken);
 
-                if (category is null)
+                if (category is not null)
                 {
                     if (category is { NodeLevel: 2 })
                     {

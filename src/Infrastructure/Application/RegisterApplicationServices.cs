@@ -92,6 +92,9 @@ namespace Application
         public static IdentityBuilder AddIdentityService(this IServiceCollection services)
         {
             #region ( Identity )
+
+            #region ( AddIdentity )
+
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
                 options.Password.RequiredLength = 6;
@@ -116,14 +119,17 @@ namespace Application
 
             }).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
-            #region Set Cookie options
+            #endregion
+
+            #region ( Configure Cookie Options )
 
             services.ConfigureApplicationCookie(options =>
             {
                 options.SlidingExpiration = true;
                 options.Cookie.HttpOnly = true;
-                options.Cookie.SameSite = SameSiteMode.Unspecified;
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(720);
+                options.Cookie.SameSite = SameSiteMode.None;
+                options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(1440);
                 options.LogoutPath = $"/account/sign-out";
                 options.LoginPath = $"/account/sign-in";
                 options.AccessDeniedPath = $"/account/access-denied";

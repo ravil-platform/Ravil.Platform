@@ -7,7 +7,7 @@
         /// <summary>
         /// تعداد کل گام ها
         /// </summary>
-        public int TotalStepCount { get; set; } = 8;
+        public int TotalStepCount { get; set; } = 9;
 
         /// <summary>
         /// تعداد گامهای تکمیل شده
@@ -20,6 +20,7 @@
         public bool IsCompletedDescription { get; set; } // Comparison Fields: Description
         public bool IsCompletedGalleryAndImages { get; set; } // Comparison Fields: SmallPictureFile && Gallery && (BranchVideo || LargePictureFile)
         public bool IsCompletedKeywords { get; set; } // Comparison Fields: Keywords List Object
+        public bool IsCompletedTimeWorks { get; set; } // Comparison Fields: TimeWorks List Object
         public bool IsCompletedSocialMediaInfos { get; set; } // Comparison Fields: SocialMediaInfos List Object
         public bool IsCompletedPhoneNumberInfos { get; set; } // Comparison Fields: PhoneNumberInfos List Object
     }

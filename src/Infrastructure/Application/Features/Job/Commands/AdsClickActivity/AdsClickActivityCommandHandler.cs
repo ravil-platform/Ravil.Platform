@@ -1,17 +1,13 @@
-﻿using AngleSharp.Common;
+﻿using Constants.Caching;
+using AngleSharp.Common;
 using System.Collections;
-using Domain.Entities.Subscription;
-using Constants.Caching;
 using Microsoft.Extensions.Caching.Distributed;
 
 namespace Application.Features.Job.Commands.AdsClickActivity;
 
-public class AdsClickActivityCommandHandler(
-    IMapper mapper,
-    IUnitOfWork unitOfWork,
-    IHttpContextAccessor httpContextAccessor, 
-    Logging.Base.ILogger<AdsClickActivityCommandHandler> logger,
-    IDistributedCache distributedCache)
+public class AdsClickActivityCommandHandler(IMapper mapper, IUnitOfWork unitOfWork,
+    IHttpContextAccessor httpContextAccessor, IDistributedCache distributedCache, 
+    Logging.Base.ILogger<AdsClickActivityCommandHandler> logger)
 : IRequestHandler<AdsClickActivityCommand>
 {
     #region ( Properties )

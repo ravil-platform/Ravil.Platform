@@ -1,16 +1,16 @@
 ﻿using System.Collections;
 using AngleSharp.Common;
-using ViewModels.QueriesResponseViewModel.Job.GuideLines;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 using PhoneNumberInfosViewModel = ViewModels.QueriesResponseViewModel.Job.PhoneNumberInfosViewModel;
 using SocialMediaInfosViewModel = ViewModels.QueriesResponseViewModel.Job.SocialMediaInfosViewModel;
 
 namespace Application.Features.GuideLine.Commands.GuideLineCompletion;
 
-public class GuideLineCompletionCommandHandler(IMapper mapper, IUnitOfWork unitOfWork, ISmsSender smsSender,
-    IHttpContextAccessor httpContextAccessor, UserManager<ApplicationUser> userManager, IFtpService ftpService,
+public class GuideLineCompletionCommandHandler(IMapper mapper, IUnitOfWork unitOfWork,
+    IHttpContextAccessor httpContextAccessor, IFtpService ftpService,
+    UserManager<ApplicationUser> userManager, ISmsSender smsSender,
     Logging.Base.ILogger<GuideLineCompletionCommandHandler> logger)
-    : IRequestHandler<GuideLineCompletionCommand, GuideLineCompletionViewModel>
+: IRequestHandler<GuideLineCompletionCommand, GuideLineCompletionViewModel>
 {
     #region ( Dependencies )
 
@@ -166,6 +166,50 @@ public class GuideLineCompletionCommandHandler(IMapper mapper, IUnitOfWork unitO
                 }
             }
 
+            #endregion
+
+            #region ( GuideLine Job TimeWorks )
+
+            if (request.JobTimeWorks is { Length: > 0 })
+            {
+                #region ( Remove Current JobTimeWork )
+
+                var currentTimeWorks = await UnitOfWork.JobTimeWorkRepository
+                    .GetAllAsync(j => j.JobBranchId.Equals(itemJobBranch.Id));
+
+                if (currentTimeWorks.Any())
+                {
+                    UnitOfWork.JobTimeWorkRepository.RemoveRange(currentTimeWorks.AsEnumerable());
+                }
+
+                #endregion
+
+                var jobTimeWorks = System.Text.Json.JsonSerializer.Deserialize<List<JobTimeWorkViewModel>>(request.JobTimeWorks);
+
+                if (itemJobBranch.JobTimeWorkType.Equals(JobTimeWorkType.WorkSomeTime) && jobTimeWorks != null)
+                {
+                    foreach (var item in jobTimeWorks)
+                    {
+                        if (item is { StartTime: not null, EndTime: not null })
+                        {
+                            await UnitOfWork.JobTimeWorkRepository.InsertAsync(new JobTimeWork
+                            {
+                                DayOfWeekId = item.DayOfWeekId,
+                                JobBranchId = itemJobBranch.Id,
+                                StartTime = item.StartTime,
+                                EndTime = item.EndTime
+                            });
+                        }
+                    }
+
+                    var saveChangesRes = await UnitOfWork.SaveAsync();
+
+                    if (saveChangesRes > 0)
+                    {
+                        guideLineCompletion.IsCompletedTimeWorks = true;
+                    }
+                }
+            }
             #endregion
 
             #region ( GuideLine JobBranch Gallery )
@@ -348,6 +392,9 @@ public class GuideLineCompletionCommandHandler(IMapper mapper, IUnitOfWork unitO
                 guideLineCompletion.CompletedStepCount += 1;
 
             if (guideLineCompletion.IsCompletedKeywords)
+                guideLineCompletion.CompletedStepCount += 1;
+
+            if (guideLineCompletion.IsCompletedTimeWorks)
                 guideLineCompletion.CompletedStepCount += 1;
 
             if (guideLineCompletion.IsCompletedSocialMediaInfos)

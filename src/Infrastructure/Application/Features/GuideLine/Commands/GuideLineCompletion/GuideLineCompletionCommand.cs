@@ -1,6 +1,4 @@
-﻿using ViewModels.QueriesResponseViewModel.Job.GuideLines;
-
-namespace Application.Features.GuideLine.Commands.GuideLineCompletion;
+﻿namespace Application.Features.GuideLine.Commands.GuideLineCompletion;
 
 public class GuideLineCompletionCommand : IRequest<GuideLineCompletionViewModel>
 {

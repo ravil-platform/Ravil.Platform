@@ -9,7 +9,7 @@ namespace Application.Features.Job.Commands.CreateFreeJobBranch;
 public class CreateFreeJobBranchCommandHandler(IMapper mapper, IUnitOfWork unitOfWork, ISmsSender smsSender,
     IHttpContextAccessor httpContextAccessor, UserManager<ApplicationUser> userManager, IFtpService ftpService,
     Logging.Base.ILogger<CreateFreeJobBranchCommandHandler> logger)
-    : IRequestHandler<CreateFreeJobBranchCommand, JobBranchViewModel>
+: IRequestHandler<CreateFreeJobBranchCommand, JobBranchViewModel>
 {
     #region ( Dependencies )
 
@@ -181,7 +181,7 @@ public class CreateFreeJobBranchCommandHandler(IMapper mapper, IUnitOfWork unitO
 
             #endregion
 
-            #region ( JobBranchGallery )
+            #region ( Job Branch Gallery )
 
             if (request.JobBranch.Gallery is not null && request.JobBranch.Gallery.Any())
             {
