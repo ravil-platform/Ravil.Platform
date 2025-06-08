@@ -8,6 +8,7 @@ namespace Constants.Caching
         public static string GetAllJobBranchByFilterQuery(int cityId, int categoryId) => $"{nameof(GetAllJobBranchByFilterQuery)}-{cityId}-{categoryId}";
         public static string GetUserSubscriptionPlanQuery(string userId) => $"{nameof(GetUserSubscriptionPlanQuery)}-{userId}";
         public static string GetJobStatisticsByFilterQuery(int jobId) => $"{nameof(GetJobStatisticsByFilterQuery)}-{jobId}";
+        public static string GetJobBranchByUserIdQuery(string userId) => $"{nameof(GetJobBranchByUserIdQuery)}-{userId}";
         public static string GetJobRankingsByFilterQuery(int jobId) => $"{nameof(GetJobRankingsByFilterQuery)}-{jobId}";
         public static string GetJobBranchByRouteQuery(string route) => $"{nameof(GetJobBranchByRouteQuery)}-{route}";
         public static string GetReviewsSummeryQuery(string jobId) => $"{nameof(GetReviewsSummeryQuery)}-{jobId}";

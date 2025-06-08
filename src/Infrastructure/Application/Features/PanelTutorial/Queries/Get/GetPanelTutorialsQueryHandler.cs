@@ -1,12 +1,11 @@
-﻿using System.Collections;
-using AngleSharp.Common;
-using ViewModels.QueriesResponseViewModel.PanelTutorial;
+﻿using AngleSharp.Common;
+using System.Collections;
 
 namespace Application.Features.PanelTutorial.Queries.Get;
 
 public class GetPanelTutorialsQueryHandler(IMapper mapper, IUnitOfWork unitOfWork,
     Logging.Base.ILogger<GetPanelTutorialsQueryHandler> logger)
-    : IRequestHandler<GetPanelTutorialsQuery, List<PanelTutorialViewModel>>
+: IRequestHandler<GetPanelTutorialsQuery, List<PanelTutorialViewModel>>
 {
     #region ( Properties )
 
@@ -23,8 +22,7 @@ public class GetPanelTutorialsQueryHandler(IMapper mapper, IUnitOfWork unitOfWor
         try
         {
             var panelTutorials = await UnitOfWork.PanelTutorialRepository.TableNoTracking
-                .OrderBy(a => a.Sort)
-                .ToListAsync(cancellationToken: cancellationToken);
+                .OrderBy(a => a.Sort).ToListAsync(cancellationToken: cancellationToken);
 
             var result = Mapper.Map<List<PanelTutorialViewModel>>(panelTutorials);
 
@@ -33,8 +31,6 @@ public class GetPanelTutorialsQueryHandler(IMapper mapper, IUnitOfWork unitOfWor
         catch (Exception e)
         {
             Logger.LogError(exception: e, e.InnerException?.Message ?? e.Message, new Hashtable(request.ToDictionary()));
-
-            await UnitOfWork.RollbackTransactionAsync(cancellationToken: cancellationToken);
             throw;
         }
 

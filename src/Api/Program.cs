@@ -42,14 +42,9 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy(CORS.DefaultName, policyBuilder =>
     {
-        string[] productionOrigins = ["https://ravil.ir", "https://api.ravil.ir", "https://api.fika.agency/", "https://admin.ravil.ir", "https://dl.newtan.academy", "https://ravil.liara.run", "https://ravil.vercel.app", "https://ravildashboardcom.vercel.app/"];
-        string[] developmentOrigins = ["https://localhost:7206", "https://localhost:7214", "http://127.0.0.1:3000", "http://localhost:3000"];
-        string[] allAllowedOrigins = developmentOrigins.ToArray();
-
-        if (builder.Environment.IsProduction())
-        {
-            allAllowedOrigins = productionOrigins.Append("http://localhost:3000").ToArray();
-        }
+        string[] productionOrigins = ["https://ravil.ir", "https://api.ravil.ir", "https://admin.ravil.ir", "https://dl.newtan.academy", "https://ravil.liara.run", "https://ravil.vercel.app", "https://ravildashboardcom.vercel.app/"];
+        string[] developmentOrigins = ["https://localhost:7206", "https://localhost:7214", "http://127.0.0.1:3000", "http://localhost:3000", "https://localhost:3000"];
+        string[] allAllowedOrigins = productionOrigins.Concat(developmentOrigins).ToArray(); ;
 
         policyBuilder.SetIsOriginAllowedToAllowWildcardSubdomains()
             .WithOrigins(allAllowedOrigins)

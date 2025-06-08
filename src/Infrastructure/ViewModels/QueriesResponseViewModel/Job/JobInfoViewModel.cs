@@ -26,9 +26,9 @@
         public JobBranchStatus Status { get; set; }
 
         #region Contact Informations
-        public List<PhoneNumberInfosViewModel> PhoneNumberInfos { get; set; } //Json Format (PhoneNumberInfosVm)
+        public List<PhoneNumberInfosViewModel>? PhoneNumberInfos { get; set; } //Json Format (PhoneNumberInfosVm)
 
-        public List<SocialMediaInfosViewModel> SocialMediaInfos { get; set; } //Json Format (SocialMediaInfosVm)
+        public List<SocialMediaInfosViewModel>? SocialMediaInfos { get; set; } //Json Format (SocialMediaInfosVm)
 
         #region Additional Info
         public bool? ShowPhoneTelInSite { get; set; }

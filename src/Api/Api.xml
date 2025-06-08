@@ -864,6 +864,13 @@
         <member name="M:Api.Controllers.V2.JobsController.#ctor(MediatR.IMediator,Logging.Base.ILogger{Api.Controllers.V2.JobsController},AutoMapper.IMapper)">
             <inheritdoc />
         </member>
+        <member name="M:Api.Controllers.V2.JobsController.GetJobBranchByUserId(Application.Features.Job.Queries.GetJobBranchByUserId.GetJobBranchByUserIdQuery)">
+            <summary>
+            Returns job branch by user id
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
         <member name="M:Api.Controllers.V2.JobsController.Report(Application.Features.Job.Queries.Report.JobReportQuery)">
             <summary>
             Returns report job clicks information

@@ -8,7 +8,6 @@ namespace Api.Controllers.V2
     /// <inheritdoc />
     [ApiVersion(ApiVersions.V2)]
     [Route(Routes.Controller)]
-    [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status403Forbidden)]
     [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status401Unauthorized)]
     public class PanelTutorialsController : GenericBaseController<PanelTutorialsController>
     {

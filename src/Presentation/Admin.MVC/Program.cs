@@ -1,11 +1,10 @@
 ﻿using Common.Options;
 using Logging.Adapters;
 using System.Reflection;
-using StackExchange.Redis;
 using Persistence.Context;
+using StackExchange.Redis;
 using Application.Profiles;
 using Application.Middlewares;
-using NuGet.Packaging;
 
 #region ( Services )
 

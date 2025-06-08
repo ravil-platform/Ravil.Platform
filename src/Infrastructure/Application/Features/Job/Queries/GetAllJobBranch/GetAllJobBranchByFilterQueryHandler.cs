@@ -92,18 +92,21 @@ public class GetAllJobBranchByFilterQueryHandler(IMapper mapper,
                         if (jobKeywordsId.Intersect(currentKeywordsId).Any())
                         {
                             current.IsAds = true;
+                            current.SubscriptionId = currentActiveUserSubscription.SubscriptionId;
                             current.SubscriptionType = currentActiveUserSubscription.Subscription.Type;
                         }
                         else
                         {
                             current.IsAds = false;
                             current.SubscriptionType = SubscriptionType.Simple;
+                            current.SubscriptionId = currentActiveUserSubscription.SubscriptionId;
                         }
                     }
                     else
                     {
                         current.IsAds = false;
                         current.SubscriptionType = SubscriptionType.Simple;
+                        current.SubscriptionId = currentActiveUserSubscription?.SubscriptionId;
                     }
                 }
 

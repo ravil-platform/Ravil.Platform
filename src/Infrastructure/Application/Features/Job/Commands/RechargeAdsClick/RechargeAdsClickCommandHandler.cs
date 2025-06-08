@@ -11,7 +11,7 @@ namespace Application.Features.Job.Commands.RechargeAdsClick;
 public class RechargeAdsClickCommandHandler(IMapper mapper, IUnitOfWork unitOfWork, ISmsSender smsSender, [FromServices] IZarinPalClient client,
     UserManager<ApplicationUser> userManager, IHttpContextAccessor httpContextAccessor, LinkGenerator linkGenerator,
     Logging.Base.ILogger<RechargeAdsClickCommandHandler> logger)
-    : IRequestHandler<RechargeAdsClickCommand, RechargeAdsClickViewModel>
+: IRequestHandler<RechargeAdsClickCommand, RechargeAdsClickViewModel>
 {
     #region ( Properties )
 

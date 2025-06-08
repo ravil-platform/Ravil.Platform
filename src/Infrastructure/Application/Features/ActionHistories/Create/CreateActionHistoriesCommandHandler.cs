@@ -41,121 +41,125 @@ public class CreateActionHistoriesCommandHandler(IUnitOfWork unitOfWork,
 
         #endregion
 
-        foreach (var itemAction in request.Data)
+        try
         {
-            var job = await UnitOfWork.JobRepository.GetByPredicate(j => j.Id == itemAction.JobId);
-            if (job != null)
+            foreach (var itemAction in request.Data)
             {
-                var actionHistory = new Domain.Entities.Histories.ActionHistories();
-                actionHistory.AddressIp = userIp ?? "127.0.0.0";
-                actionHistory.JobId = job.Id.ToString();
-                actionHistory.JobTitle = job.Title;
-
-                if (itemAction.CategoryId.HasValue || string.IsNullOrWhiteSpace(itemAction.CategoryName))
+                var job = await UnitOfWork.JobRepository.GetByPredicate(j => j.Id == itemAction.JobId);
+                if (job != null)
                 {
-                    var category = await UnitOfWork.JobCategoryRepository.GetByPredicate(j => j.JobId == job.Id, nameof(Category));
-                    if (category != null)
+                    var actionHistory = new Domain.Entities.Histories.ActionHistories();
+                    actionHistory.AddressIp = userIp ?? "127.0.0.0";
+                    actionHistory.JobId = job.Id.ToString();
+                    actionHistory.JobTitle = job.Title;
+
+                    if (itemAction.CategoryId.HasValue || string.IsNullOrWhiteSpace(itemAction.CategoryName))
                     {
-                        actionHistory.CategoryId = category.CategoryId;
-                        actionHistory.CategoryName = category.Category.Name;
+                        var category = await UnitOfWork.JobCategoryRepository.GetByPredicate(j => j.JobId == job.Id, nameof(Category));
+                        if (category != null)
+                        {
+                            actionHistory.CategoryId = category.CategoryId;
+                            actionHistory.CategoryName = category.Category.Name;
+                        }
                     }
-                }
 
-                actionHistory.Location = itemAction.Location;
-                actionHistory.Time = DateTime.UtcNow;
+                    actionHistory.Location = itemAction.Location;
+                    actionHistory.Time = DateTime.UtcNow;
 
-                if (itemAction.PhoneNumber is not null || !string.IsNullOrWhiteSpace(itemAction.UserId))
-                {
-                    var user = await UnitOfWork.ApplicationUserRepository.GetByPredicate(j =>
-                        j.PhoneNumber == itemAction.PhoneNumber || j.Id.Equals(itemAction.UserId));
-
-                    if (user is not null)
+                    if (!string.IsNullOrWhiteSpace(itemAction.UserId))
                     {
-                        actionHistory.UserId = user.Id;
-                        actionHistory.FullName = user.UserName;
+                        var user = await UnitOfWork.ApplicationUserRepository.GetByPredicate(j => j.Id.Equals(itemAction.UserId));
+
+                        if (user is not null)
+                        {
+                            actionHistory.UserId = user.Id;
+                            actionHistory.FullName = user.UserName;
+                        }
                     }
+
+                    if (itemAction.ActionType is >= ActionType.ClickOnChat and <= ActionType.JobPageView or ActionType.ViewListingPageAction)
+                    {
+                        actionHistory.JobIsActiveAds = itemAction.IsActiveAds;
+                    }
+
+                    actionHistory.PageUrl = itemAction.PageUrl;
+                    actionHistory.PageSlug = itemAction.PageSlug;
+                    actionHistory.PageTitle = itemAction.PageTitle;
+                    actionHistory.ActionType = itemAction.ActionType!.Value.GetEnumDisplayName()!;
+
+                    await UnitOfWork.ActionHistoriesRepository.InsertAsync(actionHistory);
+                    await UnitOfWork.SaveAsync();
+
+                    #region ( Handle JobInfo )
+
+                    var jobInfo = new JobInfo
+                    {
+                        Visit = 0,
+                        ClickOnCard = 0,
+                        ClickOnCall = 0,
+                        ClickOnMap = 0,
+                        ClickOnChat = 0,
+                        ClickOnImages = 0,
+                        ClickOnWebSite = 0,
+                        AverageClickOnCall = 0,
+                        JobId = itemAction.JobId,
+                        CreateAt = DateTime.UtcNow,
+                        IsActiveAds = itemAction.IsActiveAds ?? false,
+                    };
+
+                    switch (itemAction.ActionType)
+                    {
+                        case ActionType.ViewListingPageAction:
+                            jobInfo.Visit = 1;
+                            break;
+                        case ActionType.ClickOnChat:
+                            jobInfo.ClickOnChat = 1;
+                            break;
+                        case ActionType.ClickOnImages:
+                            jobInfo.ClickOnImages = 1;
+                            break;
+                        case ActionType.ClickOnWebSite:
+                            jobInfo.ClickOnWebSite = 1;
+                            break;
+                        case ActionType.ClickOnMap:
+                            jobInfo.ClickOnMap = 1;
+                            break;
+                        case ActionType.ClickOnCall:
+                            jobInfo.ClickOnCall = 1;
+                            break;
+                        case ActionType.ClickOnCard:
+                            jobInfo.ClickOnCard = 1;
+                            break;
+                        case ActionType.JobPageView:
+                            jobInfo.Visit = 1;
+                            break;
+                    }
+
+                    await UnitOfWork.JobInfoRepository.InsertAsync(jobInfo);
+
+                    #endregion
+
+                    #region ( Remove Cache Data )
+
+                    await DistributedCache.RemoveAsync(key: CacheKeys.GetJobViewsQuery(Convert.ToInt32(actionHistory.JobId)), cancellationToken);
+                    await DistributedCache.RemoveAsync(key: CacheKeys.JobOverViewQuery(Convert.ToInt32(actionHistory.JobId)), cancellationToken);
+                    await DistributedCache.RemoveAsync(key: CacheKeys.GetTagsPotentialQuery(Convert.ToInt32(actionHistory.JobId)), cancellationToken);
+                    await DistributedCache.RemoveAsync(key: CacheKeys.GetJobRankingsByFilterQuery(Convert.ToInt32(actionHistory.JobId)), cancellationToken);
+                    await DistributedCache.RemoveAsync(key: CacheKeys.GetContactRequestsQuery(Convert.ToInt32(actionHistory.JobId)), cancellationToken);
+                    await DistributedCache.RemoveAsync(key: CacheKeys.GetJobStatisticsByFilterQuery(Convert.ToInt32(actionHistory.JobId)), cancellationToken);
+
+                    #endregion
                 }
-
-                if (itemAction.ActionType is >= ActionType.ClickOnChat and <= ActionType.JobPageView)
-                {
-                    actionHistory.JobIsActiveAds = itemAction.IsActiveAds;
-                }
-
-                actionHistory.PageUrl = itemAction.PageUrl;
-                actionHistory.PageSlug = itemAction.PageSlug;
-                actionHistory.PageTitle = itemAction.PageTitle;
-                actionHistory.ActionType = itemAction.ActionType!.Value.GetEnumDisplayName()!;
-
-                await UnitOfWork.ActionHistoriesRepository.InsertAsync(actionHistory);
-                await UnitOfWork.SaveAsync();
-
-                #region ( Handle JobInfo )
-
-                var jobInfo = new JobInfo
-                {
-                    Visit = 0,
-                    ClickOnCard = 0,
-                    ClickOnCall = 0,
-                    ClickOnMap = 0,
-                    ClickOnChat = 0,
-                    ClickOnImages = 0,
-                    ClickOnWebSite = 0,
-                    AverageClickOnCall = 0,
-                    JobId = itemAction.JobId,
-                    CreateAt = DateTime.Now,
-                };
-
-                switch (itemAction.ActionType)
-                {
-                    case ActionType.ViewListingPageAction:
-                        break;
-                    case ActionType.ClickOnChat:
-                        jobInfo.ClickOnChat = 1;
-                        break;
-                    case ActionType.ClickOnImages:
-                        jobInfo.ClickOnImages = 1;
-                        break;
-                    case ActionType.ClickOnWebSite:
-                        jobInfo.ClickOnWebSite = 1;
-                        break;
-                    case ActionType.ClickOnMap:
-                        jobInfo.ClickOnMap = 1;
-                        break;
-                    case ActionType.ClickOnCall:
-                        jobInfo.ClickOnCall = 1;
-                        break;
-                    case ActionType.ClickOnCard:
-                        jobInfo.ClickOnCard = 1;
-                        break;
-                    case ActionType.JobPageView:
-                        jobInfo.Visit = 1;
-                        break;
-                }
-
-                await UnitOfWork.JobInfoRepository.InsertAsync(jobInfo);
-
-                #endregion
-
-                #region ( Remove Cache Data )
-
-                await DistributedCache.RemoveAsync(key: CacheKeys.GetJobViewsQuery(Convert.ToInt32(actionHistory.JobId)), cancellationToken);
-                await DistributedCache.RemoveAsync(key: CacheKeys.JobOverViewQuery(Convert.ToInt32(actionHistory.JobId)), cancellationToken);
-                await DistributedCache.RemoveAsync(key: CacheKeys.GetTagsPotentialQuery(Convert.ToInt32(actionHistory.JobId)), cancellationToken);
-                await DistributedCache.RemoveAsync(key: CacheKeys.GetJobRankingsByFilterQuery(Convert.ToInt32(actionHistory.JobId)), cancellationToken);
-                await DistributedCache.RemoveAsync(key: CacheKeys.GetContactRequestsQuery(Convert.ToInt32(actionHistory.JobId)), cancellationToken);
-                await DistributedCache.RemoveAsync(key: CacheKeys.GetJobStatisticsByFilterQuery(Convert.ToInt32(actionHistory.JobId)), cancellationToken);
-
-                #endregion
-
-                result.WithSuccess("عملیات با موفقیت انجام شد");
-                Logger.LogInformation("user activity is done!", new Hashtable(actionHistory.ToDictionary()));
-
-                return result;
             }
-        }
 
-        result.WithError("خطایی رخ داد");
-        Logger.LogError(exception: null,"user activity is error!", new Hashtable(request.ToDictionary()));
+            result.WithSuccess("عملیات با موفقیت انجام شد");
+            Logger.LogInformation("user activity is done!", new Hashtable(request.Data.ToDictionary()));
+        }
+        catch (Exception e)
+        {
+            result.WithError("خطایی رخ داد");
+            Logger.LogError(exception: null, "user activity is error!", new Hashtable(request.ToDictionary()));
+        }
 
         return result;
 

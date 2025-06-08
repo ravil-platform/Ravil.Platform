@@ -1,4 +1,5 @@
-﻿using Domain.Entities.Wallets;
+﻿using System.Text.Json;
+using Domain.Entities.Wallets;
 using ViewModels.AdminPanel.Comment;
 using ViewModels.AdminPanel.PanelTutorial;
 using ViewModels.QueriesResponseViewModel.Payments;
@@ -161,8 +162,8 @@ namespace Application.Profiles
                 })*/
                 .ForMember(src => src.PhoneNumberInfos, expression =>
                 {
-                    expression.PreCondition(a => !string.IsNullOrWhiteSpace(a.PhoneNumberInfos));
-                    expression.PreCondition(a =>
+                    expression.Condition(a => !string.IsNullOrWhiteSpace(a.PhoneNumberInfos));
+                    expression.Condition(a =>
                     {
                         if (string.IsNullOrWhiteSpace(a.PhoneNumberInfos)) return false;
 
@@ -175,8 +176,8 @@ namespace Application.Profiles
                 })
                 .ForMember(src => src.SocialMediaInfos, expression =>
                 {
-                    expression.PreCondition(a => !string.IsNullOrWhiteSpace(a.SocialMediaInfos));
-                    expression.PreCondition(a =>
+                    expression.Condition(a => !string.IsNullOrWhiteSpace(a.SocialMediaInfos));
+                    expression.Condition(a =>
                     {
                         if (string.IsNullOrWhiteSpace(a.SocialMediaInfos)) return false;
 
@@ -215,7 +216,7 @@ namespace Application.Profiles
 
                         return phoneNumberInfos != null && phoneNumberInfos.All(current => !string.IsNullOrWhiteSpace(current.PhoneNumber));
                     });
-                    expression.MapFrom(a => !string.IsNullOrWhiteSpace(a.PhoneNumberInfos) ? JsonConvert.DeserializeObject<List<PhoneNumberInfosViewModel>>(a.PhoneNumberInfos) : null);
+                    expression.MapFrom(a => JsonSerializer.Deserialize<List<PhoneNumberInfosViewModel>>(a.PhoneNumberInfos, JsonSerializerOptions.Web));
                 })
                 .ForMember(src => src.SocialMediaInfos, expression =>
                 {
@@ -230,7 +231,7 @@ namespace Application.Profiles
                         return socialMediaInfos != null && socialMediaInfos.All(current => !string.IsNullOrWhiteSpace(current.SocialMediaLink));
 
                     });
-                    expression.MapFrom(a => !string.IsNullOrWhiteSpace(a.SocialMediaInfos) ? JsonConvert.DeserializeObject<List<SocialMediaInfosViewModel>>(a.SocialMediaInfos) : null);
+                    expression.MapFrom(a => JsonSerializer.Deserialize<List<SocialMediaInfosViewModel>>(a.SocialMediaInfos, JsonSerializerOptions.Web));
                 })
                 .ReverseMap();
 
@@ -356,6 +357,14 @@ namespace Application.Profiles
                 {
                     expression.MapFrom(a => a.Job);
                 })
+                .ForPath(src => src.JobInfo.PhoneNumberInfos, expression =>
+                {
+                    expression.MapFrom(a => JsonSerializer.Deserialize<List<PhoneNumberInfosViewModel>>(a.Job.PhoneNumberInfos, JsonSerializerOptions.Web));
+                })
+                .ForPath(src => src.JobInfo.SocialMediaInfos, expression =>
+                {
+                    expression.MapFrom(a => JsonSerializer.Deserialize<List<SocialMediaInfosViewModel>>(a.Job.SocialMediaInfos, JsonSerializerOptions.Web));
+                })
                 .ForMember(src => src.Address, expression =>
                 {
                     expression.MapFrom(a => a.Address);
@@ -402,6 +411,14 @@ namespace Application.Profiles
                 .ForMember(src => src.JobInfo, expression =>
                 {
                     expression.MapFrom(a => a.Job);
+                })
+                .ForPath(src => src.JobInfo.PhoneNumberInfos, expression =>
+                {
+                    expression.MapFrom(a => JsonSerializer.Deserialize<List<PhoneNumberInfosViewModel>>(a.Job.PhoneNumberInfos, JsonSerializerOptions.Web));
+                })
+                .ForPath(src => src.JobInfo.SocialMediaInfos, expression =>
+                {
+                    expression.MapFrom(a => JsonSerializer.Deserialize<List<SocialMediaInfosViewModel>>(a.Job.SocialMediaInfos, JsonSerializerOptions.Web));
                 })
                 .ForMember(src => src.Address, expression =>
                 {
@@ -483,6 +500,7 @@ namespace Application.Profiles
             #endregion
 
             #region ( Subscription )
+
             CreateMap<CreateSubscriptionViewModel, Subscription>().ReverseMap();
             CreateMap<UpdateSubscriptionViewModel, Subscription>().ReverseMap();
 
@@ -490,13 +508,18 @@ namespace Application.Profiles
             CreateMap<CreateFeatureViewModel, Feature>().ReverseMap();
 
 
-            CreateMap<SubscriptionFeature, SubscriptionFeatureViewModel>().ReverseMap();
+            CreateMap<SubscriptionFeature, SubscriptionFeatureViewModel>()
+                .ForMember(src => src.FeatureId, expression => expression.MapFrom(a => a.FeatureId))
+                .ForMember(src => src.FeatureIcon, expression => expression.MapFrom(a => a.Feature.Icon))
+                .ForMember(src => src.FeatureTitle, expression => expression.MapFrom(a => a.Feature.Title))
+                .ReverseMap();
+
             CreateMap<Subscription, SubscriptionViewModel>()
-            .ForMember(src => src.Features, expression =>
-            {
-                expression.MapFrom(a => a.SubscriptionFeatures);
-            })
-            .ReverseMap();
+                .ForMember(src => src.Features, expression =>
+                {
+                    expression.MapFrom(a => a.SubscriptionFeatures);
+                })
+                .ReverseMap();
 
             CreateMap<UserSubscription, UserSubscriptionViewModel>()
             .ForMember(src => src.Subscription, expression =>
@@ -586,7 +609,13 @@ namespace Application.Profiles
             #endregion
 
             #region ( Config )
+
             CreateMap<Config, ConfigViewModel>().ReverseMap();
+
+            CreateMap<Config, AdminConfigViewModel>()
+                .ReverseMap()
+                .ForAllMembers(opts => opts.Condition((src, dest, member) => member != null));
+            
             #endregion
 
             #region ( City )

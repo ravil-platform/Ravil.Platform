@@ -2,18 +2,20 @@
 
 namespace Application.Features.User.Queries.GetUserJobBranches;
 
-public class GetUserJobBranchesQueryHandler : IRequestHandler<GetUserJobBranchesQuery, List<UserJobBranchesViewModel>>
+public class GetUserJobBranchesQueryHandler(IMapper mapper, IUnitOfWork unitOfWork)
+    : IRequestHandler<GetUserJobBranchesQuery, List<UserJobBranchesViewModel>>
 {
-    protected IMapper Mapper { get; }
-    protected IUnitOfWork UnitOfWork { get; }
-    public GetUserJobBranchesQueryHandler(IMapper mapper, IUnitOfWork unitOfWork)
-    {
-        Mapper = mapper;
-        UnitOfWork = unitOfWork;
-    }
+    #region ( Dependencies )
+
+    protected IMapper Mapper { get; } = mapper;
+    protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
+
+    #endregion
 
     public async Task<Result<List<UserJobBranchesViewModel>>> Handle(GetUserJobBranchesQuery request, CancellationToken cancellationToken)
     {
+        #region ( Get User JobBranches Query)
+
         var userJobBranches = await UnitOfWork.JobBranchRepository.TableNoTracking
             .Where(j => j.UserId == request.UserId)
             .Include(j => j.Job)
@@ -21,10 +23,11 @@ public class GetUserJobBranchesQueryHandler : IRequestHandler<GetUserJobBranches
             .ThenInclude(j => j.Category)
             .Include(j => j.Comments)
             .Include(j => j.JobUserBookMarks)
-            .Where(a => a.Job.Status == JobBranchStatus.Accepted)
             .ProjectTo<UserJobBranchesViewModel>(Mapper.ConfigurationProvider)
-            .ToListAsync(cancellationToken);
+            .ToListAsync(cancellationToken: cancellationToken);
 
         return userJobBranches;
+
+        #endregion
     }
 }

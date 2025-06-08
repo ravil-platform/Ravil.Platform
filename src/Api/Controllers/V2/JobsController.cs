@@ -5,16 +5,18 @@ using Application.Features.Job.Commands.RemoveJobBranchGalleries;
 using Application.Features.Job.Commands.SetAdsClickSetting;
 using Application.Features.Job.Commands.UpdateBusiness;
 using Application.Features.Job.Queries.GetAllKeywords;
+using Application.Features.Job.Queries.GetJobBranchByUserId;
 using Application.Features.Job.Queries.Report;
+using ViewModels.QueriesResponseViewModel.Subscription;
 using Asp.Versioning;
 using AutoMapper;
-using ViewModels.QueriesResponseViewModel.Subscription;
 
 namespace Api.Controllers.V2
 {
     /// <inheritdoc />
     [ApiVersion(ApiVersions.V2)]
     [Route(Routes.Controller)]
+    [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status401Unauthorized)]
     public class JobsController : GenericBaseController<JobsController>
     {
         /// <inheritdoc />
@@ -27,6 +29,22 @@ namespace Api.Controllers.V2
         #region ( Queries )
 
         /// <summary>
+        /// Returns job branch by user id
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        [HttpGet(Routes.Action)]
+        [ProducesResponseType(type: typeof(Result<JobBranchViewModel>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetJobBranchByUserId([FromQuery] GetJobBranchByUserIdQuery query)
+        {
+            var result = await Mediator.Send(query);
+
+            return FluentResult(result);
+        }
+
+
+        /// <summary>
         /// Returns report job clicks information
         /// </summary>
         /// <param name="query"></param>
@@ -35,6 +53,7 @@ namespace Api.Controllers.V2
         [HttpGet(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<List<SubscriptionClickViewModel>>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> Report([FromQuery] JobReportQuery query)
         {
             var result = await Mediator.Send(query);
@@ -52,6 +71,7 @@ namespace Api.Controllers.V2
         [HttpGet(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<List<KeywordViewModel>>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> GetAllKeywords([FromQuery] GetAllKeywordsQuery query)
         {
             var result = await Mediator.Send(query);
@@ -72,6 +92,7 @@ namespace Api.Controllers.V2
         [HttpPost(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<JobBranchViewModel>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> CreateFreeJobBranch([FromForm] CreateFreeJobBranchCommand command)
         {
             var result = await Mediator.Send(command);
@@ -88,6 +109,7 @@ namespace Api.Controllers.V2
         [HttpPost(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<JobBranchViewModel>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> UpdateBusiness([FromForm] UpdateBusinessCommand command)
         {
             var result = await Mediator.Send(command);
@@ -101,8 +123,10 @@ namespace Api.Controllers.V2
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
+        [Authorize]
         [HttpPost(Routes.Action)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status403Forbidden)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> RemoveJobBranchGallery([FromBody] RemoveJobBranchGalleriesCommand command)
         {
@@ -135,6 +159,7 @@ namespace Api.Controllers.V2
         [HttpPost(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<ClickAdsSettingViewModel>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> SetAdsClickSetting(SetAdsClickSettingCommand command)
         {
             var result = await Mediator.Send(command);
@@ -151,6 +176,7 @@ namespace Api.Controllers.V2
         [HttpPost(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<RechargeAdsClickViewModel>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> RechargeAdsClick(RechargeAdsClickCommand command)
         {
             var result = await Mediator.Send(command);
@@ -167,6 +193,7 @@ namespace Api.Controllers.V2
         [HttpPost(Routes.Action)]
         [ProducesResponseType(type: typeof(Result<RechargeAdsClickVerificationViewModel>), statusCode: StatusCodes.Status200OK)]
         [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> RechargeAdsClickVerification(RechargeAdsClickVerificationCommand command)
         {
             var result = await Mediator.Send(command);

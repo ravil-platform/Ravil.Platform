@@ -18,6 +18,7 @@
         
         public bool IsOffer { get; set; }
         public bool IsAds { get; set; }
+        public int? SubscriptionId { get; set; } = null;
         public SubscriptionType? SubscriptionType { get; set; } = null;
         public bool IsResizePicture { get; set; } = false;
         public JobTimeWorkType JobTimeWorkType { get; set; }

@@ -1,6 +1,6 @@
 ﻿using Constants.Caching;
-using Microsoft.Extensions.Caching.Distributed;
 using Resources.Messages;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace Application.Features.Job.Queries.GetJobBranchById;
 
