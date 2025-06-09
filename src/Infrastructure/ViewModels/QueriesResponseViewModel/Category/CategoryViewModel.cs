@@ -3,6 +3,8 @@
     public class CategoryViewModel
     {
         public int Id { get; set; }
+        
+        public Guid? KeywordId { get; set; }
 
         public CategoryBusinessType Type { get; set; }
 

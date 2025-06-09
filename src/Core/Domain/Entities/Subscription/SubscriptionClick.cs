@@ -7,12 +7,12 @@ public class SubscriptionClick : BaseEntity
     public string KeywordPageTitle { get; set; }
     public string KeywordPageUrl { get; set; }
     public string KeywordSlug { get; set; }
-    public Guid KeywordId { get; set; }
-
+    public Guid? KeywordId { get; set; }
+    
     public DateTime ClickedTime { get; set; }
     public decimal CostPerClick { get; set; }
     public bool IsDeposit { get; set; }
-    public int Position { get; set; }
+    public int? Position { get; set; }
 
 
     public int JobId { get; set; }

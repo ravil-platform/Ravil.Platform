@@ -124,6 +124,7 @@ namespace Application.Profiles
                 .ReverseMap();
 
             CreateMap<Category, CategoryViewModel>()
+                .ForMember(src => src.KeywordId, expression => expression.MapFrom(a => a.Keywords.FirstOrDefault(s => s.IsCategory)!.Id))
                 .ForMember(src => src.Route, expression => expression.MapFrom(a =>
                     !a.Route.Contains("-") ? a.Route.Trim().Replace(' ', '-') : a.Route))
                 .ReverseMap();
@@ -461,8 +462,7 @@ namespace Application.Profiles
 
             CreateMap<Keyword, CreateKeywordViewModel>().ReverseMap();
             CreateMap<Keyword, UpdateKeywordViewModel>().ReverseMap();
-
-            CreateMap<SubscriptionClick, AdsClickActivityCommand>().ReverseMap();
+            
             CreateMap<ClickAdsSetting, SetAdsClickSettingCommand>().ReverseMap();
             CreateMap<ClickAdsSetting, ClickAdsSettingViewModel>().ReverseMap();
             #endregion
@@ -529,6 +529,15 @@ namespace Application.Profiles
             .ReverseMap();
 
             #region ( Subscription Click )
+
+            CreateMap<SubscriptionClick, AdsClickActivityCommand>()
+                .ForMember(src => src.KeywordSlug, expression => expression.MapFrom(a => WebUtility.UrlDecode(a.KeywordSlug)))
+                .ForMember(src => src.KeywordPageUrl, expression => expression.MapFrom(a => WebUtility.UrlDecode(a.KeywordPageUrl)))
+                .ForMember(src => src.KeywordPageTitle, expression => expression.MapFrom(a => WebUtility.UrlDecode(a.KeywordPageTitle)))
+                .ReverseMap()
+                .ForMember(src => src.Subscription, expression => expression.Ignore())
+                .ForMember(src => src.Click, expression => expression.Ignore())
+                .ForMember(src => src.Job, expression => expression.Ignore());
 
             CreateMap<SubscriptionClick, SubscriptionClickViewModel>()
                 .ForMember(src => src.ClickedTimeStamp, expression => expression.MapFrom(a => new DateTimeOffset(a.ClickedTime).ToUnixTimeSeconds()))
@@ -673,10 +682,6 @@ namespace Application.Profiles
             #region ( Redirection Url )
             CreateMap<RedirectionUrl, CreateRedirectionUrlViewModel>().ReverseMap();
             CreateMap<RedirectionUrl, UpdateRedirectionUrlViewModel>().ReverseMap();
-            #endregion
-
-            #region ( Config )
-            CreateMap<Config, AdminConfigViewModel>().ReverseMap();
             #endregion
 
             #region ( Discount )

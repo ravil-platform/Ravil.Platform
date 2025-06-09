@@ -1,5 +1,4 @@
-﻿using Domain.Entities.Subscription;
-
+﻿
 namespace Persistence.Entities.Subscription.Configurations;
 
 public class SubscriptionClickConfigurations : IEntityTypeConfiguration<SubscriptionClick>
@@ -12,9 +11,9 @@ public class SubscriptionClickConfigurations : IEntityTypeConfiguration<Subscrip
 
         builder.Property(t => t.CostPerClick).IsRequired();
         builder.Property(t => t.ClickedTime).IsRequired();
-        builder.Property(t => t.Position).IsRequired();
+        builder.Property(t => t.Position).IsRequired(false);
 
-        builder.Property(t => t.KeywordId).IsRequired();
+        builder.Property(t => t.KeywordId).IsRequired(false);
         builder.Property(t => t.KeywordSlug).IsRequired();
         builder.Property(t => t.KeywordPageUrl).IsRequired();
         builder.Property(t => t.KeywordPageTitle).IsRequired();

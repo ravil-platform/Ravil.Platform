@@ -1,4 +1,6 @@
-﻿namespace Persistence.Context
+﻿using Microsoft.EntityFrameworkCore.Diagnostics;
+
+namespace Persistence.Context
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
@@ -222,6 +224,12 @@
             modelBuilder.AddSequentialGuidForIdConvention();
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AddressConfigurations).Assembly);
             modelBuilder.HasDefaultSchema(DatabaseSchemas.Dbo);
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.ConfigureWarnings(warnings =>
+                warnings.Ignore(RelationalEventId.PendingModelChangesWarning));
         }
     }
 }

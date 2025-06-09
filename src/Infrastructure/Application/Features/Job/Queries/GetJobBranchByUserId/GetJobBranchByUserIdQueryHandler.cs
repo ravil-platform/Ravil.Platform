@@ -1,11 +1,11 @@
-﻿using Constants.Caching;
-using Microsoft.Extensions.Caching.Distributed;
+﻿using Microsoft.Extensions.Caching.Distributed;
+using Constants.Caching;
 
-namespace Application.Features.Job.Queries.GetJobBranchById;
+namespace Application.Features.Job.Queries.GetJobBranchByUserId;
 
-public class GetJobBranchByIdQueryHandler(IMapper mapper,
+public class GetJobBranchByUserIdQueryHandler(IMapper mapper,
     IUnitOfWork unitOfWork, IDistributedCache distributedCache)
-    : IRequestHandler<GetJobBranchByIdQuery, JobBranchViewModel>
+: IRequestHandler<GetJobBranchByUserIdQuery, JobBranchViewModel>
 {
     #region ( Dependencies )
 
@@ -15,12 +15,12 @@ public class GetJobBranchByIdQueryHandler(IMapper mapper,
 
     #endregion
 
-    public async Task<Result<JobBranchViewModel>> Handle(GetJobBranchByIdQuery request, CancellationToken cancellationToken)
+    public async Task<Result<JobBranchViewModel>> Handle(GetJobBranchByUserIdQuery request, CancellationToken cancellationToken)
     {
-        #region ( Get JobBranch By Id Query )
+        #region ( Get JobBranch By UserId Query )
 
-        var result = await DistributedCache.GetOrSet(CacheKeys.GetJobBranchByIdQuery(request.Id),
-            func: async () => await UnitOfWork.JobBranchRepository.GetJobBranchById(request.Id, cancellationToken),
+        var result = await DistributedCache.GetOrSet(CacheKeys.GetJobBranchByUserIdQuery(request.UserId),
+            func: async () => await UnitOfWork.JobBranchRepository.GetJobBranchByUserId(request.UserId, cancellationToken),
             new DistributedCache.CacheOptions
             {
                 ExpireSlidingCacheFromMinutes = 4 * 60,
@@ -29,6 +29,8 @@ public class GetJobBranchByIdQueryHandler(IMapper mapper,
 
         if (result is null)
         {
+            await DistributedCache.RemoveAsync(CacheKeys.GetJobBranchByUserIdQuery(request.UserId), cancellationToken);
+
             return Result.Fail(Resources.Messages.Validations.NotFoundException);
         }
 

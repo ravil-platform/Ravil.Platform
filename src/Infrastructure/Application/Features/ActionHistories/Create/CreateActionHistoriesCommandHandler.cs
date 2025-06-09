@@ -43,13 +43,15 @@ public class CreateActionHistoriesCommandHandler(IUnitOfWork unitOfWork,
 
         try
         {
+            await UnitOfWork.BeginTransactionAsync(cancellationToken: cancellationToken);
+
             foreach (var itemAction in request.Data)
             {
                 var job = await UnitOfWork.JobRepository.GetByPredicate(j => j.Id == itemAction.JobId);
                 if (job != null)
                 {
                     var actionHistory = new Domain.Entities.Histories.ActionHistories();
-                    actionHistory.AddressIp = userIp ?? "127.0.0.0";
+                    actionHistory.AddressIp = userIp ?? IpAddresses.Local;
                     actionHistory.JobId = job.Id.ToString();
                     actionHistory.JobTitle = job.Title;
 
@@ -82,13 +84,12 @@ public class CreateActionHistoriesCommandHandler(IUnitOfWork unitOfWork,
                         actionHistory.JobIsActiveAds = itemAction.IsActiveAds;
                     }
 
-                    actionHistory.PageUrl = itemAction.PageUrl;
-                    actionHistory.PageSlug = itemAction.PageSlug;
-                    actionHistory.PageTitle = itemAction.PageTitle;
+                    actionHistory.PageUrl = WebUtility.UrlDecode(itemAction.PageUrl);
+                    actionHistory.PageSlug = WebUtility.UrlDecode(itemAction.PageSlug);
+                    actionHistory.PageTitle = WebUtility.UrlDecode(itemAction.PageTitle);
                     actionHistory.ActionType = itemAction.ActionType!.Value.GetEnumDisplayName()!;
 
                     await UnitOfWork.ActionHistoriesRepository.InsertAsync(actionHistory);
-                    await UnitOfWork.SaveAsync();
 
                     #region ( Handle JobInfo )
 
@@ -138,27 +139,40 @@ public class CreateActionHistoriesCommandHandler(IUnitOfWork unitOfWork,
                     await UnitOfWork.JobInfoRepository.InsertAsync(jobInfo);
 
                     #endregion
-
-                    #region ( Remove Cache Data )
-
-                    await DistributedCache.RemoveAsync(key: CacheKeys.GetJobViewsQuery(Convert.ToInt32(actionHistory.JobId)), cancellationToken);
-                    await DistributedCache.RemoveAsync(key: CacheKeys.JobOverViewQuery(Convert.ToInt32(actionHistory.JobId)), cancellationToken);
-                    await DistributedCache.RemoveAsync(key: CacheKeys.GetTagsPotentialQuery(Convert.ToInt32(actionHistory.JobId)), cancellationToken);
-                    await DistributedCache.RemoveAsync(key: CacheKeys.GetJobRankingsByFilterQuery(Convert.ToInt32(actionHistory.JobId)), cancellationToken);
-                    await DistributedCache.RemoveAsync(key: CacheKeys.GetContactRequestsQuery(Convert.ToInt32(actionHistory.JobId)), cancellationToken);
-                    await DistributedCache.RemoveAsync(key: CacheKeys.GetJobStatisticsByFilterQuery(Convert.ToInt32(actionHistory.JobId)), cancellationToken);
-
-                    #endregion
                 }
             }
 
-            result.WithSuccess("عملیات با موفقیت انجام شد");
-            Logger.LogInformation("user activity is done!", new Hashtable(request.Data.ToDictionary()));
+            #region ( Save Changes Async )
+
+            await UnitOfWork.SaveAsync();
+
+            #endregion
+
+            #region ( Remove Cache Data )
+
+            foreach (var itemAction in request.Data)
+            {
+                await DistributedCache.RemoveAsync(key: CacheKeys.GetJobViewsQuery(Convert.ToInt32(itemAction.JobId)), cancellationToken);
+                await DistributedCache.RemoveAsync(key: CacheKeys.JobOverViewQuery(Convert.ToInt32(itemAction.JobId)), cancellationToken);
+                await DistributedCache.RemoveAsync(key: CacheKeys.GetTagsPotentialQuery(Convert.ToInt32(itemAction.JobId)), cancellationToken);
+                await DistributedCache.RemoveAsync(key: CacheKeys.GetJobRankingsByFilterQuery(Convert.ToInt32(itemAction.JobId)), cancellationToken);
+                await DistributedCache.RemoveAsync(key: CacheKeys.GetContactRequestsQuery(Convert.ToInt32(itemAction.JobId)), cancellationToken);
+                await DistributedCache.RemoveAsync(key: CacheKeys.GetJobStatisticsByFilterQuery(Convert.ToInt32(itemAction.JobId)), cancellationToken);
+            }
+
+            #endregion
+
+            await UnitOfWork.CommitTransactionAsync(cancellationToken: cancellationToken);
+
+            result.WithSuccess(Resources.Messages.Successes.ActionIsSuccessfully);
+            Logger.LogInformation(Resources.Messages.Successes.ActionIsSuccessfully, new Hashtable(request.Data.ToDictionary()));
         }
         catch (Exception e)
         {
-            result.WithError("خطایی رخ داد");
-            Logger.LogError(exception: null, "user activity is error!", new Hashtable(request.ToDictionary()));
+            result.WithError(Resources.Messages.Validations.BadRequestException);
+            Logger.LogError(exception: e, e.InnerException?.Message ?? e.Message, new Hashtable(request.Data.ToDictionary()));
+
+            await UnitOfWork.RollbackTransactionAsync(cancellationToken: cancellationToken);
         }
 
         return result;

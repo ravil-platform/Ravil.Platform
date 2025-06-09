@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence.Context;
 
@@ -11,9 +12,11 @@ using Persistence.Context;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250608135358_mig-IsNullableUserIdForActionHistoriesModel")]
+    partial class migIsNullableUserIdForActionHistoriesModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -61,7 +64,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("UpdateDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2025, 6, 9, 11, 18, 25, 636, DateTimeKind.Local).AddTicks(4130));
+                        .HasDefaultValue(new DateTime(2025, 6, 8, 17, 23, 57, 387, DateTimeKind.Local).AddTicks(4816));
 
                     b.HasKey("Id");
 
@@ -3120,7 +3123,7 @@ namespace Persistence.Migrations
                     b.Property<int>("JobId")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("KeywordId")
+                    b.Property<Guid>("KeywordId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("KeywordPageTitle")
@@ -3135,7 +3138,7 @@ namespace Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Position")
+                    b.Property<int>("Position")
                         .HasColumnType("int");
 
                     b.Property<int>("SubscriptionId")
@@ -3489,7 +3492,7 @@ namespace Persistence.Migrations
                             Id = "05446344-f9cc-4566-bd2c-36791b4e28ed",
                             AccessFailedCount = 0,
                             BlockedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "68482ce1-b538-4305-8e85-50e7a8328d84",
+                            ConcurrencyStamp = "f7b826b5-479e-444d-a74e-4a55779fccd8",
                             Email = "admin@localhost.com",
                             EmailConfirmed = true,
                             ExpireTimeSpanBlock = 0,
@@ -3501,10 +3504,10 @@ namespace Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@LOCALHOST.COM",
                             NormalizedUserName = "ADMIN@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAECXx5mCO49O2sWRp/nrrUF11RtMMNQj5Ys3JtPFvZCX1/aUu39hy1imHdDjxQ28+vQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEI0r9WUV1lDL3Rua3iLTI9npxMYQojQeeTE5ru8l9FwLJdVzPnGVJ5+0dJgZysFb5A==",
                             PhoneNumberConfirmed = false,
-                            RegisterDate = new DateTime(2025, 6, 9, 11, 18, 25, 710, DateTimeKind.Local).AddTicks(9525),
-                            SecurityStamp = "576a4885-d9b4-40e1-96dc-2327f477a169",
+                            RegisterDate = new DateTime(2025, 6, 8, 17, 23, 57, 451, DateTimeKind.Local).AddTicks(4710),
+                            SecurityStamp = "0c58f96f-b96a-43ce-82f6-ffce285cd357",
                             TwoFactorEnabled = false,
                             UpdateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserIsBlocked = false,
@@ -3516,7 +3519,7 @@ namespace Persistence.Migrations
                             Id = "2ec9f480-7288-4d0f-a1cd-53cc89968b45",
                             AccessFailedCount = 0,
                             BlockedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "f743637f-1385-48e1-9c83-11ff6e189bf8",
+                            ConcurrencyStamp = "84c5b4b3-02b2-4d1f-b697-4da3f552df28",
                             Email = "user@localhost.com",
                             EmailConfirmed = true,
                             ExpireTimeSpanBlock = 0,
@@ -3528,10 +3531,10 @@ namespace Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "USER@LOCALHOST.COM",
                             NormalizedUserName = "USER@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEKIQCCXoa1N5Pquj2579IU6NyKaAnnDi51ZcEEuzvuWYkMpHmo1S8zR+AFJ8rf250w==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJF+dUjlblUTa3KAkMKEbZx2UK2LegCbxlAYfr0oJmXSwbxO7gU/DzGA1iwoHmjCaQ==",
                             PhoneNumberConfirmed = false,
-                            RegisterDate = new DateTime(2025, 6, 9, 11, 18, 25, 764, DateTimeKind.Local).AddTicks(2909),
-                            SecurityStamp = "2ec55dcf-9287-486b-8af0-5cfbe20b21f8",
+                            RegisterDate = new DateTime(2025, 6, 8, 17, 23, 57, 502, DateTimeKind.Local).AddTicks(6240),
+                            SecurityStamp = "81473662-f475-4cb0-92e8-94fc473db56a",
                             TwoFactorEnabled = false,
                             UpdateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserIsBlocked = false,

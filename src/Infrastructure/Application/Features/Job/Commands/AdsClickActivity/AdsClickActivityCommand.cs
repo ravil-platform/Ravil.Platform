@@ -7,7 +7,7 @@ public class AdsClickActivityCommand : IRequest
     public string KeywordPageTitle { get; set; } = null!;
     public string KeywordPageUrl { get; set; } = null!;
     public string KeywordSlug { get; set; } = null!;
-    public Guid KeywordId { get; set; }
+    public Guid? KeywordId { get; set; }
     public ClickType ClickType { get; set; }
     public int Position { get; set; }
 }

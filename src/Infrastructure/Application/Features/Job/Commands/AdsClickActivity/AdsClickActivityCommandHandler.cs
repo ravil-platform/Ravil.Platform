@@ -39,41 +39,68 @@ public class AdsClickActivityCommandHandler(IMapper mapper, IUnitOfWork unitOfWo
 
             var click = await UnitOfWork.ClickRepository.TableNoTracking.FirstOrDefaultAsync(a => a.Type.Equals(request.ClickType), cancellationToken: cancellationToken);
             if (click is null) return result.WithError(Resources.Messages.Validations.NotFoundException);
-
-            var keyword = await UnitOfWork.KeywordRepository.TableNoTracking.SingleOrDefaultAsync(a => a.Id.Equals(request.KeywordId), cancellationToken: cancellationToken);
-            if (keyword is null) return result.WithError(Resources.Messages.Validations.NotFoundException);
-
             
             var subscriptionClick = Mapper.Map<SubscriptionClick>(request);
-            subscriptionClick.ClickedTime = DateTime.Now;
+            subscriptionClick.ClickedTime = DateTime.UtcNow;
             subscriptionClick.ClickId = click.Id;
             subscriptionClick.IsDeposit = false;
 
             #region ( Calculate CPC )
 
-            var jobKeywordUsersId = await UnitOfWork.JobKeywordRepository.TableNoTracking
-                .Include(a => a.JobBranch)
-                .Where(a => a.KeywordId == keyword.Id)
-                .Select(a => new { a.JobBranch.UserId, a.JobBranchId })
-                .ToListAsync(cancellationToken: cancellationToken);
-
-            var jobOwnersAdsClickSettings = await UnitOfWork.ClickAdsSettingRepository.TableNoTracking
-                .Include(a => a.User.JobBranches)
-                .Where(a => jobKeywordUsersId.Select(u => u.UserId).Contains(a.UserId))
-                .Where(a => a.Status)
-                .OrderByDescending(a => a.MaxCostPerClick)
-                .ToListAsync(cancellationToken: cancellationToken);
-
-            if (jobOwnersAdsClickSettings.Any())
+            if (request.KeywordId.HasValue)
             {
-                var currentJobId = jobKeywordUsersId.FirstOrDefault(a => a.JobBranchId == request.JobBranchId);
-                var currentCPCIndex = jobOwnersAdsClickSettings.FindIndex(a => a.UserId.Equals(currentJobId?.UserId));
+                var keyword = await UnitOfWork.KeywordRepository.TableNoTracking.SingleOrDefaultAsync(a => a.Id.Equals(request.KeywordId), cancellationToken: cancellationToken);
+                if (keyword is null) return result.WithError(Resources.Messages.Validations.NotFoundException);
 
-                var maxCostPerClicks = jobOwnersAdsClickSettings.Select(a => a.MaxCostPerClick).ToList();
-                var distanceCostClick = maxCostPerClicks.ElementAt(currentCPCIndex + 1);
+                var jobKeywordUsersId = await UnitOfWork.JobKeywordRepository.TableNoTracking
+                    .Include(a => a.JobBranch)
+                    .Where(a => a.KeywordId == keyword.Id)
+                    .Select(a => new { a.JobBranch.UserId, a.JobBranchId, a.JobBranch.JobId })
+                    .ToListAsync(cancellationToken: cancellationToken);
 
-                var costPerClick = CalculateCPC(secondHighestBid: distanceCostClick, increasePercent: 20);
+                var jobOwnersAdsClickSettings = await UnitOfWork.ClickAdsSettingRepository.TableNoTracking
+                    .Include(a => a.User.JobBranches)
+                    .Where(a => jobKeywordUsersId.Select(u => u.UserId).Contains(a.UserId))
+                    .Where(a => a.Status)
+                    .OrderByDescending(a => a.MaxCostPerClick)
+                    .ToListAsync(cancellationToken: cancellationToken);
+
+                if (jobOwnersAdsClickSettings.Any())
+                {
+                    var currentJobId = jobKeywordUsersId.FirstOrDefault(a => a.JobBranchId == request.JobBranchId);
+                    var currentCpcIndex = jobOwnersAdsClickSettings.FindIndex(a => a.UserId.Equals(currentJobId?.UserId));
+
+                    var maxCostPerClicks = jobOwnersAdsClickSettings.Select(a => a.MaxCostPerClick).ToList();
+                    var distanceCostClick = maxCostPerClicks.ElementAt(currentCpcIndex + 1);
+
+                    var costPerClick = CalculateCPC(secondHighestBid: distanceCostClick, increasePercent: 20);
+                    subscriptionClick.CostPerClick = costPerClick;
+                    subscriptionClick.JobId = currentJobId!.JobId;
+                }
+                else
+                {
+                    var jobOwner = await UnitOfWork.JobBranchRepository.TableNoTracking.SingleOrDefaultAsync(a => a.Id == request.JobBranchId, cancellationToken: cancellationToken);
+                    if (jobOwner is null) return result.WithError(Resources.Messages.Validations.NotFoundException);
+
+                    subscriptionClick.CostPerClick = click.CostPerClick;
+                    subscriptionClick.JobId = jobOwner.JobId;
+                }
+            }
+            else
+            {
+                var jobOwner = await UnitOfWork.JobBranchRepository.TableNoTracking.SingleOrDefaultAsync(a => a.Id == request.JobBranchId, cancellationToken: cancellationToken);
+                if (jobOwner is null) return result.WithError(Resources.Messages.Validations.NotFoundException);
+                
+                var jobOwnerAdsClickSetting = await UnitOfWork.ClickAdsSettingRepository.TableNoTracking
+                    .Where(a => a.UserId == jobOwner.UserId && a.Status)
+                    .SingleOrDefaultAsync(cancellationToken: cancellationToken);
+
+                if (jobOwnerAdsClickSetting is null)
+                    return result.WithError(Resources.Messages.Validations.NotFoundException);
+
+                var costPerClick = jobOwnerAdsClickSetting.MaxCostPerClick;
                 subscriptionClick.CostPerClick = costPerClick;
+                subscriptionClick.JobId = jobOwner.JobId;
             }
 
             #endregion
@@ -89,14 +116,14 @@ public class AdsClickActivityCommandHandler(IMapper mapper, IUnitOfWork unitOfWo
 
             #endregion
 
-            result.WithSuccess("عملیات با موفقیت انجام شد");
-            Logger.LogInformation("user activity is done!", new Hashtable(subscriptionClick.ToDictionary()));
+            result.WithSuccess(Resources.Messages.Successes.ActionIsSuccessfully);
+            Logger.LogInformation(Resources.Messages.Successes.ActionIsSuccessfully, new Hashtable(subscriptionClick.ToDictionary()));
 
             return result;
         }
         catch (Exception e)
         {
-            Logger.LogError(exception: e, "job ads click activity is error!", new Hashtable(request.ToDictionary()));
+            Logger.LogError(exception: e, e.InnerException?.Message ?? e.Message, new Hashtable(request.ToDictionary()));
 
             await UnitOfWork.RollbackTransactionAsync(cancellationToken: cancellationToken);
             throw;
