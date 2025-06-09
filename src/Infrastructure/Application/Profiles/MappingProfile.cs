@@ -1,14 +1,10 @@
-﻿using System.Text.Json;
-using Domain.Entities.Wallets;
+﻿using Domain.Entities.Wallets;
 using ViewModels.AdminPanel.Comment;
 using ViewModels.AdminPanel.PanelTutorial;
-using ViewModels.QueriesResponseViewModel.Payments;
 using ViewModels.QueriesResponseViewModel.Wallet;
-using CreateJobBranchViewModel = ViewModels.QueriesResponseViewModel.Job.CreateJobBranchViewModel;
+using ViewModels.QueriesResponseViewModel.Payments;
 using CreateJobViewModel = ViewModels.QueriesResponseViewModel.Job.CreateJobViewModel;
-using JsonSerializer = System.Text.Json.JsonSerializer;
-using PhoneNumberInfosViewModel = ViewModels.QueriesResponseViewModel.Job.PhoneNumberInfosViewModel;
-using SocialMediaInfosViewModel = ViewModels.QueriesResponseViewModel.Job.SocialMediaInfosViewModel;
+using CreateJobBranchViewModel = ViewModels.QueriesResponseViewModel.Job.CreateJobBranchViewModel;
 using UpdateJobBranchViewModel = ViewModels.QueriesResponseViewModel.Job.UpdateJobBranchViewModel;
 
 namespace Application.Profiles
@@ -169,11 +165,11 @@ namespace Application.Profiles
                         if (string.IsNullOrWhiteSpace(a.PhoneNumberInfos)) return false;
 
                         var phoneNumberInfos =
-                            JsonSerializer.Deserialize<List<PhoneNumberInfosViewModel>>(a.PhoneNumberInfos);
+                            System.Text.Json.JsonSerializer.Deserialize<List<ViewModels.QueriesResponseViewModel.Job.PhoneNumberInfosViewModel>>(a.PhoneNumberInfos);
 
                         return phoneNumberInfos != null && phoneNumberInfos.All(current => !string.IsNullOrWhiteSpace(current.PhoneNumber));
                     });
-                    expression.MapFrom(a => !string.IsNullOrWhiteSpace(a.PhoneNumberInfos) ? JsonConvert.DeserializeObject<List<PhoneNumberInfosViewModel>>(a.PhoneNumberInfos) : null);
+                    expression.MapFrom(a => !string.IsNullOrWhiteSpace(a.PhoneNumberInfos) ? JsonConvert.DeserializeObject<List<ViewModels.QueriesResponseViewModel.Job.PhoneNumberInfosViewModel>>(a.PhoneNumberInfos) : null);
                 })
                 .ForMember(src => src.SocialMediaInfos, expression =>
                 {
@@ -183,12 +179,12 @@ namespace Application.Profiles
                         if (string.IsNullOrWhiteSpace(a.SocialMediaInfos)) return false;
 
                         var socialMediaInfos =
-                            JsonSerializer.Deserialize<List<SocialMediaInfosViewModel>>(a.SocialMediaInfos);
+                            System.Text.Json.JsonSerializer.Deserialize<List<ViewModels.QueriesResponseViewModel.Job.SocialMediaInfosViewModel>>(a.SocialMediaInfos);
 
                         return socialMediaInfos != null && socialMediaInfos.All(current => !string.IsNullOrWhiteSpace(current.SocialMediaLink));
 
                     });
-                    expression.MapFrom(a => !string.IsNullOrWhiteSpace(a.SocialMediaInfos) ? JsonConvert.DeserializeObject<List<SocialMediaInfosViewModel>>(a.SocialMediaInfos) : null);
+                    expression.MapFrom(a => !string.IsNullOrWhiteSpace(a.SocialMediaInfos) ? JsonConvert.DeserializeObject<List<ViewModels.QueriesResponseViewModel.Job.SocialMediaInfosViewModel>>(a.SocialMediaInfos) : null);
                 })
                 .ReverseMap();
 
@@ -213,11 +209,11 @@ namespace Application.Profiles
                         if (string.IsNullOrWhiteSpace(a.PhoneNumberInfos)) return false;
 
                         var phoneNumberInfos =
-                            JsonSerializer.Deserialize<List<PhoneNumberInfosViewModel>>(a.PhoneNumberInfos);
+                            System.Text.Json.JsonSerializer.Deserialize<List<ViewModels.QueriesResponseViewModel.Job.PhoneNumberInfosViewModel>>(a.PhoneNumberInfos);
 
                         return phoneNumberInfos != null && phoneNumberInfos.All(current => !string.IsNullOrWhiteSpace(current.PhoneNumber));
                     });
-                    expression.MapFrom(a => JsonSerializer.Deserialize<List<PhoneNumberInfosViewModel>>(a.PhoneNumberInfos, JsonSerializerOptions.Web));
+                    expression.MapFrom(a => System.Text.Json.JsonSerializer.Deserialize<List<ViewModels.QueriesResponseViewModel.Job.PhoneNumberInfosViewModel>>(a.PhoneNumberInfos, JsonSerializerOptions.Web));
                 })
                 .ForMember(src => src.SocialMediaInfos, expression =>
                 {
@@ -227,12 +223,12 @@ namespace Application.Profiles
                         if (string.IsNullOrWhiteSpace(a.SocialMediaInfos)) return false;
 
                         var socialMediaInfos =
-                            JsonSerializer.Deserialize<List<SocialMediaInfosViewModel>>(a.SocialMediaInfos);
+                            System.Text.Json.JsonSerializer.Deserialize<List<ViewModels.QueriesResponseViewModel.Job.SocialMediaInfosViewModel>>(a.SocialMediaInfos);
 
                         return socialMediaInfos != null && socialMediaInfos.All(current => !string.IsNullOrWhiteSpace(current.SocialMediaLink));
 
                     });
-                    expression.MapFrom(a => JsonSerializer.Deserialize<List<SocialMediaInfosViewModel>>(a.SocialMediaInfos, JsonSerializerOptions.Web));
+                    expression.MapFrom(a => System.Text.Json.JsonSerializer.Deserialize<List<ViewModels.QueriesResponseViewModel.Job.SocialMediaInfosViewModel>>(a.SocialMediaInfos, JsonSerializerOptions.Web));
                 })
                 .ReverseMap();
 
@@ -360,11 +356,11 @@ namespace Application.Profiles
                 })
                 .ForPath(src => src.JobInfo.PhoneNumberInfos, expression =>
                 {
-                    expression.MapFrom(a => JsonSerializer.Deserialize<List<PhoneNumberInfosViewModel>>(a.Job.PhoneNumberInfos, JsonSerializerOptions.Web));
+                    expression.MapFrom(a => JsonConvert.DeserializeObject<List<ViewModels.QueriesResponseViewModel.Job.PhoneNumberInfosViewModel>>(a.Job.PhoneNumberInfos));
                 })
                 .ForPath(src => src.JobInfo.SocialMediaInfos, expression =>
                 {
-                    expression.MapFrom(a => JsonSerializer.Deserialize<List<SocialMediaInfosViewModel>>(a.Job.SocialMediaInfos, JsonSerializerOptions.Web));
+                    expression.MapFrom(a => JsonConvert.DeserializeObject<List<ViewModels.QueriesResponseViewModel.Job.SocialMediaInfosViewModel>>(a.Job.SocialMediaInfos));
                 })
                 .ForMember(src => src.Address, expression =>
                 {
@@ -415,11 +411,11 @@ namespace Application.Profiles
                 })
                 .ForPath(src => src.JobInfo.PhoneNumberInfos, expression =>
                 {
-                    expression.MapFrom(a => JsonSerializer.Deserialize<List<PhoneNumberInfosViewModel>>(a.Job.PhoneNumberInfos, JsonSerializerOptions.Web));
+                    expression.MapFrom(a => System.Text.Json.JsonSerializer.Deserialize<List<ViewModels.QueriesResponseViewModel.Job.PhoneNumberInfosViewModel>>(a.Job.PhoneNumberInfos, JsonSerializerOptions.Web));
                 })
                 .ForPath(src => src.JobInfo.SocialMediaInfos, expression =>
                 {
-                    expression.MapFrom(a => JsonSerializer.Deserialize<List<SocialMediaInfosViewModel>>(a.Job.SocialMediaInfos, JsonSerializerOptions.Web));
+                    expression.MapFrom(a => System.Text.Json.JsonSerializer.Deserialize<List<ViewModels.QueriesResponseViewModel.Job.SocialMediaInfosViewModel>>(a.Job.SocialMediaInfos, JsonSerializerOptions.Web));
                 })
                 .ForMember(src => src.Address, expression =>
                 {

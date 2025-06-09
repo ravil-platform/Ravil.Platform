@@ -66,6 +66,7 @@ global using RNX.Mediator;
 global using System.IdentityModel.Tokens.Jwt;
 global using System.Reflection;
 global using System.Security.Claims;
+global using System.Text.Json;
 global using System.Text;
 global using UAParser;
 global using ViewModels.AdminPanel.Faq;
