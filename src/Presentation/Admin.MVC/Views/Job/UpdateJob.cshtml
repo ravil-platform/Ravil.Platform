@@ -21,9 +21,8 @@
 	var categories = (List<Category>)ViewData["categories"]!;
 	var tags = (List<Tag>)ViewData["tags"]!;
 
-	var socialMedias = JsonConvert.DeserializeObject<List<SocialMediaInfosViewModel>>(Model.CurrentSocialMediaInfos);
-	var phoneNumberInfos = JsonConvert.DeserializeObject<List<PhoneNumberInfosViewModel>>(Model.CurrentPhoneNumberInfos);
-
+	var socialMedias = Model.CurrentSocialMediaInfos != null ? JsonConvert.DeserializeObject<List<SocialMediaInfosViewModel>>(Model.CurrentSocialMediaInfos) : null;
+	var phoneNumberInfos = Model.CurrentPhoneNumberInfos != null ? JsonConvert.DeserializeObject<List<PhoneNumberInfosViewModel>>(Model.CurrentPhoneNumberInfos) : null;
 
 	//for redirect to previous page
 	string previousPage = (string)ViewData["previousPage"];
@@ -267,10 +266,10 @@
 									</div>
 								</div>
 
-								<div class="col-12 col-sm-12 col-lg-12">
+							@* <div class="col-12 col-sm-12 col-lg-12">
 									<div class="form-group">
 										<div class="checkbox">
-											<input asp-for="SendSms" type="checkbox" class="checkbox-input">
+											<input asp-for="SendSms" type="checkbox" value="true" class="checkbox-input">
 											<label asp-for="SendSms"></label>
 											<div class="help-block">
 												<span asp-validation-for="SendSms" class="text-danger"></span>
@@ -278,7 +277,8 @@
 											</div>
 										</div>
 									</div>
-								</div>
+								</div> *@
+							<input asp-for="SendSms"  value="true" hidden="">
 
 								<div class="col-12 col-sm-6 col-lg-4">
 									<div class="form-group">

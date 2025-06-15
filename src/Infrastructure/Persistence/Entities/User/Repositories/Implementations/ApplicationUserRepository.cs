@@ -32,6 +32,11 @@ public class ApplicationUserRepository : Repository<ApplicationUser>, IApplicati
 
         #region (Filter)
 
+        if (!string.IsNullOrWhiteSpace(usersFilterViewModel.Id))
+        {
+            query = query.Where(a => a.Id == usersFilterViewModel.Id);
+        }
+
         if (!string.IsNullOrWhiteSpace(usersFilterViewModel.Firstname))
         {
             query = query.Where(a => a.Firstname!.Contains(usersFilterViewModel.Firstname.Trim()));
@@ -49,7 +54,7 @@ public class ApplicationUserRepository : Repository<ApplicationUser>, IApplicati
 
         if (!string.IsNullOrWhiteSpace(usersFilterViewModel.Phone))
         {
-            query = query.Where(a => a.Phone!.Contains(usersFilterViewModel.Phone.Trim()));
+            query = query.Where(a => a.PhoneNumber!.Contains(usersFilterViewModel.Phone.Trim()));
         }
 
         if (!string.IsNullOrWhiteSpace(usersFilterViewModel.UserName))

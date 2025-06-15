@@ -239,16 +239,15 @@ public class JobRepository : Repository<Domain.Entities.Job.Job>, IJobRepository
 
         if (filter.IsDuplicate != null && filter.IsDuplicate == true)
         {
-            var duplicateJobIds = ApplicationDbContext.Job
-                .AsNoTracking()
-                .Select(j => new { j.Id, j.Title, j.Route })
-                .ToList()
-                .GroupBy(j => new { j.Title, j.Route })
+            var duplicateRoutes = ApplicationDbContext.Job
+                .GroupBy(j => j.Route)
                 .Where(g => g.Count() > 1)
-                .SelectMany(g => g.Select(j => j.Id))
-                .ToList();
+                .Select(g => g.Key);
 
-            query = query.Where(j => duplicateJobIds.Contains(j.Id));
+            query = query
+                .Where(j => duplicateRoutes.Contains(j.Route))
+                .OrderBy(j => j.Route)
+                .ThenByDescending(j => j.CreateDate);
         }
 
         if (filter.IsEnglishOnly != null && filter.IsEnglishOnly == true)

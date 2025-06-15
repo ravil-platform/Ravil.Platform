@@ -1,5 +1,5 @@
-﻿using Constants.Caching;
-using Domain.Entities.Job;
+﻿using Constants;
+using Constants.Caching;
 using Microsoft.Extensions.Caching.Distributed;
 using CreateJobBranchViewModel = ViewModels.AdminPanel.Job.CreateJobBranchViewModel;
 using JsonSerializer = System.Text.Json.JsonSerializer;
@@ -200,6 +200,16 @@ namespace Admin.MVC.Controllers
 
             var job = await UnitOfWork.JobRepository.Table.Include(j => j.JobCategories).SingleOrDefaultAsync(j => j.Id == id);
 
+            var jobBranch = await UnitOfWork.JobBranchRepository.Table.Where(j => j.JobId == job.Id)
+                .FirstOrDefaultAsync();
+
+            if (jobBranch == null)
+            {
+                ErrorAlert("برای این کسب و کار شعبه ای ثبت نشده است");
+
+                return RedirectToAction("IndexJob");
+            }
+
             var model = Mapper.Map<UpdateJobViewModel>(job);
 
             model.CurrentLargePicture = job.LargePicture;
@@ -207,7 +217,7 @@ namespace Admin.MVC.Controllers
             model.CurrentSocialMediaInfos = job.SocialMediaInfos;
             model.CurrentPhoneNumberInfos = job.PhoneNumberInfos;
             model.Categories = job.JobCategories.Select(j => j.CategoryId).ToArray();
-            model.UserOwnerId = job.AdminId;
+            model.UserOwnerId = jobBranch.UserId;
 
             #region ( previous Page )
             string previousPage = Request.Headers["Referer"].ToString();
@@ -262,7 +272,7 @@ namespace Admin.MVC.Controllers
             {
                 var deletedFile = "";
 
-                if (job.LargePicture != null)
+                if (!string.IsNullOrWhiteSpace(job.LargePicture))
                 {
                     deletedFile = job.LargePicture;
                 }
@@ -278,7 +288,7 @@ namespace Admin.MVC.Controllers
             {
                 var deletedFile = "";
 
-                if (job.SmallPicture != null)
+                if (!string.IsNullOrWhiteSpace(job.SmallPicture))
                 {
                     deletedFile = job.SmallPicture;
                 }
@@ -300,8 +310,6 @@ namespace Admin.MVC.Controllers
                 job.PhoneNumberInfos = JsonSerializer.Serialize(updateJobViewModel.PhoneNumberInfosViewModel);
             }
 
-            job.AdminId = updateJobViewModel.UserOwnerId ?? "";
-
             job.Route = job.Route.ToSlug();
             job.LastUpdateDate = DateTime.Now;
 
@@ -311,45 +319,50 @@ namespace Admin.MVC.Controllers
             #region ( Change Status And Send Sms )
             var sendSms = "";
             var phoneNumber = "";
-            var userId = updateJobViewModel.UserOwnerId ?? job.AdminId;
+            var userId = updateJobViewModel.UserOwnerId;
 
-            if (updateJobViewModel.SendSms)
+            if (job.Status == JobBranchStatus.Rejected)
             {
-                if (job.Status == JobBranchStatus.Rejected)
+                if (userId != null)
                 {
+                    phoneNumber = await UnitOfWork.ApplicationUserRepository.TableNoTracking
+                        .Where(d => d.Id == userId)
+                        .Select(u => u.PhoneNumber).SingleOrDefaultAsync();
 
-                    if (userId != null)
+                    if (phoneNumber != null)
                     {
-                        phoneNumber = await UnitOfWork.ApplicationUserRepository.TableNoTracking
-                            .Where(d => d.Id == userId)
-                            .Select(u => u.PhoneNumber).SingleOrDefaultAsync();
-
-                        if (phoneNumber != null)
-                        {
-                            sendSms = "rejectedJob";
-                        }
-                    }
-
-                }
-
-                if (job.Status == JobBranchStatus.Accepted)
-                {
-                    if (userId != null)
-                    {
-                        phoneNumber = await UnitOfWork.ApplicationUserRepository.TableNoTracking
-                            .Where(d => d.Id == userId)
-                            .Select(u => u.PhoneNumber)
-                            .SingleOrDefaultAsync();
-
-                        if (phoneNumber != null)
-                        {
-                            sendSms = "acceptedJob";
-                        }
+                        sendSms = "rejectedJob";
                     }
                 }
+
+
+                //Message Box 
+                await UnitOfWork.MessageBoxRepository.SendMessage(job.Id, MessageBoxType.Info,
+                     MessageBoxDefault.RejectJob);
+
             }
-            #endregion
 
+            if (job.Status == JobBranchStatus.Accepted)
+            {
+                if (userId != null)
+                {
+                    phoneNumber = await UnitOfWork.ApplicationUserRepository.TableNoTracking
+                        .Where(d => d.Id == userId)
+                        .Select(u => u.PhoneNumber)
+                        .SingleOrDefaultAsync();
+
+                    if (phoneNumber != null)
+                    {
+                        sendSms = "acceptedJob";
+                    }
+                }
+
+                //Message Box 
+                await UnitOfWork.MessageBoxRepository.SendMessage(job.Id, MessageBoxType.Info,
+                    MessageBoxDefault.AcceptJob);
+            }
+
+            #endregion
 
             #region ( Update Branches )
             var jobBranches = await UnitOfWork.JobBranchRepository.GetAllAsync(j => j.JobId == job.Id);
@@ -360,6 +373,8 @@ namespace Admin.MVC.Controllers
                 {
                     currentJobBranch.Status = job.Status;
                     currentJobBranch.RejectedReason = job.RejectedReason;
+                    currentJobBranch.Route = job.Route;
+                    currentJobBranch.AdminId = userId;
 
                     await UnitOfWork.JobBranchRepository.UpdateAsync(currentJobBranch);
                 }
@@ -444,7 +459,6 @@ namespace Admin.MVC.Controllers
             {
                 ErrorAlert(e.Message);
             }
-
 
             if (previousPage != null)
             {
@@ -721,6 +735,92 @@ namespace Admin.MVC.Controllers
                 ErrorAlert("در حال حاضر  api  نشان پاسخگو نیست!");
                 return Redirect(Request.Headers["Referer"].ToString());
             }
+        }
+        #endregion
+
+        #region ( Fix Address For All Jobs )
+        /// <summary>
+        /// تمامی آدرس های انگلیسی فارسی میشود با استفاده از نشان
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> FixAddressForAllJobs()
+        {
+            var results = await UnitOfWork.AddressRepository.Table.Include(a => a.Location).ToListAsync();
+
+            var enAddresses = results
+                .Where(j => !string.IsNullOrWhiteSpace(j.OtherAddress) && Regex.IsMatch(j.OtherAddress, @"[a-zA-Z]"))
+                .ToList();
+
+            var ids = enAddresses.Select(e => e.JobBranchId).ToList();
+
+            //var jobs = await UnitOfWork.JobBranchRepository.Table.Where(j => ids.Contains(j.Id)).ToListAsync();
+
+            //var names = jobs.Select(j => j.Route).ToList();
+
+            //SuccessAlert(names.ToString());
+            //return Redirect(Request.Headers["Referer"].ToString());
+
+            int failed = 0;
+            int success = 0;
+            int neshanNotReturned = 0;
+
+            foreach (var address in enAddresses)
+            {
+                #region ( Implement Location (Address) )
+                string latitude = address.Location.Lat.ToString();
+                string longitude = address.Location.Long.ToString();
+
+                if (longitude == "0" || latitude == "0")
+                {
+                    failed++;
+
+                    continue;
+                }
+
+                LocationDataViewModel? locationDataViewModel = await NeshanApiService.GetReverseGeocodeAsync(latitude, longitude);
+
+                #region ( Update Address )
+                if (locationDataViewModel != null)
+                {
+                    #region ( Neshan Reurned Data )
+                    address.OtherAddress = locationDataViewModel.FormattedAddress;
+                    address.PostalAddress = locationDataViewModel.FormattedAddress;
+                    address.Neighbourhood = locationDataViewModel.Neighbourhood;
+
+                    var currentCity = await NeshanApiService.GetCityState
+                    (locationDataViewModel.City,
+                        locationDataViewModel.State,
+                        locationDataViewModel.Neighbourhood,
+                        UnitOfWork);
+
+                    if (currentCity != null)
+                    {
+                        address.CityId = currentCity.Id;
+                        address.StateId = currentCity.StateId;
+                    }
+                    #endregion
+
+                    success++;
+                }
+                else
+                {
+                    neshanNotReturned++;
+
+                    continue;
+                }
+
+                await UnitOfWork.AddressRepository.UpdateAsync(address);
+
+                await UnitOfWork.SaveAsync();
+                #endregion
+                #endregion
+            }
+
+            string message = $"تعداد کل {enAddresses.Count} ---- تعداد شکست {failed} ---- تعداد بازگشتی نشان {success}  ---- عدم بازگشت نشان {neshanNotReturned} ";
+
+            SuccessAlert(message);
+            return Redirect(Request.Headers["Referer"].ToString());
         }
         #endregion
 
