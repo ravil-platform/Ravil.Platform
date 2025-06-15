@@ -34,11 +34,6 @@
 					</li>
 				</ul>
 			</li>
-
-			<li class="navigation-header">
-				<span> خریداران اشتراک های سایت </span>
-			</li>
-
 			<li class="nav-item">
 				<a><i class="menu-livicon" data-icon="rocket"></i><span class="menu-title" data-i18n="Invoice">مدیریت اشتراک ها</span></a>
 				<ul class="menu-content">
@@ -51,12 +46,6 @@
 					</li>
 				</ul>
 			</li>
-
-
-			<li class="navigation-header">
-				<span>کیف پول کاربران</span>
-			</li>
-
 			<li class="nav-item">
 				<a><i class="menu-livicon" data-icon="rocket"></i><span class="menu-title" data-i18n="Invoice">مدیریت کیف پول ها</span></a>
 				<ul class="menu-content">
@@ -143,53 +132,28 @@
 					</li>
 				</ul>
 			</li>
+			
+		
+		<li class="navigation-header">
+			<span>صندوق پیام و تماس با ما</span>
+		</li>
 
-			<li class="navigation-header">
-				<span>کلمات کلیدی</span>
-			</li>
+		<li class="nav-item">
+			<a><i class='bx bx-show-alt'></i><span class="menu-title" data-i18n="Invoice">مشاهده</span></a>
+			<ul class="menu-content">
+				<li class="@(selected == "Contacts_Index" ? "active" : "null")">
+					<a asp-controller="Contact" asp-action="Index"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">تماس با ما</span></a>
+				</li>
 
-			<li class="nav-item">
-				<a><i class="menu-livicon" data-icon="tag"></i><span class="menu-title" data-i18n="Invoice">مدیریت کلمات کلیدی</span></a>
-				<ul class="menu-content">
-					<li class="@(selected == "Tags_Index" ? "active" : "null")">
-						<a asp-controller="Job" asp-action="IndexKeyword"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">مشاهده لیست</span></a>
-					</li>
-				</ul>
-			</li>
+				<li class="@(selected == "MessageBox_Index" ? "active" : "null")">
+					<a asp-controller="MessageBox" asp-action="Index"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">صندوق پیام</span></a>
+				</li>
 
-			<li class="navigation-header">
-				<span>تگ ها</span>
-			</li>
-
-			<li class="nav-item">
-				<a><i class="menu-livicon" data-icon="tag"></i><span class="menu-title" data-i18n="Invoice">مدیریت تگ</span></a>
-				<ul class="menu-content">
-					<li class="@(selected == "Tags_Index" ? "active" : "null")">
-						<a asp-controller="Tag" asp-action="Index"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">مشاهده لیست</span></a>
-					</li>
-				</ul>
-			</li>
-
-			<li class="navigation-header">
-				<span>صندوق پیام و تماس با ما</span>
-			</li>
-
-			<li class="nav-item">
-				<a><i class='bx bx-show-alt'></i><span class="menu-title" data-i18n="Invoice">مشاهده</span></a>
-				<ul class="menu-content">
-					<li class="@(selected == "Contacts_Index" ? "active" : "null")">
-						<a asp-controller="Contact" asp-action="Index"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">تماس با ما</span></a>
-					</li>
-
-					<li class="@(selected == "MessageBox_Index" ? "active" : "null")">
-						<a asp-controller="MessageBox" asp-action="Index"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">صندوق پیام</span></a>
-					</li>
-
-					<li class="@(selected == "MessageBox_Create" ? "active" : "null")">
-						<a asp-controller="MessageBox" asp-action="Create"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">افزودن پیام</span></a>
-					</li>
-				</ul>
-			</li>
+				<li class="@(selected == "MessageBox_Create" ? "active" : "null")">
+					<a asp-controller="MessageBox" asp-action="Create"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">افزودن پیام</span></a>
+				</li>
+			</ul>
+		</li>
 
 			<li class="navigation-header">
 				<span>صفحات</span>
@@ -251,59 +215,6 @@
 				</ul>
 			</li>
 
-
-			<li class="navigation-header">
-				<span>اسلایدر و بنر ها</span>
-			</li>
-
-			<li class="nav-item">
-				<a><i class="menu-livicon" data-icon="image"></i><span class="menu-title" data-i18n="Invoice">مدیریت اسلایدر</span></a>
-				<ul class="menu-content">
-					<li class="@(selected == "MainSliders_Index" ? "active" : "null")">
-						<a asp-controller="MainSlider" asp-action="Index"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">مشاهده اسلایدر ها</span></a>
-					</li>
-					<li class="@(selected == "MainSliders_Create" ? "active" : "null")">
-						<a asp-controller="MainSlider" asp-action="Create"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">افزودن اسلایدر</span></a>
-					</li>
-				</ul>
-			</li>
-
-			<li class="nav-item">
-				<a><i class="menu-livicon" data-icon="image"></i><span class="menu-title" data-i18n="Invoice">بنر</span></a>
-				<ul class="menu-content">
-					<li class="@(selected == "Banners_Index" ? "active" : "null")">
-						<a asp-controller="Banner" asp-action="Index"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">مشاهده بنر ها</span></a>
-					</li>
-					<li class="@(selected == "Banners_Create" ? "active" : "null")">
-						<a asp-controller="Banner" asp-action="Create"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">افزودن بنر</span></a>
-					</li>
-				</ul>
-			</li>
-
-			<li class=" navigation-header">
-				<span>مدیریت شهر و استان ها</span>
-			</li>
-
-			<li class="nav-item">
-				<a href="#"><i class="menu-livicon" data-icon="location"></i><span class="menu-title">مدیریت شهر و استان</span></a>
-				<ul class="menu-content">
-					<li class="@(selected == "StateBases_Index" ? "active" : "null")">
-						<a asp-controller="State" asp-action="Index"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">استان ها</span></a>
-					</li>
-					<li class="@(selected == "CityBases_Index" ? "active" : "null")">
-						<a asp-controller="CityBase" asp-action="Index"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">شهر ها</span></a>
-					</li>
-					<li class="@(selected == "Cities_Create" ? "active" : "null")">
-						<a asp-controller="CityBase" asp-action="IndexCity"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">شهر های راویل</span></a>
-					</li>
-					<li class="@(selected == "Cities_IndexRelatedCities" ? "active" : "null")">
-						<a asp-controller="CityBase" asp-action="IndexRelatedCities"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">مرتبط سازی شهر ها</span></a>
-					</li>
-				</ul>
-			</li>
-
-
-
 			<li class="navigation-header">
 				<span>اشتراک و ویژگی ها | درگاه ها | کد تخفیف</span>
 			</li>
@@ -341,8 +252,34 @@
 					</li>
 				</ul>
 			</li>
+			
+		<li class="navigation-header">
+			<span>کلمات کلیدی</span>
+		</li>
 
-			<li class="navigation-header">
+		<li class="nav-item">
+			<a><i class="menu-livicon" data-icon="tag"></i><span class="menu-title" data-i18n="Invoice">مدیریت کلمات کلیدی</span></a>
+			<ul class="menu-content">
+				<li class="@(selected == "Tags_Index" ? "active" : "null")">
+					<a asp-controller="Job" asp-action="IndexKeyword"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">مشاهده لیست</span></a>
+				</li>
+			</ul>
+		</li>
+
+		<li class="navigation-header">
+			<span>تگ ها</span>
+		</li>
+
+		<li class="nav-item">
+			<a><i class="menu-livicon" data-icon="tag"></i><span class="menu-title" data-i18n="Invoice">مدیریت تگ</span></a>
+			<ul class="menu-content">
+				<li class="@(selected == "Tags_Index" ? "active" : "null")">
+					<a asp-controller="Tag" asp-action="Index"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">مشاهده لیست</span></a>
+				</li>
+			</ul>
+		</li>
+
+		<li class="navigation-header">
 				<span>دسترسی سریع موارد SEO</span>
 			</li>
 
@@ -374,8 +311,60 @@
 			<li class="nav-item  @(selected == "PanelTutorials_Index" ? "active" : "null")">
 				<a asp-controller="PanelTutorial" asp-action="Index"><i class="menu-livicon" data-icon="image"></i><span class="menu-title" data-i18n="Disabled Menu">لیست ویدیو ها</span></a>
 			</li>
+			
+		<li class="navigation-header">
+			<span>اسلایدر و بنر ها</span>
+		</li>
 
-			<li class="navigation-header">
+		<li class="nav-item">
+			<a><i class="menu-livicon" data-icon="image"></i><span class="menu-title" data-i18n="Invoice">مدیریت اسلایدر</span></a>
+			<ul class="menu-content">
+				<li class="@(selected == "MainSliders_Index" ? "active" : "null")">
+					<a asp-controller="MainSlider" asp-action="Index"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">مشاهده اسلایدر ها</span></a>
+				</li>
+				<li class="@(selected == "MainSliders_Create" ? "active" : "null")">
+					<a asp-controller="MainSlider" asp-action="Create"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">افزودن اسلایدر</span></a>
+				</li>
+			</ul>
+		</li>
+
+		<li class="nav-item">
+			<a><i class="menu-livicon" data-icon="image"></i><span class="menu-title" data-i18n="Invoice">بنر</span></a>
+			<ul class="menu-content">
+				<li class="@(selected == "Banners_Index" ? "active" : "null")">
+					<a asp-controller="Banner" asp-action="Index"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">مشاهده بنر ها</span></a>
+				</li>
+				<li class="@(selected == "Banners_Create" ? "active" : "null")">
+					<a asp-controller="Banner" asp-action="Create"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">افزودن بنر</span></a>
+				</li>
+			</ul>
+		</li>
+
+
+		<li class=" navigation-header">
+			<span>مدیریت شهر و استان ها</span>
+		</li>
+
+		<li class="nav-item">
+			<a href="#"><i class="menu-livicon" data-icon="location"></i><span class="menu-title">مدیریت شهر و استان</span></a>
+			<ul class="menu-content">
+				<li class="@(selected == "StateBases_Index" ? "active" : "null")">
+					<a asp-controller="State" asp-action="Index"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">استان ها</span></a>
+				</li>
+				<li class="@(selected == "CityBases_Index" ? "active" : "null")">
+					<a asp-controller="CityBase" asp-action="Index"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">شهر ها</span></a>
+				</li>
+				<li class="@(selected == "Cities_Create" ? "active" : "null")">
+					<a asp-controller="CityBase" asp-action="IndexCity"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">شهر های راویل</span></a>
+				</li>
+				<li class="@(selected == "Cities_IndexRelatedCities" ? "active" : "null")">
+					<a asp-controller="CityBase" asp-action="IndexRelatedCities"><i class="bx bx-left-arrow-alt"></i><span class="menu-item">مرتبط سازی شهر ها</span></a>
+				</li>
+			</ul>
+		</li>
+
+
+		<li class="navigation-header">
 				<span>تنظیمات و پیکربندی سایت</span>
 			</li>
 

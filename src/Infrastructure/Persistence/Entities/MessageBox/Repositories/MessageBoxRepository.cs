@@ -1,6 +1,4 @@
-﻿using ViewModels.AdminPanel.Filter;
-
-namespace Persistence.Entities.MessageBox.Repositories;
+﻿namespace Persistence.Entities.MessageBox.Repositories;
 
 public class MessageBoxRepository : Repository<Domain.Entities.MessageBox.MessageBox>, IMessageBoxRepository
 {
@@ -81,5 +79,28 @@ public class MessageBoxRepository : Repository<Domain.Entities.MessageBox.Messag
         filter.Build(query.Count()).SetEntities(query);
 
         return filter;
+    }
+
+    public async Task<bool> SendMessage(int jobId, MessageBoxType type, string description)
+    {
+        var message = new Domain.Entities.MessageBox.MessageBox()
+        {
+            JobId = jobId,
+            Type = type,
+            Description = description,
+            IsRead = false
+        };
+
+        try
+        {
+            await ApplicationDbContext.MessageBox.AddAsync(message);
+            await ApplicationDbContext.SaveChangesAsync();
+        }
+        catch
+        {
+            return false;
+        }
+    
+        return true;
     }
 }

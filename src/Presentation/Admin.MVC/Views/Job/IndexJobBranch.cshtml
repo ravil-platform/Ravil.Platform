@@ -81,22 +81,19 @@
 									{
 										<td class="text-warning">@JobBranchStatus.WaitingToCheck.GetEnumDisplayName()</td>
 									}
+									else
+									{
+										<td class="text-warning"> -- </td>
+									}
 
 									<td class="text-primary">@data.ViewCount</td>
 
 									<td>
-										<div class="btn-group dropup dropdown-icon-wrapper mr-1 mb-1">
-											<button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-												<i class='bx bx-cog dropdown-icon-wrapper'></i>
-											</button>
-											<div class="dropdown-menu dropdown-menu-right" x-placement="top-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(49px, -8px, 0px);">
-												<a class="dropdown-item" asp-controller="Job" asp-action="UpdateJobBranch" asp-route-id="@data.Id" data-toggle="tooltip" data-placement="top" data-original-title="ویرایش"><i class="bx bxs-edit-alt text-warning"></i></a>
-												<a class="dropdown-item" onclick="deleteItem('@data.Id','@Url.Action("DeleteJobBranch","Job")')" data-toggle="tooltip" data-placement="top" data-original-title="حذف کامل از دیتابیس"><i class='bx bx-trash text-danger'></i></a>
-												<a class="dropdown-item" asp-controller="Job" asp-action="IndexJobBranchImageGallery" asp-route-id="@data.Id" data-toggle="tooltip" data-placement="top" data-original-title="گالری تصویر"><i class='bx bx-images text-success'></i></a>
-												<a class="dropdown-item" asp-controller="Job" asp-action="AddressJobBranch" asp-route-id="@data.Id" data-toggle="tooltip" data-placement="top" data-original-title="افزودن آدرس"><i class='bx bx-map text-primary'></i></a>
-												<a class="dropdown-item" asp-controller="Job" asp-action="FixAddress" asp-route-id="@data.Id" data-toggle="tooltip" data-placement="top" data-original-title="اصلاح آدرس"><i class='bx bx-reset text-info'></i></a>
-											</div>
-										</div>
+										<a asp-controller="Job" asp-action="UpdateJobBranch" asp-route-id="@data.Id" data-toggle="tooltip" data-placement="top" data-original-title="ویرایش"><i class="bx bxs-edit-alt text-warning"></i></a>
+										<a onclick="deleteItem('@data.Id','@Url.Action("DeleteJobBranch","Job")')" data-toggle="tooltip" data-placement="top" data-original-title="حذف کامل از دیتابیس"><i class='bx bx-trash text-danger'></i></a>
+										<a asp-controller="Job" asp-action="IndexJobBranchImageGallery" asp-route-id="@data.Id" data-toggle="tooltip" data-placement="top" data-original-title="گالری تصویر"><i class='bx bx-images text-success'></i></a>
+										<a asp-controller="Job" asp-action="AddressJobBranch" asp-route-id="@data.Id" data-toggle="tooltip" data-placement="top" data-original-title="افزودن آدرس"><i class='bx bx-map text-primary'></i></a>
+										<a asp-controller="Job" asp-action="FixAddress" asp-route-id="@data.Id" data-toggle="tooltip" data-placement="top" data-original-title="اصلاح آدرس"><i class='bx bx-reset text-info'></i></a>
 									</td>
 								</tr>
 								counter++;

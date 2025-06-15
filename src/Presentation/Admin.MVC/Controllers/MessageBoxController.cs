@@ -135,6 +135,8 @@ public class MessageBoxController(IUnitOfWork unitOfWork, IMapper mapper) : Base
             await UnitOfWork.MessageBoxRepository.UpdateAsync(messageBox);
 
             await UnitOfWork.SaveAsync();
+
+            SuccessAlert();
         }
         catch (Exception exception)
         {
@@ -146,7 +148,6 @@ public class MessageBoxController(IUnitOfWork unitOfWork, IMapper mapper) : Base
     #endregion
 
     #region ( Delete )
-
     [HttpGet]
     public async Task<IActionResult> Delete(int id)
     {
@@ -157,6 +158,8 @@ public class MessageBoxController(IUnitOfWork unitOfWork, IMapper mapper) : Base
             await UnitOfWork.MessageBoxRepository.DeleteAsync(messageBox);
 
             await UnitOfWork.SaveAsync();
+
+            SuccessAlert();
         }
         catch (Exception exception)
         {
@@ -165,8 +168,6 @@ public class MessageBoxController(IUnitOfWork unitOfWork, IMapper mapper) : Base
 
         return RedirectToAction("Index");
     }
-
-
     #endregion
 
     #region ( Show Message Box )

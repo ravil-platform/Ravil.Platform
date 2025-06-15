@@ -183,7 +183,15 @@ else
 }
 
 // Configure the HTTP request pipeline
-app.UseDeveloperExceptionPage();
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Home/Error");
+}
+else
+{
+    app.UseDeveloperExceptionPage();
+}
+
 app.UseCustomExceptionMvcHandler();
 
 // Add these lines before UseRouting

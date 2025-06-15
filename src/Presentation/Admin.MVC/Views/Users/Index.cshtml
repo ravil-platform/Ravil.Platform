@@ -39,21 +39,22 @@
                         </select>
                     </fieldset>
                 </div>
+               
+                <div class="col-12 col-sm-6 col-lg-3">
+	                <label>شناسه کاربری</label>
+	                <input type="text" class="form-control text-right" asp-for="Id" />
+                </div>
+
+                <div class="col-12 col-sm-6 col-lg-3">
+	                <label>نام کاربری</label>
+	                <input type="text" class="form-control text-right" asp-for="UserName" />
+                </div>
 
                 <div class="col-12 col-sm-6 col-lg-3">
                     <label>نام</label>
                     <input type="text" class="form-control text-left" asp-for="Firstname" />
                 </div>
-
-                <div class="col-12 col-sm-6 col-lg-3">
-                    <label>نام خانوادگی</label>
-                    <input type="text" class="form-control text-left" asp-for="Lastname" />
-                </div>
-
-                <div class="col-12 col-sm-6 col-lg-3">
-                    <label>نام کاربری</label>
-                    <input type="text" class="form-control text-right" asp-for="UserName" />
-                </div>
+            
                 <div class="col-12 col-sm-6 col-lg-3">
                     <label>موبایل</label>
                     <input type="text" class="form-control text-right" asp-for="Phone" />
@@ -93,14 +94,13 @@
                             <thead class="thead-dark">
                                 <tr>
                                     <th>ردیف</th>
-                                    <th width="10%">@(Resources.General.DisplayNames.FirstName)</th>
-                                    <th width="10%">@(Resources.General.DisplayNames.LastName)</th>
-                                    <th width="13%">@(Resources.General.DisplayNames.Username)</th>
-                                    <th width="6%">@(Resources.General.DisplayNames.CellPhoneNumber)</th>
-                                    <th width="7%">@(Resources.General.DisplayNames.EmailAddress)</th>
-                                    <th width="6%">@(Resources.General.DisplayNames.Status)</th>
-                                    <th width="16%">@(Resources.General.DisplayNames.RegisterDate)</th>
-                                    <th width="18%">@(Resources.General.DisplayNames.Actions)</th>
+                                    <th>شناسه</th>
+                                    <th>@(Resources.General.DisplayNames.FirstName)</th>
+                                    <th>@(Resources.General.DisplayNames.Username)</th>
+                                    <th>@(Resources.General.DisplayNames.CellPhoneNumber)</th>
+                                    <th>@(Resources.General.DisplayNames.Status)</th>
+                                    <th>@(Resources.General.DisplayNames.RegisterDate)</th>
+                                    <th>@(Resources.General.DisplayNames.Actions)</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -108,29 +108,18 @@
                                 {
                                     <tr>
                                         <td>@counter</td>
-                                        <td>@user.Firstname</td>
-                                        <td>@user.Lastname</td>
+                                        <td>@user.Id</td>
+                                        <td>@user.Firstname @user.Lastname</td>
                                         <td>@user.UserName</td>
-
                                         @if (user.PhoneNumberConfirmed)
                                         {
-                                            <td class="text-success">@user.Phone</td>
+                                            <td class="text-success">@user.PhoneNumber</td>
                                         }
                                         else
                                         {
-                                            <td class="text-danger">@user.Phone</td>
+                                            <td class="text-danger">@user.PhoneNumber</td>
                                         }
                                         
-                                        @if (user.EmailConfirmed)
-                                        {
-                                            <td class="text-success">@user.Email</td>
-                                        }
-                                        else
-                                        {
-                                            <td class="text-danger">@user.Email</td>
-                                        }
-                                        
-
                                         @if (user.UserIsBlocked)
                                         {
                                             <td class="text-danger">غیر غعال</td>
