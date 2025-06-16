@@ -1,6 +1,7 @@
 ﻿using Constants;
 using Constants.Caching;
 using Microsoft.Extensions.Caching.Distributed;
+using Persistence.Context;
 using CreateJobBranchViewModel = ViewModels.AdminPanel.Job.CreateJobBranchViewModel;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 using PhoneNumberInfosViewModel = ViewModels.AdminPanel.Job.PhoneNumberInfosViewModel;
@@ -820,6 +821,50 @@ namespace Admin.MVC.Controllers
             string message = $"تعداد کل {enAddresses.Count} ---- تعداد شکست {failed} ---- تعداد بازگشتی نشان {success}  ---- عدم بازگشت نشان {neshanNotReturned} ";
 
             SuccessAlert(message);
+            return Redirect(Request.Headers["Referer"].ToString());
+        }
+        #endregion
+
+        #region ( Fix Duplicate Jobs )
+        /// <summary>
+        /// شغل ها با route تکراری را پیدا  کرده و به انتهای آنها یک کاراکتر اضافه میکند
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> FixDuplicateJobs()
+        {
+            var duplicateRoutes = UnitOfWork.JobRepository.TableNoTracking
+                .GroupBy(j => j.Route)
+                .Where(g => g.Count() > 1)
+                .Select(g => g.Key);
+
+            var jobs = await UnitOfWork.JobRepository.TableNoTracking
+                .Where(j => duplicateRoutes.Contains(j.Route))
+                .OrderBy(j => j.Route)
+                .ThenByDescending(j => j.CreateDate).ToListAsync();
+
+            foreach (var job in jobs)
+            {
+                var randomChar = Strings.RandomString();
+                var route = $"{job.Route}-{randomChar}";
+
+                var jobBranches = await UnitOfWork.JobBranchRepository.TableNoTracking.Where(j => j.JobId == job.Id)
+                    .ToListAsync();
+
+                foreach (var jobBranch in jobBranches)
+                {
+                    jobBranch.Route = route;
+
+                    await UnitOfWork.JobBranchRepository.UpdateAsync(jobBranch);
+                }
+
+                job.Route = route;
+
+                await UnitOfWork.JobRepository.UpdateAsync(job);
+            }
+
+            await UnitOfWork.SaveAsync();
+
             return Redirect(Request.Headers["Referer"].ToString());
         }
         #endregion
@@ -1837,7 +1882,6 @@ namespace Admin.MVC.Controllers
             return View();
         }
 
-
         [HttpPost]
         public async Task<IActionResult> InsertJobsExcelFromGoogle(InsertJobsExcelFromGoogle insertJobsExcelFromGoogle)
         {
@@ -1945,7 +1989,7 @@ namespace Admin.MVC.Controllers
 
                     #region ( Fields )
                     var name = item.Name.SanitizeText().ToLower();
-                    var route = item.Name.SanitizeText().ToLower().ToSlug();
+                    var route = (item.Name.SanitizeText().ToLower() + "-" + Strings.RandomString()).ToSlug();
                     var description = item.BusinessDescription.SanitizeText().ToLower();
 
                     int rating = 3;
@@ -2111,6 +2155,5 @@ namespace Admin.MVC.Controllers
             return RedirectToAction("IndexJob");
         }
         #endregion
-
     }
 }
