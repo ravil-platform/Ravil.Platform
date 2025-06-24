@@ -1,0 +1,68 @@
+stages:
+  - build
+  - restart
+
+variables:
+  DOCKER_DRIVER: overlay2
+
+# Backend build on srv1
+build-backend-srv1:
+  stage: build
+  tags:
+    - srv1
+  script:
+    - docker build -t backend .
+    - docker rm -f Backend || true
+    - docker run -d --name Backend -p 8080:8080 --network ravil-network --restart unless-stopped backend
+
+# Backend build on srv2
+build-backend-srv2:
+  stage: build
+  tags:
+    - srv2
+  script:
+    - docker build -t backend .
+    - docker rm -f Backend || true
+    - docker run -d --name Backend -p 8080:8080 --network ravil-network --restart unless-stopped backend
+
+# API build on srv1
+build-api-srv1:
+  stage: build
+  tags:
+    - srv1
+  script:
+    - docker build -f ./Dockerfile-api -t api .
+    - docker rm -f API || true
+    - docker run -d --name API -p 9090:8080 --network ravil-network --restart unless-stopped api
+
+# API build on srv2
+build-api-srv2:
+  stage: build
+  tags:
+    - srv2
+  script:
+    - docker build -f ./Dockerfile-api -t api .
+    - docker rm -f API || true
+    - docker run -d --name API -p 9090:8080 --network ravil-network --restart unless-stopped api
+
+# Restart Nginx on srv1 (depends on backend and api builds on srv1)
+restart-nginx-srv1:
+  stage: restart
+  tags:
+    - srv1
+  needs:
+    - build-backend-srv1
+    - build-api-srv1
+  script:
+    - docker restart Nginx
+
+# Restart Nginx on srv2 (depends on backend and api builds on srv2)
+restart-nginx-srv2:
+  stage: restart
+  tags:
+    - srv2
+  needs:
+    - build-backend-srv2
+    - build-api-srv2
+  script:
+    - docker restart Nginx
