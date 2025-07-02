@@ -1,4 +1,7 @@
-﻿namespace Persistence.Entities.User.Repositories.Implementations;
+﻿using ClosedXML.Excel;
+using Domain.Entities.Histories.Enums;
+
+namespace Persistence.Entities.User.Repositories.Implementations;
 
 public class ApplicationUserRepository : Repository<ApplicationUser>, IApplicationUserRepository
 {
@@ -219,4 +222,30 @@ public class ApplicationUserRepository : Repository<ApplicationUser>, IApplicati
         return updateResult.Succeeded;
     }
 
+    public async Task<byte[]> ExportDataToExcel()
+    {
+        var users = await ApplicationDbContext.Users.ToListAsync();
+
+        var workbook = new XLWorkbook();
+        var worksheet = workbook.Worksheets.Add("Users");
+
+        // Header
+        worksheet.Cell(1, 1).Value = "user_id";
+        worksheet.Cell(1, 2).Value = "user_location";
+        
+
+        int row = 2;
+        int index = 1;
+
+        foreach (var user in users)
+        {
+            worksheet.Cell(row, 1).Value = user.UserName;
+            worksheet.Cell(row, 2).Value = "";
+            row++;
+        }
+
+        using var stream = new MemoryStream();
+        workbook.SaveAs(stream);
+        return stream.ToArray();
+    }
 }

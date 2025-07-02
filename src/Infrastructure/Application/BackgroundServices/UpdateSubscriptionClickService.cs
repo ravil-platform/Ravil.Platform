@@ -12,14 +12,12 @@ namespace Application.BackgroundServices
         ILogger<UpdateSubscriptionClickService> logger)
     {
         #region ( Properties )
-
         protected IMapper Mapper { get; } = mapper;
         protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
         protected UserManager<ApplicationUser> UserManager { get; } = userManager;
         protected HttpContext? HttpContext { get; } = httpContextAccessor.HttpContext;
         protected IHttpContextAccessor HttpContextAccessor { get; } = httpContextAccessor;
         protected Logging.Base.ILogger<UpdateSubscriptionClickService> Logger { get; } = logger;
-
         #endregion
 
         #region ( Methods )

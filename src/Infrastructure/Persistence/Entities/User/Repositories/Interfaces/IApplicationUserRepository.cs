@@ -16,4 +16,11 @@ public interface IApplicationUserRepository : IRepository<ApplicationUser>
 
     Task<bool> LockAsync(Guid id, string lockoutReason, UserManager<ApplicationUser> UserManager);
     Task<bool> UnLockAsync(Guid id, UserManager<ApplicationUser> UserManager);
+
+
+    /// <summary>
+    /// generate an excel file from action histories table - recommendation system
+    /// </summary>
+    /// <returns>excel file</returns>
+    Task<byte[]> ExportDataToExcel();
 }

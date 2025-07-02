@@ -885,6 +885,13 @@
             <param name="query"></param>
             <returns></returns>
         </member>
+        <member name="M:Api.Controllers.V2.JobsController.GetRecommendation(Application.Features.Job.Queries.GetRecommendationJob.GetRecommendationJobCommand)">
+            <summary>
+            Returns job recommendation
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
         <member name="M:Api.Controllers.V2.JobsController.CreateFreeJobBranch(Application.Features.Job.Commands.CreateFreeJobBranch.CreateFreeJobBranchCommand)">
             <summary>
             Creates a job and also job branch ( add free job in ravil ) 

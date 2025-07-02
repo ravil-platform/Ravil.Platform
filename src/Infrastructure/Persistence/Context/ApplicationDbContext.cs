@@ -79,6 +79,10 @@ namespace Persistence.Context
         public DbSet<FeedbackSlider> FeedbackSlider { get; set; }
         #endregion
 
+        #region ( Histories )
+        public DbSet<ActionHistories> ActionHistories { get; set; }
+        #endregion
+
         #region ( Job )
         public DbSet<Job> Job { get; set; }
         public DbSet<JobTag> JobTag { get; set; }

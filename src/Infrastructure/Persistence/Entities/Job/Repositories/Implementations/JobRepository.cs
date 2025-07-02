@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using ClosedXML.Excel;
 using ViewModels.AdminPanel.Filter;
 
 namespace Persistence.Entities.Job.Repositories.Implementations;
@@ -171,6 +172,11 @@ public class JobRepository : Repository<Domain.Entities.Job.Job>, IJobRepository
             query = query.Where(a => a.AdminId == filter.UserId);
         }
 
+        if (filter.Id != null)
+        {
+            query = query.Where(a => a.Id == filter.Id);
+        }
+
         if (!string.IsNullOrWhiteSpace(filter.Route))
         {
             query = query.Where(a => a.Route.Contains(filter.Route.ToSlug().Trim()));
@@ -296,5 +302,42 @@ public class JobRepository : Repository<Domain.Entities.Job.Job>, IJobRepository
         filter.Build(query.Count()).SetEntities(query);
 
         return filter;
+    }
+
+    public async Task<byte[]> ExportDataToExcel()
+    {
+        var jobs = await ApplicationDbContext.Job.Include(job => job.JobCategories).ToListAsync();
+
+        var workbook = new XLWorkbook();
+        var worksheet = workbook.Worksheets.Add("Jobs");
+
+        // Header
+        worksheet.Cell(1, 1).Value = "job_id";
+        worksheet.Cell(1, 2).Value = "job_name";
+        worksheet.Cell(1, 3).Value = "category";
+        worksheet.Cell(1, 4).Value = "job_location";
+
+
+        int row = 2;
+        int index = 1;
+
+        foreach (var job in jobs)
+        {
+            var location = await ApplicationDbContext.JobBranch.AsNoTracking()
+                .Include(j => j.Address)
+                .ThenInclude(a => a.City)
+                .Where(j => j.JobId == job.Id)
+                .Select(j => j.Address.City.Name).FirstOrDefaultAsync();
+
+            worksheet.Cell(row, 1).Value = job.Id;
+            worksheet.Cell(row, 2).Value = job.Title;
+            worksheet.Cell(row, 3).Value = job.JobCategories.Select(j => j.CategoryId).FirstOrDefault();
+            worksheet.Cell(row, 4).Value = location;
+            row++;
+        }
+
+        using var stream = new MemoryStream();
+        workbook.SaveAs(stream);
+        return stream.ToArray();
     }
 }

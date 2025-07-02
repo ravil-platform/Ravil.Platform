@@ -127,7 +127,13 @@
 		// });
 
 
-				
+		 $(document).ready(function() {
+			$('#searchToggleButton').click(function() {
+            $('#searchForm').collapse('toggle');
+				 });
+		 });
+	
+
 		$(function () {
 		  let $lastClickedSubmit = null;
 
@@ -218,5 +224,6 @@
 		  });
 		});
     </script>
-</body>
+
+	</body>
 </html>
