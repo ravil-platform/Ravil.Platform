@@ -15,7 +15,11 @@
 <a asp-controller="Categories" asp-action="CreateRelatedCategorySeo" class="btn btn-success mb-2"> افزودن مورد جدید <i class="bx bx-plus"></i></a>
 
 <section>
-	<div class="users-list-filter px-1">
+	<button class="btn btn-primary mb-1" type="button" id="searchToggleButton">
+		فرم جستجو <i class="bx bx-search"></i>
+	</button>
+
+	<div class="users-list-filter px-1 collapse mt-3" id="searchForm">
 		<form method="get">
 			<input type="hidden" asp-for="FindAll" id="FindAll" value="false" />
 			<div class="row border rounded py-2 mb-2">

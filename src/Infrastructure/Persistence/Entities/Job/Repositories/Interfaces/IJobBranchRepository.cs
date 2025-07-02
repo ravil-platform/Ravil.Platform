@@ -8,4 +8,5 @@ public interface IJobBranchRepository : IRepository<JobBranch>
     Task<JobBranch?> GetJobBranchByUserId(string userId, CancellationToken cancellationToken);
     Task<JobBranch?> GetJobBranchByRoute(string route, CancellationToken cancellationToken);
     Task<JobBranch?> GetJobBranchById(string id, CancellationToken cancellationToken);
+    Task<List<JobBranch>?> GetJobBranchByJobId(List<int> id, CancellationToken cancellationToken);
 }

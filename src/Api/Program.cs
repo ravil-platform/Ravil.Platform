@@ -97,4 +97,9 @@ RecurringJob.AddOrUpdate<UpdateSubscriptionClickService>(
     "0 0 * * *", // Cron expression (هر روز ساعت 12 شب)
     TimeZoneInfo.Local);
 
+RecurringJob.AddOrUpdate<ExportExcelToApiBackgroundService>(
+    service => service.CreateInteractionFile(),
+    "0 0 * * 0", // این کرون هر یک‌شنبه ساعت 12 شب (00:00) اجرا می‌شود
+    TimeZoneInfo.Local);
+
 app.Run();

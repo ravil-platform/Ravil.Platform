@@ -1,10 +1,11 @@
-﻿using Common.Options;
+﻿using System.Reflection;
+using Application.BackgroundServices;
+using Application.Middlewares;
+using Application.Profiles;
+using Common.Options;
 using Logging.Adapters;
-using System.Reflection;
 using Persistence.Context;
 using StackExchange.Redis;
-using Application.Profiles;
-using Application.Middlewares;
 
 #region ( Services )
 
@@ -167,6 +168,8 @@ services.AddTransient<Persistence.Contracts.IUnitOfWork, UnitOfWork>(current =>
 
 #endregion
 
+
+services.AddScoped<ExportExcelToApiBackgroundService>();
 #endregion
 
 #region ( Middlewares )

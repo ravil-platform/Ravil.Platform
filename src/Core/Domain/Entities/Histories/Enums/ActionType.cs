@@ -12,7 +12,7 @@ public enum ActionType
     ShareAction = 3,
     [Display(Name = "امتیازدهی به کسب‌وکار", GroupName = "نوع عملیات کاربر")]
     RateAction = 4,
-    [Display(Name = "نشان کردن کسب‌وکار", GroupName = "نوع عملیات کاربر")]
+    [Display(Name = "نشان کردن", GroupName = "نوع عملیات کاربر")]
     MarkAction = 5,
     [Display(Name = "کامنت", GroupName = "نوع عملیات کاربر")]
     CommentAction = 6,

@@ -1,8 +1,4 @@
-﻿using Application.Utilities.Extensions;
-using Constants.Caching;
-using DocumentFormat.OpenXml.Office2010.Excel;
-
-namespace Admin.MVC.Controllers
+﻿namespace Admin.MVC.Controllers
 {
     public class HomeController(IUnitOfWork unitOfWork) : BaseController
     {
@@ -54,5 +50,46 @@ namespace Admin.MVC.Controllers
             return View();
         }
 
+        #region ( Export To Excel )
+        [HttpGet]
+        public async Task<IActionResult> ExportActionsToExcel()
+        {
+            var fileBytes = await UnitOfWork.ActionHistoriesRepository.ExportDataToExcel();
+
+            var fileName = $"test_interactions.xlsx";
+
+            return File(fileBytes,
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                fileName);
+        }
+        #endregion
+
+        #region ( Export To Excel )
+        [HttpGet]
+        public async Task<IActionResult> ExportUsersToExcel()
+        {
+            var fileBytes = await UnitOfWork.ApplicationUserRepository.ExportDataToExcel();
+
+            var fileName = $"test_users.xlsx";
+
+            return File(fileBytes,
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                fileName);
+        }
+        #endregion
+
+        #region ( Export To Excel )
+        [HttpGet]
+        public async Task<IActionResult> ExportJobsToExcel()
+        {
+            var fileBytes = await UnitOfWork.JobRepository.ExportDataToExcel();
+
+            var fileName = $"test_jobs_data.xlsx";
+
+            return File(fileBytes,
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                fileName);
+        }
+        #endregion
     }
 }

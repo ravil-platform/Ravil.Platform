@@ -111,5 +111,16 @@
             return new string(Enumerable.Repeat(chars, length)
                 .Select(s => s[random.Next(s.Length)]).ToArray());
         }
+
+
+        public static string RandomRateGenerator(int length = 1)
+        {
+            const string chars = "12345";
+
+            Random random = new Random();
+
+            return new string(Enumerable.Repeat(chars, length)
+                .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
     }
 }

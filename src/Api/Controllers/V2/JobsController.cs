@@ -6,6 +6,7 @@ using Application.Features.Job.Commands.SetAdsClickSetting;
 using Application.Features.Job.Commands.UpdateBusiness;
 using Application.Features.Job.Queries.GetAllKeywords;
 using Application.Features.Job.Queries.GetJobBranchByUserId;
+using Application.Features.Job.Queries.GetRecommendationJob;
 using Application.Features.Job.Queries.Report;
 using ViewModels.QueriesResponseViewModel.Subscription;
 using Asp.Versioning;
@@ -20,7 +21,7 @@ namespace Api.Controllers.V2
     public class JobsController : GenericBaseController<JobsController>
     {
         /// <inheritdoc />
-        public JobsController(IMediator mediator, Logging.Base.ILogger<JobsController> logger, IMapper mapper) 
+        public JobsController(IMediator mediator, Logging.Base.ILogger<JobsController> logger, IMapper mapper)
             : base(mediator, logger, mapper)
         {
 
@@ -60,7 +61,7 @@ namespace Api.Controllers.V2
 
             return FluentResult(result);
         }
-        
+
 
         /// <summary>
         /// Returns all keywords tag list
@@ -78,7 +79,22 @@ namespace Api.Controllers.V2
 
             return FluentResult(result);
         }
-        
+
+
+        /// <summary>
+        /// Returns job recommendation
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpPost(Routes.Action)]
+        [ProducesResponseType(type: typeof(Result<List<JobBranchViewModel>>), statusCode: StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(Result), statusCode: StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetRecommendation([FromBody] GetRecommendationJobCommand command)
+        {
+            var result = await Mediator.Send(command);
+
+            return FluentResult(result);
+        }
         #endregion
 
         #region ( Commands )
@@ -200,6 +216,8 @@ namespace Api.Controllers.V2
 
             return FluentResult(result);
         }
+
+
 
         /*/// <summary>
         /// Upload job branch galleries

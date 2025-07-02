@@ -16,4 +16,10 @@ public interface IJobRepository : IRepository<Domain.Entities.Job.Job>
     Task SetIsDelete(int jobId, bool delete);
 
     JobFilterViewModel GetByAdminFilter(JobFilterViewModel filter);
+
+    /// <summary>
+    /// generate an excel file from action histories table - recommendation system
+    /// </summary>
+    /// <returns>excel file</returns>
+    Task<byte[]> ExportDataToExcel();
 }

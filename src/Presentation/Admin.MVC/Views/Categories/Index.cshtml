@@ -33,7 +33,11 @@ else if (nodeLevel == 3)
 }
 
 <section>
-    <div class="users-list-filter px-1">
+	<button class="btn btn-primary mb-1" type="button" id="searchToggleButton">
+		فرم جستجو <i class="bx bx-search"></i>
+	</button>
+
+	<div class="users-list-filter px-1 collapse mt-3" id="searchForm">
         <form method="get">
             <input type="hidden" asp-for="FindAll" id="FindAll" value="false" />
             <input type="hidden" class="form-control text-left" asp-for="ParentId" />
